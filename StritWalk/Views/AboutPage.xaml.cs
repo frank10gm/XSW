@@ -122,6 +122,7 @@ namespace StritWalk
 
         async void getPins(){
             var items = await DataStore.GetMapItemsAsync(true);
+            Console.WriteLine("just got the list");
 			map = new CustomMap
 			{
 				MapType = MapType.Street,
@@ -133,11 +134,12 @@ namespace StritWalk
                 var pin = new Pin
                 {
                     Type = PinType.Place,
-                    Position = new Position(Convert.ToDouble(p.Lat.Replace(".", ",")), Convert.ToDouble(p.Lng.Replace(".", ","))),
+                    //Position = new Position(Convert.ToDouble(p.Lat.Replace(".", ",")), Convert.ToDouble(p.Lng.Replace(".", ","))),
+                    Position = new Position(double.Parse(p.Lat, System.Globalization.CultureInfo.InvariantCulture), double.Parse(p.Lng, System.Globalization.CultureInfo.InvariantCulture)),
                     Label = p.Name + " (" + p.Creator + ")",
                     Address = p.Added + "ago"
                 };
-                //map.Pins.Add(pin);
+                map.Pins.Add(pin);
                 map.PinList.Add(pin);
             }
 			AbsoluteLayout.SetLayoutBounds(map, new Rectangle(0, 0, 1, 1));

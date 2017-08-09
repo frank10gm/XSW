@@ -90,14 +90,14 @@ namespace StritWalk.iOS
                     listAnnotations.Add(annotation);
                 }
 
-                clusteringManager = new FBClusteringManager(listAnnotations);
-
 				//CLLocationCoordinate2D center = new CLLocationCoordinate2D(52.2, 4.8);
 				//MKCoordinateRegion region = MKCoordinateRegion.FromDistance(center, 200000, 200000);
-                //nativeMap.SetRegion(region, false);
+				//nativeMap.SetRegion(region, false);
 
-                nativeMap.RegionChanged += OnClusterChange;
-                nativeMap.GetViewForAnnotation += GetClusterView;
+				clusteringManager = new FBClusteringManager(listAnnotations);
+
+				nativeMap.RegionChanged += OnClusterChange;
+				nativeMap.GetViewForAnnotation += GetClusterView;
 
 			}
 
@@ -213,20 +213,20 @@ namespace StritWalk.iOS
 
         void OnClusterChange(object sender, MKMapViewChangeEventArgs e)
         {
-            //System.Diagnostics.Debug.WriteLine("onClusterChange: " + GetZoom());
-            //nativeMap.Region.Span.LongitudeDelta
+            System.Diagnostics.Debug.WriteLine("regionchanged");
             double scale = nativeMap.Bounds.Size.Width / nativeMap.VisibleMapRect.Size.Width;
             List<IMKAnnotation> annotationsToDisplay = clusteringManager.ClusteredAnnotationsWithinMapRect(nativeMap.VisibleMapRect, scale);
             clusteringManager.DisplayAnnotations(annotationsToDisplay, nativeMap);
-
         }
 
         MKAnnotationView GetClusterView(MKMapView mapView, IMKAnnotation annotation)
         {
+            //System.Diagnostics.Debug.WriteLine("getview");
             MKAnnotationView anView;
 
             if (annotation is FBAnnotationCluster)
             {
+                System.Diagnostics.Debug.WriteLine("cluview?ornot");
                 FBAnnotationCluster annotationcluster = (FBAnnotationCluster)annotation;
                 anView = (MKAnnotationView)mapView.DequeueReusableAnnotation(kClusterAnnotationId);
 
@@ -236,6 +236,7 @@ namespace StritWalk.iOS
                     // nicely format the cluster icon and display the number of items in it
                     anView = new MKAnnotationView(annotation, kClusterAnnotationId);
                     anView.Image = UIImage.FromBundle("cluster");
+                    //anView.Image = UIImage.FromFile("cluster.png");
                     label = new UILabel(new CGRect(0, 0, anView.Image.Size.Width, anView.Image.Size.Height));
                     label.Tag = kTagClusterLabel;
                     label.TextAlignment = UITextAlignment.Center;
