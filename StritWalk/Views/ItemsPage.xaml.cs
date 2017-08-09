@@ -11,7 +11,6 @@ namespace StritWalk
         ItemsViewModel viewModel;
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
 
-
         public ItemsPage()
         {
             InitializeComponent();
