@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="StritWalk.ItemsPage" Title="{Binding Title}" x:Name="BrowseItemsPage">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Add" Clicked="AddItem_Clicked" />
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<StackLayout>
+			<ListView SeparatorColor="White" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="ItemsListView" ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" HasUnevenRows="true"  RefreshCommand="{Binding LoadItemsCommand}" IsPullToRefreshEnabled="true" IsRefreshing="{Binding IsBusy, Mode=OneWay}" 
+                CachingStrategy="RecycleElement" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom" >
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<AbsoluteLayout Padding="10" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+								<!--<Label Text="{Binding Creator}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="14" TextColor="{StaticResource Primary}" Font="14,Bold" Margin="0,0,0,-5"/>
+								<Label Text="{Binding Details}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="10" TextColor="#333333"/>
+                                <Label Text="{Binding Post}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="12" TextColor="#000"/>-->
+                                <Label FormattedText="{Binding Post}" />
+                                <Grid Padding="50">
+                                    
+                                </Grid>
+							</AbsoluteLayout>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

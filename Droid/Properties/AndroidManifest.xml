@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="it.hackweb.stritwalk">
+	<uses-sdk android:minSdkVersion="15" />
+	<application android:label="StritWalk">
+		<meta-data android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyC4TOxAcT8iM6_PFoTszKdizbai4ICwj9Q" />
+	</application>
+</manifest>
