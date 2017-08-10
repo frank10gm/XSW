@@ -36,5 +36,6 @@
         <image name="tab_about.png" width="32" height="30"/>
         <image name="tab_feed.png" width="32" height="30"/>
         <image name="xamarin_logo.png" width="220" height="51"/>
+        <image name="cluster.png" width="42" height="42"/>
     </resources>
 </document>

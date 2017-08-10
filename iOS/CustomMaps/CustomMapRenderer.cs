@@ -213,7 +213,7 @@ namespace StritWalk.iOS
 
         void OnClusterChange(object sender, MKMapViewChangeEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("regionchanged");
+            //System.Diagnostics.Debug.WriteLine("regionchanged");
             double scale = nativeMap.Bounds.Size.Width / nativeMap.VisibleMapRect.Size.Width;
             List<IMKAnnotation> annotationsToDisplay = clusteringManager.ClusteredAnnotationsWithinMapRect(nativeMap.VisibleMapRect, scale);
             clusteringManager.DisplayAnnotations(annotationsToDisplay, nativeMap);
@@ -226,7 +226,7 @@ namespace StritWalk.iOS
 
             if (annotation is FBAnnotationCluster)
             {
-                System.Diagnostics.Debug.WriteLine("cluview?ornot");
+                //System.Diagnostics.Debug.WriteLine("cluview?ornot");
                 FBAnnotationCluster annotationcluster = (FBAnnotationCluster)annotation;
                 anView = (MKAnnotationView)mapView.DequeueReusableAnnotation(kClusterAnnotationId);
 

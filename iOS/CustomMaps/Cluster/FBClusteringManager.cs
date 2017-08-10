@@ -67,12 +67,27 @@ namespace StritWalk.iOS.CustomMaps.Cluster
 			{
 				cellSize *= RespondsToSelector(this);
 			}
-			double scaleFactor = zoomScale / cellSize;
+            double scaleFactor = zoomScale / cellSize;
 
-			int minX = (int)Math.Floor(rect.MinX * scaleFactor);
-			int maxX = (int)Math.Floor(rect.MaxX * scaleFactor);
-			int minY = (int)Math.Floor(rect.MinY * scaleFactor);
-			int maxY = (int)Math.Floor(rect.MaxY * scaleFactor);
+            int minX = (int)Math.Floor((rect.MinX) * scaleFactor);
+            int maxX = (int)Math.Floor((rect.MaxX) * scaleFactor);
+            int minY = (int)Math.Floor((rect.MinY) * scaleFactor);
+            int maxY = (int)Math.Floor((rect.MaxY) * scaleFactor);
+
+            //System.Diagnostics.Debug.WriteLine("zoomscale: " + zoomScale);
+            //System.Diagnostics.Debug.WriteLine("scale factor: " + scaleFactor);
+            //System.Diagnostics.Debug.WriteLine("rect.minx: " + rect.MinX);
+            //System.Diagnostics.Debug.WriteLine("rect.maxx: " + rect.MaxX);
+            //System.Diagnostics.Debug.WriteLine("minx: " + minX);
+            //System.Diagnostics.Debug.WriteLine("maxx: " + maxX);
+
+            minX -= 5;
+            minY -= 5;
+            maxX += 5;
+            maxY += 5;
+
+			//System.Diagnostics.Debug.WriteLine("minx: " + minX);
+			//System.Diagnostics.Debug.WriteLine("maxx: " + maxX);
 
 			List<IMKAnnotation> clusteredAnnotations = new List<IMKAnnotation>();
 

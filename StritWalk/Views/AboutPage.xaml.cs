@@ -22,17 +22,6 @@ namespace StritWalk
         {
             InitializeComponent();
 
-            //location gestione
-            switch(Device.RuntimePlatform)
-            {
-                case Device.iOS:
-					locationTracker = DependencyService.Get<ILocationTracker>();
-					locationTracker.LocationChanged += OnLocationTracker;
-                    break;
-                default:
-                    break;
-            }
-
             //map = new CustomMap
             //{
             //    MapType = MapType.Street,
@@ -120,7 +109,8 @@ namespace StritWalk
 			}
         }
 
-        async void getPins(){
+        async void getPins()
+        {
             var items = await DataStore.GetMapItemsAsync(true);
             Console.WriteLine("just got the list");
 			map = new CustomMap
@@ -167,6 +157,17 @@ namespace StritWalk
 
 			if (Device.Android != Device.RuntimePlatform)
 				layout.Children.Add(button);
+
+			//location gestione
+			switch (Device.RuntimePlatform)
+			{
+				case Device.iOS:
+					locationTracker = DependencyService.Get<ILocationTracker>();
+					locationTracker.LocationChanged += OnLocationTracker;
+					break;
+				default:
+					break;
+			}
         }
 
     }
