@@ -1,20 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="StritWalk.App">
-	<Application.Resources>
-		<ResourceDictionary>
-			<Color x:Key="Primary">#4885ed</Color>
-			<Color x:Key="PrimaryDark">#1976D2</Color>
-			<Color x:Key="Accent">#4885ed</Color>
-            <Color x:Key="White">#ffffff</Color>
-			<Color x:Key="LightBackgroundColor">#efefef</Color>
-            <Color x:Key="Dark">#222222</Color>
-			<Color x:Key="DarkBackgroundColor">#C0C0C0</Color>
-			<Color x:Key="MediumGrayTextColor">#4d4d4d</Color>
-			<Color x:Key="LightTextColor">#999999</Color>
-			<Style TargetType="NavigationPage">
-				<Setter Property="BarBackgroundColor" Value="{StaticResource White}" />
-				<Setter Property="BarTextColor" Value="{StaticResource Dark}" />
-			</Style>
-		</ResourceDictionary>
-	</Application.Resources>
+    <Application.Resources>
+        <OnPlatform x:TypeArguments="ResourceDictionary">
+            <OnPlatform.iOS>
+                <ResourceDictionary>
+                    <Color x:Key="Primary">#4885ed</Color>
+                    <Color x:Key="PrimaryDark">#1976D2</Color>
+                    <Color x:Key="Accent">#4885ed</Color>
+                    <Color x:Key="White">#ffffff</Color>
+                    <Color x:Key="LightBackgroundColor">#efefef</Color>
+                    <Color x:Key="Dark">#222222</Color>
+                    <Color x:Key="DarkBackgroundColor">#C0C0C0</Color>
+                    <Color x:Key="MediumGrayTextColor">#4d4d4d</Color>
+                    <Color x:Key="LightTextColor">#999999</Color>
+                    <Style TargetType="NavigationPage">
+                        <Setter Property="BarBackgroundColor" Value="{StaticResource White}" />
+                        <Setter Property="BarTextColor" Value="{StaticResource Dark}" />
+                    </Style>
+                </ResourceDictionary>
+            </OnPlatform.iOS>
+            <OnPlatform.Android>
+                <ResourceDictionary>
+                    <Color x:Key="Primary">#4885ed</Color>
+                    <Color x:Key="PrimaryDark">#1976D2</Color>
+                    <Color x:Key="Accent">#4885ed</Color>
+                    <Color x:Key="White">#ffffff</Color>
+                    <Color x:Key="LightBackgroundColor">#efefef</Color>
+                    <Color x:Key="Dark">#222222</Color>
+                    <Color x:Key="DarkBackgroundColor">#C0C0C0</Color>
+                    <Color x:Key="MediumGrayTextColor">#4d4d4d</Color>
+                    <Color x:Key="LightTextColor">#999999</Color>
+                    <Style TargetType="NavigationPage">
+                    </Style>
+                </ResourceDictionary>
+            </OnPlatform.Android>
+        </OnPlatform>
+    </Application.Resources>
 </Application>

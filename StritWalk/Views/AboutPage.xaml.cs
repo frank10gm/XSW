@@ -72,7 +72,6 @@ namespace StritWalk
             //prima posizione all'apertura della pagina della mappa
             if(start)
             {
-                //dev10n
                 map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(2)));
                 start = false;
                 //getPins();
@@ -82,37 +81,45 @@ namespace StritWalk
 
 		}
 
-        protected override void OnAppearing(){
+        protected override void OnAppearing()
+        {
 			base.OnAppearing();
 
 			switch (Device.RuntimePlatform)
 			{
 				case Device.iOS:
-                    locationTracker.StartTracking();
 					break;
 				default:
 					break;
 			}
 
+            if(!start){
+                locationTracker.StartTracking();
+                Console.WriteLine("started long time ago");
+            }else{
+                Console.WriteLine("just starting");
+            }
         }
 
-        protected override void OnDisappearing(){
+        protected override void OnDisappearing()
+        {
             base.OnDisappearing();
 
 			switch (Device.RuntimePlatform)
 			{
 				case Device.iOS:
-                    locationTracker.PauseTracking();
 					break;
 				default:
 					break;
 			}
+
+            locationTracker.PauseTracking();
         }
 
         async void getPins()
         {
             var items = await DataStore.GetMapItemsAsync(true);
-            Console.WriteLine("just got the list");
+
 			map = new CustomMap
 			{
 				MapType = MapType.Street,
@@ -120,7 +127,6 @@ namespace StritWalk
 			};
             foreach(var p in items)
             {
-                //Console.WriteLine(p.Id);
                 var pin = new Pin
                 {
                     Type = PinType.Place,
@@ -162,13 +168,15 @@ namespace StritWalk
 			switch (Device.RuntimePlatform)
 			{
 				case Device.iOS:
-					locationTracker = DependencyService.Get<ILocationTracker>();
-					locationTracker.LocationChanged += OnLocationTracker;
 					break;
 				default:
 					break;
 			}
-        }
+
+			locationTracker = DependencyService.Get<ILocationTracker>();
+			locationTracker.LocationChanged += OnLocationTracker;
+			locationTracker.StartTracking();
+		}
 
     }
 }
