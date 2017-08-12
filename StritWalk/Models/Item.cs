@@ -113,7 +113,7 @@ namespace StritWalk
                         new Span { Text = Creator + "\n", FontAttributes=FontAttributes.Bold, FontSize=16.0F, ForegroundColor=Color.FromHex("#4885ED")},
                         new Span { Text = Details + "\n\n", FontSize=10.0F, ForegroundColor=Color.FromHex("#333333") },   
                         new Span { Text = "{ ", FontSize=14.0F, ForegroundColor=Color.FromHex("#4885ed") },
-                        new Span { Text = Name, FontAttributes=FontAttributes.Bold, FontSize=14.0F },
+                        new Span { Text = Name, FontAttributes=FontAttributes.Bold, FontSize=14.0F, ForegroundColor=Color.FromHex("#000000") },
                         new Span { Text = " }", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4885ed") }
                     }
                 };
