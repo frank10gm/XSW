@@ -5,7 +5,7 @@
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<AbsoluteLayout>
-			<ListView SeparatorColor="White" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="ItemsListView" ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" HasUnevenRows="true"  RefreshCommand="{Binding LoadItemsCommand}" IsPullToRefreshEnabled="true" IsRefreshing="{Binding IsBusy, Mode=OneWay}" 
+			<ListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" SeparatorColor="White" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="ItemsListView" ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" HasUnevenRows="true"  RefreshCommand="{Binding LoadItemsCommand}" IsPullToRefreshEnabled="true" IsRefreshing="{Binding IsBusy, Mode=OneWay}" 
                 CachingStrategy="RecycleElement" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom" >
 				<ListView.ItemTemplate>
 					<DataTemplate>
