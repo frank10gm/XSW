@@ -16,7 +16,7 @@
                                 <Label Text="{Binding Post}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="12" TextColor="#000"/>-->
                                 <Label FormattedText="{Binding Post}" />
                                 <Grid Padding="50">
-                                    
+                                   
                                 </Grid>
 							</AbsoluteLayout>
 						</ViewCell>
