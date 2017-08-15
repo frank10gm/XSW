@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Xamarin.Forms.Maps;
 
 
+
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
 namespace StritWalk.Droid
 {
