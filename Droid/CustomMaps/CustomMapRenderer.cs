@@ -11,10 +11,10 @@ using Xamarin.Forms.Maps;
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
 namespace StritWalk.Droid
 {
-	public class CustomMapRenderer : MapRenderer, IOnMapReadyCallback
+	public class CustomMapRenderer : MapRenderer
 	{
-		GoogleMap map;
-		List<Position> shapeCoordinates;
+		//GoogleMap map;
+		//List<Position> shapeCoordinates;
 
 		protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<Map> e)
 		{
@@ -28,27 +28,10 @@ namespace StritWalk.Droid
 			if (e.NewElement != null)
 			{
 				var formsMap = (CustomMap)e.NewElement;
-				shapeCoordinates = formsMap.ShapeCoordinates;
 
 				((MapView)Control).GetMapAsync(this);
 			}
 		}
 
-		public void OnMapReady(GoogleMap googleMap)
-		{
-			map = googleMap;
-
-			var polygonOptions = new PolygonOptions();
-			polygonOptions.InvokeFillColor(0x66FF0000);
-			polygonOptions.InvokeStrokeColor(0x660000FF);
-			polygonOptions.InvokeStrokeWidth(30.0f);
-
-			foreach (var position in shapeCoordinates)
-			{
-				polygonOptions.Add(new LatLng(position.Latitude, position.Longitude));
-			}
-
-			//map.AddPolygon(polygonOptions);
-		}
 	}
 }

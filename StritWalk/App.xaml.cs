@@ -43,24 +43,29 @@ namespace StritWalk
 
         public static void GoToMainPage()
         {
-            Current.MainPage = new TabbedPage
-            {
-                Children = {
-                    new NavigationPage(new ItemsPage())
-                    {
-                   						
-                        Icon = Device.OnPlatform("tab_feed.png", null, null),
-                        Title = Device.OnPlatform(null, "Home", "Home")
+
+			TabbedPage tabbedPage = new TabbedPage
+			{
+				Children = {
+					new NavigationPage(new ItemsPage())
+					{
+
+						Icon = Device.OnPlatform("tab_feed.png", null, null),
+						Title = Device.OnPlatform(null, "Home", "Home")
                         //Title = "home"
                     },
-                    new NavigationPage(new AboutPage())
-                    {
-                        Icon = Device.OnPlatform("tab_about.png", null, null),
-                        Title = Device.OnPlatform(null, "Map", "Map")
+					new NavigationPage(new AboutPage())
+					{
+						Icon = Device.OnPlatform("tab_about.png", null, null),
+						Title = Device.OnPlatform(null, "Map", "Map")
                         //Title = "map"
                     },
-                }
-            };
+				}
+			};
+
+            Current.MainPage = tabbedPage;
+
+            tabbedPage.CurrentPage = tabbedPage.Children[1];
 
         }
     }

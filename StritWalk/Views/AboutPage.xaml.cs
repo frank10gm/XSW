@@ -10,7 +10,6 @@ namespace StritWalk
 {
     public partial class AboutPage : ContentPage
     {
-
         CustomMap map;
         ILocationTracker locationTracker;
         Position position;
@@ -88,13 +87,6 @@ namespace StritWalk
         {
             base.OnAppearing();
 
-            switch (Device.RuntimePlatform)
-            {
-                case Device.iOS:
-                    break;
-                default:
-                    break;
-            }
 
             if (!start)
             {
@@ -111,14 +103,6 @@ namespace StritWalk
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-
-            switch (Device.RuntimePlatform)
-            {
-                case Device.iOS:
-                    break;
-                default:
-                    break;
-            }
 
             if (CrossConnectivity.Current.IsConnected && locationTracker != null)
                 locationTracker.PauseTracking();
@@ -171,15 +155,6 @@ namespace StritWalk
 
             if (Device.Android != Device.RuntimePlatform)
                 layout.Children.Add(button);
-
-            //location gestione
-            switch (Device.RuntimePlatform)
-            {
-                case Device.iOS:
-                    break;
-                default:
-                    break;
-            }
 
             locationTracker = DependencyService.Get<ILocationTracker>();
             locationTracker.LocationChanged += OnLocationTracker;
