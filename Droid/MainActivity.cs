@@ -23,6 +23,7 @@ namespace StritWalk.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             global::Xamarin.FormsMaps.Init(this, bundle);
+            //global::Xamarin.FormsGoogleMaps.Init(this, bundle);
             Toolkit.Init(this, bundle);
 
 			LoadApplication(new App());

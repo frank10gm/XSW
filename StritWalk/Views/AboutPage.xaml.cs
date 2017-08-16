@@ -4,6 +4,8 @@ using Plugin.Connectivity;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
+//using Xamarin.Forms.GoogleMaps;
+//using Xamarin.Forms.GoogleMaps.Bindings;
 //using TK.CustomMap;
 
 namespace StritWalk
@@ -127,7 +129,7 @@ namespace StritWalk
                     Label = p.Name + " (" + p.Creator + ")",
                     Address = p.Added + "ago"
                 };
-                map.Pins.Add(pin);
+                //map.Pins.Add(pin);
                 map.PinList.Add(pin);
             }
             AbsoluteLayout.SetLayoutBounds(map, new Rectangle(0, 0, 1, 1));
@@ -159,6 +161,7 @@ namespace StritWalk
             locationTracker = DependencyService.Get<ILocationTracker>();
             locationTracker.LocationChanged += OnLocationTracker;
             locationTracker.StartTracking();
+
         }
 
     }

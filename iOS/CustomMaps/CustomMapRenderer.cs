@@ -98,6 +98,7 @@ namespace StritWalk.iOS
 
 				nativeMap.RegionChanged += OnClusterChange;
 				nativeMap.GetViewForAnnotation += GetClusterView;
+                nativeMap.DidSelectAnnotationView += OnDidSelectAnnotationView;
 
 			}
 
@@ -186,19 +187,19 @@ namespace StritWalk.iOS
 
 		void OnDidSelectAnnotationView(object sender, MKAnnotationViewEventArgs e)
 		{
-            
-			var customView = e.View as CustomMKAnnotationView;
-			customPinView = new UIView();
+            //System.Diagnostics.Debug.WriteLine("gino");
+			//var customView = e.View as CustomMKAnnotationView;
+			//customPinView = new UIView();
 
-			if (customView.Id == "Xamarin")
-			{
-				customPinView.Frame = new CGRect(0, 0, 200, 84);
-				var image = new UIImageView(new CGRect(0, 0, 200, 84));
-				image.Image = UIImage.FromFile("xamarin.png");
-				customPinView.AddSubview(image);
-				customPinView.Center = new CGPoint(0, -(e.View.Frame.Height + 75));
-				e.View.AddSubview(customPinView);
-			}
+			//if (customView.Id == "Xamarin")
+			//{
+			//	customPinView.Frame = new CGRect(0, 0, 200, 84);
+			//	var image = new UIImageView(new CGRect(0, 0, 200, 84));
+			//	image.Image = UIImage.FromFile("xamarin.png");
+			//	customPinView.AddSubview(image);
+			//	customPinView.Center = new CGPoint(0, -(e.View.Frame.Height + 75));
+			//	e.View.AddSubview(customPinView);
+			//}
 		}
 
 		void OnDidDeselectAnnotationView(object sender, MKAnnotationViewEventArgs e)
