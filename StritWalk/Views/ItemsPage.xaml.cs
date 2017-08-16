@@ -38,7 +38,7 @@ namespace StritWalk
             
             if(viewModel.Items[viewModel.Items.Count - 4] == args.Item && Settings.listEnd == 0)
             {                
-                viewModel.start += 10;
+                viewModel.start += 20;
                 var items = await DataStore.GetItemsAsync(true, viewModel.start);
 				viewModel.Items.AddRange(items);
 			}

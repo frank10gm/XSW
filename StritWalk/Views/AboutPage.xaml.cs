@@ -161,7 +161,6 @@ namespace StritWalk
             locationTracker = DependencyService.Get<ILocationTracker>();
             locationTracker.LocationChanged += OnLocationTracker;
             locationTracker.StartTracking();
-
         }
 
     }
