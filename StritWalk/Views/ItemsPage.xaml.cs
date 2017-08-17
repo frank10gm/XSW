@@ -33,14 +33,18 @@ namespace StritWalk
             ItemsListView.SelectedItem = null;
         }
 
+        private void OnItemTapped(object sender, ItemTappedEventArgs args)
+		{
+            ItemsListView.SelectedItem = null;
+		}
+
         async void OnReachBottom(object sender, ItemVisibilityEventArgs args)
         {
-            
             if(viewModel.Items[viewModel.Items.Count - 4] == args.Item && Settings.listEnd == 0)
             {                
                 viewModel.start += 20;
                 var items = await DataStore.GetItemsAsync(true, viewModel.start);
-				viewModel.Items.AddRange(items);
+                viewModel.Items.AddRange(items);
 			}
         }
 

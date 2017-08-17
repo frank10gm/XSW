@@ -235,6 +235,7 @@
     <BundleResource Include="Resources\xamarin_logo%403x.png" />
     <BundleResource Include="Resources\cluster.png" />
     <BundleResource Include="Resources\cluster%402x.png" />
+    <BundleResource Include="Resources\cluster%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppDelegate.cs" />

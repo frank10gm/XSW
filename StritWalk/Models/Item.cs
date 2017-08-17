@@ -16,6 +16,20 @@ namespace StritWalk
             set { SetProperty(ref id, value); }
         }
 
+        bool primo = true;
+		public bool Primo
+		{
+			get { return primo; }
+			set { SetProperty(ref primo, value); }
+		}
+
+        bool secondo = false;
+		public bool Secondo
+		{
+			get { return secondo; }
+			set { SetProperty(ref secondo, value); }
+		}
+
         string lat = string.Empty;
 		public string Lat
 		{

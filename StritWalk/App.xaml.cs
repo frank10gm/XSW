@@ -49,8 +49,7 @@ namespace StritWalk
 				Children = {
 					new NavigationPage(new ItemsPage())
 					{
-
-						Icon = Device.OnPlatform("tab_feed.png", null, null),
+						Icon = Device.OnPlatform("tab_about.png", null, null),
 						Title = Device.OnPlatform(null, "Home", "Home")
                         //Title = "home"
                     },
@@ -60,12 +59,24 @@ namespace StritWalk
 						Title = Device.OnPlatform(null, "Map", "Map")
                         //Title = "map"
                     },
+                    new NavigationPage(new ItemsPage())
+					{
+						Icon = Device.OnPlatform("tab_about.png", null, null),
+						Title = Device.OnPlatform(null, "News", "News")
+                        //Title = "map"
+                    },
+					new NavigationPage(new ItemsPage())
+					{
+						Icon = Device.OnPlatform("slideout.png", null, null),
+						Title = Device.OnPlatform(null, "Menu", "Menu")
+                        //Title = "map"
+                    }
 				}
 			};
 
             Current.MainPage = tabbedPage;
 
-            tabbedPage.CurrentPage = tabbedPage.Children[1];
+            //tabbedPage.CurrentPage = tabbedPage.Children[1];
 
         }
     }

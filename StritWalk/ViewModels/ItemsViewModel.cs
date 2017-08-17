@@ -40,6 +40,7 @@ namespace StritWalk
                 Items.Clear();
                 var items = await DataStore.GetItemsAsync(true);
                 Items.ReplaceRange(items);
+                //Items.Insert(0, new Item());
             }
             catch (Exception ex)
             {
