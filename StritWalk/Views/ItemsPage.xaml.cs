@@ -33,6 +33,12 @@ namespace StritWalk
             ItemsListView.SelectedItem = null;
         }
 
+        private void OnFocused(object sender, FocusEventArgs args)
+        {
+            PostEditor.Text = "";
+            PostEditor.TextColor = Color.FromHex("#000000");
+        }
+
         private void OnItemTapped(object sender, ItemTappedEventArgs args)
 		{
             ItemsListView.SelectedItem = null;

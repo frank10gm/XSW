@@ -10,9 +10,9 @@
                 <ListView.Header>
                     <Grid Padding="0,20,0,15" RowSpacing="20" ColumnSpacing="0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="40" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
@@ -22,45 +22,53 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="30" />
                         </Grid.ColumnDefinitions>
-                        
                         <!--<Image Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />-->
-
                         <!--<AbsoluteLayout Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3">
                             <Image AbsoluteLayout.LayoutFlags="All" HorizontalOptions="Fill" AbsoluteLayout.LayoutBounds="0,0,.3,1" Source="Cluster.png">
                             </Image>
                             <Label Text="gino" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,0,.7,1" >
                             </Label>
                         </AbsoluteLayout>-->
-
                         <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3">
                             <Grid.RowDefinitions>
-                            <RowDefinition Height="50" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="8*" />
-                        </Grid.ColumnDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="8*" />
+                            </Grid.ColumnDefinitions>
                             <Image Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Start" Source="profile_generic.png" HeightRequest="40" />
-                            <Label Text="gino" Grid.Row="0" Grid.Column="1" ></Label>
+                            <Label FormattedText="{Binding Gino}" Grid.Row="0" Grid.Column="1" />
                         </Grid>
-                        
-                        <!--<Image Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />
-                        <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" 
-                        Text="Usernameeeeeeeeeeeeeeeeee" Margin="0,0,0,0" />-->
-                        
-                        <!--<Image Grid.Row="0" Grid.Column="4" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />-->
-                        
-                        <Image Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />
-                        <Image Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />
-                        <Image Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />
-                        <Image Grid.Row="1" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />
-                        <Image Grid.Row="1" Grid.Column="4" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />
-                        <Image Grid.Row="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />
+
+                        <Label FormattedText="{Binding PostsN}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                        <Label FormattedText="{Binding FriendsN}" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                        <Label FormattedText="{Binding LikesN}" Grid.Row="1" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+
+                        <Editor Keyboard="Default" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Text="Do you want to post something?" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="PostEditor" HeightRequest="70" Focused="OnFocused" TextColor="#333333" />
+
+                        <!--<Image Grid.Row="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />
                         <Image Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />
                         <Image Grid.Row="2" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />
                         <Image Grid.Row="2" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />
-                        <Image Grid.Row="2" Grid.Column="4" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />
-                        <BoxView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" BackgroundColor="#FFFFFF" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+                        <Image Grid.Row="2" Grid.Column="4" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />-->
+                        <!--<BoxView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" BackgroundColor="#FFFFFF" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />-->
+                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" BackgroundColor="#FFFFFF">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Row="0" Grid.Column="0" Text="My" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center">
+                            </Button>
+                            <Button Grid.Row="0" Grid.Column="1" Text="Friends" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center">
+                            </Button>
+                            <Button Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center">
+                            </Button>
+                        </Grid>
                         <!--<Label Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Text="Usernameeeeeeeeeeeeeeeeeeeeeeeeeeeeee" />
                         <Label Grid.Row="1" Grid.Column="2" Text="Username \r descrizione" Grid.ColumnSpan="5" HorizontalOptions="Start" VerticalOptions="Center" />
                         <Label Grid.Row="2" Grid.Column="1" Text="Username \r descrizione" Grid.ColumnSpan="5" HorizontalOptions="Start" VerticalOptions="Center" />
@@ -79,8 +87,8 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.Footer>
-                    <StackLayout Padding="0,30,0,30">
-                        <Label Text="testo per il loading" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Gray">
+                    <StackLayout Padding="0,20,0,30">
+                        <Label Text="The End" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Gray">
                         </Label>
                     </StackLayout>
                 </ListView.Footer>

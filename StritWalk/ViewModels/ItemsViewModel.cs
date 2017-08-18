@@ -24,6 +24,8 @@ namespace StritWalk
                 Items.Add(_item);
                 await DataStore.AddItemAsync(_item);
             });
+
+		
         }
 
         async Task ExecuteLoadItemsCommand()
