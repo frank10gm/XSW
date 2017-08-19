@@ -16,6 +16,15 @@ namespace StritWalk
             get { return isBusy; }
             set { SetProperty(ref isBusy, value); }
         }
+
+		bool isPosting = false;
+
+		public bool IsPosting
+		{
+            get { return isPosting; }
+            set { SetProperty(ref isPosting, value); }
+		}
+
         /// <summary>
         /// Private backing field to hold the title
         /// </summary>

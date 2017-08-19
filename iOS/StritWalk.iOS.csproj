@@ -253,6 +253,8 @@
     <Compile Include="CustomMaps\Cluster\FBClusteringManager.cs" />
     <Compile Include="CustomMaps\Cluster\FBAnnotationCluster.cs" />
     <Compile Include="CustomMaps\BasicMapAnnotation.cs" />
+    <Compile Include="CustomListView\CustomListViewRenderer.cs" />
+    <Compile Include="CustomListView\CustomViewCellRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Entitlements.plist" />
@@ -265,6 +267,7 @@
   <ItemGroup>
     <Folder Include="CustomMaps\" />
     <Folder Include="CustomMaps\Cluster\" />
+    <Folder Include="CustomListView\" />
   </ItemGroup>
   <Import Project="..\StritWalk\StritWalk.projitems" Label="Shared" Condition="Exists('..\StritWalk\StritWalk.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

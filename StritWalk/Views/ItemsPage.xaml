@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="StritWalk.ItemsPage" Title="{Binding Title}" x:Name="BrowseItemsPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="StritWalk.ItemsPage" Title="{Binding Title}" x:Name="BrowseItemsPage" xmlns:local="clr-namespace:StritWalk;" >
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Clicked="AddItem_Clicked" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <AbsoluteLayout>
             <ListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" SeparatorColor="White" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="ItemsListView" ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" HasUnevenRows="true" RefreshCommand="{Binding LoadItemsCommand}" IsPullToRefreshEnabled="true"
-                IsRefreshing="{Binding IsBusy, Mode=OneWay}" CachingStrategy="RecycleElement" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom">
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}" CachingStrategy="RecycleElement" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom" >
                 <ListView.Header>
                     <Grid Padding="0,20,0,15" RowSpacing="20" ColumnSpacing="0">
                         <Grid.RowDefinitions>
@@ -22,13 +22,6 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="30" />
                         </Grid.ColumnDefinitions>
-                        <!--<Image Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />-->
-                        <!--<AbsoluteLayout Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3">
-                            <Image AbsoluteLayout.LayoutFlags="All" HorizontalOptions="Fill" AbsoluteLayout.LayoutBounds="0,0,.3,1" Source="Cluster.png">
-                            </Image>
-                            <Label Text="gino" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,0,.7,1" >
-                            </Label>
-                        </AbsoluteLayout>-->
                         <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -40,19 +33,41 @@
                             <Image Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Start" Source="profile_generic.png" HeightRequest="40" />
                             <Label FormattedText="{Binding Gino}" Grid.Row="0" Grid.Column="1" />
                         </Grid>
-
                         <Label FormattedText="{Binding PostsN}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" />
                         <Label FormattedText="{Binding FriendsN}" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" />
                         <Label FormattedText="{Binding LikesN}" Grid.Row="1" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" />
-
-                        <Editor Keyboard="Default" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Text="Do you want to post something?" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="PostEditor" HeightRequest="70" Focused="OnFocused" TextColor="#333333" />
-
-                        <!--<Image Grid.Row="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />
-                        <Image Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />
-                        <Image Grid.Row="2" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />
-                        <Image Grid.Row="2" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />
-                        <Image Grid.Row="2" Grid.Column="4" HorizontalOptions="Center" VerticalOptions="Center" Source="Cluster.png" />-->
-                        <!--<BoxView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" BackgroundColor="#FFFFFF" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />-->
+                        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="20" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="cluster.png" Grid.Row="0" Grid.Column="0" WidthRequest="25">
+                                </Image>
+                                <Editor Keyboard="Default" Grid.Row="0" Grid.Column="1" Text="Do you want to post something?" BackgroundColor="#f7f7f7" x:Name="PostEditor" HeightRequest="40" Focused="OnFocused" TextColor="#888888"
+                                    FontSize="13" Completed="OnPosting" />
+                            </Grid>
+                            <Button Grid.Row="1" Grid.Column="1" Text="Video" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsPosting}">
+                            </Button>
+                            <Button Grid.Row="1" Grid.Column="2" Text="Audio" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsPosting}">
+                            </Button>
+                            <Button Grid.Row="1" Grid.Column="3" Text="Post" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsPosting}">
+                            </Button>
+                        </Grid>
                         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" BackgroundColor="#FFFFFF">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
@@ -69,25 +84,27 @@
                             <Button Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center">
                             </Button>
                         </Grid>
-                        <!--<Label Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Text="Usernameeeeeeeeeeeeeeeeeeeeeeeeeeeeee" />
-                        <Label Grid.Row="1" Grid.Column="2" Text="Username \r descrizione" Grid.ColumnSpan="5" HorizontalOptions="Start" VerticalOptions="Center" />
-                        <Label Grid.Row="2" Grid.Column="1" Text="Username \r descrizione" Grid.ColumnSpan="5" HorizontalOptions="Start" VerticalOptions="Center" />
-                        <BoxView Grid.Row="3" BackgroundColor="#FFFFFF" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>-->
                     </Grid>
                 </ListView.Header>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <AbsoluteLayout Padding="10" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                                <Label FormattedText="{Binding Post}" />
-                                <Grid Padding="50">
-                                </Grid>
-                            </AbsoluteLayout>
+                            <Grid Padding="10" BackgroundColor="#efefef">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" FormattedText="{Binding Post}" Margin="0,0,0,50" />
+                            </Grid>
+                            <!--<AbsoluteLayout Padding="10" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">-->
+                            <!--</AbsoluteLayout>-->
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.Footer>
-                    <StackLayout Padding="0,20,0,30">
+                    <StackLayout Padding="0,10,0,30">
                         <Label Text="The End" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Gray">
                         </Label>
                     </StackLayout>
