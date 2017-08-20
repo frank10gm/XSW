@@ -33,6 +33,11 @@ namespace StritWalk
             ItemsListView.SelectedItem = null;
         }
 
+        private void OnCellTapped(object sender, EventArgs args)
+        {
+            Console.WriteLine("prova");
+        }
+
         private void OnFocused(object sender, FocusEventArgs args)
         {
             PostEditor.Text = "";

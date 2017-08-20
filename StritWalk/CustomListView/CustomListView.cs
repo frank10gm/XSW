@@ -7,23 +7,25 @@ namespace StritWalk
     public class CustomListView : ListView
     {
 
-        //public static readonly BindableProperty ItemsProperty =
-        //    BindableProperty.Create("Items", typeof(IEnumerable<DataSource>), typeof(NativeListView), new List<DataSource>());
+		public static readonly BindableProperty ItemsProperty =
+            BindableProperty.Create("Items", typeof(IList<Item>), typeof(CustomListView), new List<Item>());
 
-        //public IEnumerable<DataSource> Items
-        //{
-        //    get { return (IEnumerable<DataSource>)GetValue(ItemsProperty); }
-        //    set { SetValue(ItemsProperty, value); }
-        //}
+        public IList<Item> Items
+		{
+            get { return (IList<Item>)GetValue(ItemsProperty); }
+			set { SetValue(ItemsProperty, value); }
+		}
 
-        //public event EventHandler<SelectedItemChangedEventArgs> ItemSelected;
+        ListViewCachingStrategy CachingStrategy { get; }
 
-        //public void NotifyItemSelected(object item)
-        //{
-        //    if (ItemSelected != null)
-        //    {
-        //        ItemSelected(this, new SelectedItemChangedEventArgs(item));
-        //    }
-        //}
+		public event EventHandler<SelectedItemChangedEventArgs> ItemSelected;
+
+		public void NotifyItemSelected(object item)
+		{
+			if (ItemSelected != null)
+			{
+				ItemSelected(this, new SelectedItemChangedEventArgs(item));
+			}
+		}
     }
 }

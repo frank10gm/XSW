@@ -255,6 +255,8 @@
     <Compile Include="CustomMaps\BasicMapAnnotation.cs" />
     <Compile Include="CustomListView\CustomListViewRenderer.cs" />
     <Compile Include="CustomListView\CustomViewCellRenderer.cs" />
+    <Compile Include="CustomListView\CustomListViewSource.cs" />
+    <Compile Include="CustomListView\CustomListViewCell.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Entitlements.plist" />

@@ -26,7 +26,7 @@ namespace StritWalk
         /// </summary> 
         /// <param name="collection">collection: The collection from which the elements are copied.</param> 
         /// <exception cref="System.ArgumentNullException">The collection parameter cannot be null.</exception> 
-        public ObservableRangeCollection(IEnumerable<T> collection)
+        public ObservableRangeCollection(IList<T> collection)
             : base(collection)
         {
         }
@@ -34,7 +34,7 @@ namespace StritWalk
         /// <summary> 
         /// Adds the elements of the specified collection to the end of the ObservableCollection(Of T). 
         /// </summary> 
-        public void AddRange(IEnumerable<T> collection, NotifyCollectionChangedAction notificationMode = NotifyCollectionChangedAction.Add)
+        public void AddRange(IList<T> collection, NotifyCollectionChangedAction notificationMode = NotifyCollectionChangedAction.Add)
         {
             if (collection == null)
                 throw new ArgumentNullException("collection");
@@ -70,7 +70,7 @@ namespace StritWalk
         /// <summary> 
         /// Removes the first occurence of each item in the specified collection from ObservableCollection(Of T). 
         /// </summary> 
-        public void RemoveRange(IEnumerable<T> collection)
+        public void RemoveRange(IList<T> collection)
         {
             if (collection == null)
                 throw new ArgumentNullException("collection");
@@ -91,7 +91,7 @@ namespace StritWalk
         /// <summary> 
         /// Clears the current collection and replaces it with the specified collection. 
         /// </summary> 
-        public void ReplaceRange(IEnumerable<T> collection)
+        public void ReplaceRange(IList<T> collection)
         {
             if (collection == null)
                 throw new ArgumentNullException("collection");

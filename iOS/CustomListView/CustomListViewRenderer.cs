@@ -3,16 +3,42 @@ using StritWalk;
 using StritWalk.iOS;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
+using UIKit;
+
+using System.Collections;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
+using Foundation;
+
+using Xamarin.Forms.Internals;
+using RectangleF = CoreGraphics.CGRect;
+using SizeF = CoreGraphics.CGSize;
 
 [assembly: ExportRenderer(typeof(CustomListView), typeof(CustomListViewRenderer))]
 namespace StritWalk.iOS
 {
-    public class CustomListViewRenderer : ListViewRenderer
+    public class CustomListViewRenderer : ListViewRenderer 
     {
 
-        protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.ListView> e)
+        ListViewCachingStrategy CachingStrategy { get; }
+
+        protected override void OnElementChanged(ElementChangedEventArgs<ListView> e)
         {
             base.OnElementChanged(e);
+
+            if (Control == null) return;
+
+            // ListView Separator for whole view width
+            Control.SeparatorInset = UIEdgeInsets.Zero;
+            Control.LayoutMargins = UIEdgeInsets.Zero;
+            Control.CellLayoutMarginsFollowReadableWidth = false;
+
+            // ListView Separator - remove it, from empty cells
+            Control.TableFooterView = new UIView();
 
             if (e.OldElement != null)
             {
@@ -21,7 +47,7 @@ namespace StritWalk.iOS
 
             if (e.NewElement != null)
             {
-                //Control.Source = new NativeiOSListViewSource(e.NewElement as NativeListView);
+                //Control.Source = new CustomListViewSource(e.NewElement as CustomListView);
             }
         }
 
@@ -29,11 +55,13 @@ namespace StritWalk.iOS
         {
             base.OnElementPropertyChanged(sender, e);
 
-            //if (e.PropertyName == NativeListView.ItemsProperty.PropertyName)
+            //if (e.PropertyName == CustomListView.ItemsProperty.PropertyName)
             //{
-            //    Control.Source = new NativeiOSListViewSource(Element as NativeListView);
+            //    Control.Source = new CustomListViewSource(Element as CustomListView);
             //}
         }
+
+	
 
  
     }
