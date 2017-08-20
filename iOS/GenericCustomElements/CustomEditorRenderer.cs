@@ -13,6 +13,7 @@ namespace StritWalk.iOS
     public class CustomEditorRenderer : EditorRenderer
     {
 		private UILabel _placeholderLabel;
+        CustomEditor element;
 
 		protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
 		{
@@ -21,12 +22,15 @@ namespace StritWalk.iOS
 			if (Element == null)
 				return;
 
+            element = (CustomEditor)Element;
+
             //CreatePlaceholderLabel((CustomEditor)Element, Control);
 
-            //Control.Ended += OnEnded;
-            //Control.Changed += OnChanged;
-            Control.Text = "gino";
-
+            Control.Ended += OnEnded;
+            Control.Changed += OnChanged;
+            Control.Started += OnFocused;
+            Control.Text = element.Placeholder;
+            Control.TextColor = UIColor.Gray;
 
 		}
 
@@ -58,6 +62,10 @@ namespace StritWalk.iOS
 		{
 			if (!((UITextView)sender).HasText && _placeholderLabel != null)
 				_placeholderLabel.Hidden = false;
+            if(string.IsNullOrEmpty(Control.Text) || string.IsNullOrWhiteSpace(Control.Text))
+            {
+                Control.Text = element.Placeholder;
+            }
 		}
 
 		private void OnChanged(object sender, EventArgs args)
@@ -66,12 +74,22 @@ namespace StritWalk.iOS
 				_placeholderLabel.Hidden = ((UITextView)sender).HasText;
 		}
 
+		private void OnFocused(object sender, EventArgs args)
+		{
+            if(Control.Text == element.Placeholder)
+            {
+                Control.Text = "";
+            }
+            Control.TextColor = UIColor.Black;
+		}
+
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
 			{
 				Control.Ended -= OnEnded;
 				Control.Changed -= OnChanged;
+                Control.Started -= OnFocused;
 
 				_placeholderLabel?.Dispose();
 				_placeholderLabel = null;

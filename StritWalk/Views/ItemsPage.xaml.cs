@@ -56,8 +56,8 @@ namespace StritWalk
             if (String.IsNullOrEmpty(PostEditor.Text) || String.IsNullOrWhiteSpace(PostEditor.Text))
             {
                 viewModel.IsPosting = false;
-                PostEditor.TextColor = Color.FromHex("#888888");
-                PostEditor.Text = "Do you want to post something?";
+                //PostEditor.TextColor = Color.FromHex("#888888");
+                //PostEditor.Text = "Do you want to post something?";
             }
         }
 
@@ -66,17 +66,19 @@ namespace StritWalk
 			if (String.IsNullOrEmpty(PostEditor.Text) || String.IsNullOrWhiteSpace(PostEditor.Text))
 			{
 				viewModel.IsPosting = false;
-				PostEditor.Text = "Do you want to post something?";
-				PostEditor.TextColor = Color.FromHex("#888888");
+				//PostEditor.Text = "Do you want to post something?";
+				//PostEditor.TextColor = Color.FromHex("#888888");
 			}
             else
             {
                 viewModel.IsPosting = false;
-                PostEditor.TextColor = Color.FromHex("#888888");
-                ThreadStart myThreadDelegate = new ThreadStart(TypeWriter);
-				Thread myThread = new Thread(myThreadDelegate);
+                //PostEditor.TextColor = Color.FromHex("#888888");
+				//ThreadStart myThreadDelegate = new ThreadStart(TypeWriter);
+				//Thread myThread = new Thread(myThreadDelegate);
 				//myThread.Start();
-                //postare qui
+				//postare qui
+				string text = "Posted. Do you want to post something else?";
+                PostEditor.Placeholder = text;
             }
         }
 
