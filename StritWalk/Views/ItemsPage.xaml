@@ -6,8 +6,8 @@
     <ContentPage.Content>
         <AbsoluteLayout>
             <!--CachingStrategy="RecycleElement"-->
-            <local:CustomListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" SeparatorColor="White" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="ItemsListView" ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" HasUnevenRows="true" RefreshCommand="{Binding LoadItemsCommand}" IsPullToRefreshEnabled="true"
-                IsRefreshing="{Binding IsBusy, Mode=OneWay}" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom">
+            <ListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" SeparatorColor="White" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="ItemsListView" ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" HasUnevenRows="true" RefreshCommand="{Binding LoadItemsCommand}" IsPullToRefreshEnabled="true"
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}" CachingStrategy="RecycleElement" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom">
                 <ListView.Header>
                     <Grid Padding="0,20,0,15" RowSpacing="20" ColumnSpacing="0">
                         <Grid.RowDefinitions>
@@ -59,15 +59,18 @@
                                 </Grid.ColumnDefinitions>
                                 <Image Source="cluster.png" Grid.Row="0" Grid.Column="0" WidthRequest="25">
                                 </Image>
-                                <Editor Keyboard="Default" Grid.Row="0" Grid.Column="1" Text="Do you want to post something?" BackgroundColor="#f7f7f7" x:Name="PostEditor" HeightRequest="40" Focused="OnFocused" TextColor="#888888" FontSize="13"
-                                    Completed="OnPosting" />
+                                <local:CustomEditor Placeholder="Do you wand to post something?" Keyboard="Default" Grid.Row="0" Grid.Column="1"  BackgroundColor="#f7f7f7" x:Name="PostEditor" HeightRequest="50" Focused="OnFocused" TextColor="#000000" FontSize="13"
+                                    Completed="OnCheckTest"  />
                             </Grid>
-                            <Button Grid.Row="1" Grid.Column="1" Text="Video" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsPosting}">
-                            </Button>
-                            <Button Grid.Row="1" Grid.Column="2" Text="Audio" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsPosting}">
-                            </Button>
-                            <Button Grid.Row="1" Grid.Column="3" Text="Post" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsPosting}">
-                            </Button>
+                            <Label Margin="5" FontSize="14.0" Grid.Row="1" Grid.Column="1" Text="Video" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsPosting}">
+                            </Label>
+                            <Label Margin="5" FontSize="14.0" Grid.Row="1" Grid.Column="2" Text="Audio" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsPosting}">
+                            </Label>
+                            <Label Margin="5" FontSize="14.0" Grid.Row="1" Grid.Column="3" Text="Post" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsPosting}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnPosting" />
+                                </Label.GestureRecognizers>
+                            </Label>
                         </Grid>
                         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" BackgroundColor="#FFFFFF">
                             <Grid.RowDefinitions>
@@ -78,22 +81,22 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Row="0" Grid.Column="0" Text="My" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center">
-                            </Button>
-                            <Button Grid.Row="0" Grid.Column="1" Text="Friends" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center">
-                            </Button>
-                            <Button Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center">
-                            </Button>
+                            <Label Margin="5" FontSize="14.0" Grid.Row="0" Grid.Column="0" Text="My" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center">
+                            </Label>
+                            <Label Margin="5" FontSize="14.0" Grid.Row="0" Grid.Column="1" Text="Friends" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center">
+                            </Label>
+                            <Label Margin="5" FontSize="14.0" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center">
+                            </Label>
                         </Grid>
                     </Grid>
                 </ListView.Header>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <local:CustomViewCell>
+                        <ViewCell>
                             <Grid Padding="10" BackgroundColor="#efefef">
-                               <!-- <Grid.GestureRecognizers>
+                                <Grid.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnCellTapped" />
-                                </Grid.GestureRecognizers>-->
+                                </Grid.GestureRecognizers>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
@@ -103,9 +106,7 @@
                                 <Label Grid.Row="0" Grid.Column="0" FormattedText="{Binding Post}" Margin="0,0,0,50">
                                 </Label>
                             </Grid>
-                            <!--<AbsoluteLayout Padding="10" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">-->
-                            <!--</AbsoluteLayout>-->
-                        </local:CustomViewCell>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.Footer>
@@ -114,7 +115,7 @@
                         </Label>
                     </StackLayout>
                 </ListView.Footer>
-            </local:CustomListView>
+            </ListView>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

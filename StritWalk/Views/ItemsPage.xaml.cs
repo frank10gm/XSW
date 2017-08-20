@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -35,28 +36,59 @@ namespace StritWalk
 
         private void OnCellTapped(object sender, EventArgs args)
         {
-            Console.WriteLine("prova");
+            
         }
 
         private void OnFocused(object sender, FocusEventArgs args)
         {
-            PostEditor.Text = "";
-            PostEditor.TextColor = Color.FromHex("#000000");
+            
+            //PostEditor.Text = "";
+            //PostEditor.TextColor = Color.FromHex("#000000");
             viewModel.IsPosting = true;
+
             //PostEditor.HeightRequest = 40;
             //ItemsListView.ScrollTo(viewModel.Items[0],ScrollToPosition.Start,true);
 
         }
 
-        private async void OnPosting(object sender, EventArgs args)
+        private async void OnCheckTest(object sender, EventArgs args)
         {
             if (String.IsNullOrEmpty(PostEditor.Text) || String.IsNullOrWhiteSpace(PostEditor.Text))
             {
                 viewModel.IsPosting = false;
-                PostEditor.Text = "Do you want to post something?";
                 PostEditor.TextColor = Color.FromHex("#888888");
+                PostEditor.Text = "Do you want to post something?";
             }
+        }
 
+        private void OnPosting(object sender, EventArgs args)
+        {
+			if (String.IsNullOrEmpty(PostEditor.Text) || String.IsNullOrWhiteSpace(PostEditor.Text))
+			{
+				viewModel.IsPosting = false;
+				PostEditor.Text = "Do you want to post something?";
+				PostEditor.TextColor = Color.FromHex("#888888");
+			}
+            else
+            {
+                viewModel.IsPosting = false;
+                PostEditor.TextColor = Color.FromHex("#888888");
+                ThreadStart myThreadDelegate = new ThreadStart(TypeWriter);
+				Thread myThread = new Thread(myThreadDelegate);
+				//myThread.Start();
+                //postare qui
+            }
+        }
+
+        public void TypeWriter()
+        {
+			string text = "Posted. Do you want to post something else?";
+			PostEditor.Text = "";
+			for (int i = 0; i < text.Length; i++)
+			{
+				PostEditor.Text += text[i];
+				Thread.Sleep(50);
+			}
         }
 
         private void OnItemTapped(object sender, ItemTappedEventArgs args)

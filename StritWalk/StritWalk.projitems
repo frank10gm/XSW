@@ -46,6 +46,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)CustomMaps\ILocationTracker.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CustomListView\CustomListView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CustomListView\CustomViewCell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GenericCustomElements\CustomEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
@@ -58,5 +59,6 @@
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)CustomMaps\" />
     <Folder Include="$(MSBuildThisFileDirectory)CustomListView\" />
+    <Folder Include="$(MSBuildThisFileDirectory)GenericCustomElements\" />
   </ItemGroup>
 </Project>

@@ -213,6 +213,7 @@
     <Compile Include="CustomListView\CustomListViewRenderer.cs" />
     <Compile Include="CustomListView\CustomViewCellRenderer.cs" />
     <Compile Include="CustomListView\CustomListViewSource.cs" />
+    <Compile Include="GenericCustomElements\CustomEditorRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon.png" />
@@ -233,6 +234,7 @@
   <ItemGroup />
   <ItemGroup>
     <Folder Include="CustomListView\" />
+    <Folder Include="GenericCustomElements\" />
   </ItemGroup>
   <Import Project="..\StritWalk\StritWalk.projitems" Label="Shared" Condition="Exists('..\StritWalk\StritWalk.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
