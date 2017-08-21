@@ -32,7 +32,7 @@
                                 <ColumnDefinition Width="8*" />
                             </Grid.ColumnDefinitions>
                             <Image Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Start" Source="profile_generic.png" HeightRequest="40" />
-                            <Label FormattedText="{Binding Gino}" Grid.Row="0" Grid.Column="1" />
+                            <Label FormattedText="{Binding Gino}" Grid.Row="0" Grid.Column="1" />                           
                         </Grid>
                         <Label FormattedText="{Binding PostsN}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" />
                         <Label FormattedText="{Binding FriendsN}" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" />
