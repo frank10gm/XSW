@@ -4,13 +4,9 @@ namespace StritWalk
 {
     public class BaseViewModel : ObservableObject
     {
-        /// <summary>
-        /// Get the azure service instance
-        /// </summary>
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
 
         bool isBusy = false;
-
         public bool IsBusy
         {
             get { return isBusy; }
@@ -18,20 +14,13 @@ namespace StritWalk
         }
 
 		bool isPosting = false;
-
 		public bool IsPosting
 		{
             get { return isPosting; }
             set { SetProperty(ref isPosting, value); }
 		}
 
-        /// <summary>
-        /// Private backing field to hold the title
-        /// </summary>
         string title = string.Empty;
-        /// <summary>
-        /// Public property to set and get the title of the item
-        /// </summary>
         public string Title
         {
             get { return title; }
@@ -46,7 +35,7 @@ namespace StritWalk
 				{
 					Spans =
 					{
-						new Span { Text = "Gino" + "\n", FontAttributes=FontAttributes.Bold, FontSize=16.0F, ForegroundColor=Color.FromHex("#000000")},
+                        new Span { Text = Settings.UserId + "\n", FontAttributes=FontAttributes.Bold, FontSize=16.0F, ForegroundColor=Color.FromHex("#000000")},
 						new Span { Text = "Gino è un super robottino." + "", FontSize=10.0F, ForegroundColor=Color.FromHex("#333333") }
 					}
 				};

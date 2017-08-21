@@ -32,30 +32,30 @@ namespace StritWalk
 		static readonly string lngDefault = "44.0";
 		#endregion
 
-		//public static string AuthToken
-		//{
-		//    get
-		//    {
-		//        return AppSettings.GetValueOrDefault<string>(AuthTokenKey, AuthTokenDefault);
-		//    }
-		//    set
-		//    {
-		//        AppSettings.AddOrUpdateValue<string>(AuthTokenKey, value);
-		//    }
-		//}
+		public static string AuthToken
+		{
+		    get
+		    {
+		        return AppSettings.GetValueOrDefault(AuthTokenKey, AuthTokenDefault);
+		    }
+		    set
+		    {
+		        AppSettings.AddOrUpdateValue(AuthTokenKey, value);
+		    }
+		}
 
-		//public static bool IsLoggedIn => !string.IsNullOrWhiteSpace(UserId);
-		//public static string UserId
-		//{
-		//    get
-		//    {
-		//        return AppSettings.GetValueOrDefault<string>(UserIdKey, UserIdDefault);
-		//    }
-		//    set
-		//    {
-		//        AppSettings.AddOrUpdateValue<string>(UserIdKey, value);
-		//    }
-		//}
+		public static bool IsLoggedIn => !string.IsNullOrWhiteSpace(UserId);
+		public static string UserId
+		{
+		    get
+		    {
+		        return AppSettings.GetValueOrDefault(UserIdKey, UserIdDefault);
+		    }
+		    set
+		    {
+		        AppSettings.AddOrUpdateValue(UserIdKey, value);
+		    }
+		}
 
 		public static string lat
 		{

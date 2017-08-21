@@ -20,7 +20,7 @@ namespace StritWalk
 
         }
 
-        async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
+        private void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
             //var item = args.SelectedItem as Item;
             //if (item == null)
@@ -46,12 +46,25 @@ namespace StritWalk
             //PostEditor.TextColor = Color.FromHex("#000000");
             viewModel.IsPosting = true;
 
+			string text = "Posted. Do you want to post something else?";
+            string original_text = "Do you wand to post something?";
+            if(PostEditor.Placeholder == text)
+            {
+				if (Device.iOS == Device.RuntimePlatform)
+				{
+                    PostEditor.Text = original_text;
+					PostEditor.TextColor = Color.FromHex("#888888");
+				}
+                PostEditor.Placeholder = original_text;
+            }
+	
+
             //PostEditor.HeightRequest = 40;
             //ItemsListView.ScrollTo(viewModel.Items[0],ScrollToPosition.Start,true);
 
         }
 
-        private async void OnCheckTest(object sender, EventArgs args)
+        private void OnCheckTest(object sender, EventArgs args)
         {
             if (String.IsNullOrEmpty(PostEditor.Text) || String.IsNullOrWhiteSpace(PostEditor.Text))
             {
@@ -63,6 +76,7 @@ namespace StritWalk
 
         private void OnPosting(object sender, EventArgs args)
         {
+            PostEditor.Unfocus();
 			if (String.IsNullOrEmpty(PostEditor.Text) || String.IsNullOrWhiteSpace(PostEditor.Text))
 			{
 				viewModel.IsPosting = false;
@@ -79,6 +93,11 @@ namespace StritWalk
 				//postare qui
 				string text = "Posted. Do you want to post something else?";
                 PostEditor.Placeholder = text;
+                if (Device.iOS == Device.RuntimePlatform)
+                {
+                    PostEditor.Text = text;
+                    PostEditor.TextColor = Color.FromHex("#888888");
+                }
             }
         }
 

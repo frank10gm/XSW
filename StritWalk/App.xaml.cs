@@ -26,19 +26,19 @@ namespace StritWalk
 
         public static void SetMainPage()
         {
-            //if (!UseMockDataStore && !Settings.IsLoggedIn)
-            //{
-            //    Current.MainPage = new NavigationPage(new LoginPage())
-            //    {
-            //        BarBackgroundColor = (Color)Current.Resources["Primary"],
-            //        BarTextColor = Color.White
-            //    };s
-            //}
-            //else
-            //{
-            //    GoToMainPage();
-            //}
-            GoToMainPage();
+            if (!Settings.IsLoggedIn)
+            {
+                Current.MainPage = new NavigationPage(new LoginPage())
+                {
+                    BarBackgroundColor = (Color)Current.Resources["Primary"],
+                    BarTextColor = Color.White
+                };
+            }
+            else
+            {
+                GoToMainPage();
+            }
+            //GoToMainPage();
         }
 
         public static void GoToMainPage()
