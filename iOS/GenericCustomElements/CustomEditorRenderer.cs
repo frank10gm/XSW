@@ -60,18 +60,20 @@ namespace StritWalk.iOS
 
 		private void OnEnded(object sender, EventArgs args)
 		{
-			if (!((UITextView)sender).HasText && _placeholderLabel != null)
-				_placeholderLabel.Hidden = false;
+			//if (!((UITextView)sender).HasText && _placeholderLabel != null)
+				//_placeholderLabel.Hidden = false;
+
             if(string.IsNullOrEmpty(Control.Text) || string.IsNullOrWhiteSpace(Control.Text))
             {
                 Control.Text = element.Placeholder;
+                Control.TextColor = UIColor.Gray;
             }
 		}
 
 		private void OnChanged(object sender, EventArgs args)
 		{
-			if (_placeholderLabel != null)
-				_placeholderLabel.Hidden = ((UITextView)sender).HasText;
+			//if (_placeholderLabel != null)
+				//_placeholderLabel.Hidden = ((UITextView)sender).HasText;
 		}
 
 		private void OnFocused(object sender, EventArgs args)
@@ -91,8 +93,8 @@ namespace StritWalk.iOS
 				Control.Changed -= OnChanged;
                 Control.Started -= OnFocused;
 
-				_placeholderLabel?.Dispose();
-				_placeholderLabel = null;
+				//_placeholderLabel?.Dispose();
+				//_placeholderLabel = null;
 			}
 
 			base.Dispose(disposing);
