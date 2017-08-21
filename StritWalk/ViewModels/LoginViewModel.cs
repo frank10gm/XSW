@@ -68,5 +68,6 @@ namespace StritWalk
             Settings.UserId = "Frankie";
             return false;
         }
+
     }
 }

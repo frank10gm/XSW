@@ -214,6 +214,7 @@
     <Compile Include="CustomListView\CustomViewCellRenderer.cs" />
     <Compile Include="CustomListView\CustomListViewSource.cs" />
     <Compile Include="GenericCustomElements\CustomEditorRenderer.cs" />
+    <Compile Include="GenericCustomElements\CustomEntryRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon.png" />

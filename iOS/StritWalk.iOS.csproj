@@ -261,6 +261,7 @@
     <Compile Include="CustomListView\CustomListViewSource.cs" />
     <Compile Include="CustomListView\CustomListViewCell.cs" />
     <Compile Include="GenericCustomElements\CustomEditorRenderer.cs" />
+    <Compile Include="GenericCustomElements\CustomEntryRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Entitlements.plist" />

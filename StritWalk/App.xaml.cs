@@ -41,6 +41,17 @@ namespace StritWalk
             //GoToMainPage();
         }
 
+        public static void LogOut()
+        {
+			Settings.UserId = "";
+			Settings.AuthToken = "";
+			Current.MainPage = new NavigationPage(new LoginPage())
+			{
+				BarBackgroundColor = (Color)Current.Resources["Primary"],
+				BarTextColor = Color.White
+			};
+        }
+
         public static void GoToMainPage()
         {
 

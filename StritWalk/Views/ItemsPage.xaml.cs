@@ -87,10 +87,13 @@ namespace StritWalk
             {
                 viewModel.IsPosting = false;
                 //PostEditor.TextColor = Color.FromHex("#888888");
-				//ThreadStart myThreadDelegate = new ThreadStart(TypeWriter);
-				//Thread myThread = new Thread(myThreadDelegate);
-				//myThread.Start();
-				//postare qui
+                //ThreadStart myThreadDelegate = new ThreadStart(TypeWriter);
+                //Thread myThread = new Thread(myThreadDelegate);
+                //myThread.Start();
+                //postare qui
+
+                App.LogOut();
+
 				string text = "Posted. Do you want to post something else?";
                 PostEditor.Placeholder = text;
                 if (Device.iOS == Device.RuntimePlatform)

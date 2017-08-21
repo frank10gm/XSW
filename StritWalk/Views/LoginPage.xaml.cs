@@ -11,5 +11,10 @@ namespace StritWalk
         {
             InitializeComponent();
         }
+
+		private void GoNext(object sender, EventArgs args)
+		{
+            PasswordField.Focus();
+		}
     }
 }
