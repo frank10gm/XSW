@@ -5,6 +5,7 @@ using StritWalk;
 using StritWalk.Droid;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+using Android.Widget;
 
 [assembly: ExportRenderer(typeof(CustomEntry), typeof(CustomEntryRenderer))]
 
@@ -25,6 +26,14 @@ namespace StritWalk.Droid
 				Control.ImeOptions = entryExt.ReturnKeyType.GetValueFromDescription();
 				// This is hackie ;-) / A Android-only bindable property should be added to the EntryExt class 
 				Control.SetImeActionLabel(entryExt.ReturnKeyType.ToString(), Control.ImeOptions);
+
+				Control.EditorAction += (object sender, TextView.EditorActionEventArgs args) =>
+				{
+                    if (entryExt.ReturnKeyType.ToString() != "Next")
+                        entryExt.Unfocus();
+				
+					entryExt?.InvokeCompleted();
+				};
 			}
 		}
 

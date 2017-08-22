@@ -7,6 +7,8 @@ namespace StritWalk
     {
 		public const string ReturnKeyPropertyName = "ReturnKeyType";
 
+        public new event EventHandler<EventArgs> Completed;
+
         public CustomEntry() { }
 
 		public static readonly BindableProperty ReturnKeyTypeProperty = BindableProperty.Create(
@@ -20,7 +22,13 @@ namespace StritWalk
 			get { return (ReturnKeyTypes)GetValue(ReturnKeyTypeProperty); }
 			set { SetValue(ReturnKeyTypeProperty, value); }
 		}
+
+		public void InvokeCompleted()
+		{
+			this.Completed?.Invoke(this, null);
+		}
     }
+
 
 	// Not all of these are support on Android, consult EntryEditText.ImeOptions
 	public enum ReturnKeyTypes : int

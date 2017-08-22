@@ -22,7 +22,11 @@
             </StackLayout>
             <vm:CustomEntry Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Placeholder="Username" ReturnKeyType="Next" Completed="GoNext" HeightRequest="50" FontSize="20">
             </vm:CustomEntry>
-            <vm:CustomEntry Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Placeholder="Password" IsPassword="true" x:Name="PasswordField" Margin="0,-10,0,0" ReturnKeyType="Go" HeightRequest="50" FontSize="20">
+            <vm:CustomEntry Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Placeholder="Password" IsPassword="true" x:Name="PasswordField" Margin="0,-10,0,0" HeightRequest="50" FontSize="20" Completed="Handle_Completed">
+                <vm:CustomEntry.ReturnKeyType>
+                    <OnPlatform x:TypeArguments="vm:ReturnKeyTypes" Android="Go" iOS="Go">
+                    </OnPlatform>
+                </vm:CustomEntry.ReturnKeyType>
             </vm:CustomEntry>
             <Button Grid.Row="3" Grid.Column="0" Text="Sign Up" Command="{Binding NotNowCommand}" x:Name="ButtonNowNow" HorizontalOptions="FillAndExpand" IsEnabled="{Binding IsNotBusy}" />
             <Button Grid.Row="3" Grid.Column="1" Text="Sign In" Command="{Binding SignInCommand}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding IsNotBusy}" TextColor="White" BackgroundColor="{StaticResource Primary}" />

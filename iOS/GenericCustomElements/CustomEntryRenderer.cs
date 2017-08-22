@@ -20,7 +20,18 @@ namespace StritWalk.iOS
 		{
 			base.OnElementChanged(e);
 			if ((Control != null) && (e.NewElement != null))
+            {
+                var entryExt = (e.NewElement as CustomEntry);
+
                 Control.ReturnKeyType = (e.NewElement as CustomEntry).ReturnKeyType.GetValueFromDescription();
+
+				Control.ShouldReturn += (UITextField tf) =>
+				{
+                    entryExt?.InvokeCompleted();
+					return true;
+				};
+            }
+                
 		}
 
         protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -31,6 +42,7 @@ namespace StritWalk.iOS
 			{
                 //D.WriteLine($"{(sender as CustomEntry).ReturnKeyType.ToString()}");
                 Control.ReturnKeyType = (sender as CustomEntry).ReturnKeyType.GetValueFromDescription();
+
 			}
         }
 
