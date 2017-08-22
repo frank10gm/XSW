@@ -53,7 +53,7 @@ namespace StritWalk
         {
             try
             {
-                IsBusy = true;
+                
             }
             finally
             {

@@ -7,8 +7,8 @@ namespace StritWalk
 {
     public partial class LoginPage : ContentPage
     {
-
         LoginViewModel vm;
+
 
         public LoginPage()
         {
@@ -30,6 +30,11 @@ namespace StritWalk
         void Handle_Completed(object sender, System.EventArgs e)
         {
             vm.SignInCommand.Execute(null);
+        }
+
+        async void Handle_Clicked(object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new RegisterPage(new RegisterPageViewModel()));
         }
     }
 }
