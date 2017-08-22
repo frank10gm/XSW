@@ -76,7 +76,7 @@ namespace StritWalk
 						Title = Device.OnPlatform(null, "News", "News")
                         //Title = "map"
                     },
-					new NavigationPage(new ItemsPage())
+					new NavigationPage(new MenuPage())
 					{
 						Icon = Device.OnPlatform("slideout.png", null, null),
 						Title = Device.OnPlatform(null, "Menu", "Menu")

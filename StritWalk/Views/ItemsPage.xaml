@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="StritWalk.ItemsPage" Title="{Binding Title}" x:Name="BrowseItemsPage" xmlns:local="clr-namespace:StritWalk;">
-    <ContentPage.ToolbarItems>      
+    <ContentPage.ToolbarItems>
         <ToolbarItem Text="New" Clicked="AddItem_Clicked" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
@@ -32,7 +32,7 @@
                                 <ColumnDefinition Width="8*" />
                             </Grid.ColumnDefinitions>
                             <Image Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Start" Source="profile_generic.png" HeightRequest="40" />
-                            <Label FormattedText="{Binding Gino}" Grid.Row="0" Grid.Column="1" />                           
+                            <Label FormattedText="{Binding Gino}" Grid.Row="0" Grid.Column="1" />
                         </Grid>
                         <Label FormattedText="{Binding PostsN}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" />
                         <Label FormattedText="{Binding FriendsN}" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" />
@@ -59,8 +59,8 @@
                                 </Grid.ColumnDefinitions>
                                 <Image Source="cluster.png" Grid.Row="0" Grid.Column="0" WidthRequest="25">
                                 </Image>
-                                <local:CustomEditor Placeholder="Do you wand to post something?" Keyboard="Default" Grid.Row="0" Grid.Column="1"  BackgroundColor="#f7f7f7" x:Name="PostEditor" HeightRequest="50" Focused="OnFocused" TextColor="#000000" FontSize="13"
-                                    Completed="OnCheckTest"  />
+                                <local:CustomEditor Placeholder="Do you wand to post something?" Keyboard="Default" Grid.Row="0" Grid.Column="1" BackgroundColor="#f7f7f7" x:Name="PostEditor" HeightRequest="50" Focused="OnFocused" TextColor="#000000" FontSize="13"
+                                    Completed="OnCheckTest" />
                             </Grid>
                             <Label Margin="5" FontSize="14.0" Grid.Row="1" Grid.Column="1" Text="Video" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsPosting}">
                             </Label>

@@ -92,8 +92,6 @@ namespace StritWalk
                 //myThread.Start();
                 //postare qui
 
-                App.LogOut();
-
 				string text = "Posted. Do you want to post something else?";
                 PostEditor.Placeholder = text;
                 if (Device.iOS == Device.RuntimePlatform)
