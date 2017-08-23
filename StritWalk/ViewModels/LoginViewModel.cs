@@ -9,10 +9,11 @@ namespace StritWalk
 {
     public class LoginViewModel : BaseViewModel
     {
+
         public LoginViewModel()
         {
             SignInCommand = new Command(async () => await SignIn());
-            NotNowCommand = new Command(async () => await SignUp());
+            //NotNowCommand = new Command(async () => await SignUp());
         }
 
         string message = string.Empty;
@@ -41,32 +42,32 @@ namespace StritWalk
             {
                 Message = string.Empty;
                 IsBusy = false;
-                //if(result)
-                //App.GoToMainPage();
+                if (!result)
+                {
+                    string mex = "Wrong username or password...";
+                    for (var i = 0; i < mex.Length; i++)
+                    {
+                        Message += mex[i];
+                        await Task.Delay(100);
+                    }
+                    await Task.Delay(500);
+                    Message = string.Empty;
+                }
+
 
                 if (Settings.IsLoggedIn)
                     App.GoToMainPage();
             }
         }
 
-        async Task SignUp()
-        {
-            try
-            {
-                
-            }
-            finally
-            {
 
-            }
-        }
 
-        public static async Task<bool> TryLoginAsync()
+        public async Task<bool> TryLoginAsync()
         {
-            await Task.Delay(1000);
-            Settings.AuthToken = "123";
-            Settings.UserId = "Frankie";
-            return false;
+            //await Task.Delay(1000);
+            //Settings.AuthToken = "123";
+            //Settings.UserId = "Frankie";
+            return await DataStore.Login(Username, Password);
         }
 
     }

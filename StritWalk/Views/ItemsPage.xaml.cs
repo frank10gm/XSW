@@ -18,6 +18,8 @@ namespace StritWalk
 
             BindingContext = viewModel = new ItemsViewModel();
 
+            viewModel.Navigation = Navigation;
+
         }
 
         private void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -90,15 +92,16 @@ namespace StritWalk
                 //ThreadStart myThreadDelegate = new ThreadStart(TypeWriter);
                 //Thread myThread = new Thread(myThreadDelegate);
                 //myThread.Start();
+
                 //postare qui
 
-				string text = "Posted. Do you want to post something else?";
-                PostEditor.Placeholder = text;
-                if (Device.iOS == Device.RuntimePlatform)
-                {
-                    PostEditor.Text = text;
-                    PostEditor.TextColor = Color.FromHex("#888888");
-                }
+				//string text = "Posted. Do you want to post something else?";
+                //PostEditor.Placeholder = text;
+                //if (Device.iOS == Device.RuntimePlatform)
+                //{
+                //    PostEditor.Text = text;
+                //    PostEditor.TextColor = Color.FromHex("#888888");
+                //}
             }
         }
 

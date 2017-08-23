@@ -8,12 +8,13 @@ namespace StritWalk
     public partial class LoginPage : ContentPage
     {
         LoginViewModel vm;
-
+        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
 
         public LoginPage()
         {
             InitializeComponent();
             vm = BindingContext as LoginViewModel;
+            vm.Navigation = Navigation;
         }
 
 		private void GoNext(object sender, EventArgs args)
@@ -23,8 +24,7 @@ namespace StritWalk
 
         void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
-            Console.WriteLine("prova");
-            Console.WriteLine(e.NewTextValue);
+            
         }
 
         void Handle_Completed(object sender, System.EventArgs e)

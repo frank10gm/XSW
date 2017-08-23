@@ -6,6 +6,26 @@ namespace StritWalk
     {
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
 
+
+        public INavigation Navigation
+        {
+            get; set;
+        }
+
+		string password = string.Empty;
+		public string Password
+		{
+			get { return password; }
+			set { SetProperty(ref password, value); }
+		}
+
+		string username = string.Empty;
+		public string Username
+		{
+			get { return username; }
+			set { SetProperty(ref username, value); }
+		}
+
         bool isBusy = false;
         public bool IsBusy
         {

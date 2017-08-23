@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Threading;
 
 using Xamarin.Forms;
 
@@ -8,9 +10,10 @@ namespace StritWalk
 {
     public class ItemsViewModel : BaseViewModel
     {
+        public int start = 0;
         public ObservableRangeCollection<Item> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
-        public int start = 0;
+        public ICommand PostCommand { get; }
 
         public ItemsViewModel()
         {
@@ -25,8 +28,26 @@ namespace StritWalk
                 await DataStore.AddItemAsync(_item);
             });
 
-		
+            PostCommand = new Command(async () => await PostTask());
         }
+
+		async Task PostTask()
+		{
+			try
+			{
+				// Post method
+				await TryPostAsync();
+			}
+			finally
+			{
+
+			}
+		}
+
+		public async Task<bool> TryPostAsync()
+		{
+			return await DataStore.Login(Username, Password);
+		}
 
         async Task ExecuteLoadItemsCommand()
         {

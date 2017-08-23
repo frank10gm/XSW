@@ -15,7 +15,7 @@
                 <StackLayout Spacing="5" Grid.ColumnSpan="2">
                     <Label HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" LineBreakMode="WordWrap" FontSize="Large" Text="Seahorse" Margin="0,0,0,25" />
                     <Image HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="95" HeightRequest="95" Source="profile_generic.png" Aspect="AspectFill" x:Name="CircleImageAvatar" Margin="0,0,0,20" />
-                    <vm:CustomEntry x:Name="MailField" Placeholder="E-Mail" ReturnKeyType="Next" HeightRequest="50" >
+                    <vm:CustomEntry x:Name="UserMailField" Placeholder="E-Mail" ReturnKeyType="Next" HeightRequest="50" >
                     </vm:CustomEntry>
                     <vm:CustomEntry x:Name="UsernameField" Placeholder="Username" ReturnKeyType="Next" HeightRequest="50" >
                     </vm:CustomEntry>
@@ -26,7 +26,7 @@
                         </vm:CustomEntry.ReturnKeyType>
                     </vm:CustomEntry>
                 </StackLayout>
-                <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="Sign Up" HorizontalOptions="FillAndExpand" Clicked="Handle_Clicked" IsEnabled="{Binding IsNotBusy}" TextColor="White" BackgroundColor="{StaticResource Primary}"/>
+                <Button x:Name="SignUpButton" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="Sign Up" HorizontalOptions="FillAndExpand" IsEnabled="{Binding IsNotBusy}" TextColor="White" BackgroundColor="{StaticResource Primary}"/>
                 <StackLayout Grid.Row="2" Grid.ColumnSpan="2" VerticalOptions="Center" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                     <ActivityIndicator IsRunning="{Binding IsBusy}" HorizontalOptions="EndAndExpand" VerticalOptions="Center">
                         <ActivityIndicator.Color>

@@ -5,6 +5,7 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <AbsoluteLayout>
+            
             <!--CachingStrategy="RecycleElement"-->
             <ListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" SeparatorColor="White" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="ItemsListView" ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" HasUnevenRows="true" RefreshCommand="{Binding LoadItemsCommand}" IsPullToRefreshEnabled="true"
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}" CachingStrategy="RecycleElement" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom">
@@ -49,7 +50,9 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="20" />
                             </Grid.ColumnDefinitions>
-                            <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3">
+                            <local:CustomEditor HorizontalOptions="FillAndExpand" Placeholder="Do you wand to post something?" Keyboard="Default" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" BackgroundColor="#f7f7f7" x:Name="PostEditor" HeightRequest="54" Focused="OnFocused"
+                                TextColor="#000000" FontSize="13" Completed="OnCheckTest" />
+                            <!--<Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
@@ -59,18 +62,28 @@
                                 </Grid.ColumnDefinitions>
                                 <Image Source="cluster.png" Grid.Row="0" Grid.Column="0" WidthRequest="25">
                                 </Image>
-                                <local:CustomEditor Placeholder="Do you wand to post something?" Keyboard="Default" Grid.Row="0" Grid.Column="1" BackgroundColor="#f7f7f7" x:Name="PostEditor" HeightRequest="50" Focused="OnFocused" TextColor="#000000" FontSize="13"
+                                <local:CustomEditor Placeholder="Do you wand to post something?" Keyboard="Default" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#f7f7f7" x:Name="PostEditor" HeightRequest="55" Focused="OnFocused" TextColor="#000000" FontSize="13"
                                     Completed="OnCheckTest" />
+                            </Grid>-->
+                            <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Padding="0,5,0,5" IsVisible="{Binding IsPosting}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label FontSize="14.0" Grid.Row="0" Grid.Column="0" Text="Video" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center">
+                                </Label>
+                                <Label FontSize="14.0" Grid.Row="0" Grid.Column="1" Text="Audio" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center">
+                                </Label>
+                                <Label FontSize="14.0" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnPosting" Command="{Binding PostCommand}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </Grid>
-                            <Label Margin="5" FontSize="14.0" Grid.Row="1" Grid.Column="1" Text="Video" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsPosting}">
-                            </Label>
-                            <Label Margin="5" FontSize="14.0" Grid.Row="1" Grid.Column="2" Text="Audio" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsPosting}">
-                            </Label>
-                            <Label Margin="5" FontSize="14.0" Grid.Row="1" Grid.Column="3" Text="Post" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsPosting}">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnPosting" />
-                                </Label.GestureRecognizers>
-                            </Label>
                         </Grid>
                         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" BackgroundColor="#FFFFFF">
                             <Grid.RowDefinitions>

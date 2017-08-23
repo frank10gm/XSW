@@ -12,5 +12,7 @@ namespace StritWalk
         Task<T> GetItemAsync(string id);
         Task<IList<T>> GetItemsAsync(bool forceRefresh = false, int start = 0);
         Task<IList<T>> GetMapItemsAsync(bool forceRefresh = false, int start = 0);
+
+        Task<bool> Login(string username, string password);
     }
 }
