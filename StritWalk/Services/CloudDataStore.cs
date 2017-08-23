@@ -117,7 +117,6 @@ namespace StritWalk
         public async Task<bool> Login(string username, string password)
 		{
             bool result = false;
-
             if (username != null && CrossConnectivity.Current.IsConnected)
 			{
                 var contentType = "application/json";
@@ -139,8 +138,37 @@ namespace StritWalk
                 //items = await Task.Run(() => JsonConvert.DeserializeObject<IList<Item>>(json));
 			}
             return result;
-
 		}
+
+        public async Task<bool> Post(string id_user, string name, string audio, string lat, string lng, string description)
+        {
+			bool result = false;
+            if (description != null && CrossConnectivity.Current.IsConnected)
+			{
+				var contentType = "application/json";
+                var json = $"{{ action: 'post', id: '{Settings.AuthToken}', name: '', audio: '', lat: '{Settings.lat}', lng: '{Settings.lng}', description: '{description}' }}";
+				JObject o = JObject.Parse(json);
+				json = o.ToString(Formatting.None);
+				var httpContent = new StringContent(json, Encoding.UTF8, contentType);
+				var req = await client.PostAsync($"", httpContent);
+				var resp = await req.Content.ReadAsStringAsync();
+                var ao = JObject.Parse(resp);
+
+                Console.WriteLine(resp);
+                result = true;
+
+				//Console.WriteLine(ao[0]["error"]);
+				//if ((int)ao[0]["data"] != 0)
+				//{
+				//	Settings.AuthToken = (string)ao[0]["user_id"];
+				//	Settings.UserId = (string)ao[0]["user"];
+				//	result = true;
+				//}
+				//serializzare utente
+				//items = await Task.Run(() => JsonConvert.DeserializeObject<IList<Item>>(json));
+			}
+			return result;
+        }
 
         public async Task<bool> AddItemAsync(Item item)
         {

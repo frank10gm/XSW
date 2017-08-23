@@ -14,5 +14,6 @@ namespace StritWalk
         Task<IList<T>> GetMapItemsAsync(bool forceRefresh = false, int start = 0);
 
         Task<bool> Login(string username, string password);
+        Task<bool> Post(string id_user, string name, string audio, string lat, string lng, string description);
     }
 }

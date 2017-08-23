@@ -11,9 +11,18 @@ namespace StritWalk
     public class ItemsViewModel : BaseViewModel
     {
         public int start = 0;
+        bool result = false;
         public ObservableRangeCollection<Item> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
         public ICommand PostCommand { get; }
+        public CustomEditor PostEditor { get; set; }
+
+		string newPostDescription = string.Empty;
+		public string NewPostDescription
+		{
+			get { return newPostDescription; }
+			set { SetProperty(ref newPostDescription, value); }
+		}
 
         public ItemsViewModel()
         {
@@ -36,17 +45,28 @@ namespace StritWalk
 			try
 			{
 				// Post method
-				await TryPostAsync();
+				result = await TryPostAsync();
 			}
 			finally
 			{
+                if(result)
+                {
+                    Items.Insert(0, new Item { Id = "new", Creator = Settings.UserId , Description = newPostDescription });
 
+					string text = "Posted. Do you want to post something else?";
+					PostEditor.Placeholder = text;
+					if (Device.iOS == Device.RuntimePlatform)
+					{
+                        PostEditor.TextColor = Color.FromHex("#888888");
+					    PostEditor.Text = text;					  
+					}
+				}
 			}
 		}
 
 		public async Task<bool> TryPostAsync()
 		{
-			return await DataStore.Login(Username, Password);
+            return await DataStore.Post("","","","","",newPostDescription);
 		}
 
         async Task ExecuteLoadItemsCommand()

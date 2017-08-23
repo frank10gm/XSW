@@ -7,6 +7,12 @@ namespace StritWalk
 {
     public class Item : ObservableObject
     {
+
+        public Item()
+        {
+            
+        }
+
         string id = string.Empty;
 
         //[JsonIgnore]
@@ -120,17 +126,33 @@ namespace StritWalk
 		{
 			get
             {
-                return new FormattedString
+
+                FormattedString result = new FormattedString();
+
+                Span creator = new Span { Text = Creator + "\n", FontAttributes = FontAttributes.Bold, FontSize = 16.0F, ForegroundColor = Color.FromHex("#4885ED") };
+                Span details = new Span { Text = Details + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#333333") };
+                Span brace1 = new Span { Text = "{ ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4885ed") };
+                Span brace2 = new Span { Text = " } ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4885ed") };
+                Span name = new Span { Text = Name, FontAttributes = FontAttributes.Bold, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };
+                Span description = new Span { Text = Description, FontSize = 14.0F };
+
+                if(Id == "new")
                 {
-                    Spans =
-                    {
-                        new Span { Text = Creator + "\n", FontAttributes=FontAttributes.Bold, FontSize=16.0F, ForegroundColor=Color.FromHex("#4885ED")},
-                        new Span { Text = Details + "\n\n", FontSize=10.0F, ForegroundColor=Color.FromHex("#333333") },   
-                        new Span { Text = "{ ", FontSize=14.0F, ForegroundColor=Color.FromHex("#4885ed") },
-                        new Span { Text = Name, FontAttributes=FontAttributes.Bold, FontSize=14.0F, ForegroundColor=Color.FromHex("#000000") },
-                        new Span { Text = " }", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4885ed") }
-                    }
-                };
+                    details = new Span { Text = "here, now" + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#333333") };
+                }    
+
+                result.Spans.Add(creator);
+                result.Spans.Add(details);
+                if (!string.IsNullOrEmpty(Name) || !string.IsNullOrWhiteSpace(Name))
+                {
+					result.Spans.Add(brace1);
+					result.Spans.Add(name);
+					result.Spans.Add(brace2);
+                }
+                result.Spans.Add(description);
+
+                return result;
+
             }
             set { }
 		}

@@ -20,6 +20,8 @@ namespace StritWalk
 
             viewModel.Navigation = Navigation;
 
+            viewModel.PostEditor = PostEditor;
+
         }
 
         private void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
