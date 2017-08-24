@@ -5,10 +5,9 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <AbsoluteLayout>
-            
             <!--CachingStrategy="RecycleElement"-->
-            <ListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" SeparatorColor="White" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="ItemsListView" ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" HasUnevenRows="true" RefreshCommand="{Binding LoadItemsCommand}" IsPullToRefreshEnabled="true"
-                IsRefreshing="{Binding IsBusy, Mode=OneWay}" CachingStrategy="RecycleElement" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom">
+            <ListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" SeparatorColor="White" SeparatorVisibility="None" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="ItemsListView" ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" HasUnevenRows="true" RefreshCommand="{Binding LoadItemsCommand}"
+                IsPullToRefreshEnabled="true" IsRefreshing="{Binding IsBusy, Mode=OneWay}" CachingStrategy="RecycleElement" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom">
                 <ListView.Header>
                     <Grid Padding="0,20,0,15" RowSpacing="20" ColumnSpacing="0">
                         <Grid.RowDefinitions>
@@ -65,24 +64,26 @@
                                 <local:CustomEditor Placeholder="Do you wand to post something?" Keyboard="Default" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#f7f7f7" x:Name="PostEditor" HeightRequest="55" Focused="OnFocused" TextColor="#000000" FontSize="13"
                                     Completed="OnCheckTest" />
                             </Grid>-->
-                            <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Padding="0,5,0,5" IsVisible="{Binding IsPosting}">
+                            <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Padding="0,5,0,0">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Label FontSize="14.0" Grid.Row="0" Grid.Column="0" Text="Video" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center">
-                                </Label>
-                                <Label FontSize="14.0" Grid.Row="0" Grid.Column="1" Text="Audio" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center">
-                                </Label>
-                                <Label FontSize="14.0" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Button FontSize="14.0" Grid.Row="0" Grid.Column="0" Text="Video" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center">
+                                </Button>
+                                <Button FontSize="14.0" Grid.Row="0" Grid.Column="1" Text="Audio" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center">
+                                </Button>
+                                <Button FontSize="14.0" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center" IsEnabled="{Binding IsPosting}" Command="{Binding PostCommand}">
+                                </Button>
+                                <!--<Label FontSize="14.0" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center" IsEnabled="{Binding IsPosting}">
                                     <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnPosting" Command="{Binding PostCommand}" />
+                                        <TapGestureRecognizer Command="{Binding PostCommand}" />
                                     </Label.GestureRecognizers>
-                                </Label>
+                                </Label>-->
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" BackgroundColor="#FFFFFF">
@@ -99,6 +100,9 @@
                             <Label Margin="5" FontSize="14.0" Grid.Row="0" Grid.Column="1" Text="Friends" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center">
                             </Label>
                             <Label Margin="5" FontSize="14.0" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer />
+                                </Label.GestureRecognizers>
                             </Label>
                         </Grid>
                     </Grid>
@@ -106,29 +110,44 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid Padding="10" BackgroundColor="#efefef">
+                            <Grid Padding="0" BackgroundColor="#efefef">
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnCellTapped" />
                                 </Grid.GestureRecognizers>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Row="0" Grid.Column="0" FormattedText="{Binding Post}" Margin="0,0,0,10">
+                                <Label Grid.Row="0" Grid.Column="0" FormattedText="{Binding Post}" Margin="10,10,10,40">
                                 </Label>
+                                <BoxView Grid.Row="1" BackgroundColor="White" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="10">
+                                </BoxView>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.Footer>
-                    <StackLayout Padding="0,10,0,30">
-                        <Label Text="The End" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Gray">
+                    <StackLayout Padding="0,30,0,30">
+                        <Label Text="The End" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Gray" >
                         </Label>
+                        <ActivityIndicator IsRunning="true" IsVisible="{Binding IsNotEnd}" HorizontalOptions="Center" VerticalOptions="Center">
+                            <ActivityIndicator.Color>
+                                <OnPlatform x:TypeArguments="Color" Android="{StaticResource Accent}" />
+                            </ActivityIndicator.Color>
+                        </ActivityIndicator>
                     </StackLayout>
                 </ListView.Footer>
             </ListView>
+            <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsVisible="{Binding IsLoading}" BackgroundColor="Black" Opacity="0.3" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            </StackLayout>
+            <ActivityIndicator AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" HorizontalOptions="Center" VerticalOptions="Center">
+                <ActivityIndicator.Color>
+                    <OnPlatform x:TypeArguments="Color" Android="{StaticResource Accent}" iOS="#ffffff" />
+                </ActivityIndicator.Color>
+            </ActivityIndicator>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

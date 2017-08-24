@@ -69,9 +69,9 @@ namespace StritWalk
 			set => AppSettings.AddOrUpdateValue(nameof(lng), value);
 		}
 
-        public static int listEnd
+        public static bool listEnd
 		{
-            get => AppSettings.GetValueOrDefault(nameof(listEnd), 0);
+            get => AppSettings.GetValueOrDefault(nameof(listEnd), false);
             set => AppSettings.AddOrUpdateValue(nameof(listEnd), value);
 		}
     }

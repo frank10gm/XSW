@@ -12,19 +12,19 @@ namespace StritWalk
             get; set;
         }
 
-		string password = string.Empty;
-		public string Password
-		{
-			get { return password; }
-			set { SetProperty(ref password, value); }
-		}
+        string password = string.Empty;
+        public string Password
+        {
+            get { return password; }
+            set { SetProperty(ref password, value); }
+        }
 
-		string username = string.Empty;
-		public string Username
-		{
-			get { return username; }
-			set { SetProperty(ref username, value); }
-		}
+        string username = string.Empty;
+        public string Username
+        {
+            get { return username; }
+            set { SetProperty(ref username, value); }
+        }
 
         bool isBusy = false;
         public bool IsBusy
@@ -33,12 +33,19 @@ namespace StritWalk
             set { SetProperty(ref isBusy, value); }
         }
 
-		bool isPosting = false;
-		public bool IsPosting
+		bool isLoading = false;
+		public bool IsLoading
 		{
+            get { return isLoading; }
+            set { SetProperty(ref isLoading, value); }
+		}
+
+        bool isPosting = false;
+        public bool IsPosting
+        {
             get { return isPosting; }
             set { SetProperty(ref isPosting, value); }
-		}
+        }
 
         string title = string.Empty;
         public string Title
@@ -51,64 +58,64 @@ namespace StritWalk
         {
             get
             {
-				return new FormattedString
-				{
-					Spans =
-					{
+                return new FormattedString
+                {
+                    Spans =
+                    {
                         new Span { Text = Settings.UserId + "\n", FontAttributes=FontAttributes.Bold, FontSize=16.0F, ForegroundColor=Color.FromHex("#000000")},
-						new Span { Text = "Gino è un super robottino." + "", FontSize=10.0F, ForegroundColor=Color.FromHex("#333333") }
-					}
-				};
+                        new Span { Text = "Gino è un super robottino." + "", FontSize=10.0F, ForegroundColor=Color.FromHex("#333333") }
+                    }
+                };
             }
             set { }
         }
 
-		public FormattedString PostsN
-		{
-			get
-			{
-				return new FormattedString
-				{
-					Spans =
-					{
-						new Span { Text = "Posts" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
-						new Span { Text = "191", FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
-					}
-				};
-			}
-			set { }
-		}
+        public FormattedString PostsN
+        {
+            get
+            {
+                return new FormattedString
+                {
+                    Spans =
+                    {
+                        new Span { Text = "Posts" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
+                        new Span { Text = "191", FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
+                    }
+                };
+            }
+            set { }
+        }
 
-		public FormattedString FriendsN
-		{
-			get
-			{
-				return new FormattedString
-				{
-					Spans =
-					{
-						new Span { Text = "Friends" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
-						new Span { Text = "225", FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
-					}
-				};
-			}
-			set { }
-		}
+        public FormattedString FriendsN
+        {
+            get
+            {
+                return new FormattedString
+                {
+                    Spans =
+                    {
+                        new Span { Text = "Friends" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
+                        new Span { Text = "225", FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
+                    }
+                };
+            }
+            set { }
+        }
 
-		public FormattedString LikesN
-		{
-			get
-			{
-				return new FormattedString
-				{
-					Spans =
-					{
-						new Span { Text = "Likes" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
-						new Span { Text = "441", FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
-					}
-				};
-			}
-			set { }
-		}
+        public FormattedString LikesN
+        {
+            get
+            {
+                return new FormattedString
+                {
+                    Spans =
+                    {
+                        new Span { Text = "Likes" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
+                        new Span { Text = "441", FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
+                    }
+                };
+            }
+            set { }
+        }
     }
 }

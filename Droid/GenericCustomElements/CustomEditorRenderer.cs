@@ -9,17 +9,22 @@ namespace StritWalk.Droid
 {
     public class CustomEditorRenderer : EditorRenderer
     {
-		protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
+        CustomEditor element;
+		protected override void OnElementChanged(ElementChangedEventArgs<Editor> ev)
 		{
-			base.OnElementChanged(e);
+			base.OnElementChanged(ev);
 
 			if (Element == null)
 				return;
 
-            var element = (CustomEditor)Element;
+            element = (CustomEditor)Element;
 
 			Control.Hint = element.Placeholder;
 			Control.SetHintTextColor(element.PlaceholderColor.ToAndroid());
+            Control.TextChanged += (object sender, Android.Text.TextChangedEventArgs e) =>
+            {
+                Control.Hint = element.Placeholder;
+            };
 		}
     }
 }

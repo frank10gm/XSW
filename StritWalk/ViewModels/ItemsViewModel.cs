@@ -17,18 +17,22 @@ namespace StritWalk
         public ICommand PostCommand { get; }
         public CustomEditor PostEditor { get; set; }
 
-		string newPostDescription = string.Empty;
-		public string NewPostDescription
-		{
-			get { return newPostDescription; }
-			set { SetProperty(ref newPostDescription, value); }
-		}
+        string newPostDescription = string.Empty;
+        public string NewPostDescription
+        {
+            get { return newPostDescription; }
+            set { SetProperty(ref newPostDescription, value); }
+        }
+
+        bool isNotEnd = true;
+        public bool IsNotEnd { get { return isNotEnd; } set { SetProperty(ref isNotEnd, value); } }
 
         public ItemsViewModel()
         {
             Title = "Seahorse";
             Items = new ObservableRangeCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            PostCommand = new Command(async () => await PostTask());
 
             MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
             {
@@ -37,37 +41,54 @@ namespace StritWalk
                 await DataStore.AddItemAsync(_item);
             });
 
-            PostCommand = new Command(async () => await PostTask());
+            MessagingCenter.Subscribe<CloudDataStore, bool>(this, "NotEnd", (sender, arg) => {
+                IsNotEnd = arg;			
+			});
         }
 
-		async Task PostTask()
-		{
-			try
-			{
-				// Post method
-				result = await TryPostAsync();
-			}
-			finally
-			{
-                if(result)
+        async Task PostTask()
+        {
+            try
+            {
+                // Post method
+                IsLoading = true;
+                result = await TryPostAsync();
+            }
+            finally
+            {
+                IsLoading = false;
+                if (result)
                 {
-                    Items.Insert(0, new Item { Id = "new", Creator = Settings.UserId , Description = newPostDescription });
+                    Items.Insert(0, new Item { Id = "new", Creator = Settings.UserId, Description = newPostDescription });
 
-					string text = "Posted. Do you want to post something else?";
-					PostEditor.Placeholder = text;
-					if (Device.iOS == Device.RuntimePlatform)
-					{
-                        PostEditor.TextColor = Color.FromHex("#888888");
-					    PostEditor.Text = text;					  
-					}
-				}
-			}
-		}
+                    string text = "Posted. Do you want to post something else?";
+                    PostEditor.Placeholder = text;
+                    if (Device.iOS == Device.RuntimePlatform)
+                    {
+                        PostEditor.Text = text;
+                    }
+                    else
+                    {
+                        PostEditor.Text = "";
+                    }
+                    PostEditor.Unfocus();
+                    IsPosting = false;
+                }
+                else
+                {
+                    string text = "Do you want to post something?";
+                    PostEditor.Placeholder = text;
+                    PostEditor.Unfocus();
+                    IsPosting = false;
+                }
+            }
+        }
 
-		public async Task<bool> TryPostAsync()
-		{
-            return await DataStore.Post("","","","","",newPostDescription);
-		}
+        public async Task<bool> TryPostAsync()
+        {
+            await Task.Delay(2000);
+            return await DataStore.Post("", "", "", "", "", newPostDescription);
+        }
 
         async Task ExecuteLoadItemsCommand()
         {
@@ -79,7 +100,8 @@ namespace StritWalk
             try
             {
                 start = 0;
-                Settings.listEnd = 0;
+                IsNotEnd = true;
+                Settings.listEnd = false;
                 Items.Clear();
                 var items = await DataStore.GetItemsAsync(true);
                 Items.ReplaceRange(items);

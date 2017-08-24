@@ -63,7 +63,7 @@ namespace StritWalk.iOS
 			//if (!((UITextView)sender).HasText && _placeholderLabel != null)
 				//_placeholderLabel.Hidden = false;
 
-            if(string.IsNullOrEmpty(Control.Text) || string.IsNullOrWhiteSpace(Control.Text))
+            if(string.IsNullOrEmpty(Control.Text) || string.IsNullOrWhiteSpace(Control.Text) || Control.Text == element.Placeholder)
             {
                 Control.Text = element.Placeholder;
                 Control.TextColor = UIColor.Gray;
@@ -96,7 +96,6 @@ namespace StritWalk.iOS
 				//_placeholderLabel?.Dispose();
 				//_placeholderLabel = null;
 			}
-
 			base.Dispose(disposing);
 		}
     }

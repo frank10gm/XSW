@@ -21,5 +21,6 @@ namespace StritWalk
 			get { return (Color)GetValue(PlaceholderColorProperty); }
 			set { SetValue(PlaceholderColorProperty, value); }
 		}
+
     }
 }

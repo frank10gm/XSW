@@ -134,7 +134,7 @@ namespace StritWalk
                 Span brace1 = new Span { Text = "{ ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4885ed") };
                 Span brace2 = new Span { Text = " } ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4885ed") };
                 Span name = new Span { Text = Name, FontAttributes = FontAttributes.Bold, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };
-                Span description = new Span { Text = Description, FontSize = 14.0F };
+                Span description = new Span { Text = Description, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };
 
                 if(Id == "new")
                 {

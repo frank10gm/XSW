@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using Plugin.Connectivity;
 using Plugin.Geolocator;
 using Plugin.Settings;
+using Xamarin.Forms;
 
 namespace StritWalk
 {
@@ -49,7 +50,8 @@ namespace StritWalk
                 var json = await resp.Content.ReadAsStringAsync();
                 if(json == "[]")
                 {
-                    Settings.listEnd = 1;
+                    Settings.listEnd = true;
+                    MessagingCenter.Send<CloudDataStore, bool>(this, "NotEnd", false);
                 }
                 items = await Task.Run(() => JsonConvert.DeserializeObject<IList<Item>>(json));
             }
@@ -72,7 +74,7 @@ namespace StritWalk
 				}
 
 				var contentType = "application/json";
-				var req = "{\"action\":\"getPosts\", \"num\":\"" + start + "\", \"order\":\"added\", \"order2\":\"100\", \"lat\":\"" + Settings.lat + "\", \"lng\":\"" + Settings.lng + "\", \"user_id\":\"1\" }";
+				var req = "{\"action\":\"getPosts\", \"num\":\"" + start + "\", \"order\":\"added\", \"order2\":\"10000\", \"lat\":\"" + Settings.lat + "\", \"lng\":\"" + Settings.lng + "\", \"user_id\":\"1\" }";
 				var httpContent = new StringContent(req, Encoding.UTF8, contentType);
 
 				//var json = await client.GetStringAsync($"api/item");
@@ -81,7 +83,7 @@ namespace StritWalk
 				var json = await resp.Content.ReadAsStringAsync();
 				if (json == "[]")
 				{
-					Settings.listEnd = 1;
+					Settings.listEnd = true;
 				}
                 Console.WriteLine(json);
 				items = await Task.Run(() => JsonConvert.DeserializeObject<IList<Item>>(json));
@@ -143,7 +145,7 @@ namespace StritWalk
         public async Task<bool> Post(string id_user, string name, string audio, string lat, string lng, string description)
         {
 			bool result = false;
-            if (description != null && CrossConnectivity.Current.IsConnected)
+            if ((!string.IsNullOrEmpty(description) || !string.IsNullOrWhiteSpace(description)) && CrossConnectivity.Current.IsConnected)
 			{
 				var contentType = "application/json";
                 var json = $"{{ action: 'post', id: '{Settings.AuthToken}', name: '', audio: '', lat: '{Settings.lat}', lng: '{Settings.lng}', description: '{description}' }}";
