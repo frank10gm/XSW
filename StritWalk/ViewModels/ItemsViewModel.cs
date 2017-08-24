@@ -63,30 +63,29 @@ namespace StritWalk
 
                     string text = "Posted. Do you want to post something else?";
                     PostEditor.Placeholder = text;
+
                     if (Device.iOS == Device.RuntimePlatform)
                     {
                         PostEditor.Text = text;
+                        PostEditor.TextColor = Color.Gray;
                     }
                     else
                     {
                         PostEditor.Text = "";
                     }
-                    PostEditor.Unfocus();
-                    IsPosting = false;
                 }
                 else
                 {
                     string text = "Do you want to post something?";
                     PostEditor.Placeholder = text;
-                    PostEditor.Unfocus();
-                    IsPosting = false;
                 }
+                IsPosting = false;
+                PostEditor.Unfocus();
             }
         }
 
         public async Task<bool> TryPostAsync()
         {
-            await Task.Delay(2000);
             return await DataStore.Post("", "", "", "", "", newPostDescription);
         }
 
