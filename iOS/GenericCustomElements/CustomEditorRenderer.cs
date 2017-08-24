@@ -15,9 +15,9 @@ namespace StritWalk.iOS
 		private UILabel _placeholderLabel;
         CustomEditor element;
 
-		protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
+		protected override void OnElementChanged(ElementChangedEventArgs<Editor> ev)
 		{
-			base.OnElementChanged(e);
+			base.OnElementChanged(ev);
 
 			if (Element == null)
 				return;
@@ -31,7 +31,14 @@ namespace StritWalk.iOS
             Control.Started += OnFocused;
             Control.Text = element.Placeholder;
             Control.TextColor = UIColor.Gray;
+            element.TextChanged += (sender, e) => 
+            {
+				if (Control.Text == element.Placeholder)
+				{			
+					Control.TextColor = UIColor.Gray;
 
+                }
+            };
 		}
 
         private void CreatePlaceholderLabel(CustomEditor element, UITextView parent)

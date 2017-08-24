@@ -24,6 +24,13 @@ namespace StritWalk
             set { SetProperty(ref newPostDescription, value); }
         }
 
+        Color postPlaceholder = Color.Gray;
+        public Color PostPlaceholder
+		{
+            get { return postPlaceholder; }
+            set { SetProperty(ref postPlaceholder, value); }
+		}
+
         bool isNotEnd = true;
         public bool IsNotEnd { get { return isNotEnd; } set { SetProperty(ref isNotEnd, value); } }
 
@@ -66,8 +73,9 @@ namespace StritWalk
 
                     if (Device.iOS == Device.RuntimePlatform)
                     {
+                        //PostEditor.TextColor = Color.Gray;
+                        //PostPlaceholder = Color.Gray;
                         PostEditor.Text = text;
-                        PostEditor.TextColor = Color.Gray;
                     }
                     else
                     {

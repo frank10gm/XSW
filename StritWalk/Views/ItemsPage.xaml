@@ -50,7 +50,7 @@
                                 <ColumnDefinition Width="20" />
                             </Grid.ColumnDefinitions>
                             <local:CustomEditor HorizontalOptions="FillAndExpand" Placeholder="Do you wand to post something?" Keyboard="Default" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" BackgroundColor="#f7f7f7" x:Name="PostEditor" HeightRequest="54" Focused="OnFocused"
-                                TextColor="#000000" FontSize="13" Completed="OnCheckTest" Text="{Binding NewPostDescription}" />
+                                 FontSize="13" Completed="OnCheckTest" Text="{Binding NewPostDescription}" TextColor="{Binding PostPlaceholder}" />
                             <!--<Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
