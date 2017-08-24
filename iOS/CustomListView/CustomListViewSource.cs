@@ -53,38 +53,40 @@ namespace StritWalk.iOS
 
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
-			// request a recycled cell to save memory
-			//CustomListViewCell cell = tableView.DequeueReusableCell(cellIdentifier) as CustomListViewCell;
+            // request a recycled cell to save memory
+            //CustomListViewCell cell = tableView.DequeueReusableCell(cellIdentifier) as CustomListViewCell;
 
-			// if there are no cells to reuse, create a new one
-			//if (cell == null)
-			//{
-			//    cell = new CustomListViewCell(cellIdentifier);
-			//}
+            // if there are no cells to reuse, create a new one
+            //if (cell == null)
+            //{
+            //    cell = new CustomListViewCell(cellIdentifier);
+            //}
 
-			//if (String.IsNullOrWhiteSpace(tableItems[indexPath.Row].ImageFilename))
-			//{
-			//	cell.UpdateCell(tableItems[indexPath.Row].Name
-			//		, tableItems[indexPath.Row].Category
-			//		, null);
-			//}
-			//else
-			//{
-			//	cell.UpdateCell(tableItems[indexPath.Row].Name
-			//		, tableItems[indexPath.Row].Category
-			//		, UIImage.FromFile("Images/" + tableItems[indexPath.Row].ImageFilename + ".jpg"));
-			//}
+            //if (String.IsNullOrWhiteSpace(tableItems[indexPath.Row].ImageFilename))
+            //{
+            //	cell.UpdateCell(tableItems[indexPath.Row].Name
+            //		, tableItems[indexPath.Row].Category
+            //		, null);
+            //}
+            //else
+            //{
+            //	cell.UpdateCell(tableItems[indexPath.Row].Name
+            //		, tableItems[indexPath.Row].Category
+            //		, UIImage.FromFile("Images/" + tableItems[indexPath.Row].ImageFilename + ".jpg"));
+            //}
 
-			UITableViewCell cell = tableView.DequeueReusableCell(cellIdentifier);
-			var item = tableItems[indexPath.Row];
+            UITableViewCell cell = tableView.DequeueReusableCell(cellIdentifier);
+            //var item = tableItems[indexPath.Row];
 
-			//---- if there are no cells to reuse, create a new one
-			if (cell == null)
-			{ cell = new UITableViewCell(UITableViewCellStyle.Default, cellIdentifier); }
+            //---- if there are no cells to reuse, create a new one
+            if (cell == null)
+            { 
+                cell = new UITableViewCell(UITableViewCellStyle.Default, cellIdentifier); 
+            }
 
-			//cell.TextLabel.Text = item;
+            //cell.TextLabel.Text = item;
 
-			return cell;
+            return cell;
 
         }
     }
