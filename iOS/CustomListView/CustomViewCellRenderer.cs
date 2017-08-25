@@ -11,27 +11,8 @@ namespace StritWalk.iOS
 {
     public class CustomViewCellRenderer : ViewCellRenderer
     {
-
-        //CustomListViewCell cell;
-
         public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
         {
-
-            //var customCell = (CustomViewCell)item;
-
-            //cell = reusableCell as CustomListViewCell;
-
-            //if (cell == null)
-            //{
-            //             cell = new CustomListViewCell(item.GetType().FullName, customCell);
-            //}
-            //else
-            //{
-            //             cell.CustomViewCell.PropertyChanged -= OnNativeCellPropertyChanged;
-            //}
-
-            //nativeCell.PropertyChanged += OnNativeCellPropertyChanged;
-
             var cell = base.GetCell(item, reusableCell, tv);
             if (cell != null)
             {
@@ -41,7 +22,6 @@ namespace StritWalk.iOS
             }
             return cell;
         }
-
 
     }
 }

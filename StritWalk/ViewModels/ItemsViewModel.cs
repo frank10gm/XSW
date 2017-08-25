@@ -73,8 +73,6 @@ namespace StritWalk
 
                     if (Device.iOS == Device.RuntimePlatform)
                     {
-                        //PostEditor.TextColor = Color.Gray;
-                        //PostPlaceholder = Color.Gray;
                         PostEditor.Text = text;
                     }
                     else

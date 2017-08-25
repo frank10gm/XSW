@@ -21,10 +21,8 @@ using SizeF = CoreGraphics.CGSize;
 [assembly: ExportRenderer(typeof(CustomListView), typeof(CustomListViewRenderer))]
 namespace StritWalk.iOS
 {
-    public class CustomListViewRenderer : ListViewRenderer 
+    public class CustomListViewRenderer : ListViewRenderer
     {
-
-        ListViewCachingStrategy CachingStrategy { get; }
 
         protected override void OnElementChanged(ElementChangedEventArgs<ListView> e)
         {
@@ -32,13 +30,13 @@ namespace StritWalk.iOS
 
             if (Control == null) return;
 
-            // ListView Separator for whole view width
-            Control.SeparatorInset = UIEdgeInsets.Zero;
-            Control.LayoutMargins = UIEdgeInsets.Zero;
-            Control.CellLayoutMarginsFollowReadableWidth = false;
+			// ListView Separator for whole view width
+			Control.SeparatorInset = UIEdgeInsets.Zero;
+			Control.LayoutMargins = UIEdgeInsets.Zero;
+			Control.CellLayoutMarginsFollowReadableWidth = false;
 
-            // ListView Separator - remove it, from empty cells
-            Control.TableFooterView = new UIView();
+			// ListView Separator - remove it, from empty cells
+			Control.TableFooterView = new UIView();
 
             if (e.OldElement != null)
             {
@@ -47,22 +45,14 @@ namespace StritWalk.iOS
 
             if (e.NewElement != null)
             {
-                //Control.Source = new CustomListViewSource(e.NewElement as CustomListView);
+
             }
         }
 
         protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-
-            //if (e.PropertyName == CustomListView.ItemsProperty.PropertyName)
-            //{
-            //    Control.Source = new CustomListViewSource(Element as CustomListView);
-            //}
         }
 
-	
-
- 
     }
 }

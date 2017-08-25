@@ -9,9 +9,8 @@ namespace StritWalk.iOS
     public class CustomListViewSource : UITableViewSource
     {
         // declare vars
-        string[] tableItems;
-        //string[] tableItems;
-        //CustomListView listView;
+        ObservableRangeCollection<Item> tableItems;
+        CustomListView listView;
         readonly NSString cellIdentifier = new NSString("TableCell");
 
         //      public IList<Item> Items
@@ -23,15 +22,19 @@ namespace StritWalk.iOS
         //	}
         //}
 
-        public CustomListViewSource(string[] items)
+        public CustomListViewSource(CustomListView view)
         {
-            tableItems = items;
+            listView = view;
+            tableItems = view.ItemsSource as ObservableRangeCollection<Item>;
         }
 
 
         public override nint RowsInSection(UITableView tableview, nint section)
         {
-            return tableItems.Length;
+            if (tableItems != null)
+                return tableItems.Count;
+            else
+                return 0;
         }
 
         //#region user interaction methods
@@ -75,13 +78,14 @@ namespace StritWalk.iOS
             //		, UIImage.FromFile("Images/" + tableItems[indexPath.Row].ImageFilename + ".jpg"));
             //}
 
-            UITableViewCell cell = tableView.DequeueReusableCell(cellIdentifier);
+
+            CustomListViewCell cell = tableView.DequeueReusableCell(cellIdentifier) as CustomListViewCell;
             //var item = tableItems[indexPath.Row];
 
             //---- if there are no cells to reuse, create a new one
             if (cell == null)
             { 
-                cell = new UITableViewCell(UITableViewCellStyle.Default, cellIdentifier); 
+                cell = new CustomListViewCell(cellIdentifier, cell); 
             }
 
             //cell.TextLabel.Text = item;

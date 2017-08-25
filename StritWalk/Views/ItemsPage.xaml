@@ -6,8 +6,11 @@
     <ContentPage.Content>
         <AbsoluteLayout>
             <!--CachingStrategy="RecycleElement"-->
-            <local:CustomListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" SeparatorColor="White" SeparatorVisibility="None" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="ItemsListView" ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" HasUnevenRows="true" RefreshCommand="{Binding LoadItemsCommand}"
-                IsPullToRefreshEnabled="true" IsRefreshing="{Binding IsBusy, Mode=OneWay}" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom">
+            <local:CustomListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" SeparatorColor="White" SeparatorVisibility="None" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="ItemsListView" VerticalOptions="FillAndExpand" HasUnevenRows="true" RefreshCommand="{Binding LoadItemsCommand}" IsPullToRefreshEnabled="true"
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom" ItemsSource="{Binding Items}">
+                <x:Arguments>
+                    <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
+                </x:Arguments>
                 <ListView.Header>
                     <Grid Padding="0,20,0,15" RowSpacing="20" ColumnSpacing="0">
                         <Grid.RowDefinitions>
@@ -50,7 +53,7 @@
                                 <ColumnDefinition Width="20" />
                             </Grid.ColumnDefinitions>
                             <local:CustomEditor HorizontalOptions="FillAndExpand" Placeholder="Do you wand to post something?" Keyboard="Default" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" BackgroundColor="#f7f7f7" x:Name="PostEditor" HeightRequest="54" Focused="OnFocused"
-                                 FontSize="13" Completed="OnCheckTest" Text="{Binding NewPostDescription}" TextColor="{Binding PostPlaceholder}" />
+                                FontSize="13" Completed="OnCheckTest" Text="{Binding NewPostDescription}" TextColor="{Binding PostPlaceholder}" />
                             <!--<Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -111,11 +114,11 @@
                     <DataTemplate>
                         <local:CustomViewCell>
                             <Grid Padding="0" BackgroundColor="#efefef">
-                                <Grid.GestureRecognizers>
+                                <!--<Grid.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnCellTapped" />
-                                </Grid.GestureRecognizers>
+                                </Grid.GestureRecognizers>-->
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
                                     <RowDefinition Height="10" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
@@ -131,7 +134,7 @@
                 </ListView.ItemTemplate>
                 <ListView.Footer>
                     <StackLayout Padding="0,30,0,30">
-                        <Label Text="The End" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Gray" >
+                        <Label Text="The End" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Gray">
                         </Label>
                         <ActivityIndicator IsRunning="true" IsVisible="{Binding IsNotEnd}" HorizontalOptions="Center" VerticalOptions="Center">
                             <ActivityIndicator.Color>

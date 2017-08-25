@@ -14,10 +14,9 @@ namespace StritWalk.iOS
         public CustomViewCell CustomViewCell { get; private set; }
 		
 
-        public CustomListViewCell(string cellId, CustomViewCell cell) : base (UITableViewCellStyle.Default, cellId)
+        public CustomListViewCell(string cellId, CustomListViewCell cell) : base (UITableViewCellStyle.Default, cellId)
         {
-
-            CustomViewCell = cell;
+            
 
             SelectionStyle = UITableViewCellSelectionStyle.None;
 
