@@ -38,7 +38,7 @@ namespace StritWalk
 
         private void OnCellTapped(object sender, EventArgs args)
         {
-
+			
         }
 
         private void OnFocused(object sender, EventArgs args)
@@ -58,7 +58,7 @@ namespace StritWalk
 
         private void OnItemTapped(object sender, ItemTappedEventArgs args)
         {
-            ItemsListView.SelectedItem = null;
+            //ItemsListView.SelectedItem = null;
         }
 
         async void OnReachBottom(object sender, ItemVisibilityEventArgs args)

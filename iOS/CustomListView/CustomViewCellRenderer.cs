@@ -14,12 +14,15 @@ namespace StritWalk.iOS
         public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
         {
             var cell = base.GetCell(item, reusableCell, tv);
+
             if (cell != null)
             {
-                // Disable native cell selection color style - set as *Transparent*
+				// Disable native cell selection color style - set as *Transparent*
+
                 cell.SelectionStyle = UITableViewCellSelectionStyle.None;
-                cell.SelectedBackgroundView = null;
+                //cell.SelectedBackgroundView
             }
+
             return cell;
         }
 

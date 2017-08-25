@@ -7,9 +7,9 @@
         <AbsoluteLayout>
             <!--CachingStrategy="RecycleElement"-->
             <local:CustomListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" SeparatorColor="White" SeparatorVisibility="None" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="ItemsListView" VerticalOptions="FillAndExpand" HasUnevenRows="true" RefreshCommand="{Binding LoadItemsCommand}" IsPullToRefreshEnabled="true"
-                IsRefreshing="{Binding IsBusy, Mode=OneWay}" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom" ItemsSource="{Binding Items}">
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom" ItemsSource="{Binding Items}" >
                 <x:Arguments>
-                    <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
+                    <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
                 </x:Arguments>
                 <ListView.Header>
                     <Grid Padding="0,20,0,15" RowSpacing="20" ColumnSpacing="0">
