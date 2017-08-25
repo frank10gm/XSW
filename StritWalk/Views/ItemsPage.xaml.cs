@@ -4,13 +4,16 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Plugin.MediaManager;
+using System.Windows.Input;
 
 namespace StritWalk
 {
     public partial class ItemsPage : ContentPage
     {
         ItemsViewModel viewModel;
+        IList<Item> items;
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public ICommand LoadMoreCommand{get; set;}
 
         public ItemsPage()
         {
@@ -21,6 +24,8 @@ namespace StritWalk
             viewModel.Navigation = Navigation;
 
             viewModel.PostEditor = PostEditor;
+
+            LoadMoreCommand = new Command(async () => await LoadMoreItems());
 
         }
 
@@ -61,12 +66,25 @@ namespace StritWalk
             //ItemsListView.SelectedItem = null;
         }
 
-        async void OnReachBottom(object sender, ItemVisibilityEventArgs args)
+        void OnReachBottom(object sender, ItemVisibilityEventArgs args)
         {
-            if (viewModel.Items[viewModel.Items.Count - 8] == args.Item && !Settings.listEnd)
+            if (viewModel.Items[viewModel.Items.Count - 1] == args.Item && !Settings.listEnd)
+            {
+                Console.WriteLine("####### prima...");
+                LoadMoreCommand.Execute(null);
+                Console.WriteLine("####### esecuzione completata");
+            }         
+        }
+
+        async Task LoadMoreItems()
+        {
+            try
             {
                 viewModel.start += 20;
-                var items = await DataStore.GetItemsAsync(true, viewModel.start);
+                items = await DataStore.GetItemsAsync(true, viewModel.start);                
+            }
+            finally
+            {
                 viewModel.Items.AddRange(items);
             }
         }
