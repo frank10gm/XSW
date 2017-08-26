@@ -69,10 +69,8 @@ namespace StritWalk
         void OnReachBottom(object sender, ItemVisibilityEventArgs args)
         {
             if (viewModel.Items[viewModel.Items.Count - 1] == args.Item && !Settings.listEnd)
-            {
-                Console.WriteLine("####### prima...");
-                LoadMoreCommand.Execute(null);
-                Console.WriteLine("####### esecuzione completata");
+            {                
+                LoadMoreCommand.Execute(null);               
             }         
         }
 

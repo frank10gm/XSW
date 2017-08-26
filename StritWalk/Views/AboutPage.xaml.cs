@@ -31,7 +31,7 @@ namespace StritWalk
             //};
 
             if (CrossConnectivity.Current.IsConnected)
-                getPins();
+                getMap();
 
             //map.ShapeCoordinates.Add(new Position(37.797513, -122.402058));
             //map.ShapeCoordinates.Add(new Position(37.798433, -122.402256));
@@ -71,15 +71,9 @@ namespace StritWalk
 
         void OnLocationTracker(object sender, GeographicLocation args)
         {
-            position = new Position(args.Latitude, args.Longitude);
+            position = new Position(args.Latitude, args.Longitude);       
 
-            //prima posizione all'apertura della pagina della mappa
-            if (start)
-            {
-                map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(2)));
-                start = false;
-                //getPins();
-            }
+            //prima posizione all'apertura della pagina della mappa            
 
             //myLocationButton.IsVisible = Device.OS != TargetPlatform.Android;
 
@@ -89,7 +83,6 @@ namespace StritWalk
         {
             base.OnAppearing();
 
-
             if (!start)
             {
                 if (CrossConnectivity.Current.IsConnected && locationTracker != null)
@@ -97,8 +90,8 @@ namespace StritWalk
             }
             else
             {
-                if (CrossConnectivity.Current.IsConnected)
-                    getPins();
+                if (CrossConnectivity.Current.IsConnected) { }
+                    getMap();
             }
         }
 
@@ -110,7 +103,7 @@ namespace StritWalk
                 locationTracker.PauseTracking();
         }
 
-        async void getPins()
+        async void getMap()
         {
             var items = await DataStore.GetMapItemsAsync(true);
 
@@ -161,6 +154,13 @@ namespace StritWalk
             locationTracker = DependencyService.Get<ILocationTracker>();
             locationTracker.LocationChanged += OnLocationTracker;
             locationTracker.StartTracking();
+
+            map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(double.Parse(Settings.lat, System.Globalization.CultureInfo.InvariantCulture), double.Parse(Settings.lng, System.Globalization.CultureInfo.InvariantCulture)), Distance.FromKilometers(2)));
+
+            if (start)
+            {
+                start = false;
+            }
         }
 
     }

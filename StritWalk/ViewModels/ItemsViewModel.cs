@@ -24,7 +24,7 @@ namespace StritWalk
             set { SetProperty(ref newPostDescription, value); }
         }
 
-        Color postPlaceholder = Color.Gray;
+        Color postPlaceholder = Color.Black;
         public Color PostPlaceholder
 		{
             get { return postPlaceholder; }
