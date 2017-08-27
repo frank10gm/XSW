@@ -181,5 +181,8 @@ FakesAssemblies/
 
 *.userprefs
 *.vs
+*.vs/
+.vs
+.vs/
 
 .DS_Store
