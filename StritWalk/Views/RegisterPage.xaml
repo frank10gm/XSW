@@ -26,7 +26,7 @@
                         </vm:CustomEntry.ReturnKeyType>
                     </vm:CustomEntry>
                 </StackLayout>
-                <Button x:Name="SignUpButton" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="Sign Up" HorizontalOptions="FillAndExpand" IsEnabled="{Binding IsNotBusy}" TextColor="White" BackgroundColor="{StaticResource Primary}"/>
+                <Button x:Name="SignUpButton" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="Sign Up" HorizontalOptions="FillAndExpand" IsEnabled="{Binding IsNotBusy}" TextColor="White" BackgroundColor="{StaticResource Primary}" Command="{Binding SignUpCommand}" />
                 <StackLayout Grid.Row="2" Grid.ColumnSpan="2" VerticalOptions="Center" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                     <ActivityIndicator IsRunning="{Binding IsBusy}" HorizontalOptions="EndAndExpand" VerticalOptions="Center">
                         <ActivityIndicator.Color>
