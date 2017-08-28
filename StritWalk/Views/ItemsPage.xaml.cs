@@ -79,8 +79,8 @@ namespace StritWalk
             try
             {
                 viewModel.start += 20;
-                items = await DataStore.GetItemsAsync(true, viewModel.start);
-                viewModel.Items.AddRange(items);
+                items = await DataStore.GetItemsAsync(true, viewModel.start);                
+                viewModel.Items.AddRange(items);                
             }
             finally
             {
