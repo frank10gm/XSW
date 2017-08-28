@@ -32,23 +32,24 @@ namespace StritWalk
                 Message = "Loading...";
 
                 // Log the user in
-                result = await TryLoginAsync();
+                //result = await TryLoginAsync();
             }
             finally
             {
                 Message = string.Empty;
                 IsBusy = false;
-                if (!result)
-                {
-                    string mex = "Wrong username or password...";
-                    for (var i = 0; i < mex.Length; i++)
-                    {
-                        Message += mex[i];
-                        await Task.Delay(100);
-                    }
-                    await Task.Delay(500);
-                    Message = string.Empty;
-                }
+
+                //if (!result)
+                //{
+                //    string mex = "Wrong username or password...";
+                //    for (var i = 0; i < mex.Length; i++)
+                //    {
+                //        Message += mex[i];
+                //        await Task.Delay(100);
+                //    }
+                //    await Task.Delay(500);
+                //    Message = string.Empty;
+                //}
 
 
                 if (Settings.IsLoggedIn)
