@@ -31,6 +31,7 @@ namespace StritWalk
                 IsBusy = true;
                 Message = "Loading...";
 
+
                 // Log the user in
                 //result = await TryLoginAsync();
             }
