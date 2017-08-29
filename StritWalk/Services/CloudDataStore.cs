@@ -11,6 +11,8 @@ using Plugin.Connectivity;
 using Plugin.Geolocator;
 using Plugin.Settings;
 using Xamarin.Forms;
+using System.IO;
+using System.Net;
 
 namespace StritWalk
 {
@@ -74,20 +76,31 @@ namespace StritWalk
 				}
 
 				var contentType = "application/json";
-				var req = "{\"action\":\"getPosts\", \"num\":\"" + start + "\", \"order\":\"added\", \"order2\":\"10000\", \"lat\":\"" + Settings.lat + "\", \"lng\":\"" + Settings.lng + "\", \"user_id\":\"1\" }";
+				var req = "{\"action\":\"getPosts\", \"num\":\"" + start + "\", \"order\":\"added\", \"order2\":\"100\", \"lat\":\"" + Settings.lat + "\", \"lng\":\"" + Settings.lng + "\", \"user_id\":\"1\" }";
 				var httpContent = new StringContent(req, Encoding.UTF8, contentType);
+                HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, "");
+                requestMessage.Content = httpContent;
+                var resp = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead);
+                Stream stream = await resp.Content.ReadAsStreamAsync();
+                var json = await new StreamReader(stream).ReadToEndAsync();                
 
-				//var json = await client.GetStringAsync($"api/item");
-				var resp = await client.PostAsync($"", httpContent);
+                //var resp = await client.PostAsync($"", httpContent);
 
-				var json = await resp.Content.ReadAsStringAsync();
-				if (json == "[]")
-				{
-					Settings.listEnd = true;
-				}
-                Console.WriteLine(json);
-				items = await Task.Run(() => JsonConvert.DeserializeObject<IList<Item>>(json));
-			}
+                //var stream = await resp.Content.ReadAsStreamAsync();
+
+                //string streamreader = await new StreamReader(stream).ReadToEndAsync();
+                //Console.WriteLine("###" + streamreader);
+                //var json = streamreader;
+
+                //var json = resp.Content.ReadAsStringAsync();                
+
+                if (json == "[]")
+                {
+                    Settings.listEnd = true;
+                }
+
+                items = await Task.Run(() => JsonConvert.DeserializeObject<IList<Item>>(json));
+            }
 
 			return items;
 		}
