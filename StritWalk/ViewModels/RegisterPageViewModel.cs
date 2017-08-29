@@ -9,9 +9,10 @@ namespace StritWalk
     {
 
         //variables
+        string result = "";
+
         public ICommand SignUpCommand { get; }
 
-        //properties
         string message = string.Empty;
         public string Message
         {
@@ -19,9 +20,20 @@ namespace StritWalk
             set { message = value; OnPropertyChanged(); }
         }
 
+        string email = string.Empty;
+        public string Email
+        {
+            get => email;
+            set { SetProperty(ref email, value); }
+        }
+
         public RegisterPageViewModel()
         {
-            SignUpCommand = new Command(async () => await SignUp());
+            SignUpCommand = new Command(async () =>
+            {
+                if (!IsBusy)
+                    await SignUp();
+            });
         }
 
         async Task SignUp()
@@ -31,31 +43,34 @@ namespace StritWalk
                 IsBusy = true;
                 Message = "Loading...";
 
-
-                // Log the user in
-                //result = await TryLoginAsync();
+                result = await TrySignUp();
             }
             finally
             {
                 Message = string.Empty;
+
+                if (result != "OK")
+                {
+                    string mex = result;
+                    for (var i = 0; i < mex.Length; i++)
+                    {
+                        Message += mex[i];
+                        await Task.Delay(50);
+                    }
+                    await Task.Delay(500);
+                    Message = string.Empty;
+                }
+
                 IsBusy = false;
-
-                //if (!result)
-                //{
-                //    string mex = "Wrong username or password...";
-                //    for (var i = 0; i < mex.Length; i++)
-                //    {
-                //        Message += mex[i];
-                //        await Task.Delay(100);
-                //    }
-                //    await Task.Delay(500);
-                //    Message = string.Empty;
-                //}
-
 
                 if (Settings.IsLoggedIn)
                     App.GoToMainPage();
             }
+        }
+
+        public async Task<string> TrySignUp()
+        {
+            return await DataStore.SignUp(Username, Password, Email);
         }
     }
 }

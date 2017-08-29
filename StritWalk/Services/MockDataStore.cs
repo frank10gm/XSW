@@ -62,5 +62,10 @@ namespace StritWalk
         {
             return await Task.FromResult(items);
         }
+
+        public Task<bool> SignUp(string username, string password, string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

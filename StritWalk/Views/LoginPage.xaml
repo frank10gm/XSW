@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:StritWalk;" x:Class="StritWalk.LoginPage" Title="Sign In">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <vm:BoolConvert x:Key="cnv"></vm:BoolConvert>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.BindingContext>
         <vm:LoginViewModel />
     </ContentPage.BindingContext>
@@ -30,7 +35,7 @@
                 </vm:CustomEntry.ReturnKeyType>
             </vm:CustomEntry>
             <Button Grid.Row="3" Grid.Column="0" Text="Sign Up" x:Name="ButtonNowNow" HorizontalOptions="FillAndExpand" Clicked="Handle_Clicked" IsEnabled="{Binding IsNotBusy}" />
-            <Button Grid.Row="3" Grid.Column="1" Text="Sign In" Command="{Binding SignInCommand}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding IsNotBusy}" TextColor="White" BackgroundColor="{StaticResource Primary}" />
+            <Button Grid.Row="3" Grid.Column="1" Text="Sign In" Command="{Binding SignInCommand}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding IsBusy, Converter={StaticResource cnv}}" TextColor="White" BackgroundColor="{StaticResource Primary}" />
             <StackLayout Grid.Row="4" Grid.ColumnSpan="2" VerticalOptions="Center" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                 <ActivityIndicator IsRunning="{Binding IsBusy}" HorizontalOptions="EndAndExpand" VerticalOptions="Center">
                     <ActivityIndicator.Color>

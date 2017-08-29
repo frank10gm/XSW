@@ -18,12 +18,12 @@ namespace StritWalk
             UserMailField.Completed += (sender, e) => UsernameField.Focus();
             UsernameField.Completed += (sender, e) => PasswordField.Focus();
             PasswordField.Completed += (sender, e) => SignUp();
-            SignUpButton.Clicked += (sender, e) => SignUp();
+            //SignUpButton.Clicked += (sender, e) => SignUp();
         }
 
         private void SignUp()
         {
-            Console.WriteLine("sign up method");
+            vm.SignUpCommand.Execute(null);
         }
 
     }

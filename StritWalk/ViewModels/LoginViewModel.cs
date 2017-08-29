@@ -10,11 +10,10 @@ namespace StritWalk
     public class LoginViewModel : BaseViewModel
     {
 
-        public LoginViewModel()
-        {
-            SignInCommand = new Command(async () => await SignIn());
-            //NotNowCommand = new Command(async () => await SignUp());
-        }
+        bool result;
+
+        public ICommand NotNowCommand { get; }
+        public ICommand SignInCommand { get; }
 
         string message = string.Empty;
         public string Message
@@ -23,10 +22,17 @@ namespace StritWalk
             set { message = value; OnPropertyChanged(); }
         }
 
-        public ICommand NotNowCommand { get; }
-        public ICommand SignInCommand { get; }
 
-        bool result;
+        public LoginViewModel()
+        {
+            SignInCommand = new Command(async () =>
+            {
+                if (!IsBusy)
+                    await SignIn();
+            });
+            //NotNowCommand = new Command(async () => await SignUp());
+        }
+
 
         async Task SignIn()
         {
@@ -40,20 +46,21 @@ namespace StritWalk
             }
             finally
             {
-                Message = string.Empty;
-                IsBusy = false;
+                Message = string.Empty;   
+                
                 if (!result)
                 {
                     string mex = "Wrong username or password...";
                     for (var i = 0; i < mex.Length; i++)
                     {
                         Message += mex[i];
-                        await Task.Delay(100);
+                        await Task.Delay(50);
                     }
                     await Task.Delay(500);
                     Message = string.Empty;
                 }
 
+                IsBusy = false;
 
                 if (Settings.IsLoggedIn)
                     App.GoToMainPage();
