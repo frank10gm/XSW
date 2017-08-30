@@ -44,7 +44,19 @@ namespace StritWalk
 		    }
 		}
 
-		public static bool IsLoggedIn => !string.IsNullOrWhiteSpace(UserId);
+        public static string UserDescription
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault("UserDescription", string.Empty);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue("UserDescription", value);
+            }
+        }
+
+        public static bool IsLoggedIn => !string.IsNullOrWhiteSpace(UserId);
 		public static string UserId
 		{
 		    get

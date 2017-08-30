@@ -148,6 +148,7 @@ namespace StritWalk
                 {
                     Settings.AuthToken = (string)ao[0]["user_id"];
                     Settings.UserId = (string)ao[0]["user"];
+                    Settings.UserDescription = (string)ao[0]["description"];
                     result = true;
                 }
                 //serializzare utente
@@ -231,9 +232,7 @@ namespace StritWalk
                 return result;
             }
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(email)) return "Fields can't be empty.";
-
-            var user = $"{{ username: '{username}', password: '{password}', mail: '{email}' }}";
-
+            var user = $"{{ username: '{username}', password: '{password}', mail: '{email}' }}";        
             var contentType = "application/json";
             var json = $"{{ action: 'register', user: {user} }}";
             JObject o = JObject.Parse(json);
@@ -242,19 +241,18 @@ namespace StritWalk
             var req = await client.PostAsync($"", httpContent);
             var resp = await req.Content.ReadAsStringAsync();
             var ao = JObject.Parse(resp);
-
-            Console.WriteLine("###" + resp);
-            result = "OK";
-
-            //Console.WriteLine(ao[0]["error"]);
-            //if ((int)ao[0]["data"] != 0)
-            //{
-            //	Settings.AuthToken = (string)ao[0]["user_id"];
-            //	Settings.UserId = (string)ao[0]["user"];
-            //	result = true;
-            //}
-            //serializzare utente
-            //items = await Task.Run(() => JsonConvert.DeserializeObject<IList<Item>>(json));
+            
+            if ((int)ao["data"] != 0)
+            {
+                Settings.AuthToken = (string)ao["user_id"];
+                Settings.UserId = (string)ao["username"];
+                result = "OK";
+            }
+            else
+            {
+                if ((string)ao["error"] == "error_mail") result = "This E-Mail is not available.";
+                else if ((string)ao["error"] == "error_username") result = "This Username is already in use.";
+            }
 
             return result;
         }

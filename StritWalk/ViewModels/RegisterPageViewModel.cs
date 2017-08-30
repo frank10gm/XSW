@@ -10,6 +10,7 @@ namespace StritWalk
 
         //variables
         string result = "";
+        bool doing = false;
 
         public ICommand SignUpCommand { get; }
 
@@ -31,7 +32,7 @@ namespace StritWalk
         {
             SignUpCommand = new Command(async () =>
             {
-                if (!IsBusy)
+                if (!IsBusy && !FormIsNotReady && !doing)
                     await SignUp();
             });
         }
@@ -41,6 +42,8 @@ namespace StritWalk
             try
             {
                 IsBusy = true;
+                doing = true;
+                FormIsNotReady = true;
                 Message = "Loading...";
 
                 result = await TrySignUp();
@@ -48,6 +51,7 @@ namespace StritWalk
             finally
             {
                 Message = string.Empty;
+                IsBusy = false;
 
                 if (result != "OK")
                 {
@@ -60,8 +64,9 @@ namespace StritWalk
                     await Task.Delay(500);
                     Message = string.Empty;
                 }
-
-                IsBusy = false;
+                
+                FormIsNotReady = false;
+                doing = false;
 
                 if (Settings.IsLoggedIn)
                     App.GoToMainPage();

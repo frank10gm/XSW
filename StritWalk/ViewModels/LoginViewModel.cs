@@ -11,6 +11,7 @@ namespace StritWalk
     {
 
         bool result;
+        bool doing = false;
 
         public ICommand NotNowCommand { get; }
         public ICommand SignInCommand { get; }
@@ -27,7 +28,7 @@ namespace StritWalk
         {
             SignInCommand = new Command(async () =>
             {
-                if (!IsBusy)
+                if (!IsBusy && !FormIsNotReady && !doing)
                     await SignIn();
             });
             //NotNowCommand = new Command(async () => await SignUp());
@@ -39,6 +40,8 @@ namespace StritWalk
             try
             {
                 IsBusy = true;
+                FormIsNotReady = true;
+                doing = true;
                 Message = "Signing In...";
 
                 // Log the user in
@@ -46,8 +49,9 @@ namespace StritWalk
             }
             finally
             {
-                Message = string.Empty;   
-                
+                Message = string.Empty;
+                IsBusy = false;
+
                 if (!result)
                 {
                     string mex = "Wrong username or password...";
@@ -59,8 +63,9 @@ namespace StritWalk
                     await Task.Delay(500);
                     Message = string.Empty;
                 }
-
-                IsBusy = false;
+                
+                FormIsNotReady = false;
+                doing = false;
 
                 if (Settings.IsLoggedIn)
                     App.GoToMainPage();

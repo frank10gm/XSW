@@ -15,6 +15,8 @@ namespace StritWalk
             InitializeComponent();
             vm = BindingContext as LoginViewModel;
             vm.Navigation = Navigation;
+            UsernameField.TextChanged += (sender, e) => verifyForm();
+            PasswordField.TextChanged += (sender, e) => verifyForm();
         }
 
 		private void GoNext(object sender, EventArgs args)
@@ -35,6 +37,12 @@ namespace StritWalk
         async void Handle_Clicked(object sender, System.EventArgs e)
         {
             await Navigation.PushAsync(new RegisterPage(new RegisterPageViewModel()));
+        }
+
+        private void verifyForm()
+        {
+            if (!string.IsNullOrWhiteSpace(vm.Username) && !string.IsNullOrWhiteSpace(vm.Password))
+                vm.FormIsNotReady = false;
         }
     }
 }

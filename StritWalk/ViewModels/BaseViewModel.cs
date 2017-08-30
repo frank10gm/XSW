@@ -33,7 +33,14 @@ namespace StritWalk
             set { SetProperty(ref isBusy, value); }
         }
 
-		bool isLoading = false;
+        bool formIsNotReady = true;
+        public bool FormIsNotReady
+        {
+            get { return formIsNotReady; }
+            set { SetProperty(ref formIsNotReady, value); }
+        }
+
+        bool isLoading = false;
 		public bool IsLoading
 		{
             get { return isLoading; }
@@ -63,7 +70,7 @@ namespace StritWalk
                     Spans =
                     {
                         new Span { Text = Settings.UserId + "\n", FontAttributes=FontAttributes.Bold, FontSize=16.0F, ForegroundColor=Color.FromHex("#000000")},
-                        new Span { Text = "Gino è un super robottino." + "", FontSize=10.0F, ForegroundColor=Color.FromHex("#333333") }
+                        new Span { Text = Settings.UserDescription + "", FontSize=10.0F, ForegroundColor=Color.FromHex("#333333") }
                     }
                 };
             }
