@@ -37,7 +37,8 @@ namespace StritWalk
 
             //await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
 
-            //await CrossMediaManager.Current.Play("http://www.hackweb.it/api/uploads/music/" + item.Audio);
+            //await CrossMediaManager.Current.Play("http://www.hackweb.it/api/uploads/music/" + item.Audio);            
+
             ItemsListView.SelectedItem = null;
         }
 

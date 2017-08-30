@@ -144,6 +144,8 @@
                     </StackLayout>
                 </ListView.Footer>
             </local:CustomListView>
+                        
+
             <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsVisible="{Binding IsLoading}" BackgroundColor="Black" Opacity="0.3" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             </StackLayout>
             <ActivityIndicator AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" HorizontalOptions="Center" VerticalOptions="Center">
@@ -151,6 +153,8 @@
                     <OnPlatform x:TypeArguments="Color" Android="{StaticResource Accent}" iOS="#ffffff" />
                 </ActivityIndicator.Color>
             </ActivityIndicator>
+
+
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

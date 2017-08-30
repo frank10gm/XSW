@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="StritWalk.MenuPage">
     <ContentPage.Content>
-        <ScrollView>
-            <Grid Padding="20,40,20,20" ColumnSpacing="10" RowSpacing="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <StackLayout Spacing="30" Grid.ColumnSpan="2">
-                    <Image HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="95" HeightRequest="95" Source="profile_generic.png" Aspect="AspectFill" x:Name="CircleImageAvatar" />
-                    <Label HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" LineBreakMode="WordWrap" FontSize="Large" Text="Settings">
-                    </Label>
-                    <Button Text="Log Out" Clicked="Handle_Clicked" IsEnabled="true"/>
-                        
-                </StackLayout>
-            </Grid>
-        </ScrollView>
+        <StackLayout>
+            <ScrollView VerticalOptions="FillAndExpand">
+                <Grid Padding="20,40,20,20" ColumnSpacing="10" RowSpacing="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Spacing="30" Grid.ColumnSpan="2">
+                        <Image HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="95" HeightRequest="95" Source="profile_generic.png" Aspect="AspectFill" x:Name="CircleImageAvatar" />
+                        <Label HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" LineBreakMode="WordWrap" FontSize="Large" Text="Settings">
+                        </Label>
+                        <Button Text="Log Out" Clicked="Handle_Clicked" IsEnabled="true"/>
+
+                    </StackLayout>
+                </Grid>
+            </ScrollView>
+            <Entry VerticalOptions="End"></Entry>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
