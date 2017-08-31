@@ -9,7 +9,7 @@
             <local:CustomListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" SeparatorColor="White" SeparatorVisibility="None" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="ItemsListView" VerticalOptions="FillAndExpand" HasUnevenRows="true" RefreshCommand="{Binding LoadItemsCommand}" IsPullToRefreshEnabled="true"
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom" ItemsSource="{Binding Items}" >
                 <x:Arguments>
-                    <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+                    <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
                 </x:Arguments>
                 <ListView.Header>
                     <Grid Padding="0,20,0,15" RowSpacing="20" ColumnSpacing="0">
@@ -118,16 +118,46 @@
                                     <TapGestureRecognizer Tapped="OnCellTapped" />
                                 </Grid.GestureRecognizers>-->
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
                                     <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="40" />
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Row="0" Grid.Column="0" FormattedText="{Binding Post}" Margin="10,10,10,40">
+
+                                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" FormattedText="{Binding Username}" Margin="10,10,10,5">
                                 </Label>
-                                <BoxView Grid.Row="1" BackgroundColor="White" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="10">
+
+                                <Label Grid.Row="0" Grid.Column="4" TextColor="Black" Text="[ ]" HorizontalTextAlignment="Center" Margin="0,15,0,0" >
+                                </Label>
+
+                                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" TextColor="Black" FormattedText="{Binding Post}" HorizontalTextAlignment="Start" Margin="10,0,10,30">
+                                </Label>
+
+                                <Label Grid.Row="2" Grid.Column="0" Text="[ ]" HorizontalTextAlignment="Center" TextColor="Black" >
+                                </Label>
+                                <Label Grid.Row="2" Grid.Column="1"  Text="{Binding Likes}" FontSize="12" HorizontalTextAlignment="Start" Margin="0,0,0,0" TextColor="Black">
+                                </Label>
+                                <Label Grid.Row="2" Grid.Column="2" Text="[ ]" HorizontalTextAlignment="Center" TextColor="Black">
+                                </Label>
+                                <Label Grid.Row="2" Grid.Column="3" Text="{Binding Comments}" FontSize="12" HorizontalTextAlignment="Start" TextColor="Black">
+                                </Label>
+                                <Label Grid.Row="2" Grid.Column="4" Text="[ ]" HorizontalTextAlignment="End" Margin="0,0,10,0">
+                                </Label>
+                                
+                                <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Text="View all 7 comments" FontSize="9" HorizontalTextAlignment="Start" Margin="15,10,10,10">
+                                </Label>
+
+                                <BoxView Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" BackgroundColor="White" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="10">
                                 </BoxView>
+                                
                             </Grid>
                         </local:CustomViewCell>
                     </DataTemplate>
@@ -144,7 +174,7 @@
                     </StackLayout>
                 </ListView.Footer>
             </local:CustomListView>
-                        
+
 
             <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsVisible="{Binding IsLoading}" BackgroundColor="Black" Opacity="0.3" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             </StackLayout>
