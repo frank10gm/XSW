@@ -198,7 +198,7 @@ namespace StritWalk
         }
 
         string commentscount = string.Empty;
-        public string Comments
+        public string Commentscount
         {
             get
             {

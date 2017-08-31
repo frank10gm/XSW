@@ -147,7 +147,7 @@
                                 </Label>
                                 <Label Grid.Row="2" Grid.Column="2" Text="[ ]" HorizontalTextAlignment="Center" TextColor="Black">
                                 </Label>
-                                <Label Grid.Row="2" Grid.Column="3" Text="{Binding Comments}" FontSize="12" HorizontalTextAlignment="Start" TextColor="Black">
+                                <Label Grid.Row="2" Grid.Column="3" Text="{Binding Commentscount}" FontSize="12" HorizontalTextAlignment="Start" TextColor="Black">
                                 </Label>
                                 <Label Grid.Row="2" Grid.Column="4" Text="[ ]" HorizontalTextAlignment="End" Margin="0,0,10,0">
                                 </Label>
