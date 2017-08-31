@@ -203,10 +203,10 @@ namespace StritWalk
             get
             {
                 string text = " Comments";
-                if (Int32.Parse(comments_count) == 1) text = " Comment";
-                return likes + text;
+                //if (Int32.Parse(comments_count) == 1) text = " Comment";
+                return comments_count + text;
             }
-            set { SetProperty(ref likes, value); }
+            set { SetProperty(ref comments_count, value); }
         }
 
     }

@@ -55,6 +55,8 @@ namespace StritWalk
                     Settings.listEnd = true;
                     MessagingCenter.Send<CloudDataStore, bool>(this, "NotEnd", false);
                 }
+
+                Console.WriteLine("###" + json);
                 items = await Task.Run(() => JsonConvert.DeserializeObject<IList<Item>>(json));
             }
 
