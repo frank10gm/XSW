@@ -24,7 +24,7 @@
                     </StackLayout>
                 </Grid>
             </ScrollView>
-            <Entry VerticalOptions="End"></Entry>
+            <Entry VerticalOptions="End" IsVisible="False"></Entry>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
