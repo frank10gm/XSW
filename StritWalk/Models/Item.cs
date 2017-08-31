@@ -197,16 +197,16 @@ namespace StritWalk
             set { SetProperty(ref likes, value); }
         }
 
-        string comments_count = string.Empty;
+        string commentscount = string.Empty;
         public string Comments
         {
             get
             {
                 string text = " Comments";
-                //if (Int32.Parse(comments_count) == 1) text = " Comment";
-                return comments_count + text;
+                if (Int32.Parse(commentscount) == 1) text = " Comment";
+                return commentscount + text;
             }
-            set { SetProperty(ref comments_count, value); }
+            set { SetProperty(ref commentscount, value); }
         }
 
     }
