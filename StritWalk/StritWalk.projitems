@@ -9,6 +9,7 @@
     <Import_RootNamespace>StritWalk</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)GenericCustomElements\FlatButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableRangeCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Settings.cs" />
@@ -74,6 +75,5 @@
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)CustomMaps\" />
     <Folder Include="$(MSBuildThisFileDirectory)CustomListView\" />
-    <Folder Include="$(MSBuildThisFileDirectory)GenericCustomElements\" />
   </ItemGroup>
 </Project>

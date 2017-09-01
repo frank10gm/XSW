@@ -16,6 +16,7 @@ namespace StritWalk
         public Command LoadItemsCommand { get; set; }
         public ICommand PostCommand { get; }
         public CustomEditor PostEditor { get; set; }
+        public ICommand ILikeThis { get; }
 
         string newPostDescription = string.Empty;
         public string NewPostDescription
@@ -26,10 +27,10 @@ namespace StritWalk
 
         Color postPlaceholder = Color.Black;
         public Color PostPlaceholder
-		{
+        {
             get { return postPlaceholder; }
             set { SetProperty(ref postPlaceholder, value); }
-		}
+        }
 
         bool isNotEnd = true;
         public bool IsNotEnd { get { return isNotEnd; } set { SetProperty(ref isNotEnd, value); } }
@@ -40,6 +41,7 @@ namespace StritWalk
             Items = new ObservableRangeCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             PostCommand = new Command(async () => await PostTask());
+            ILikeThis = new Command(async (par1) => await ILikeThisTask((string)par1));
 
             MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
             {
@@ -48,9 +50,10 @@ namespace StritWalk
                 await DataStore.AddItemAsync(_item);
             });
 
-            MessagingCenter.Subscribe<CloudDataStore, bool>(this, "NotEnd", (sender, arg) => {
-                IsNotEnd = arg;			
-			});
+            MessagingCenter.Subscribe<CloudDataStore, bool>(this, "NotEnd", (sender, arg) =>
+            {
+                IsNotEnd = arg;
+            });
         }
 
         async Task PostTask()
@@ -126,6 +129,11 @@ namespace StritWalk
             {
                 IsBusy = false;
             }
+        }
+
+        async Task ILikeThisTask(string par1)
+        {
+            Console.WriteLine(par1);
         }
     }
 }

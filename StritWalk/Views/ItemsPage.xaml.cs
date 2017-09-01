@@ -13,7 +13,7 @@ namespace StritWalk
         ItemsViewModel viewModel;
         IList<Item> items;
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
-        public ICommand LoadMoreCommand{get; set;}
+        public ICommand LoadMoreCommand { get; }
 
         public ItemsPage()
         {
@@ -26,6 +26,57 @@ namespace StritWalk
             viewModel.PostEditor = PostEditor;
 
             LoadMoreCommand = new Command(async () => await LoadMoreItems());
+
+            ItemsListView.ItemTemplate = new DataTemplate(() =>
+            {
+                var grid = new Grid();
+                grid.Padding = 0;
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(10) });
+
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(40) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(40) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(40) });
+
+                var userLabel = new Label { Margin = new Thickness(20, 10, 10, 5) };
+                userLabel.SetBinding(Label.FormattedTextProperty, "Username");
+                grid.Children.Add(userLabel, 0, 0);
+                Grid.SetColumnSpan(userLabel, 4);
+
+                var postLabel = new Label { Margin = new Thickness(20, 0, 20, 20) };
+                postLabel.SetBinding(Label.FormattedTextProperty, "Post");
+                grid.Children.Add(postLabel, 0, 1);
+                Grid.SetColumnSpan(postLabel, 5);
+
+                var likeButton = new Button();
+                likeButton.SetBinding(Button.TextProperty, "Likes");
+                grid.Children.Add(likeButton, 1, 2);
+                //Grid.SetColumnSpan(likeButton, 2);
+
+                var commentsButton = new Button();
+                commentsButton.SetBinding(Button.TextProperty, "Comments_count");
+                grid.Children.Add(commentsButton, 3, 2);
+                //Grid.SetColumnSpan(commentsButton, 2);
+
+                //var otherButton = new Button { Text = "Actions" };                
+                //grid.Children.Add(otherButton, 4, 2);                
+
+                var commentsLabel = new Label { Margin = new Thickness(15, 10, 10, 10), Text = "View all comments", TextColor = Color.Gray, FontSize = 9, IsVisible = false };
+                commentsLabel.SetBinding(Label.IsVisibleProperty, "ViewComments");
+                grid.Children.Add(commentsLabel, 0, 3);                
+                Grid.SetColumnSpan(commentsLabel, 5);
+
+                var whiteSeparator = new BoxView { BackgroundColor = Color.White, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, HeightRequest = 10 };
+                grid.Children.Add(whiteSeparator, 0, 4);
+                Grid.SetColumnSpan(whiteSeparator, 5);
+
+                return new CustomViewCell { View = grid };
+            });
 
         }
 
@@ -44,7 +95,7 @@ namespace StritWalk
 
         private void OnCellTapped(object sender, EventArgs args)
         {
-			
+
         }
 
         private void OnFocused(object sender, EventArgs args)
@@ -70,9 +121,10 @@ namespace StritWalk
         void OnReachBottom(object sender, ItemVisibilityEventArgs args)
         {
             if (viewModel.Items[viewModel.Items.Count - 1] == args.Item && !Settings.listEnd)
-            {                
-                LoadMoreCommand.Execute(null);               
-            }         
+            {
+                //LoadMoreCommand.Execute(null);
+                Task.Run(LoadMoreItems);
+            }
         }
 
         async Task LoadMoreItems()
@@ -80,12 +132,15 @@ namespace StritWalk
             try
             {
                 viewModel.start += 20;
-                items = await DataStore.GetItemsAsync(true, viewModel.start);                
-                viewModel.Items.AddRange(items);                
+                items = await DataStore.GetItemsAsync(true, viewModel.start);
             }
             finally
             {
-                
+                viewModel.Items.AddRange(items);
+                //for (var i = 0; i < items.Count; i++)
+                //{
+                //    viewModel.Items.Add(items[i]);                    
+                //}
             }
         }
 

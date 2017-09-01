@@ -189,9 +189,10 @@ namespace StritWalk
         string likes = string.Empty;
         public string Likes
         {
-            get {
+            get
+            {
                 string text = " Likes";
-                if (Int32.Parse(likes) == 1) text = " Like"; 
+                if (Int32.Parse(likes) == 1) text = " Like";
                 return likes + text;
             }
             set { SetProperty(ref likes, value); }
@@ -207,6 +208,15 @@ namespace StritWalk
                 return comments_count + text;
             }
             set { SetProperty(ref comments_count, value); }
+        }
+       
+        public bool ViewComments
+        {
+            get
+            {                
+                if (Int32.Parse(comments_count) == 0) return false;
+                else return true;
+            }        
         }
 
 
