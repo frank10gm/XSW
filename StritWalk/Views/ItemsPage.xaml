@@ -9,7 +9,7 @@
             <local:CustomListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" SeparatorColor="White" SeparatorVisibility="None" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="ItemsListView" VerticalOptions="FillAndExpand" HasUnevenRows="true" RefreshCommand="{Binding LoadItemsCommand}" IsPullToRefreshEnabled="true"
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom" ItemsSource="{Binding Items}" >
                 <x:Arguments>
-                    <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
+                    <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
                 </x:Arguments>
                 <ListView.Header>
                     <Grid Padding="0,20,0,15" RowSpacing="20" ColumnSpacing="0">
@@ -141,15 +141,15 @@
                                 <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" TextColor="Black" FormattedText="{Binding Post}" HorizontalTextAlignment="Start" Margin="10,0,10,30">
                                 </Label>
 
-                                <Label Grid.Row="2" Grid.Column="0" Text="[ ]" HorizontalTextAlignment="Center" TextColor="Black" >
+                                <Label Grid.Row="2" Grid.Column="0" Text="[ ]" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="Black" >
                                 </Label>
-                                <Label Grid.Row="2" Grid.Column="1"  Text="{Binding Likes}" FontSize="12" HorizontalTextAlignment="Start" Margin="0,0,0,0" TextColor="Black">
+                                <Label Grid.Row="2" Grid.Column="1"  Text="{Binding Likes}" FontSize="12" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" Margin="0,0,0,0" TextColor="Black">
                                 </Label>
-                                <Label Grid.Row="2" Grid.Column="2" Text="[ ]" HorizontalTextAlignment="Center" TextColor="Black">
+                                <Label Grid.Row="2" Grid.Column="2" Text="[ ]" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="Black">
                                 </Label>
-                                <Label Grid.Row="2" Grid.Column="3" Text="{Binding Comments_count}" FontSize="12" HorizontalTextAlignment="Start" TextColor="Black">
+                                <Label Grid.Row="2" Grid.Column="3" Text="{Binding Comments_count}" FontSize="12" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" TextColor="Black">
                                 </Label>
-                                <Label Grid.Row="2" Grid.Column="4" Text="[ ]" HorizontalTextAlignment="End" Margin="0,0,10,0">
+                                <Label Grid.Row="2" Grid.Column="4" Text="[ ]" HorizontalTextAlignment="End" Margin="0,0,10,0" VerticalTextAlignment="Center">
                                 </Label>
                                 
                                 <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Text="View all 7 comments" FontSize="9" HorizontalTextAlignment="Start" Margin="15,10,10,10">
