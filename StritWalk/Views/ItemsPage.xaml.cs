@@ -53,12 +53,12 @@ namespace StritWalk
                 grid.Children.Add(postLabel, 0, 1);
                 Grid.SetColumnSpan(postLabel, 5);
 
-                var likeButton = new Button();
+                var likeButton = new Button() { TextColor = Color.Black, FontSize = 12 };
                 likeButton.SetBinding(Button.TextProperty, "Likes");
                 grid.Children.Add(likeButton, 1, 2);
                 //Grid.SetColumnSpan(likeButton, 2);
 
-                var commentsButton = new Button();
+                var commentsButton = new Button(){TextColor = Color.Black, FontSize = 12 };
                 commentsButton.SetBinding(Button.TextProperty, "Comments_count");
                 grid.Children.Add(commentsButton, 3, 2);
                 //Grid.SetColumnSpan(commentsButton, 2);

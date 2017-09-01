@@ -191,7 +191,7 @@ namespace StritWalk
         {
             get
             {
-                string text = " Likes";
+                string text = "  Likes";
                 if (Int32.Parse(likes) == 1) text = " Like";
                 return likes + text;
             }
@@ -203,7 +203,7 @@ namespace StritWalk
         {
             get
             {
-                string text = " Comments";
+                string text = "  Comments";
                 if (Int32.Parse(comments_count) == 1) text = " Comment";
                 return comments_count + text;
             }
