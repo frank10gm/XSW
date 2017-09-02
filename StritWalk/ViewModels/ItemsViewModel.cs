@@ -24,11 +24,12 @@ namespace StritWalk
             get { return newPostDescription; }
             set { SetProperty(ref newPostDescription, value); }
         }
-        
+
+        string endText = string.Empty;
         public string EndText
         {
-            get;
-            set;
+            get { return endText; }
+            set { SetProperty(ref endText, value); }
         }
 
         Color postPlaceholder = Color.Black;
@@ -113,6 +114,7 @@ namespace StritWalk
 
             try
             {
+                EndText = "";
                 start = 0;
                 isNotEnd = false;
                 Settings.listEnd = false;

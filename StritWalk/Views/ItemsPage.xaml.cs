@@ -141,7 +141,7 @@ namespace StritWalk
             }
             else
             {
-                viewModel.EndText = "The End";
+                viewModel.EndText = "The End";                
             }
         }
 

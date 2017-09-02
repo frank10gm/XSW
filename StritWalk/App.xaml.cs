@@ -43,47 +43,55 @@ namespace StritWalk
 
         public static void LogOut()
         {
-			Settings.UserId = "";
-			Settings.AuthToken = "";
-			Current.MainPage = new NavigationPage(new LoginPage())
-			{
-				BarBackgroundColor = (Color)Current.Resources["Primary"],
-				BarTextColor = Color.White
-			};
+            Settings.UserId = "";
+            Settings.AuthToken = "";
+            Current.MainPage = new NavigationPage(new LoginPage())
+            {
+                BarBackgroundColor = (Color)Current.Resources["Primary"],
+                BarTextColor = Color.White
+            };
         }
 
         public static void GoToMainPage()
         {
 
-			TabbedPage tabbedPage = new TabbedPage
-			{
-				Children = {
-					new NavigationPage(new ItemsPage())
-					{
-						Icon = Device.OnPlatform("tab_about.png", null, null),
-						Title = Device.OnPlatform(null, "Home", "Home")
+            TabbedPage tabbedPage = new TabbedPage
+            {
+                Children = {
+                    new NavigationPage(new ItemsPage())
+                    {
+                        Icon = Device.OnPlatform("tab_about.png", null, null),
+                        Title = Device.OnPlatform(null, "Home", "Home")
                         //Title = "home"
                     },
-					new NavigationPage(new AboutPage())
-					{
-						Icon = Device.OnPlatform("tab_about.png", null, null),
-						Title = Device.OnPlatform(null, "Map", "Map")
+                    new NavigationPage(new AboutPage())
+                    {
+                        Icon = Device.OnPlatform("tab_about.png", null, null),
+                        Title = Device.OnPlatform(null, "Map", "Map")
                         //Title = "map"
                     },
                     new NavigationPage(new ItemsPage())
-					{
-						Icon = Device.OnPlatform("tab_about.png", null, null),
-						Title = Device.OnPlatform(null, "News", "News")
+                    {
+                        Icon = Device.OnPlatform("tab_about.png", null, null),
+                        Title = Device.OnPlatform(null, "News", "News")
                         //Title = "map"
                     },
-					new NavigationPage(new MenuPage())
-					{
-						Icon = Device.OnPlatform("slideout.png", null, null),
-						Title = Device.OnPlatform(null, "Menu", "Menu")
+                    new NavigationPage(new MenuPage())
+                    {
+                        Icon = Device.OnPlatform("slideout.png", null, null),
+                        Title = Device.OnPlatform(null, "Menu", "Menu")
                         //Title = "map"
                     }
-				}
-			};
+                }
+            };
+
+            if (Device.iOS == Device.RuntimePlatform)
+            {
+                tabbedPage.BarBackgroundColor = Color.FromHex("#ffffff");
+                tabbedPage.BackgroundColor = Color.FromHex("#2b98f0");
+                tabbedPage.BarTextColor = Color.FromHex("#2b98f0");
+            }
+       
 
             Current.MainPage = tabbedPage;
 
