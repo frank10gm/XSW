@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="StritWalk.ItemsPage" Title="{Binding Title}" x:Name="BrowseItemsPage" xmlns:local="clr-namespace:StritWalk;">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:BoolConvert x:Key="cnv"></local:BoolConvert>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="New" Clicked="AddItem_Clicked" />
     </ContentPage.ToolbarItems>
@@ -169,7 +174,7 @@
                 </ListView.ItemTemplate>-->
                 <ListView.Footer>
                     <StackLayout Padding="0,30,0,30">
-                        <Label Text="The End" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Gray">
+                        <Label Text="{Binding EndText}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Gray" IsVisible="{Binding IsNotEnd, Converter={StaticResource cnv}}">
                         </Label>
                         <ActivityIndicator IsRunning="true" IsVisible="{Binding IsNotEnd}" HorizontalOptions="Center" VerticalOptions="Center">
                             <ActivityIndicator.Color>

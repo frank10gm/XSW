@@ -24,6 +24,12 @@ namespace StritWalk
             get { return newPostDescription; }
             set { SetProperty(ref newPostDescription, value); }
         }
+        
+        public string EndText
+        {
+            get;
+            set;
+        }
 
         Color postPlaceholder = Color.Black;
         public Color PostPlaceholder
@@ -32,7 +38,7 @@ namespace StritWalk
             set { SetProperty(ref postPlaceholder, value); }
         }
 
-        bool isNotEnd = true;
+        bool isNotEnd = false;
         public bool IsNotEnd { get { return isNotEnd; } set { SetProperty(ref isNotEnd, value); } }
 
         public ItemsViewModel()
@@ -108,11 +114,12 @@ namespace StritWalk
             try
             {
                 start = 0;
-                IsNotEnd = true;
+                isNotEnd = false;
                 Settings.listEnd = false;
                 Items.Clear();
                 var items = await DataStore.GetItemsAsync(true);
                 Items.ReplaceRange(items);
+                IsNotEnd = true;
                 //Items.Insert(0, new Item());
             }
             catch (Exception ex)
