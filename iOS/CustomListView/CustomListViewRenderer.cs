@@ -1,9 +1,8 @@
-﻿using System;
+﻿
 using StritWalk;
 using StritWalk.iOS;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-using UIKit;
 using System.Reflection;
 using System.Collections.Specialized;
 
@@ -42,16 +41,19 @@ namespace StritWalk.iOS
 
             if (e.NewElement != null)
             {                
-                Control.ShowsVerticalScrollIndicator = true;                
+                Control.ShowsVerticalScrollIndicator = false;                
                 templatedItemsList = (INotifyCollectionChanged)ListViewTemplatedItemsPropertyInfo.GetValue(e.NewElement);                
                 templatedItemsList.CollectionChanged += this.OnCollectionChanged;
                 Control.Source = dataSource = new CustomListViewSource(Element as CustomListView, Control.Source, ListViewTemplatedItemsPropertyInfo);
-                UpdateRowHeight();
+                //UpdateRowHeight();
             }
+
+            //Console.WriteLine("@@@ onelementchanged");
         }
 
         protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+            //Console.WriteLine("@@@ onpropertychanged");
             base.OnElementPropertyChanged(sender, e);
             Control.Source = dataSource = new CustomListViewSource(Element as CustomListView, Control.Source, ListViewTemplatedItemsPropertyInfo);
             ClearRowHeightCache();
@@ -59,6 +61,7 @@ namespace StritWalk.iOS
 
         private void UpdateRowHeight()
         {
+            //Console.WriteLine("@@@ update row height");
             var rowHeight = Element.RowHeight;
             Control.EstimatedRowHeight = 200;
             Control.RowHeight = rowHeight <= 0 ? 44 : rowHeight;

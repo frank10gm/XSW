@@ -126,18 +126,18 @@ namespace StritWalk
             //ItemsListView.SelectedItem = null;
         }
 
-        async void OnReachBottom(object sender, ItemVisibilityEventArgs args)
+        void OnReachBottom(object sender, ItemVisibilityEventArgs args)
         {
             
             if (viewModel.Items[viewModel.Items.Count - 1] == args.Item && !Settings.listEnd)
             {
                 //LoadMoreCommand.Execute(null);                
-                //Task.Run(() => LoadMoreItems(args.Item ));
+                Task.Run(() => LoadMoreItems(args.Item));
                 //IsBusy = true;
-                Console.WriteLine("### " + "reachedBottom");
-                viewModel.start += 20;
-                items = await DataStore.GetItemsAsync(true, viewModel.start);
-                viewModel.Items.AddRange(items);
+                //Console.WriteLine("### " + "reachedBottom");
+                //viewModel.start += 20;
+                //items = await DataStore.GetItemsAsync(true, viewModel.start);
+                //viewModel.Items.AddRange(items);
                 
                 //ItemsListView.ScrollTo(args.Item, ScrollToPosition.End, false);
                 //IsBusy = false;
@@ -153,13 +153,11 @@ namespace StritWalk
             try
             {
                 viewModel.start += 20;
-                items = await DataStore.GetItemsAsync(true, viewModel.start);
-                viewModel.Items.AddRange(items);
-                ItemsListView.ScrollTo(viewModel.Items[10], ScrollToPosition.End, false);
+                items = await DataStore.GetItemsAsync(true, viewModel.start);                                
             }
             finally
-            {                
-                
+            {
+                viewModel.Items.AddRange(items);
                 //for (var i = 0; i < items.Count; i++)
                 //{
                 //    viewModel.Items.Add(items[i]);

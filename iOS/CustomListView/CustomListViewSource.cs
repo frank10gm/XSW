@@ -1,31 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using StritWalk;
 using Foundation;
 using UIKit;
 using Xamarin.Forms;
-using System;
-using StritWalk;
-using StritWalk.iOS;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.iOS;
-using UIKit;
 using System.Reflection;
-using System.Collections.Specialized;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Reflection;
-
-using Foundation;
-
-using UIKit;
-
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.iOS;
 
 namespace StritWalk.iOS
 {
@@ -88,29 +67,14 @@ namespace StritWalk.iOS
 
 
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
-        {
-            //UITableViewCell cell = tableView.DequeueReusableCell(cellIdentifier) ;
-            //var item = tableItems[indexPath.Row];
-
-
-            //if (cell == null)
-            //{
-            //    cell = new UITableViewCell(UITableViewCellStyle.Default, cellIdentifier);
-            //}
-
-            //cell.TextLabel.Text = item.Creator;
-
-            //return cell;
-
-            //return GetCellInternal(tableView, indexPath);
+        {                       
             return source.GetCell(tableView, indexPath);
         }
 
-        private UITableViewCell GetCellInternal(UITableView tableView, NSIndexPath indexPath)
-        {
-            return source.GetCell(tableView, indexPath);
+        public override void WillDisplay(UITableView tableView, UITableViewCell cell, NSIndexPath indexPath)
+        {                        
+            cachedHeights[indexPath.Row] = cell.Frame.Size.Height;
         }
-
 
         public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
         {
@@ -118,16 +82,19 @@ namespace StritWalk.iOS
 
             if (this.list.RowHeight == -1 && cellForPath.Height == -1.0 && cellForPath is CustomViewCell)
             {
+                return UITableView.AutomaticDimension;
 
-                //return UITableView.AutomaticDimension;
+                //var view = ((CustomViewCell)cellForPath).View;
 
-                var view = ((ViewCell)cellForPath).View;
+                ////var sizeRequest = view.GetSizeRequest(tableView.Frame.Width, double.PositiveInfinity);
+                //var sizeRequest = view.Measure(tableView.Frame.Width, double.PositiveInfinity, MeasureFlags.IncludeMargins);
+                ////Console.WriteLine("@@@ " + sizeRequest);
 
-                var sizeRequest = view.GetSizeRequest(tableView.Frame.Width, double.PositiveInfinity);
+                //cachedHeights[indexPath.Row] = sizeRequest.Request.Height;
 
-                cachedHeights[indexPath.Row] = sizeRequest.Request.Height;
+                
 
-                return (nfloat)sizeRequest.Request.Height;
+                //return (nfloat)sizeRequest.Request.Height;
             }
 
             var renderHeight = cellForPath.RenderHeight;
@@ -140,15 +107,19 @@ namespace StritWalk.iOS
 
         public override nfloat EstimatedHeight(UITableView tableView, NSIndexPath indexPath)
         {
-            return this.cachedHeights.ContainsKey(indexPath.Row) ? (nfloat)this.cachedHeights[indexPath.Row] : 200;
+            //if(cachedHeights.ContainsKey(indexPath.Row))
+            //{
+            //    Console.WriteLine("@@@ " + (nfloat)this.cachedHeights[indexPath.Row]);
+            //}            
+            return this.cachedHeights.ContainsKey(indexPath.Row) ? (nfloat)this.cachedHeights[indexPath.Row] : UITableView.AutomaticDimension;
         }
 
         private Cell GetCellForPath(NSIndexPath indexPath)
         {
             var templatedItemsList = (IReadOnlyList<Cell>)specialProperty.GetValue(this.list);
 
-            if (this.list.IsGroupingEnabled)
-                templatedItemsList = (IReadOnlyList<Cell>)((IList)templatedItemsList)[indexPath.Section];
+            //if (this.list.IsGroupingEnabled)
+            //    templatedItemsList = (IReadOnlyList<Cell>)((IList)templatedItemsList)[indexPath.Section];
 
             return templatedItemsList[indexPath.Row];
         }
