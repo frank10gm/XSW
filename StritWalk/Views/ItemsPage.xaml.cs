@@ -75,7 +75,7 @@ namespace StritWalk
                     
                 };
 
-                grid.GestureRecognizers.Add(tapGestureRecognizer);
+                //grid.GestureRecognizers.Add(tapGestureRecognizer);
 
                 CustomViewCell cell = new CustomViewCell();
                 ;
