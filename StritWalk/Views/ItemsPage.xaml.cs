@@ -24,7 +24,7 @@ namespace StritWalk
             BindingContext = viewModel = new ItemsViewModel();
             viewModel.Navigation = Navigation;
             viewModel.PostEditor = PostEditor;
-            LoadMoreCommand = new Command(async () => await LoadMoreItems());
+            LoadMoreCommand = new Command(async () => await LoadMoreItems(null));
 
             ItemsListView.ItemTemplate = new DataTemplate(() =>
             {
@@ -70,6 +70,13 @@ namespace StritWalk
                 grid.Children.Add(whiteSeparator, 0, 3);
                 Grid.SetColumnSpan(whiteSeparator, 2);
 
+                var tapGestureRecognizer = new TapGestureRecognizer();
+                tapGestureRecognizer.Tapped += (s, e) => {
+                    
+                };
+
+                grid.GestureRecognizers.Add(tapGestureRecognizer);
+
                 return new CustomViewCell { View = grid };
 
             });
@@ -114,12 +121,18 @@ namespace StritWalk
             //ItemsListView.SelectedItem = null;
         }
 
-        void OnReachBottom(object sender, ItemVisibilityEventArgs args)
+        async void OnReachBottom(object sender, ItemVisibilityEventArgs args)
         {
             if (viewModel.Items[viewModel.Items.Count - 1] == args.Item && !Settings.listEnd)
             {
-                //LoadMoreCommand.Execute(null);
-                Task.Run(LoadMoreItems);
+                //LoadMoreCommand.Execute(null);                
+                //Task.Run(() => LoadMoreItems(args.Item ));
+                //IsBusy = true;
+                viewModel.start += 20;
+                items = await DataStore.GetItemsAsync(true, viewModel.start);
+                viewModel.Items.AddRange(items);
+                //ItemsListView.ScrollTo(args.Item, ScrollToPosition.End, false);
+                //IsBusy = false;
             }
             else
             {
@@ -127,17 +140,18 @@ namespace StritWalk
             }
         }
 
-        async Task LoadMoreItems()
+        async Task LoadMoreItems(object x)
         {
             try
             {
                 viewModel.start += 20;
                 items = await DataStore.GetItemsAsync(true, viewModel.start);
-                //await Task.Delay(3000);
                 viewModel.Items.AddRange(items);
+                ItemsListView.ScrollTo(viewModel.Items[10], ScrollToPosition.End, false);
             }
             finally
             {                
+                
                 //for (var i = 0; i < items.Count; i++)
                 //{
                 //    viewModel.Items.Add(items[i]);

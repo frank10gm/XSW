@@ -24,6 +24,9 @@ namespace StritWalk.iOS
                 //cell.SelectedBackgroundView
             }
 
+            tv.RowHeight = UITableView.AutomaticDimension;
+            tv.EstimatedRowHeight = 200;            
+
             return cell;
         }
 
