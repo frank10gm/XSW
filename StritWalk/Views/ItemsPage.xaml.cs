@@ -66,7 +66,7 @@ namespace StritWalk
                 grid.Children.Add(commentsLabel, 0, 2);
                 Grid.SetColumnSpan(commentsLabel, 2);
 
-                var whiteSeparator = new BoxView { BackgroundColor = Color.White, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, HeightRequest = 10 };
+                var whiteSeparator = new BoxView { BackgroundColor = Color.White, HeightRequest = 10 };
                 grid.Children.Add(whiteSeparator, 0, 3);
                 Grid.SetColumnSpan(whiteSeparator, 2);
 
@@ -134,13 +134,13 @@ namespace StritWalk
                 viewModel.start += 20;
                 items = await DataStore.GetItemsAsync(true, viewModel.start);
                 //await Task.Delay(3000);
+                viewModel.Items.AddRange(items);
             }
             finally
-            {
-                viewModel.Items.AddRange(items);
+            {                
                 //for (var i = 0; i < items.Count; i++)
                 //{
-                //    viewModel.Items.Add(items[i]);                    
+                //    viewModel.Items.Add(items[i]);
                 //}
             }
         }

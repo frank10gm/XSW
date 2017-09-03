@@ -30,7 +30,7 @@ namespace StritWalk.iOS
 
             if (e.NewElement != null)
             {
-
+                Control.ShowsVerticalScrollIndicator = false;
             }
         }
 

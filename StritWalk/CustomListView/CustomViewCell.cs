@@ -5,6 +5,10 @@ namespace StritWalk
 {
     public class CustomViewCell : ViewCell
     {
+        public CustomViewCell()
+        {
+            
+        }
         
     }
 }

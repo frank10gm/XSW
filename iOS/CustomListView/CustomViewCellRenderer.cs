@@ -5,6 +5,7 @@ using System.ComponentModel;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
+using System.Drawing;
 
 [assembly: ExportRenderer(typeof(CustomViewCell), typeof(CustomViewCellRenderer))]
 namespace StritWalk.iOS
@@ -25,6 +26,8 @@ namespace StritWalk.iOS
 
             return cell;
         }
+
+        
 
     }
 }
