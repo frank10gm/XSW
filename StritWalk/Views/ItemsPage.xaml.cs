@@ -31,8 +31,8 @@ namespace StritWalk
                 var grid = new Grid();
                 grid.Padding = 0;
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(20) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(20) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(10) });
 
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -61,8 +61,8 @@ namespace StritWalk
                 //var otherButton = new Button { Text = "Actions" };                
                 //grid.Children.Add(otherButton, 4, 2);                
 
-                var commentsLabel = new Label { Margin = new Thickness(15, 10, 10, 10), Text = "View all comments", TextColor = Color.Gray, FontSize = 9, IsVisible = false };
-                commentsLabel.SetBinding(Label.IsVisibleProperty, "ViewComments");
+                var commentsLabel = new Label { Margin = new Thickness(15, 10, 10, 10), Text = "", TextColor = Color.Gray, FontSize = 9, IsVisible = false };
+                commentsLabel.SetBinding(Label.TextProperty, "ViewComments");
                 grid.Children.Add(commentsLabel, 0, 2);
                 Grid.SetColumnSpan(commentsLabel, 2);
 
@@ -72,28 +72,6 @@ namespace StritWalk
 
                 return new CustomViewCell { View = grid };
 
-
-                //            var layout = new AbsoluteLayout();
-
-                //            var userLabel = new Label() { BackgroundColor = Color.Red, Margin = new Thickness(20, 10, 10, 5) };
-                //            userLabel.SetBinding(Label.FormattedTextProperty, "Username");
-                //            AbsoluteLayout.SetLayoutBounds(userLabel, new Rectangle(0,0,1,.3));
-                //            AbsoluteLayout.SetLayoutFlags(userLabel, AbsoluteLayoutFlags.All);            
-                //            layout.Children.Add(userLabel);
-
-                //            var postLabel = new Label(){ BackgroundColor = Color.Blue, Margin = new Thickness(20, 0, 20, 20) };
-                //            postLabel.SetBinding(Label.FormattedTextProperty, "Post");
-                //            AbsoluteLayout.SetLayoutBounds(postLabel, new Rectangle(0, .9, 1, .6));
-                //            AbsoluteLayout.SetLayoutFlags(postLabel, AbsoluteLayoutFlags.All);
-                //            layout.Children.Add(postLabel);
-
-                //var whiteSeparator = new BoxView { BackgroundColor = Color.White, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, HeightRequest = 10 };
-                //AbsoluteLayout.SetLayoutBounds(whiteSeparator, new Rectangle(0, 1, 1, 10));
-                //            AbsoluteLayout.SetLayoutFlags(whiteSeparator, AbsoluteLayoutFlags.PositionProportional);
-                //            AbsoluteLayout.SetLayoutFlags(whiteSeparator, AbsoluteLayoutFlags.WidthProportional);
-                //layout.Children.Add(whiteSeparator);
-
-                //return new CustomViewCell { View = layout };
             });
 
         }
@@ -113,7 +91,7 @@ namespace StritWalk
 
         private void OnCellTapped(object sender, EventArgs args)
         {
-
+            ItemsListView.SelectedItem = null;
         }
 
         private void OnFocused(object sender, EventArgs args)
@@ -155,6 +133,7 @@ namespace StritWalk
             {
                 viewModel.start += 20;
                 items = await DataStore.GetItemsAsync(true, viewModel.start);
+                await Task.Delay(3000);
             }
             finally
             {

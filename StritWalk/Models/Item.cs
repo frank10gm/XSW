@@ -210,12 +210,12 @@ namespace StritWalk
             set { SetProperty(ref comments_count, value); }
         }
        
-        public bool ViewComments
+        public string ViewComments
         {
             get
             {                
-                if (Int32.Parse(comments_count) == 0) return false;
-                else return true;
+                if (Int32.Parse(comments_count) == 0) return "";
+                else return "View all " + comments_count + " comments";
             }        
         }
 
