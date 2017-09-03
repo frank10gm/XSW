@@ -22,10 +22,7 @@ namespace StritWalk.iOS
 
                 cell.SelectionStyle = UITableViewCellSelectionStyle.None;
                 //cell.SelectedBackgroundView
-            }
-
-            tv.RowHeight = UITableView.AutomaticDimension;
-            tv.EstimatedRowHeight = 200;            
+            }          
 
             return cell;
         }

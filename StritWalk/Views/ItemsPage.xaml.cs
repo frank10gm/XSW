@@ -77,7 +77,12 @@ namespace StritWalk
 
                 grid.GestureRecognizers.Add(tapGestureRecognizer);
 
-                return new CustomViewCell { View = grid };
+                CustomViewCell cell = new CustomViewCell();
+                ;
+                cell.View = grid;
+                //cell.Height = 234;                
+
+                return cell;
 
             });
 
@@ -123,14 +128,17 @@ namespace StritWalk
 
         async void OnReachBottom(object sender, ItemVisibilityEventArgs args)
         {
+            
             if (viewModel.Items[viewModel.Items.Count - 1] == args.Item && !Settings.listEnd)
             {
                 //LoadMoreCommand.Execute(null);                
                 //Task.Run(() => LoadMoreItems(args.Item ));
                 //IsBusy = true;
+                Console.WriteLine("### " + "reachedBottom");
                 viewModel.start += 20;
                 items = await DataStore.GetItemsAsync(true, viewModel.start);
                 viewModel.Items.AddRange(items);
+                
                 //ItemsListView.ScrollTo(args.Item, ScrollToPosition.End, false);
                 //IsBusy = false;
             }
