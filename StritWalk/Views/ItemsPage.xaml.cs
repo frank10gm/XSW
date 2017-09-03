@@ -133,7 +133,7 @@ namespace StritWalk
             {
                 viewModel.start += 20;
                 items = await DataStore.GetItemsAsync(true, viewModel.start);
-                await Task.Delay(3000);
+                //await Task.Delay(3000);
             }
             finally
             {
