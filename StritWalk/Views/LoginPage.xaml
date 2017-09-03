@@ -37,7 +37,7 @@
             <Button Grid.Row="3" Grid.Column="0" Text="Sign Up" x:Name="ButtonNowNow" HorizontalOptions="FillAndExpand" Clicked="Handle_Clicked" IsEnabled="{Binding IsNotBusy}" />
             <Button Grid.Row="3" Grid.Column="1" Text="Sign In" Command="{Binding SignInCommand}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding FormIsNotReady, Converter={StaticResource cnv}}" TextColor="White">
                 <Button.BackgroundColor>
-                    <OnPlatform x:TypeArguments="Color" Android="{StaticResource Primary}" iOS="{StaticResource Azure}" />
+                    <OnPlatform x:TypeArguments="Color" Android="{StaticResource Primary}" iOS="#ffffff" />
                 </Button.BackgroundColor>
             </Button>
             <StackLayout Grid.Row="4" Grid.ColumnSpan="2" VerticalOptions="Center" Orientation="Horizontal" HorizontalOptions="FillAndExpand">

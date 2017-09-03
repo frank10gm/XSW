@@ -3,9 +3,11 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 using Plugin.MediaManager;
 using System.Windows.Input;
 
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace StritWalk
 {
     public partial class ItemsPage : ContentPage
@@ -20,44 +22,40 @@ namespace StritWalk
             InitializeComponent();
 
             BindingContext = viewModel = new ItemsViewModel();
-            viewModel.Navigation = Navigation;        
-            viewModel.PostEditor = PostEditor;            
+            viewModel.Navigation = Navigation;
+            viewModel.PostEditor = PostEditor;
             LoadMoreCommand = new Command(async () => await LoadMoreItems());
 
             ItemsListView.ItemTemplate = new DataTemplate(() =>
             {
                 var grid = new Grid();
                 grid.Padding = 0;
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(20) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(20) });
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(10) });
 
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(40) });
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(40) });
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(40) });
 
-                var userLabel = new Label { Margin = new Thickness(20, 10, 10, 5) };
-                userLabel.SetBinding(Label.FormattedTextProperty, "Username");
-                grid.Children.Add(userLabel, 0, 0);
-                Grid.SetColumnSpan(userLabel, 4);
+                //var userLabel = new Label { Margin = new Thickness(20, 10, 10, 5) };
+                //userLabel.SetBinding(Label.FormattedTextProperty, "Username");
+                //grid.Children.Add(userLabel, 0, 0);
+                //Grid.SetColumnSpan(userLabel, 4);
 
-                var postLabel = new Label { Margin = new Thickness(20, 0, 20, 20) };
+                var postLabel = new Label { Margin = new Thickness(20, 10, 20, 20) };
                 postLabel.SetBinding(Label.FormattedTextProperty, "Post");
-                grid.Children.Add(postLabel, 0, 1);
-                Grid.SetColumnSpan(postLabel, 5);
+                grid.Children.Add(postLabel, 0, 0);
+                Grid.SetColumnSpan(postLabel, 2);
 
                 var likeButton = new Button() { TextColor = Color.Black, FontSize = 12 };
                 likeButton.SetBinding(Button.TextProperty, "Likes");
-                grid.Children.Add(likeButton, 1, 2);
+                grid.Children.Add(likeButton, 0, 1);
                 //Grid.SetColumnSpan(likeButton, 2);
 
                 var commentsButton = new Button() { TextColor = Color.Black, FontSize = 12 };
                 commentsButton.SetBinding(Button.TextProperty, "Comments_count");
-                grid.Children.Add(commentsButton, 3, 2);
+                grid.Children.Add(commentsButton, 1, 1);
                 //Grid.SetColumnSpan(commentsButton, 2);
 
                 //var otherButton = new Button { Text = "Actions" };                
@@ -65,29 +63,35 @@ namespace StritWalk
 
                 var commentsLabel = new Label { Margin = new Thickness(15, 10, 10, 10), Text = "View all comments", TextColor = Color.Gray, FontSize = 9, IsVisible = false };
                 commentsLabel.SetBinding(Label.IsVisibleProperty, "ViewComments");
-                grid.Children.Add(commentsLabel, 0, 3);
-                Grid.SetColumnSpan(commentsLabel, 5);
+                grid.Children.Add(commentsLabel, 0, 2);
+                Grid.SetColumnSpan(commentsLabel, 2);
 
                 var whiteSeparator = new BoxView { BackgroundColor = Color.White, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, HeightRequest = 10 };
-                grid.Children.Add(whiteSeparator, 0, 4);
-                Grid.SetColumnSpan(whiteSeparator, 5);
+                grid.Children.Add(whiteSeparator, 0, 3);
+                Grid.SetColumnSpan(whiteSeparator, 2);
 
                 return new CustomViewCell { View = grid };
 
 
-                //var layout = new AbsoluteLayout();
+                //            var layout = new AbsoluteLayout();
 
-                //var userLabel = new Label { Margin = new Thickness(20, 10, 10, 5) };
-                //userLabel.SetBinding(Label.FormattedTextProperty, "Username");
-                //AbsoluteLayout.SetLayoutBounds(userLabel, new Rectangle(0,0,1,.2));
-                //AbsoluteLayout.SetLayoutFlags(userLabel, AbsoluteLayoutFlags.All);            
-                //layout.Children.Add(userLabel);
+                //            var userLabel = new Label() { BackgroundColor = Color.Red, Margin = new Thickness(20, 10, 10, 5) };
+                //            userLabel.SetBinding(Label.FormattedTextProperty, "Username");
+                //            AbsoluteLayout.SetLayoutBounds(userLabel, new Rectangle(0,0,1,.3));
+                //            AbsoluteLayout.SetLayoutFlags(userLabel, AbsoluteLayoutFlags.All);            
+                //            layout.Children.Add(userLabel);
 
-                //var postLabel = new Label { Margin = new Thickness(20, 0, 20, 20) };
-                //postLabel.SetBinding(Label.FormattedTextProperty, "Post");
-                //AbsoluteLayout.SetLayoutBounds(postLabel, new Rectangle(0, .4, 1, .8));
-                //AbsoluteLayout.SetLayoutFlags(postLabel, AbsoluteLayoutFlags.All);
-                //layout.Children.Add(postLabel);
+                //            var postLabel = new Label(){ BackgroundColor = Color.Blue, Margin = new Thickness(20, 0, 20, 20) };
+                //            postLabel.SetBinding(Label.FormattedTextProperty, "Post");
+                //            AbsoluteLayout.SetLayoutBounds(postLabel, new Rectangle(0, .9, 1, .6));
+                //            AbsoluteLayout.SetLayoutFlags(postLabel, AbsoluteLayoutFlags.All);
+                //            layout.Children.Add(postLabel);
+
+                //var whiteSeparator = new BoxView { BackgroundColor = Color.White, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, HeightRequest = 10 };
+                //AbsoluteLayout.SetLayoutBounds(whiteSeparator, new Rectangle(0, 1, 1, 10));
+                //            AbsoluteLayout.SetLayoutFlags(whiteSeparator, AbsoluteLayoutFlags.PositionProportional);
+                //            AbsoluteLayout.SetLayoutFlags(whiteSeparator, AbsoluteLayoutFlags.WidthProportional);
+                //layout.Children.Add(whiteSeparator);
 
                 //return new CustomViewCell { View = layout };
             });
@@ -141,7 +145,7 @@ namespace StritWalk
             }
             else
             {
-                viewModel.EndText = "The End";                
+                viewModel.EndText = "The End";
             }
         }
 

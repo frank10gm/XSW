@@ -142,8 +142,8 @@ namespace StritWalk
                     details = new Span { Text = "here, now" + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#333333") };
                 }
 
-                //result.Spans.Add(creator);
-                //result.Spans.Add(details);
+                result.Spans.Add(creator);
+                result.Spans.Add(details);
                 if (!string.IsNullOrEmpty(Name) || !string.IsNullOrWhiteSpace(Name))
                 {
                     result.Spans.Add(brace1);
