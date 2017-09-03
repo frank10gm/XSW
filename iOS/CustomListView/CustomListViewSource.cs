@@ -78,12 +78,13 @@ namespace StritWalk.iOS
 
         public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
         {
+            return UITableView.AutomaticDimension;
+
             var cellForPath = this.GetCellForPath(indexPath);
 
             if (this.list.RowHeight == -1 && cellForPath.Height == -1.0 && cellForPath is CustomViewCell)
             {
-                return UITableView.AutomaticDimension;
-
+                
                 //var view = ((CustomViewCell)cellForPath).View;
 
                 ////var sizeRequest = view.GetSizeRequest(tableView.Frame.Width, double.PositiveInfinity);
@@ -91,7 +92,7 @@ namespace StritWalk.iOS
                 ////Console.WriteLine("@@@ " + sizeRequest);
 
                 //cachedHeights[indexPath.Row] = sizeRequest.Request.Height;
-
+                
                 
 
                 //return (nfloat)sizeRequest.Request.Height;
