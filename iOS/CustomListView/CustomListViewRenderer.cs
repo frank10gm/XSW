@@ -24,7 +24,7 @@ namespace StritWalk.iOS
         {
             base.OnElementChanged(e);
 
-            if (Control == null) return;
+            //if (Control == null) return;
 
             //Control.SeparatorInset = UIEdgeInsets.Zero;
             //Control.LayoutMargins = UIEdgeInsets.Zero;

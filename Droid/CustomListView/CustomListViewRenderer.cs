@@ -10,8 +10,19 @@ namespace StritWalk.Droid
 {
     public class CustomListViewRenderer : ListViewRenderer
     {
-        public CustomListViewRenderer()
+        protected override void OnElementChanged(ElementChangedEventArgs<ListView> e)
         {
+            base.OnElementChanged(e);
+
+			if (e.OldElement != null)
+			{
+			
+			}
+
+			if (e.NewElement != null)
+			{
+                Control.VerticalScrollBarEnabled = false;
+			}
         }
     }
 }
