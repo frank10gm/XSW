@@ -53,7 +53,7 @@ namespace StritWalk.iOS
 
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
-            var cellForPath = this.GetCellForPath(indexPath);
+            var cellForPath = GetCellForPath(indexPath);
             //listView.NotifyItemSelected(tableItems[indexPath.Row]);
             Console.WriteLine("Row " + indexPath.Row.ToString() + " selected");
             tableView.DeselectRow(indexPath, true);
@@ -69,12 +69,14 @@ namespace StritWalk.iOS
 
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {                       
+            //var cell = this.GetCellForPath(indexPath);
             return source.GetCell(tableView, indexPath);
         }
 
         public override void WillDisplay(UITableView tableView, UITableViewCell cell, NSIndexPath indexPath)
         {                        
             cachedHeights[indexPath.Row] = cell.Frame.Size.Height;
+            cell.SelectionStyle = UITableViewCellSelectionStyle.None;
         }
 
         public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)

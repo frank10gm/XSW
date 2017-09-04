@@ -2,26 +2,29 @@
 
 using Foundation;
 using UIKit;
+using Xamarin.Forms;
 
 namespace StritWalk.iOS
 {
-    public class CustomListViewCell : UITableViewCell
+    public class CustomListViewCell : UITableViewCell, INativeElementView
     {
 
 		//UILabel headingLabel, subheadingLabel;
 		//UIImageView imageView;
 
         public CustomViewCell CustomViewCell { get; private set; }
+        public Element Element => CustomViewCell; 
 		
 
-        public CustomListViewCell(string cellId, CustomListViewCell cell) : base (UITableViewCellStyle.Default, cellId)
+        public CustomListViewCell(string cellId, CustomViewCell cell) : base (UITableViewCellStyle.Default, cellId)
         {
             
+            CustomViewCell = cell;
 
-            SelectionStyle = UITableViewCellSelectionStyle.None;
-
-			//ContentView.BackgroundColor = UIColor.FromRGB(218, 255, 127);
-
+            SelectionStyle = UITableViewCellSelectionStyle.Blue;
+			
+			ContentView.BackgroundColor = UIColor.FromRGB(33, 247, 48);
+           			
 			//imageView = new UIImageView();
 
 			//headingLabel = new UILabel()
