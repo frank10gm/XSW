@@ -75,7 +75,7 @@ namespace StritWalk
                 }
 
                 var contentType = "application/json";
-                var req = "{\"action\":\"getPosts\", \"num\":\"" + start + "\", \"order\":\"added\", \"order2\":\"5\", \"lat\":\"" + Settings.lat + "\", \"lng\":\"" + Settings.lng + "\", \"user_id\":\"1\" }";
+                var req = "{\"action\":\"getPosts\", \"num\":\"" + start + "\", \"order\":\"added\", \"order2\":\"9999999\", \"lat\":\"" + Settings.lat + "\", \"lng\":\"" + Settings.lng + "\", \"user_id\":\"1\" }";
                 var httpContent = new StringContent(req, Encoding.UTF8, contentType);
                 HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, "");
                 requestMessage.Content = httpContent;

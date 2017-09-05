@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Xamarin.Forms;
 
@@ -9,7 +10,7 @@ namespace StritWalk
     {
         public static bool UseMockDataStore = false;
         public static string BackendUrl = "http://www.hackweb.it/api";
-
+        public static TabbedPage tabbedPage;
         public static IDictionary<string, string> LoginParameters => null;
 
         public App()
@@ -54,32 +55,32 @@ namespace StritWalk
 
         public static void GoToMainPage()
         {
-
-            TabbedPage tabbedPage = new TabbedPage
+            
+            tabbedPage = new TabbedPage
             {
                 Children = {
                     new NavigationPage(new ItemsPage())
-                    {
-                        Icon = Device.OnPlatform("tab_about.png", null, null),
-                        Title = Device.OnPlatform(null, "Home", "Home")
+                    {                        
+                        Icon = Platformer("tab_about.png", null, null),
+                        Title = Platformer(null, "Home", "Home")
                         //Title = "home"
                     },
                     new NavigationPage(new AboutPage())
                     {
-                        Icon = Device.OnPlatform("tab_about.png", null, null),
-                        Title = Device.OnPlatform(null, "Map", "Map")
+                        Icon = Platformer("tab_about.png", null, null),
+                        Title = Platformer(null, "Map", "Map")
                         //Title = "map"
                     },
                     new NavigationPage(new ItemsPage())
                     {
-                        Icon = Device.OnPlatform("tab_about.png", null, null),
-                        Title = Device.OnPlatform(null, "News", "News")
+                        Icon = Platformer("tab_about.png", null, null),
+                        Title = Platformer(null, "News", "News")
                         //Title = "map"
                     },
                     new NavigationPage(new MenuPage())
                     {
-                        Icon = Device.OnPlatform("slideout.png", null, null),
-                        Title = Device.OnPlatform(null, "Menu", "Menu")
+                        Icon = Platformer("slideout.png", null, null),
+                        Title = Platformer(null, "Menu", "Menu")
                         //Title = "map"
                     }
                 }
@@ -87,16 +88,43 @@ namespace StritWalk
 
             if (Device.iOS == Device.RuntimePlatform)
             {
-                tabbedPage.BarBackgroundColor = Color.FromHex("#ffffff");
-                tabbedPage.BackgroundColor = Color.FromHex("#2b98f0");
-                tabbedPage.BarTextColor = Color.FromHex("#2b98f0");
-            }
-       
+                //tabbedPage.BarBackgroundColor = Color.FromHex("#ffffff");
+                //tabbedPage.BackgroundColor = Color.FromHex("#2b98f0");
+                //tabbedPage.BarTextColor = Color.FromHex("#2b98f0");
+            }      
 
             Current.MainPage = tabbedPage;
 
+            tabbedPage.CurrentPageChanged += TabbedPage_CurrentPageChanged;
+
             //tabbedPage.CurrentPage = tabbedPage.Children[1];
 
+        }
+
+        private static void TabbedPage_CurrentPageChanged(object sender, System.EventArgs e)
+        {
+            if ((tabbedPage.CurrentPage as NavigationPage).CurrentPage.Title == "Map")
+                ((tabbedPage.CurrentPage as NavigationPage).CurrentPage as AboutPage).Starter();
+        }
+
+        public static string Platformer(string ios, string android, string win)
+        {
+            string stringa = null;
+
+            switch (Device.RuntimePlatform)
+            {
+                case Device.iOS:
+                    stringa = ios;
+                    break;
+                case Device.Android:
+                    stringa = android;
+                    break;
+                case Device.WinPhone:
+                    stringa = win;
+                    break;
+            }
+
+            return stringa;
         }
     }
 }

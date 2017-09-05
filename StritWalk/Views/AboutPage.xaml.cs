@@ -16,7 +16,8 @@ namespace StritWalk
         ILocationTracker locationTracker;
         Position position;
         Button button;
-        bool start = true;
+        bool start = false;
+        bool first_starter = false;
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
         AbsoluteLayout layout;
 
@@ -25,6 +26,11 @@ namespace StritWalk
             InitializeComponent();
             layout = new AbsoluteLayout() { };
             Content = layout;
+
+            if (CrossConnectivity.Current.IsConnected && locationTracker == null)
+            {
+                getMap();
+            }
         }
 
         void positionClicked(object sender, EventArgs e)
@@ -32,25 +38,26 @@ namespace StritWalk
             map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(2)));
         }
 
+        public void Starter()
+        {
+            if (!first_starter)
+            {
+                locationTracker.StartTracking();
+                map.IsShowingUser = true;
+                first_starter = false;
+            }
+        }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            Console.WriteLine("@@@ " + "gino");
-            if (!start)
+
+            if (start && CrossConnectivity.Current.IsConnected && locationTracker != null)
             {
-                if (CrossConnectivity.Current.IsConnected && locationTracker != null)
-                {
-                    locationTracker.StartTracking();
-                    map.IsShowingUser = true;
-                }                    
+                locationTracker.StartTracking();
+                map.IsShowingUser = true;
             }
-            else
-            {
-                if (CrossConnectivity.Current.IsConnected && locationTracker == null) {
-                    getMap();                    
-                }                    
-            }
-        }        
+        }
 
         protected override void OnDisappearing()
         {
@@ -60,7 +67,7 @@ namespace StritWalk
             {
                 locationTracker.PauseTracking();
                 map.IsShowingUser = false;
-            }                
+            }
         }
 
         void OnLocationTracker(object sender, GeographicLocation args)
@@ -75,7 +82,7 @@ namespace StritWalk
             map = new CustomMap
             {
                 MapType = MapType.Street,
-                IsShowingUser = true                
+                IsShowingUser = false
             };
 
             foreach (var p in items)
@@ -120,14 +127,11 @@ namespace StritWalk
 
             locationTracker = DependencyService.Get<ILocationTracker>();
             locationTracker.LocationChanged += OnLocationTracker;
-            locationTracker.StartTracking();
+            //locationTracker.StartTracking();
 
             map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(double.Parse(Settings.lat, System.Globalization.CultureInfo.InvariantCulture), double.Parse(Settings.lng, System.Globalization.CultureInfo.InvariantCulture)), Distance.FromKilometers(2)));
 
-            if (start)
-            {
-                start = false;
-            }
+            start = true;
         }
 
     }
