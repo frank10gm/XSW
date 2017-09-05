@@ -16,10 +16,10 @@
                     <Color x:Key="MediumGrayTextColor">#4d4d4d</Color>
                     <Color x:Key="LightTextColor">#999999</Color>
                     <Color x:Key="Azure">#2b98f0</Color>
-                    <Style TargetType="NavigationPage">
+                    <!--<Style TargetType="NavigationPage">
                         <Setter Property="BarBackgroundColor" Value="{StaticResource Azure}" />
                         <Setter Property="BarTextColor" Value="{StaticResource White}" />
-                    </Style>
+                    </Style>-->
                 </ResourceDictionary>
             </OnPlatform.iOS>
             <OnPlatform.Android>

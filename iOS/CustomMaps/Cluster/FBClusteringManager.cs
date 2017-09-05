@@ -104,6 +104,7 @@ namespace StritWalk.iOS.CustomMaps.Cluster
 						double totalLongitude = 0;
 
 						List<IMKAnnotation> annotations = new List<IMKAnnotation>();
+                        string annotations_string = "";
 
 						_tree.EnumerateAnnotationsInBox(mapBox, delegate (IMKAnnotation annotation)
 							{
@@ -112,6 +113,7 @@ namespace StritWalk.iOS.CustomMaps.Cluster
 									totalLatitude += annotation.Coordinate.Latitude;
 									totalLongitude += annotation.Coordinate.Longitude;
 									annotations.Add(annotation);
+                                    annotations_string += annotation.GetTitle() + ", ";
 								}
 							});
 
@@ -121,7 +123,7 @@ namespace StritWalk.iOS.CustomMaps.Cluster
 						if (count > 1)
 						{
 							CLLocationCoordinate2D coordinate = new CLLocationCoordinate2D(totalLatitude / count, totalLongitude / count);
-							FBAnnotationCluster cluster = new FBAnnotationCluster(coordinate);
+                            FBAnnotationCluster cluster = new FBAnnotationCluster(coordinate, annotations_string);
 							cluster.Annotations = annotations;
 							clusteredAnnotations.Add(cluster);
 						}

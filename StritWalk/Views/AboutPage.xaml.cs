@@ -110,12 +110,12 @@ namespace StritWalk
                 //BorderWidth = 1,
                 //HorizontalOptions = LayoutOptions.Center,
                 //VerticalOptions = LayoutOptions.CenterAndExpand
-                Image = "cluster.png",
+                Image = "profile_generic.png",
                 Margin = new Thickness(0, 0, 0, 0)
             };
             button.Clicked += positionClicked;
 
-            AbsoluteLayout.SetLayoutBounds(button, new Rectangle(.9, .98, 100, 30));
+            AbsoluteLayout.SetLayoutBounds(button, new Rectangle(.95, .95, 30, 30));
             AbsoluteLayout.SetLayoutFlags(button, AbsoluteLayoutFlags.PositionProportional);
 
             //AbsoluteLayout.SetLayoutBounds(map, new Rectangle(0, 0, 1, 1));

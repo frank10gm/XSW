@@ -243,7 +243,8 @@ namespace StritWalk.iOS
                     label.TextAlignment = UITextAlignment.Center;
                     label.TextColor = UIColor.White;
                     anView.AddSubview(label);
-                    anView.CanShowCallout = false;
+
+                    anView.CanShowCallout = true;
                 }
                 else
                 {
