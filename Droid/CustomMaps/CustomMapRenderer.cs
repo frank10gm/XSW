@@ -81,17 +81,26 @@ namespace StritWalk.Droid
             }
 
             _clusterManager.AddItems(items);
-            //_clusterManager.SetOnClusterClickListener(new ClusterManager.IOnClusterClickListener()
-            //{
 
-            //});
+            _clusterManager.SetOnClusterClickListener(new ClusterManager.ClusterClickEventArgs(bool, items);
+
+            {
+
+            };
+
 			//this.AddClusterItems();
 
             _mapReady = true;
 
 		}
 
-		private void AddClusterItems()
+        public virtual void SetOnClusterClickListener()
+        {
+
+        }
+
+
+        private void AddClusterItems()
 		{
 			double lat = 47.59978;
 			double lng = -122.3346;
