@@ -81,6 +81,10 @@ namespace StritWalk.Droid
             }
 
             _clusterManager.AddItems(items);
+            //_clusterManager.SetOnClusterClickListener(new ClusterManager.IOnClusterClickListener()
+            //{
+
+            //});
 			//this.AddClusterItems();
 
             _mapReady = true;

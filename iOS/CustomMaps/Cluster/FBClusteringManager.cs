@@ -122,7 +122,7 @@ namespace StritWalk.iOS.CustomMaps.Cluster
 							clusteredAnnotations.AddRange(annotations);
 						if (count > 1)
 						{
-                            annotations_string = count + " posts here.";
+                            annotations_string = count + " posts here";
 							CLLocationCoordinate2D coordinate = new CLLocationCoordinate2D(totalLatitude / count, totalLongitude / count);
                             FBAnnotationCluster cluster = new FBAnnotationCluster(coordinate, annotations_string);
 							cluster.Annotations = annotations;
