@@ -14,58 +14,58 @@ using Xamarin.Forms.Maps.Android;
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
 namespace StritWalk.Droid
 {
-    public class CustomMapRenderer : MapRenderer
-	{
+    public class CustomMapRenderer : MapRenderer, ClusterManager.IOnClusterClickListener
+    {
         ClusterManager _clusterManager;
         bool _isDrawn;
         bool _mapReady;
         CustomMap _formsMap;
 
-		protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<Map> e)
-		{
-			base.OnElementChanged(e);
+        protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<Map> e)
+        {
+            base.OnElementChanged(e);
 
-			if (e.OldElement != null)
-			{
-				// Unsubscribe
-			}
+            if (e.OldElement != null)
+            {
+                // Unsubscribe
+            }
 
-			if (e.NewElement != null)
-			{
-				_formsMap = (CustomMap)e.NewElement;
-				((MapView)Control).GetMapAsync(this);
-			}
-		}
+            if (e.NewElement != null)
+            {
+                _formsMap = (CustomMap)e.NewElement;
+                ((MapView)Control).GetMapAsync(this);
+            }
+        }
 
         protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if(e.PropertyName.Equals("VisibleRegion") && !_isDrawn)
+            if (e.PropertyName.Equals("VisibleRegion") && !_isDrawn)
             {
                 OnGMapReady();
                 _isDrawn = true;
             }
         }
 
-		protected override void OnLayout(bool changed, int l, int t, int r, int b)
-		{
-			base.OnLayout(changed, l, t, r, b);
+        protected override void OnLayout(bool changed, int l, int t, int r, int b)
+        {
+            base.OnLayout(changed, l, t, r, b);
 
-			if (changed)
-			{
-				_isDrawn = false;
-			}
-		}
+            if (changed)
+            {
+                _isDrawn = false;
+            }
+        }
 
-		public void OnGMapReady()
-		{
+        public void OnGMapReady()
+        {
             if (_mapReady) return;
 
             _clusterManager = new ClusterManager(Context, NativeMap);
 
-			//_clusterManager.SetOnClusterClickListener();
-			//_clusterManager.SetOnClusterItemClickListener(this);
+            _clusterManager.SetOnClusterClickListener(this);
+            //_clusterManager.SetOnClusterItemClickListener(this);
             NativeMap.SetOnCameraIdleListener(_clusterManager);
             NativeMap.SetOnMarkerClickListener(_clusterManager);
 
@@ -81,44 +81,38 @@ namespace StritWalk.Droid
             }
 
             _clusterManager.AddItems(items);
+            
 
-            _clusterManager.SetOnClusterClickListener(new ClusterManager.ClusterClickEventArgs(bool, items);
-
-            {
-
-            };
-
-			//this.AddClusterItems();
+            //this.AddClusterItems();
 
             _mapReady = true;
-
-		}
-
-        public virtual void SetOnClusterClickListener()
-        {
 
         }
 
 
         private void AddClusterItems()
-		{
-			double lat = 47.59978;
-			double lng = -122.3346;
+        {
+            double lat = 47.59978;
+            double lng = -122.3346;
 
-			var items = new List<ClusterItem>();
+            var items = new List<ClusterItem>();
 
-			// Create a log. spiral of markers to test clustering
-			for (int i = 0; i < 20; ++i)
-			{
-				var t = i * Math.PI * 0.33f;
-				var r = 0.005 * Math.Exp(0.1 * t);
-				var x = r * Math.Cos(t);
-				var y = r * Math.Sin(t);
-				var item = new ClusterItem(lat + x, lng + y);
-				items.Add(item);
-			}
-			_clusterManager.AddItems(items);
-		}
+            // Create a log. spiral of markers to test clustering
+            for (int i = 0; i < 20; ++i)
+            {
+                var t = i * Math.PI * 0.33f;
+                var r = 0.005 * Math.Exp(0.1 * t);
+                var x = r * Math.Cos(t);
+                var y = r * Math.Sin(t);
+                var item = new ClusterItem(lat + x, lng + y);
+                items.Add(item);
+            }
+            _clusterManager.AddItems(items);
+        }
 
-	}
+        public bool OnClusterClick(ICluster p0)
+        {
+            Console.WriteLine("@@@ stai male");
+        }
+    }
 }
