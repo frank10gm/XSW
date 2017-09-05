@@ -23,44 +23,7 @@ namespace StritWalk
         public AboutPage()
         {
             InitializeComponent();
-
-            //map = new CustomMap
-            //{
-            //    MapType = MapType.Street,
-            //    IsShowingUser = true
-            //};
-
-            if (CrossConnectivity.Current.IsConnected)
-                getMap();
-
-            //map.ShapeCoordinates.Add(new Position(37.797513, -122.402058));
-            //map.ShapeCoordinates.Add(new Position(37.798433, -122.402256));
-            //map.ShapeCoordinates.Add(new Position(37.798582, -122.401071));
-            //map.ShapeCoordinates.Add(new Position(37.797658, -122.400888));
-
-            //map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(37.79752, -122.40183), Distance.FromMiles(0.1)));
-
-            //             (
-            //MapSpan.FromCenterAndRadius(
-            //                 new Position(44, 12.6), Distance.FromKilometers(2)))
-            //{
-            //	IsShowingUser = true,
-            //	//HeightRequest = 100,
-            //	//WidthRequest = 960,
-            //	//VerticalOptions = LayoutOptions.FillAndExpand
-            //};
-            layout = new AbsoluteLayout { };
-
-            var blueBox = new BoxView
-            {
-                Color = Color.Blue,
-                //VerticalOptions = LayoutOptions.FillAndExpand,
-                //HorizontalOptions = LayoutOptions.FillAndExpand,
-                //HeightRequest = 75
-            };
-            AbsoluteLayout.SetLayoutBounds(blueBox, new Rectangle(.9, .9, 10, 10));
-            AbsoluteLayout.SetLayoutFlags(blueBox, AbsoluteLayoutFlags.PositionProportional);
-
+            layout = new AbsoluteLayout() { };
             Content = layout;
         }
 
@@ -69,38 +32,40 @@ namespace StritWalk
             map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(2)));
         }
 
-        void OnLocationTracker(object sender, GeographicLocation args)
-        {
-            position = new Position(args.Latitude, args.Longitude);       
-
-            //prima posizione all'apertura della pagina della mappa            
-
-            //myLocationButton.IsVisible = Device.OS != TargetPlatform.Android;
-
-        }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
+            Console.WriteLine("@@@ " + "gino");
             if (!start)
             {
                 if (CrossConnectivity.Current.IsConnected && locationTracker != null)
+                {
                     locationTracker.StartTracking();
+                    map.IsShowingUser = true;
+                }                    
             }
             else
             {
-                if (CrossConnectivity.Current.IsConnected) { }
-                    getMap();
+                if (CrossConnectivity.Current.IsConnected && locationTracker == null) {
+                    getMap();                    
+                }                    
             }
-        }
+        }        
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
 
-            if (CrossConnectivity.Current.IsConnected && locationTracker != null)
+            if (locationTracker != null)
+            {
                 locationTracker.PauseTracking();
+                map.IsShowingUser = false;
+            }                
+        }
+
+        void OnLocationTracker(object sender, GeographicLocation args)
+        {
+            position = new Position(args.Latitude, args.Longitude);
         }
 
         async void getMap()
@@ -110,8 +75,9 @@ namespace StritWalk
             map = new CustomMap
             {
                 MapType = MapType.Street,
-                IsShowingUser = true
+                IsShowingUser = true                
             };
+
             foreach (var p in items)
             {
                 var pin = new Pin
@@ -125,6 +91,7 @@ namespace StritWalk
                 //map.Pins.Add(pin);
                 map.PinList.Add(pin);
             }
+
             AbsoluteLayout.SetLayoutBounds(map, new Rectangle(0, 0, 1, 1));
             AbsoluteLayout.SetLayoutFlags(map, AbsoluteLayoutFlags.All);
             layout.Children.Add(map);
@@ -136,7 +103,7 @@ namespace StritWalk
                 //BorderWidth = 1,
                 //HorizontalOptions = LayoutOptions.Center,
                 //VerticalOptions = LayoutOptions.CenterAndExpand
-                Image = "xamarin_logo.png",
+                Image = "cluster.png",
                 Margin = new Thickness(0, 0, 0, 0)
             };
             button.Clicked += positionClicked;

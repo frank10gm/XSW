@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,10 +8,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Plugin.Connectivity;
 using Plugin.Geolocator;
-using Plugin.Settings;
 using Xamarin.Forms;
 using System.IO;
-using System.Net;
 
 namespace StritWalk
 {
@@ -36,7 +33,7 @@ namespace StritWalk
                 {
                     var locator = CrossGeolocator.Current;
                     locator.DesiredAccuracy = 100;
-                    var position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(10000));
+                    var position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(5000));
 
                     Settings.lat = position.Latitude.ToString().Replace(",", ".");
                     Settings.lng = position.Longitude.ToString().Replace(",", ".");

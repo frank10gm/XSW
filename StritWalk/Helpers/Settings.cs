@@ -29,7 +29,7 @@ namespace StritWalk
 		static readonly string latDefault = "44.0";
 
 		const string lngKey = "lng";
-		static readonly string lngDefault = "44.0";
+		static readonly string lngDefault = "12.0";
 		#endregion
 
 		public static string AuthToken
