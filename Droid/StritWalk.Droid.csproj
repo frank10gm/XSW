@@ -203,6 +203,7 @@
     <None Include="Scripts\jquery-3.1.1-vsdoc.js" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomMaps\CustomClusterAdapter.cs" />
     <Compile Include="CustomMaps\Toolkit.cs" />
     <Compile Include="GenericCustomElements\FlatButtonRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
