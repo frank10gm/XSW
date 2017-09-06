@@ -1,31 +1,20 @@
-﻿using Android.Gms.Maps;
-using Android.Gms.Maps.Model;
+﻿
 using StritWalk;
 using StritWalk.Droid;
 using Xamarin.Forms;
-using System.Collections.Generic;
-using Com.Google.Maps.Android.Clustering;
-using System;
 
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Maps.Android;
 using Com.Google.Maps.Android.Clustering.View;
-using Android.Content;
-using Android.Views;
-using Android.Widget;
+
 
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
 namespace StritWalk.Droid
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
-    using Android.App;
     using Android.Content;
-    using Android.OS;
-    using Android.Runtime;
     using Android.Views;
     using Android.Widget;
     using Android.Gms.Maps;
@@ -105,8 +94,7 @@ namespace StritWalk.Droid
                 items.Add(item);
             }
 
-            _clusterManager.AddItems(items);            
-            
+            _clusterManager.AddItems(items);                        
 
             //this.AddClusterItems();
 
@@ -172,23 +160,22 @@ namespace StritWalk.Droid
             public CustomClusterAdapter(Context context)
             {
                 //LayoutInflater inflater = LayoutInflater.From(context);
-                LayoutInflater inflater = (LayoutInflater)context.GetSystemService(Context.LayoutInflaterService);
-                //var layout = inflater.Inflate(Resource.Layout.amu_info_window, null) as LinearLayout;
+                LayoutInflater inflater = (LayoutInflater)context.GetSystemService(Context.LayoutInflaterService);                
+                //myContentsView = inflater.Inflate(Resource.Layout.amu_text_bubble, null);
                 myContentsView = inflater.Inflate(Resource.Layout.amu_info_window, null);
                 //clickedCluster = cluster;
-                Console.WriteLine("@@@ custom cluster");
             }
 
             View GoogleMap.IInfoWindowAdapter.GetInfoContents(Marker marker) => null;
 
             Android.Views.View GoogleMap.IInfoWindowAdapter.GetInfoWindow(Marker marker)
-            {
-                Console.WriteLine("@@@ dentro il getinfo");
-                TextView tvTitle = ((TextView)myContentsView.FindViewById(Resource.Id.text));
+            {                
+                TextView tvTitle = ((TextView)myContentsView.FindViewById(Resource.Id.window));
                 //TextView tvSnippet = ((TextView)myContentsView.FindViewById(Resource.Id.text2));
                 ////tvSnippet.Visibility = ViewStates.Gone;
                 //tvTitle.SetText("ok", TextView.BufferType.Normal);
-                tvTitle.Text = " more posts";                
+                tvTitle.Text = clickedCluster.Items.Count.ToString() + " more posts";
+                tvTitle.SetBackgroundColor(Android.Graphics.Color.White);
 
                 //if (clickedCluster != null)
                 //{

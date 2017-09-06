@@ -40,7 +40,7 @@ namespace StritWalk
 
         public void Starter()
         {
-            if (!first_starter)
+            if (!first_starter && locationTracker != null)
             {
                 locationTracker.StartTracking();
                 map.IsShowingUser = true;
