@@ -43,6 +43,7 @@ namespace StritWalk.iOS
 					nativeMap.RemoveOverlays(nativeMap.Overlays);
 					nativeMap.OverlayRenderer = null;
 					polygonRenderer = null;
+                    nativeMap.ShowsCompass = true;
 				}
 			}
 

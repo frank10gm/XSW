@@ -14,7 +14,7 @@ using Xamarin.Forms.Maps.Android;
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
 namespace StritWalk.Droid
 {
-    public class CustomMapRenderer : MapRenderer, ClusterManager.IOnClusterClickListener
+    public class CustomMapRenderer : MapRenderer, ClusterManager.IOnClusterClickListener, ClusterManager.IOnClusterInfoWindowClickListener
     {
         ClusterManager _clusterManager;
         bool _isDrawn;
@@ -65,6 +65,8 @@ namespace StritWalk.Droid
             _clusterManager = new ClusterManager(Context, NativeMap);
 
             _clusterManager.SetOnClusterClickListener(this);
+            _clusterManager.SetOnClusterInfoWindowClickListener(this);
+
             //_clusterManager.SetOnClusterItemClickListener(this);
             NativeMap.SetOnCameraIdleListener(_clusterManager);
             NativeMap.SetOnMarkerClickListener(_clusterManager);
@@ -80,7 +82,7 @@ namespace StritWalk.Droid
                 items.Add(item);
             }
 
-            _clusterManager.AddItems(items);
+            _clusterManager.AddItems(items);            
             
 
             //this.AddClusterItems();
@@ -112,7 +114,13 @@ namespace StritWalk.Droid
 
         public bool OnClusterClick(ICluster p0)
         {
-            Console.WriteLine("@@@ stai male");
+            
+            return true;
+        }
+
+        public void OnClusterInfoWindowClick(ICluster p0)
+        {
+            
         }
     }
 }
