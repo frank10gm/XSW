@@ -174,10 +174,22 @@ namespace StritWalk.Droid
                 //TextView tvSnippet = ((TextView)myContentsView.FindViewById(Resource.Id.text2));
                 ////tvSnippet.Visibility = ViewStates.Gone;
                 //tvTitle.SetText("ok", TextView.BufferType.Normal);
-                tvTitle.Text = clickedCluster.Items.Count.ToString() + " more posts";
+                tvTitle.Text = clickedCluster.Size.ToString() + " more posts";
                 tvTitle.SetBackgroundColor(Android.Graphics.Color.White);
+                tvTitle.SetPadding(50, 50, 50, 50);
+                //tvTitle.SetX(-150);
+                //tvTitle.SetY(50);
+                tvTitle.Bottom = 100;
+                tvTitle.Top = 100;
+                //tvTitle.SetY(-10);
+                LinearLayout.LayoutParams par = new LinearLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
+                par.SetMargins(0, 0, 0, 25);
+                tvTitle.LayoutParameters = par;                
+
+                Console.WriteLine("@@@ " + clickedCluster.Size);
 
                 //if (clickedCluster != null)
+
                 //{
                 //    tvTitle.Text = " more posts"; //clickedCluster.Items.Count.ToString() +
                 //}
