@@ -44,6 +44,7 @@ namespace StritWalk.iOS
 					nativeMap.OverlayRenderer = null;
 					polygonRenderer = null;
                     nativeMap.ShowsCompass = true;
+                    nativeMap.UserTrackingMode = MKUserTrackingMode.FollowWithHeading;
 				}
 			}
 
