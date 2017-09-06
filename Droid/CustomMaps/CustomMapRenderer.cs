@@ -88,7 +88,7 @@ namespace StritWalk.Droid
             _clusterManager.SetOnClusterClickListener(this);
             _clusterManager.SetOnClusterInfoWindowClickListener(this);
             NativeMap.SetInfoWindowAdapter(_clusterManager.MarkerManager);
-            //_clusterManager.ClusterMarkerCollection.SetOnInfoWindowAdapter(new CustomClusterAdapter());
+            _clusterManager.ClusterMarkerCollection.SetOnInfoWindowAdapter(new CustomClusterAdapter(Context));
 
             //_clusterManager.SetOnClusterItemClickListener(this);
             NativeMap.SetOnCameraIdleListener(_clusterManager);
@@ -166,12 +166,14 @@ namespace StritWalk.Droid
 
         class CustomClusterAdapter : Java.Lang.Object, GoogleMap.IInfoWindowAdapter
         {
-            private Android.Views.View myContentsView;
+            private View myContentsView;
             //private ICluster clickedCluster;
 
-            public CustomClusterAdapter()
+            public CustomClusterAdapter(Context context)
             {
-                LayoutInflater inflater = LayoutInflater.From(Application.Context);
+                //LayoutInflater inflater = LayoutInflater.From(context);
+                LayoutInflater inflater = (LayoutInflater)context.GetSystemService(Context.LayoutInflaterService);
+                //var layout = inflater.Inflate(Resource.Layout.amu_info_window, null) as LinearLayout;
                 myContentsView = inflater.Inflate(Resource.Layout.amu_info_window, null);
                 //clickedCluster = cluster;
                 Console.WriteLine("@@@ custom cluster");
@@ -182,16 +184,16 @@ namespace StritWalk.Droid
             Android.Views.View GoogleMap.IInfoWindowAdapter.GetInfoWindow(Marker marker)
             {
                 Console.WriteLine("@@@ dentro il getinfo");
-                TextView tvTitle = ((TextView)myContentsView.FindViewById(Resource.Id.text));
-                TextView tvSnippet = ((TextView)myContentsView.FindViewById(Resource.Id.text2));
-                //tvSnippet.Visibility = ViewStates.Gone;
+                TextView tvTitle = ((TextView)myContentsView.FindViewById(Resource.Id.amu_text));
+                //TextView tvSnippet = ((TextView)myContentsView.FindViewById(Resource.Id.text2));
+                ////tvSnippet.Visibility = ViewStates.Gone;
+                //tvTitle.SetText("ok", TextView.BufferType.Normal);
+                tvTitle.Text = " more posts";                
 
-                tvTitle.Text = " more posts";
-
-                if (clickedCluster != null)
-                {
-                    tvTitle.Text = " more posts"; //clickedCluster.Items.Count.ToString() +
-                }
+                //if (clickedCluster != null)
+                //{
+                //    tvTitle.Text = " more posts"; //clickedCluster.Items.Count.ToString() +
+                //}
 
                 return myContentsView;
             }
