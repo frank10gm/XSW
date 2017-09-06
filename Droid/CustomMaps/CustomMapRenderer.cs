@@ -184,7 +184,7 @@ namespace StritWalk.Droid
             Android.Views.View GoogleMap.IInfoWindowAdapter.GetInfoWindow(Marker marker)
             {
                 Console.WriteLine("@@@ dentro il getinfo");
-                TextView tvTitle = ((TextView)myContentsView.FindViewById(Resource.Id.amu_text));
+                TextView tvTitle = ((TextView)myContentsView.FindViewById(Resource.Id.text));
                 //TextView tvSnippet = ((TextView)myContentsView.FindViewById(Resource.Id.text2));
                 ////tvSnippet.Visibility = ViewStates.Gone;
                 //tvTitle.SetText("ok", TextView.BufferType.Normal);
