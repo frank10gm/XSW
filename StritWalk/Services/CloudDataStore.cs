@@ -10,6 +10,7 @@ using Plugin.Connectivity;
 using Plugin.Geolocator;
 using Xamarin.Forms;
 using System.IO;
+using Plugin.Geolocator.Abstractions;
 
 namespace StritWalk
 {
@@ -32,11 +33,25 @@ namespace StritWalk
                 if (start == 0)
                 {
                     var locator = CrossGeolocator.Current;
+                    Position position = null;
                     locator.DesiredAccuracy = 100;
-                    var position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(5000));
-
-                    Settings.lat = position.Latitude.ToString().Replace(",", ".");
-                    Settings.lng = position.Longitude.ToString().Replace(",", ".");
+                    try
+                    {
+                        position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(10000));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("@@@ Unable to get location, may need to increase timeout: " + ex);
+                    }
+                    finally
+                    {
+                        if (position != null)
+                        {
+                            Settings.lat = position.Latitude.ToString().Replace(",", ".");
+                            Settings.lng = position.Longitude.ToString().Replace(",", ".");
+                        }
+                    }                    
+                    
                 }
 
                 var contentType = "application/json";
@@ -67,11 +82,24 @@ namespace StritWalk
                 if (start == 0)
                 {
                     var locator = CrossGeolocator.Current;
+                    Position position = null;
                     locator.DesiredAccuracy = 100;
-                    var position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(10000));
-
-                    Settings.lat = position.Latitude.ToString().Replace(",", ".");
-                    Settings.lng = position.Longitude.ToString().Replace(",", ".");
+                    try
+                    {
+                        position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(10000));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("@@@ Unable to get location, may need to increase timeout: " + ex);
+                    }
+                    finally
+                    {
+                        if(position != null)
+                        {
+                            Settings.lat = position.Latitude.ToString().Replace(",", ".");
+                            Settings.lng = position.Longitude.ToString().Replace(",", ".");
+                        }                        
+                    }
                 }
 
                 var contentType = "application/json";

@@ -73,7 +73,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)CustomMaps\" />
     <Folder Include="$(MSBuildThisFileDirectory)CustomListView\" />
   </ItemGroup>
 </Project>
