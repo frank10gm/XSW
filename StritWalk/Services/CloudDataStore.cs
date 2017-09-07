@@ -11,6 +11,8 @@ using Plugin.Geolocator;
 using Xamarin.Forms;
 using System.IO;
 using Plugin.Geolocator.Abstractions;
+using Plugin.Permissions.Abstractions;
+using Plugin.Permissions;
 
 namespace StritWalk
 {
@@ -32,26 +34,65 @@ namespace StritWalk
             {
                 if (start == 0)
                 {
-                    var locator = CrossGeolocator.Current;
-                    Position position = null;
-                    locator.DesiredAccuracy = 100;
                     try
                     {
-                        position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(10000));
+                        var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+                        if (status != PermissionStatus.Granted)
+                        {
+                            if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
+                            {
+                                Console.WriteLine("Need location");
+                            }
+
+                            var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
+                            //Best practice to always check that the key exists
+                            if (results.ContainsKey(Permission.Location))
+                                status = results[Permission.Location];
+                        }
+
+                        if (status == PermissionStatus.Granted)
+                        {
+                            Position position = null;
+                            try
+                            {
+                                var locator = CrossGeolocator.Current;
+                                locator.DesiredAccuracy = 100;
+
+                                if (position != null)
+                                {
+                                    Console.WriteLine("@@@ got cached");
+                                }
+
+                                if (!locator.IsGeolocationAvailable || !locator.IsGeolocationEnabled)
+                                {
+                                    //not available or enabled
+                                    Console.WriteLine("@@@ notavailable");
+                                }
+                                position = await locator.GetPositionAsync(TimeSpan.FromSeconds(2), null, true);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("@@@ Unable to get location: " + ex);
+                            }
+                            finally
+                            {
+                                if (position != null)
+                                {
+                                    Settings.lat = position.Latitude.ToString().Replace(",", ".");
+                                    Settings.lng = position.Longitude.ToString().Replace(",", ".");
+                                }
+                            }
+                        }
+                        else if (status != PermissionStatus.Unknown)
+                        {
+                            Console.WriteLine("@@@ Location Denied");
+                        }
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("@@@ Unable to get location, may need to increase timeout: " + ex);
+
+                        Console.WriteLine("Error: " + ex);
                     }
-                    finally
-                    {
-                        if (position != null)
-                        {
-                            Settings.lat = position.Latitude.ToString().Replace(",", ".");
-                            Settings.lng = position.Longitude.ToString().Replace(",", ".");
-                        }
-                    }                    
-                    
                 }
 
                 var contentType = "application/json";
@@ -79,28 +120,68 @@ namespace StritWalk
         {
             if (forceRefresh && CrossConnectivity.Current.IsConnected)
             {
-                if (start == 0)
-                {
-                    var locator = CrossGeolocator.Current;
-                    Position position = null;
-                    locator.DesiredAccuracy = 100;
-                    try
-                    {
-                        position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(10000));
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("@@@ Unable to get location, may need to increase timeout: " + ex);
-                    }
-                    finally
-                    {
-                        if(position != null)
-                        {
-                            Settings.lat = position.Latitude.ToString().Replace(",", ".");
-                            Settings.lng = position.Longitude.ToString().Replace(",", ".");
-                        }                        
-                    }
-                }
+                //if (start == 0)
+                //{
+                //    try
+                //    {
+                //        var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+                //        if (status != PermissionStatus.Granted)
+                //        {
+                //            if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
+                //            {
+                //                Console.WriteLine("Need location", "Gunna need that location", "OK");
+                //            }
+
+                //            var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
+                //            //Best practice to always check that the key exists
+                //            if (results.ContainsKey(Permission.Location))
+                //                status = results[Permission.Location];
+                //        }
+
+                //        if (status == PermissionStatus.Granted)
+                //        {                            
+                //            Position position = null;                            
+                //            try
+                //            {
+                //                var locator = CrossGeolocator.Current;
+                //                locator.DesiredAccuracy = 100;
+
+                //                if (position != null)
+                //                {
+                //                    Console.WriteLine("@@@ got cached");
+                //                }
+
+                //                if (!locator.IsGeolocationAvailable || !locator.IsGeolocationEnabled)
+                //                {
+                //                    //not available or enabled
+                //                    Console.WriteLine("@@@ notavailable");
+                //                }                                
+                //                position = await locator.GetPositionAsync(TimeSpan.FromSeconds(20),null,true);
+                //            }
+                //            catch (Exception ex)
+                //            {
+                //                Console.WriteLine("@@@ Unable to get location: " + ex);
+                //            }
+                //            finally
+                //            {
+                //                if (position != null)
+                //                {
+                //                    Settings.lat = position.Latitude.ToString().Replace(",", ".");
+                //                    Settings.lng = position.Longitude.ToString().Replace(",", ".");
+                //                }
+                //            }
+                //        }
+                //        else if (status != PermissionStatus.Unknown)
+                //        {
+                //            Console.WriteLine("@@@ Location Denied", "Can not continue, try again.", "OK");
+                //        }
+                //    }
+                //    catch (Exception ex)
+                //    {
+
+                //        Console.WriteLine("Error: " + ex);
+                //    }
+                //}
 
                 var contentType = "application/json";
                 var req = "{\"action\":\"getPosts\", \"num\":\"" + start + "\", \"order\":\"added\", \"order2\":\"9999999\", \"lat\":\"" + Settings.lat + "\", \"lng\":\"" + Settings.lng + "\", \"user_id\":\"1\" }";
