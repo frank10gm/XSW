@@ -11,17 +11,18 @@ using Plugin.Permissions;
 using Xamarin.Forms.Platform.Android;
 using Android.Util;
 
+
 namespace StritWalk.Droid
 {
     [Activity(Label = "Seahorse", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     //WindowSoftInputMode = SoftInput.AdjustResize
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public class MainActivity : FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-            //WindowSoftInputMode = SoftInput.AdjustResize
+            //WindowSoftInputMode = SoftInput.AdjustResize            
 
             base.OnCreate(bundle);
 
@@ -53,5 +54,6 @@ namespace StritWalk.Droid
         {
             base.OnActivityResult(requestCode, resultCode, data);
         }
+
     }
 }

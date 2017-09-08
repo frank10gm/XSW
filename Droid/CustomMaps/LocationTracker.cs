@@ -8,16 +8,25 @@ using Android.OS;
 using Android.Runtime;
 
 using Xamarin.Forms;
+using Android.Gms.Common.Apis;
+using Android.Gms.Common;
+using Android.Gms.Location;
+using Android.Util;
+using Android.Widget;
+
 
 [assembly: Dependency(typeof(StritWalk.Droid.LocationTracker))]
 
 namespace StritWalk.Droid
 {
-	public class LocationTracker : Java.Lang.Object, ILocationTracker, ILocationListener
-	{
-		LocationManager locationManager;
+	public class LocationTracker : Java.Lang.Object, ILocationTracker, ILocationListener, GoogleApiClient.IConnectionCallbacks,
+        GoogleApiClient.IOnConnectionFailedListener
+    {
 
-		public event EventHandler<GeographicLocation> LocationChanged;
+        LocationManager locationManager;
+        GoogleApiClient apiClient;                
+
+        public event EventHandler<GeographicLocation> LocationChanged;
 
 		public LocationTracker()
 		{
@@ -28,8 +37,9 @@ namespace StritWalk.Droid
 					"Must call Toolkit.Init before using LocationProvider");
 
 			locationManager =
-				activity.GetSystemService(Context.LocationService) as LocationManager;
-		}
+				activity.GetSystemService(Context.LocationService) as LocationManager;                    
+            
+        }
 
         public void SingleTracking()
         {
@@ -79,5 +89,19 @@ namespace StritWalk.Droid
 		{
 		}
 
+        public void OnConnected(Bundle connectionHint)
+        {
+ 
+        }
+
+        public void OnConnectionSuspended(int cause)
+        {
+
+        }
+
+        public void OnConnectionFailed(ConnectionResult result)
+        {
+
+        }
     }
 }

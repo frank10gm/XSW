@@ -56,8 +56,8 @@ namespace StritWalk
                             Position position = null;
                             try
                             {
-                                var locator = CrossGeolocator.Current;                                
-                                locator.DesiredAccuracy = 100;                                
+                                var locator = CrossGeolocator.Current;
+                                locator.DesiredAccuracy = 100;
 
                                 if (position != null)
                                 {
@@ -69,7 +69,7 @@ namespace StritWalk
                                     Console.WriteLine("### geolocator not available");
                                 }
                                 Console.WriteLine("### asking location right now");
-                                position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(5000));
+                                position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(2000));
                             }
                             catch (Exception ex)
                             {
