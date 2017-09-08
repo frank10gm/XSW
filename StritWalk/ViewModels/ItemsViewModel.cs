@@ -120,6 +120,7 @@ namespace StritWalk
                 Settings.listEnd = false;
                 Items.Clear();
                 var items = await DataStore.GetItemsAsync(true);
+                Console.WriteLine("### osteria");
                 Items.ReplaceRange(items);
                 IsNotEnd = true;
                 //Items.Insert(0, new Item());

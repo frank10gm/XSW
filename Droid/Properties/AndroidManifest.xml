@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="it.hackweb.stritwalk" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="15" />
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.LOCATION_HARDWARE" />
+	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="25" />
 	<application android:label="Seahorse">
 		<meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyC4TOxAcT8iM6_PFoTszKdizbai4ICwj9Q" />
 	</application>

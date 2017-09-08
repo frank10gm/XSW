@@ -6,6 +6,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Plugin.MediaManager;
 using System.Windows.Input;
+using Plugin.Geolocator.Abstractions;
+using Plugin.Geolocator;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace StritWalk
@@ -154,7 +156,7 @@ namespace StritWalk
             try
             {
                 viewModel.start += 20;
-                items = await DataStore.GetItemsAsync(true, viewModel.start);                                
+                items = await DataStore.GetItemsAsync(true, viewModel.start);
             }
             finally
             {
@@ -176,7 +178,7 @@ namespace StritWalk
             base.OnAppearing();
 
             if (viewModel.Items.Count == 0)
-                viewModel.LoadItemsCommand.Execute(null);
+                viewModel.LoadItemsCommand.Execute(null);                       
         }
     }
 }

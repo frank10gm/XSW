@@ -71,7 +71,7 @@ namespace StritWalk
                         Title = Platformer(null, "Map", "Map")
                         //Title = "map"
                     },
-                    new NavigationPage(new ItemsPage())
+                    new NavigationPage(new MenuPage())
                     {
                         Icon = Platformer("tab_about.png", null, null),
                         Title = Platformer(null, "News", "News")

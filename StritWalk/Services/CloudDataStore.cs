@@ -37,11 +37,12 @@ namespace StritWalk
                     try
                     {
                         var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+                        Console.WriteLine("### status permission: " + status);
                         if (status != PermissionStatus.Granted)
                         {
                             if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
                             {
-                                Console.WriteLine("Need location");
+                                Console.WriteLine("### Need location");
                             }
 
                             var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
@@ -60,19 +61,18 @@ namespace StritWalk
 
                                 if (position != null)
                                 {
-                                    Console.WriteLine("@@@ got cached");
+                                    Console.WriteLine("### got cached");
                                 }
 
                                 if (!locator.IsGeolocationAvailable || !locator.IsGeolocationEnabled)
-                                {
-                                    //not available or enabled
-                                    Console.WriteLine("@@@ notavailable");
+                                {                                    
+                                    Console.WriteLine("### geolocator not available");
                                 }
-                                position = await locator.GetPositionAsync(TimeSpan.FromSeconds(2), null, true);
+                                position = await locator.GetPositionAsync(TimeSpan.FromSeconds(2));
                             }
                             catch (Exception ex)
                             {
-                                Console.WriteLine("@@@ Unable to get location: " + ex);
+                                Console.WriteLine("### Unable to get location: " + ex);
                             }
                             finally
                             {
@@ -85,13 +85,13 @@ namespace StritWalk
                         }
                         else if (status != PermissionStatus.Unknown)
                         {
-                            Console.WriteLine("@@@ Location Denied");
+                            Console.WriteLine("### Location Denied");
                         }
                     }
                     catch (Exception ex)
                     {
 
-                        Console.WriteLine("Error: " + ex);
+                        Console.WriteLine("### Error: " + ex);
                     }
                 }
 
@@ -119,87 +119,30 @@ namespace StritWalk
         public async Task<IList<Item>> GetMapItemsAsync(bool forceRefresh = false, int start = 0)
         {
             if (forceRefresh && CrossConnectivity.Current.IsConnected)
-            {
-                //if (start == 0)
-                //{
-                //    try
-                //    {
-                //        var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
-                //        if (status != PermissionStatus.Granted)
-                //        {
-                //            if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
-                //            {
-                //                Console.WriteLine("Need location", "Gunna need that location", "OK");
-                //            }
-
-                //            var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
-                //            //Best practice to always check that the key exists
-                //            if (results.ContainsKey(Permission.Location))
-                //                status = results[Permission.Location];
-                //        }
-
-                //        if (status == PermissionStatus.Granted)
-                //        {                            
-                //            Position position = null;                            
-                //            try
-                //            {
-                //                var locator = CrossGeolocator.Current;
-                //                locator.DesiredAccuracy = 100;
-
-                //                if (position != null)
-                //                {
-                //                    Console.WriteLine("@@@ got cached");
-                //                }
-
-                //                if (!locator.IsGeolocationAvailable || !locator.IsGeolocationEnabled)
-                //                {
-                //                    //not available or enabled
-                //                    Console.WriteLine("@@@ notavailable");
-                //                }                                
-                //                position = await locator.GetPositionAsync(TimeSpan.FromSeconds(20),null,true);
-                //            }
-                //            catch (Exception ex)
-                //            {
-                //                Console.WriteLine("@@@ Unable to get location: " + ex);
-                //            }
-                //            finally
-                //            {
-                //                if (position != null)
-                //                {
-                //                    Settings.lat = position.Latitude.ToString().Replace(",", ".");
-                //                    Settings.lng = position.Longitude.ToString().Replace(",", ".");
-                //                }
-                //            }
-                //        }
-                //        else if (status != PermissionStatus.Unknown)
-                //        {
-                //            Console.WriteLine("@@@ Location Denied", "Can not continue, try again.", "OK");
-                //        }
-                //    }
-                //    catch (Exception ex)
-                //    {
-
-                //        Console.WriteLine("Error: " + ex);
-                //    }
-                //}
-
+            {               
                 var contentType = "application/json";
                 var req = "{\"action\":\"getPosts\", \"num\":\"" + start + "\", \"order\":\"added\", \"order2\":\"9999999\", \"lat\":\"" + Settings.lat + "\", \"lng\":\"" + Settings.lng + "\", \"user_id\":\"1\" }";
                 var httpContent = new StringContent(req, Encoding.UTF8, contentType);
                 HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, "");
                 requestMessage.Content = httpContent;
-                var resp = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead);
-                Stream stream = await resp.Content.ReadAsStreamAsync();
-                var json = await new StreamReader(stream).ReadToEndAsync();
+                string json = "[]";
 
+                try
+                {
+                    var resp = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead);
+                    Stream stream = await resp.Content.ReadAsStreamAsync();
+                    json = await new StreamReader(stream).ReadToEndAsync();
+                }
+                catch
+                {
+                    Console.WriteLine("@@@ internet connection problem");
+                }
+                
                 //var resp = await client.PostAsync($"", httpContent);
-
                 //var stream = await resp.Content.ReadAsStreamAsync();
-
                 //string streamreader = await new StreamReader(stream).ReadToEndAsync();
                 //Console.WriteLine("###" + streamreader);
                 //var json = streamreader;
-
                 //var json = resp.Content.ReadAsStringAsync();                
 
                 if (json == "[]")
@@ -213,25 +156,11 @@ namespace StritWalk
             return items;
         }
 
-        public async Task<Item> GetItemAsync(string id)
+        public Task<Item> GetItemAsync(string id)
         {
             if (id != null && CrossConnectivity.Current.IsConnected)
             {
-                //var json = await client.GetStringAsync($"api/item/{id}");
-                //items = await Task.Run(() => JsonConvert.DeserializeObject<IList<Item>>(json));
-                //var contentType = "application/json";
-                //var req = "{\"action\":\"getPosts\", \"num\":\"" + start + "\", \"order\":\"added\", \"order2\":\"20\", \"lat\":\"" + Settings.lat + "\", \"lng\":\"" + Settings.lng + "\", \"user_id\":\"1\" }";
-                //var httpContent = new StringContent(req, Encoding.UTF8, contentType);
 
-                //var json = await client.GetStringAsync($"api/item");
-                //var resp = await client.PostAsync($"", httpContent);
-
-                //var json = await resp.Content.ReadAsStringAsync();
-                //if (json == "[]")
-                //{
-                //	Settings.listEnd = 1;
-                //}
-                //items = await Task.Run(() => JsonConvert.DeserializeObject<IList<Item>>(json));
             }
 
             return null;
