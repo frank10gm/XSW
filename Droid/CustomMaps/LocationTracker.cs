@@ -31,9 +31,16 @@ namespace StritWalk.Droid
 				activity.GetSystemService(Context.LocationService) as LocationManager;
 		}
 
+        public void SingleTracking()
+        {
+            Criteria criteria = new Criteria();
+            criteria.Accuracy = Accuracy.Coarse;            
+            locationManager.RequestSingleUpdate(criteria,null);
+        }
+
 		// Two methods to implement ILocationProvider (the dependency service interface).
 		public void StartTracking()
-		{
+		{            
 			IList<string> locationProviders = locationManager.AllProviders;
 
 			foreach (string locationProvider in locationProviders)
@@ -71,5 +78,6 @@ namespace StritWalk.Droid
 									Bundle extras)
 		{
 		}
-	}
+
+    }
 }

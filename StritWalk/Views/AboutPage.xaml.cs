@@ -72,7 +72,10 @@ namespace StritWalk
 
         void OnLocationTracker(object sender, GeographicLocation args)
         {
+            Console.WriteLine("### changed latitude and longitude: " + Settings.lat + " " + Settings.lng);
             position = new Position(args.Latitude, args.Longitude);
+            Settings.lat = position.Latitude.ToString().Replace(",", "."); ;
+            Settings.lng = position.Longitude.ToString().Replace(",", ".");
         }
 
         async void getMap()
@@ -123,7 +126,7 @@ namespace StritWalk
             //layout.Children.Add(map);
 
             if (Device.Android != Device.RuntimePlatform)
-                layout.Children.Add(button);
+                layout.Children.Add(button);            
 
             locationTracker = DependencyService.Get<ILocationTracker>();
             locationTracker.LocationChanged += OnLocationTracker;

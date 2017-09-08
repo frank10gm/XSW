@@ -56,8 +56,8 @@ namespace StritWalk
                             Position position = null;
                             try
                             {
-                                var locator = CrossGeolocator.Current;
-                                locator.DesiredAccuracy = 100;
+                                var locator = CrossGeolocator.Current;                                
+                                locator.DesiredAccuracy = 100;                                
 
                                 if (position != null)
                                 {
@@ -68,7 +68,8 @@ namespace StritWalk
                                 {                                    
                                     Console.WriteLine("### geolocator not available");
                                 }
-                                position = await locator.GetPositionAsync(TimeSpan.FromSeconds(2));
+                                Console.WriteLine("### asking location right now");
+                                position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(5000));
                             }
                             catch (Exception ex)
                             {
@@ -95,6 +96,7 @@ namespace StritWalk
                     }
                 }
 
+                Console.WriteLine("### current latitude and longitude: " + Settings.lat + " " + Settings.lng);
                 var contentType = "application/json";
                 var req = "{\"action\":\"getPosts\", \"num\":\"" + start + "\", \"order\":\"added\", \"order2\":\"20\", \"lat\":\"" + Settings.lat + "\", \"lng\":\"" + Settings.lng + "\", \"user_id\":\"1\" }";
                 var httpContent = new StringContent(req, Encoding.UTF8, contentType);

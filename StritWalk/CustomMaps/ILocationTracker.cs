@@ -8,5 +8,7 @@ namespace StritWalk
 		void StartTracking();
 
 		void PauseTracking();
+
+        void SingleTracking();
     }
 }
