@@ -2,6 +2,7 @@
 
 using Newtonsoft.Json;
 using Xamarin.Forms;
+using System.Globalization;
 
 namespace StritWalk
 {
@@ -104,7 +105,13 @@ namespace StritWalk
         {
             get
             {
-                if (Distanza == "0.01")
+                Console.WriteLine("### " + Distanza);
+                if(Distanza == "null")
+                {
+                    return Added + "ago";
+                }
+
+                if (float.Parse(Distanza, CultureInfo.InvariantCulture.NumberFormat) < 0.01)
                 {
                     return Added + "ago, " + "here";
                 }

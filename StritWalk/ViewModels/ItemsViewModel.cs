@@ -76,7 +76,7 @@ namespace StritWalk
                 IsLoading = false;
                 if (result)
                 {
-                    Items.Insert(0, new Item { Id = "new", Creator = Settings.UserId, Description = newPostDescription, Likes = "0", Comments_count = "0" });
+                    Items.Insert(0, new Item { Id = "new", Creator = Settings.UserId, Description = newPostDescription, Likes = "0", Comments_count = "0", Distanza = "0" });
 
                     string text = "Posted. Do you want to post something else?";
                     PostEditor.Placeholder = text;

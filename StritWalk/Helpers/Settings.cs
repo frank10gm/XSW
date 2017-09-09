@@ -26,10 +26,10 @@ namespace StritWalk
         static readonly string AuthTokenDefault = string.Empty;
 
 		const string latKey = "lat";
-		static readonly string latDefault = "44.0";
+		static readonly string latDefault = "0";
 
 		const string lngKey = "lng";
-		static readonly string lngDefault = "12.0";
+		static readonly string lngDefault = "0";
 		#endregion
 
 		public static string AuthToken
