@@ -116,12 +116,11 @@ namespace StritWalk
             {
                 EndText = "";
                 start = 0;
-                isNotEnd = false;
+                IsNotEnd = true;
                 Settings.listEnd = false;
                 Items.Clear();
                 var items = await DataStore.GetItemsAsync(true);
-                Items.ReplaceRange(items);
-                IsNotEnd = true;
+                Items.ReplaceRange(items);                
                 //Items.Insert(0, new Item());
             }
             catch (Exception ex)
@@ -136,6 +135,7 @@ namespace StritWalk
             }
             finally
             {
+                IsNotEnd = false;
                 IsBusy = false;
             }
         }
