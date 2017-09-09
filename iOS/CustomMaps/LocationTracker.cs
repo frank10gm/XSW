@@ -48,5 +48,10 @@ namespace StritWalk.iOS
 		{
 			locationManager.StopUpdatingLocation();
 		}
+
+        public void SingleTracking()
+        {
+            
+        }
     }
 }

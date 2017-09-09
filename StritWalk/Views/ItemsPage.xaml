@@ -80,11 +80,11 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Button FontSize="14.0" Grid.Row="0" Grid.Column="0" Text="Video" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Button FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Video" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center">
                                 </Button>
-                                <Button FontSize="14.0" Grid.Row="0" Grid.Column="1" Text="Audio" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Button FontAttributes="Bold" Grid.Row="0" Grid.Column="1" Text="Audio" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center">
                                 </Button>
-                                <Button FontSize="14.0" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PostCommand}" IsEnabled="{Binding IsPosting}">
+                                <Button FontAttributes="Bold" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PostCommand}" IsEnabled="{Binding IsPosting}">
                                 </Button>
                                 <!--<Label FontSize="14.0" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center" IsEnabled="{Binding IsPosting}">
                                     <Label.GestureRecognizers>
