@@ -80,9 +80,9 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Button FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Video" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Button FontAttributes="None" Grid.Row="0" Grid.Column="0" Text="Video" TextColor="#333" HorizontalOptions="Center" VerticalOptions="Center">
                                 </Button>
-                                <Button FontAttributes="Bold" Grid.Row="0" Grid.Column="1" Text="Audio" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Button FontAttributes="None" Grid.Row="0" Grid.Column="1" Text="Audio" TextColor="#333" HorizontalOptions="Center" VerticalOptions="Center">
                                 </Button>
                                 <Button FontAttributes="Bold" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#4885ed" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PostCommand}" IsEnabled="{Binding IsPosting}">
                                 </Button>
