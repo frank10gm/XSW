@@ -110,8 +110,12 @@ namespace StritWalk
         }
 
         private void OnFocused(object sender, EventArgs args)
-        {
+        {            
             viewModel.IsPosting = true;
+            if(viewModel.NewPostDescription == PostEditor.Placeholder)
+            {
+                viewModel.NewPostDescription = string.Empty;
+            }
         }
 
         private void OnCheckTest(object sender, EventArgs args)

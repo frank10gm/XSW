@@ -10,6 +10,9 @@ namespace StritWalk
 		public static BindableProperty PlaceholderColorProperty
         = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(CustomEditor), Color.FromHex("#888888"));
 
+		public static BindableProperty ReadyProperty
+		= BindableProperty.Create(nameof(Ready), typeof(string), typeof(CustomEditor));
+
 		public string Placeholder
 		{
 			get { return (string)GetValue(PlaceholderProperty); }
@@ -20,6 +23,12 @@ namespace StritWalk
 		{
 			get { return (Color)GetValue(PlaceholderColorProperty); }
 			set { SetValue(PlaceholderColorProperty, value); }
+		}
+
+		public bool Ready
+		{
+			get { return (bool)GetValue(ReadyProperty); }
+			set { SetValue(ReadyProperty, value); }
 		}
 
     }

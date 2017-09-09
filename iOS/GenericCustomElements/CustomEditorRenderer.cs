@@ -36,7 +36,10 @@ namespace StritWalk.iOS
 				if (Control.Text == element.Placeholder)
 				{			
 					Control.TextColor = UIColor.Gray;
-
+                    element.Ready = false;
+                }else
+                {
+                    element.Ready = true;    
                 }
             };
 		}
