@@ -17,6 +17,7 @@ namespace StritWalk
         public ICommand PostCommand { get; }
         public CustomEditor PostEditor { get; set; }
         public ICommand ILikeThis { get; }
+        public User me = new User();
 
         string newPostDescription = string.Empty;
         public string NewPostDescription
@@ -49,6 +50,7 @@ namespace StritWalk
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             PostCommand = new Command(async () => await PostTask());
             ILikeThis = new Command(async (par1) => await ILikeThisTask((string)par1));
+            Task.Run(() => GetMyUser());
 
             MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
             {
@@ -77,6 +79,16 @@ namespace StritWalk
                 if (result)
                 {
                     Items.Insert(0, new Item { Id = "new", Creator = Settings.UserId, Description = newPostDescription, Likes = "0", Comments_count = "0", Distanza = "0" });
+                    Settings.Num_posts += 1;
+                    me.Num_posts += 1;
+                    PostsN = new FormattedString
+                    {
+                        Spans =
+                    {
+                        new Span { Text = "Posts" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
+                        new Span { Text = me.Num_posts.ToString(), FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
+                    }
+                    };
 
                     string text = "Posted. Do you want to post something else?";
                     PostEditor.Placeholder = text;
@@ -116,11 +128,13 @@ namespace StritWalk
             {
                 EndText = "";
                 start = 0;
-                IsNotEnd = true;
+                IsNotEnd = false;
                 Settings.listEnd = false;
                 Items.Clear();
                 var items = await DataStore.GetItemsAsync(true);
-                Items.ReplaceRange(items);                
+                Items.ReplaceRange(items);
+                IsNotEnd = true;
+                EndText = "";
                 //Items.Insert(0, new Item());
             }
             catch (Exception ex)
@@ -135,7 +149,7 @@ namespace StritWalk
             }
             finally
             {
-                IsNotEnd = false;
+                //IsNotEnd = false;
                 IsBusy = false;
             }
         }
@@ -143,6 +157,19 @@ namespace StritWalk
         async Task ILikeThisTask(string par1)
         {
             Console.WriteLine(par1);
+        }
+
+        async Task GetMyUser()
+        {
+            me = await DataStore.GetMyUser(me);
+            PostsN = new FormattedString
+            {
+                Spans =
+                    {
+                        new Span { Text = "Posts" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
+                        new Span { Text = me.Num_posts.ToString(), FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
+                    }
+            };
         }
     }
 }

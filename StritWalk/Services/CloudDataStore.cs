@@ -67,8 +67,7 @@ namespace StritWalk
                                 if (!locator.IsGeolocationAvailable || !locator.IsGeolocationEnabled)
                                 {                                    
                                     Console.WriteLine("### geolocator not available");
-                                }
-                                Console.WriteLine("### asking location right now");
+                                }                              
                                 position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(2000));
                             }
                             catch (Exception ex)
@@ -95,8 +94,7 @@ namespace StritWalk
                         Console.WriteLine("### Error: " + ex);
                     }
                 }
-
-                Console.WriteLine("### current latitude and longitude: " + Settings.lat + " " + Settings.lng);
+                
                 var contentType = "application/json";
                 var req = "{\"action\":\"getPosts\", \"num\":\"" + start + "\", \"order\":\"added\", \"order2\":\"20\", \"lat\":\"" + Settings.lat + "\", \"lng\":\"" + Settings.lng + "\", \"user_id\":\"1\" }";
                 var httpContent = new StringContent(req, Encoding.UTF8, contentType);
@@ -294,6 +292,28 @@ namespace StritWalk
             }
 
             return result;
+        }
+
+        public async Task<User> GetMyUser(User me)
+        {
+            if (!CrossConnectivity.Current.IsConnected)
+            {                
+                return me;
+            }
+
+            var contentType = "application/json";
+            var json = $"{{ action: 'getMyUser', user: {Settings.AuthToken} }}";
+            JObject o = JObject.Parse(json);
+            json = o.ToString(Formatting.None);            
+            var httpContent = new StringContent(json, Encoding.UTF8, contentType);
+            var req = await client.PostAsync($"", httpContent);
+            var resp = await req.Content.ReadAsStringAsync();            
+            var ao = JObject.Parse(resp);
+
+            Settings.Num_posts = (int)ao["num_posts"];            
+            
+            me = await Task.Run(() => JsonConvert.DeserializeObject<User>(resp));            
+            return me;
         }
 
     }

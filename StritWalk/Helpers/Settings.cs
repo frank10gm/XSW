@@ -29,8 +29,8 @@ namespace StritWalk
 		static readonly string latDefault = "0";
 
 		const string lngKey = "lng";
-		static readonly string lngDefault = "0";
-		#endregion
+		static readonly string lngDefault = "0";        
+ 		#endregion
 
 		public static string AuthToken
 		{
@@ -55,6 +55,7 @@ namespace StritWalk
                 AppSettings.AddOrUpdateValue("UserDescription", value);
             }
         }
+
 
         public static bool IsLoggedIn => !string.IsNullOrWhiteSpace(UserId);
 		public static string UserId
@@ -86,5 +87,11 @@ namespace StritWalk
             get => AppSettings.GetValueOrDefault(nameof(listEnd), false);
             set => AppSettings.AddOrUpdateValue(nameof(listEnd), value);
 		}
+        
+        public static int Num_posts
+        {
+            get => AppSettings.GetValueOrDefault(nameof(Num_posts), 0);
+            set => AppSettings.AddOrUpdateValue(nameof(Num_posts), value);
+        }
     }
 }

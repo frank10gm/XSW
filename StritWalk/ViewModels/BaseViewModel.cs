@@ -41,11 +41,11 @@ namespace StritWalk
         }
 
         bool isLoading = false;
-		public bool IsLoading
-		{
+        public bool IsLoading
+        {
             get { return isLoading; }
             set { SetProperty(ref isLoading, value); }
-		}
+        }
 
         bool isPosting = false;
         public bool IsPosting
@@ -77,20 +77,18 @@ namespace StritWalk
             set { }
         }
 
-        public FormattedString PostsN
+        FormattedString postsN = new FormattedString
         {
-            get
-            {
-                return new FormattedString
-                {
-                    Spans =
+            Spans =
                     {
                         new Span { Text = "Posts" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
-                        new Span { Text = "191", FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
+                        new Span { Text = Settings.Num_posts.ToString(), FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
                     }
-                };
-            }
-            set { }
+        };
+        public FormattedString PostsN
+        {
+            get { return postsN; }
+            set { SetProperty(ref postsN, value); }
         }
 
         public FormattedString FriendsN
