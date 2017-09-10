@@ -91,36 +91,34 @@ namespace StritWalk
             set { SetProperty(ref postsN, value); }
         }
 
-        public FormattedString FriendsN
-        {
-            get
-            {
-                return new FormattedString
-                {
-                    Spans =
-                    {
-                        new Span { Text = "Friends" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
-                        new Span { Text = "225", FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
-                    }
-                };
-            }
-            set { }
-        }
 
+        FormattedString likesN = new FormattedString
+        {
+            Spans =
+            {
+                new Span { Text = "Liked" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
+                new Span { Text = Settings.Num_likes.ToString(), FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
+            }
+        };
         public FormattedString LikesN
         {
-            get
+            get => likesN;
+            set => SetProperty(ref likesN, value);
+        }
+
+
+        FormattedString friendsN = new FormattedString
+        {
+            Spans =
             {
-                return new FormattedString
-                {
-                    Spans =
-                    {
-                        new Span { Text = "Likes" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
-                        new Span { Text = "441", FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
-                    }
-                };
+                new Span { Text = "Followers" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
+                new Span { Text = Settings.Num_likes.ToString(), FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
             }
-            set { }
+        };
+        public FormattedString FriendsN
+        {
+            get => friendsN;
+            set => SetProperty(ref friendsN, value);
         }
     }
 }

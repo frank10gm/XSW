@@ -93,5 +93,17 @@ namespace StritWalk
             get => AppSettings.GetValueOrDefault(nameof(Num_posts), 0);
             set => AppSettings.AddOrUpdateValue(nameof(Num_posts), value);
         }
+
+        public static int Num_likes
+        {
+            get => AppSettings.GetValueOrDefault(nameof(Num_likes), 0);
+            set => AppSettings.AddOrUpdateValue(nameof(Num_likes), value);
+        }
+
+        public static int Num_friends
+        {
+            get => AppSettings.GetValueOrDefault(nameof(Num_friends), 0);
+            set => AppSettings.AddOrUpdateValue(nameof(Num_friends), value);
+        }
     }
 }
