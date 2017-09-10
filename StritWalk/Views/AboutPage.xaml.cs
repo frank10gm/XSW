@@ -71,8 +71,7 @@ namespace StritWalk
         }
 
         void OnLocationTracker(object sender, GeographicLocation args)
-        {
-            Console.WriteLine("### changed latitude and longitude: " + Settings.lat + " " + Settings.lng);
+        {            
             position = new Position(args.Latitude, args.Longitude);
             Settings.lat = position.Latitude.ToString().Replace(",", "."); ;
             Settings.lng = position.Longitude.ToString().Replace(",", ".");

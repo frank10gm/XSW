@@ -105,8 +105,7 @@ namespace StritWalk
         {
             get
             {
-                Console.WriteLine("### " + Distanza);
-                if(Distanza == "null")
+                if (Distanza == "null")
                 {
                     return Added + "ago";
                 }
@@ -199,10 +198,14 @@ namespace StritWalk
             get
             {
                 string text = "  Likes";
-                if (Int32.Parse(likes) == 1) text = " Like";
+                if (Int32.Parse(likes) == 1) text = "  Like";
                 return likes + text;
             }
             set { SetProperty(ref likes, value); }
+        }
+        public string LikesNum
+        {
+            get { return likes; }
         }
 
         string comments_count = string.Empty;
@@ -216,14 +219,26 @@ namespace StritWalk
             }
             set { SetProperty(ref comments_count, value); }
         }
-       
+
         public string ViewComments
         {
             get
-            {                
+            {
                 if (Int32.Parse(comments_count) == 0) return "";
                 else return "View all " + comments_count + " comments";
-            }        
+            }
+        }
+
+        string liked_me = string.Empty;
+        public string Liked_me
+        {
+            get
+            {
+                if (Int32.Parse(liked_me) == 1)
+                    return "#4885ED";
+                else return "#000000";                
+            }
+            set { SetProperty(ref liked_me, value); }
         }
 
 

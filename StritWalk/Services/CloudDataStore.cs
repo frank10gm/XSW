@@ -37,7 +37,6 @@ namespace StritWalk
                     try
                     {
                         var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
-                        Console.WriteLine("### status permission: " + status);
                         if (status != PermissionStatus.Granted)
                         {
                             if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
@@ -65,9 +64,9 @@ namespace StritWalk
                                 }
 
                                 if (!locator.IsGeolocationAvailable || !locator.IsGeolocationEnabled)
-                                {                                    
+                                {
                                     Console.WriteLine("### geolocator not available");
-                                }                              
+                                }
                                 position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(2000));
                             }
                             catch (Exception ex)
@@ -94,7 +93,7 @@ namespace StritWalk
                         Console.WriteLine("### Error: " + ex);
                     }
                 }
-                
+
                 var contentType = "application/json";
                 var req = "{\"action\":\"getPosts\", \"num\":\"" + start + "\", \"order\":\"added\", \"order2\":\"20\", \"lat\":\"" + Settings.lat + "\", \"lng\":\"" + Settings.lng + "\", \"user_id\":\"1\" }";
                 var httpContent = new StringContent(req, Encoding.UTF8, contentType);
@@ -108,8 +107,7 @@ namespace StritWalk
                     Settings.listEnd = true;
                     MessagingCenter.Send<CloudDataStore, bool>(this, "NotEnd", false);
                 }
-
-                //Console.WriteLine("###" + json);
+                
                 items = await Task.Run(() => JsonConvert.DeserializeObject<IList<Item>>(json));
             }
 
@@ -119,7 +117,7 @@ namespace StritWalk
         public async Task<IList<Item>> GetMapItemsAsync(bool forceRefresh = false, int start = 0)
         {
             if (forceRefresh && CrossConnectivity.Current.IsConnected)
-            {               
+            {
                 var contentType = "application/json";
                 var req = "{\"action\":\"getPosts\", \"num\":\"" + start + "\", \"order\":\"added\", \"order2\":\"9999999\", \"lat\":\"" + Settings.lat + "\", \"lng\":\"" + Settings.lng + "\", \"user_id\":\"1\" }";
                 var httpContent = new StringContent(req, Encoding.UTF8, contentType);
@@ -137,7 +135,7 @@ namespace StritWalk
                 {
                     Console.WriteLine("@@@ internet connection problem");
                 }
-                
+
                 //var resp = await client.PostAsync($"", httpContent);
                 //var stream = await resp.Content.ReadAsStreamAsync();
                 //string streamreader = await new StreamReader(stream).ReadToEndAsync();
@@ -269,7 +267,7 @@ namespace StritWalk
                 return result;
             }
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(email)) return "Fields can't be empty.";
-            var user = $"{{ username: '{username}', password: '{password}', mail: '{email}' }}";        
+            var user = $"{{ username: '{username}', password: '{password}', mail: '{email}' }}";
             var contentType = "application/json";
             var json = $"{{ action: 'register', user: {user} }}";
             JObject o = JObject.Parse(json);
@@ -278,7 +276,7 @@ namespace StritWalk
             var req = await client.PostAsync($"", httpContent);
             var resp = await req.Content.ReadAsStringAsync();
             var ao = JObject.Parse(resp);
-            
+
             if ((int)ao["data"] != 0)
             {
                 Settings.AuthToken = (string)ao["user_id"];
@@ -296,24 +294,39 @@ namespace StritWalk
 
         public async Task<User> GetMyUser(User me)
         {
-            if (!CrossConnectivity.Current.IsConnected) return me;            
+            if (!CrossConnectivity.Current.IsConnected) return me;
 
             var contentType = "application/json";
             var json = $"{{ action: 'getMyUser', user: {Settings.AuthToken} }}";
             JObject o = JObject.Parse(json);
-            json = o.ToString(Formatting.None);            
+            json = o.ToString(Formatting.None);
             var httpContent = new StringContent(json, Encoding.UTF8, contentType);
             var req = await client.PostAsync($"", httpContent);
             var resp = await req.Content.ReadAsStringAsync();            
             var ao = JObject.Parse(resp);
 
-            Settings.Num_posts = (int)ao["num_posts"];            
+            Settings.Num_posts = (int)ao["num_posts"];
             Settings.Num_likes = (int)ao["num_likes"];
             Settings.Num_friends = (int)ao["num_friends"];
 
-            me = await Task.Run(() => JsonConvert.DeserializeObject<User>(resp));            
+            me = await Task.Run(() => JsonConvert.DeserializeObject<User>(resp));
             return me;
         }
 
+        public async Task<int> ILikeThis(string post_id, string action)
+        {
+            if (!CrossConnectivity.Current.IsConnected) return 1;
+
+            var contentType = "application/json";
+            var json = $"{{ action: '{action}', post_id: {post_id}, user_id: {Settings.AuthToken} }}";            
+            JObject o = JObject.Parse(json);
+            json = o.ToString(Formatting.None);
+            var httpContent = new StringContent(json, Encoding.UTF8, contentType);
+            var req = await client.PostAsync($"", httpContent);
+            var resp = await req.Content.ReadAsStringAsync();
+            if (resp == "added like.") return 0;
+            else if (resp == "removed like.") return 2;
+            else return 3;
+        }
     }
 }

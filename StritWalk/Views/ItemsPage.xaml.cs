@@ -51,15 +51,18 @@ namespace StritWalk
                 grid.Children.Add(postLabel, 0, 0);
                 Grid.SetColumnSpan(postLabel, 2);
 
-                var likeButton = new Button() { TextColor = Color.Black, FontSize = 12 };
+                var likeButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) } ;
+                likeButton.SetBinding(Button.TextColorProperty, "Liked_me");
                 likeButton.SetBinding(Button.TextProperty, "Likes");
+                likeButton.Command = viewModel.ILikeThis;
+                likeButton.SetBinding(Button.CommandParameterProperty, ".");             
                 grid.Children.Add(likeButton, 0, 1);
                 //Grid.SetColumnSpan(likeButton, 2);
 
-                var commentsButton = new Button() { TextColor = Color.Black, FontSize = 12 };
+                var commentsButton = new Button() { TextColor = Color.Black, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
                 commentsButton.SetBinding(Button.TextProperty, "Comments_count");
                 grid.Children.Add(commentsButton, 1, 1);
-                //Grid.SetColumnSpan(commentsButton, 2);
+                //Grid.SetColumnSpan(commentsButton, 2);                
 
                 //var otherButton = new Button { Text = "Actions" };                
                 //grid.Children.Add(otherButton, 4, 2);                
@@ -81,7 +84,7 @@ namespace StritWalk
                 //grid.GestureRecognizers.Add(tapGestureRecognizer);
 
                 CustomViewCell cell = new CustomViewCell();
-                ;
+                
                 cell.View = grid;
                 //cell.Height = 234;                
 
@@ -99,7 +102,7 @@ namespace StritWalk
 
             //await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
 
-            //await CrossMediaManager.Current.Play("http://www.hackweb.it/api/uploads/music/" + item.Audio);            
+            //await CrossMediaManager.Current.Play("http://www.hackweb.it/api/uploads/music/" + item.Audio);             
 
             ItemsListView.SelectedItem = null;
         }
@@ -134,20 +137,10 @@ namespace StritWalk
         }
 
         void OnReachBottom(object sender, ItemVisibilityEventArgs args)
-        {
-            
+        {            
             if (viewModel.Items[viewModel.Items.Count - 1] == args.Item && !Settings.listEnd)
-            {
-                //LoadMoreCommand.Execute(null);                
+            {                       
                 Task.Run(() => LoadMoreItems(args.Item));
-                //IsBusy = true;
-                //Console.WriteLine("### " + "reachedBottom");
-                //viewModel.start += 20;
-                //items = await DataStore.GetItemsAsync(true, viewModel.start);
-                //viewModel.Items.AddRange(items);
-                
-                //ItemsListView.ScrollTo(args.Item, ScrollToPosition.End, false);
-                //IsBusy = false;
             }
             else
             {
@@ -165,10 +158,6 @@ namespace StritWalk
             finally
             {
                 viewModel.Items.AddRange(items);
-                //for (var i = 0; i < items.Count; i++)
-                //{
-                //    viewModel.Items.Add(items[i]);
-                //}
             }
         }
 

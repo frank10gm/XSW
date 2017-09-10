@@ -49,8 +49,8 @@ namespace StritWalk
             Items = new ObservableRangeCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             PostCommand = new Command(async () => await PostTask());
-            ILikeThis = new Command(async (par1) => await ILikeThisTask((string)par1));
-            Task.Run(() => GetMyUser());
+            ILikeThis = new Command(async (par1) => await ILikeThisTask((object)par1));
+            //Task.Run(() => GetMyUser());
 
             MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
             {
@@ -122,10 +122,11 @@ namespace StritWalk
             if (IsBusy)
                 return;
 
-            IsBusy = true;
+            IsBusy = true;            
 
             try
             {
+                await Task.Run(() => GetMyUser());
                 EndText = "";
                 start = 0;
                 IsNotEnd = false;
@@ -154,9 +155,27 @@ namespace StritWalk
             }
         }
 
-        async Task ILikeThisTask(string par1)
+        async Task ILikeThisTask(object par1)
         {
-            Console.WriteLine(par1);
+            Item item = par1 as Item;
+            string action = "addLikePost";
+            if (item.Liked_me == "#4885ED")
+                action = "removeLikePost";
+            var res = await DataStore.ILikeThis((string)item.Id, action);
+            if (res == 2)
+            {
+                var num = Int32.Parse(item.LikesNum);
+                num -= 1;
+                item.Likes = num.ToString();
+                item.Liked_me = "0";
+            }
+            else if (res == 0)
+            {
+                var num = Int32.Parse(item.LikesNum);
+                num += 1;
+                item.Likes = num.ToString();
+                item.Liked_me = "1";
+            }          
         }
 
         async Task GetMyUser()
@@ -174,7 +193,7 @@ namespace StritWalk
             {
                 Spans =
                     {
-                        new Span { Text = "Posts" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
+                        new Span { Text = "Liked" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
                         new Span { Text = me.Num_likes.ToString(), FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
                     }
             };

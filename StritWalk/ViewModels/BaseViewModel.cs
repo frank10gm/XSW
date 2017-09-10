@@ -112,7 +112,7 @@ namespace StritWalk
             Spans =
             {
                 new Span { Text = "Followers" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
-                new Span { Text = Settings.Num_likes.ToString(), FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
+                new Span { Text = Settings.Num_friends.ToString(), FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
             }
         };
         public FormattedString FriendsN
