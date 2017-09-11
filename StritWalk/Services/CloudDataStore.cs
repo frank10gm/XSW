@@ -305,6 +305,8 @@ namespace StritWalk
             var resp = await req.Content.ReadAsStringAsync();            
             var ao = JObject.Parse(resp);
 
+            Console.WriteLine("### "+resp);
+
             Settings.Num_posts = (int)ao["num_posts"];
             Settings.Num_likes = (int)ao["num_likes"];
             Settings.Num_friends = (int)ao["num_friends"];

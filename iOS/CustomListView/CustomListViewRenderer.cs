@@ -35,7 +35,7 @@ namespace StritWalk.iOS
             if (e.OldElement != null)
             {
                 // Unsubscribe
-                templatedItemsList = (INotifyCollectionChanged)ListViewTemplatedItemsPropertyInfo.GetValue(e.NewElement);
+                //templatedItemsList = (INotifyCollectionChanged)ListViewTemplatedItemsPropertyInfo.GetValue(e.NewElement);
                 templatedItemsList.CollectionChanged -= this.OnCollectionChanged;
             }
 

@@ -17,7 +17,7 @@ namespace StritWalk
         public ICommand PostCommand { get; }
         public CustomEditor PostEditor { get; set; }
         public ICommand ILikeThis { get; }
-        public User me = new User();
+        public User me;
 
         string newPostDescription = string.Empty;
         public string NewPostDescription
@@ -50,6 +50,7 @@ namespace StritWalk
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             PostCommand = new Command(async () => await PostTask());
             ILikeThis = new Command(async (par1) => await ILikeThisTask((object)par1));
+            me = new User();
             //Task.Run(() => GetMyUser());
 
             MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>

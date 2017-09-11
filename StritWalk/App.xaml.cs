@@ -46,6 +46,11 @@ namespace StritWalk
         {
             Settings.UserId = "";
             Settings.AuthToken = "";
+            Settings.Num_friends = 0;
+            Settings.Num_likes = 0;
+            Settings.Num_posts = 0;
+
+
             Current.MainPage = new NavigationPage(new LoginPage())
             {
                 BarBackgroundColor = (Color)Current.Resources["Primary"],
