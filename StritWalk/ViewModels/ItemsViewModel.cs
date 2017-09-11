@@ -78,7 +78,7 @@ namespace StritWalk
                 IsLoading = false;
                 if (result)
                 {
-                    Items.Insert(0, new Item { Id = "new", Creator = Settings.UserId, Description = newPostDescription, Likes = "0", Comments_count = "0", Distanza = "0" });
+                    Items.Insert(0, new Item { Id = "new", Creator = Settings.UserId, Description = newPostDescription, Likes = "0", Comments_count = "0", Distanza = "0", Liked_me = "0" });
                     Settings.Num_posts += 1;
                     me.Num_posts += 1;
                     PostsN = new FormattedString
