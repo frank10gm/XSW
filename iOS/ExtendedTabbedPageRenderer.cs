@@ -58,8 +58,8 @@ namespace StritWalk.iOS
 		{
 			base.ViewDidLayoutSubviews();
 
-			const float newTabBarHeight = 40f;
-            TabBar.Frame = new System.Drawing.RectangleF((float)TabBar.Frame.X, (float)TabBar.Frame.Y + ((float)TabBar.Frame.Height - newTabBarHeight), (float)TabBar.Frame.Width, newTabBarHeight);
+			//const float newTabBarHeight = 40f;
+            //TabBar.Frame = new System.Drawing.RectangleF((float)TabBar.Frame.X, (float)TabBar.Frame.Y + ((float)TabBar.Frame.Height - newTabBarHeight), (float)TabBar.Frame.Width, newTabBarHeight);
 		}
 
 		public override void ViewDidAppear(bool animated)
