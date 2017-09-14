@@ -58,19 +58,6 @@
                             </Grid.ColumnDefinitions>
                             <local:CustomEditor HorizontalOptions="FillAndExpand" Placeholder="Do you wand to post something?" Keyboard="Default" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" BackgroundColor="#f7f7f7" x:Name="PostEditor" HeightRequest="54" Focused="OnFocused"
                                 FontSize="13" Completed="OnCheckTest" Text="{Binding NewPostDescription}" TextColor="{Binding PostPlaceholder}" Margin="0,0,0,0" />
-                            <!--<Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Image Source="cluster.png" Grid.Row="0" Grid.Column="0" WidthRequest="25">
-                                </Image>
-                                <local:CustomEditor Placeholder="Do you wand to post something?" Keyboard="Default" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#f7f7f7" x:Name="PostEditor" HeightRequest="55" Focused="OnFocused" TextColor="#000000" FontSize="13"
-                                    Completed="OnCheckTest" />
-                            </Grid>-->
                             <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Padding="0,5,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
