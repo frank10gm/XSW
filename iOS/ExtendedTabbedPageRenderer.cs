@@ -23,9 +23,9 @@ namespace StritWalk.iOS
             //UITabBarItem.Appearance.SetTitleTextAttributes(normalTextAttributes, UIControlState.Normal);
             //UITabBarItem.Appearance.TitlePositionAdjustment = new UIOffset(0,-16);
             TabBarItem.ImageInsets = new UIEdgeInsets(50, 50, 50, 50);
-            TabBar.BackgroundColor = UIColor.FromRGB(255, 255, 255);
-            TabBar.BarTintColor = UIColor.FromRGB(255, 255, 255);
-            TabBar.TintColor = UIColor.FromRGB(72, 133, 237);
+            //TabBar.BackgroundColor = UIColor.FromRGB(255, 255, 255);
+            //TabBar.BarTintColor = UIColor.FromRGB(255, 255, 255);
+            TabBar.TintColor = UIColor.FromRGB(43, 152, 240);
 		}
 
 		public override UIViewController SelectedViewController
