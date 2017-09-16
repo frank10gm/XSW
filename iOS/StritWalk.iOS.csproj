@@ -246,7 +246,6 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Helpers\Settings.cs" />
-    <Compile Include="ExtendedTabbedPageRenderer.cs" />
     <Compile Include="CustomMaps\CustomMapRenderer.cs" />
     <Compile Include="CustomMaps\CustomMKAnnotationView.cs" />
     <Compile Include="CustomMaps\LocationTracker.cs" />
@@ -264,6 +263,7 @@
     <Compile Include="CustomListView\CustomListViewCell.cs" />
     <Compile Include="GenericCustomElements\CustomEditorRenderer.cs" />
     <Compile Include="GenericCustomElements\CustomEntryRenderer.cs" />
+    <Compile Include="GenericCustomElements\ExtendedTabbedPageRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
