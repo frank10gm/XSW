@@ -3,6 +3,7 @@
 using Newtonsoft.Json;
 using Xamarin.Forms;
 using System.Globalization;
+using Newtonsoft.Json.Linq;
 
 namespace StritWalk
 {
@@ -15,7 +16,6 @@ namespace StritWalk
         }
 
         string id = string.Empty;
-
         //[JsonIgnore]
         public string Id
         {
@@ -28,6 +28,13 @@ namespace StritWalk
         {
             get { return primo; }
             set { SetProperty(ref primo, value); }
+        }
+
+        bool nuovo = false;
+        public bool Nuovo
+        {
+            get { return nuovo; }
+            set { SetProperty(ref nuovo, value); }
         }
 
         bool secondo = false;
@@ -143,7 +150,7 @@ namespace StritWalk
                 Span name = new Span { Text = Name, FontAttributes = FontAttributes.Bold, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };
                 Span description = new Span { Text = Description, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };
 
-                if (Id == "new")
+                if (Nuovo == true)
                 {
                     details = new Span { Text = "here, now" + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#333333") };
                 }
@@ -220,15 +227,6 @@ namespace StritWalk
             set { SetProperty(ref comments_count, value); }
         }
 
-        public string ViewComments
-        {
-            get
-            {
-                if (Int32.Parse(comments_count) == 0) return "";
-                else return "View all " + comments_count + " comments";
-            }
-        }
-
         string liked_me = string.Empty;
         public string Liked_me
         {
@@ -236,11 +234,53 @@ namespace StritWalk
             {
                 if (Int32.Parse(liked_me) == 1)
                     return "#2b98f0";
-                else return "#000000";                
+                else return "#000000";
             }
             set { SetProperty(ref liked_me, value); }
         }
 
+        JArray comments = null;
+        public JArray Comments
+        {
+            get
+            {
+                return comments;
+            }
+            set { SetProperty(ref comments, value); }
+        }
+
+        [JsonIgnore]
+        public bool VisibleComments
+        {
+            get
+            {
+                if (comments != null) return true;
+                return false;
+            }
+        }
+
+        [JsonIgnore]
+        public FormattedString ViewComments
+        {
+            get
+            {
+                if (Int32.Parse(comments_count) == 0)
+                {
+                    return "";
+                }
+                else
+                {
+                    FormattedString result = new FormattedString();
+                    Span testo = new Span
+                    {
+                        Text = "View all " + comments_count + " comments" + "\n\n" + comments[0]["user_name"]
+                            + ": " + comments[0]["comment"] + "\n" + comments[1]["user_name"] + ": " + comments[0]["comment"]
+                    };
+                    result.Spans.Add(testo);
+                    return result;
+                }
+            }
+        }
 
     }
 }

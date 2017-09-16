@@ -11,14 +11,15 @@ namespace StritWalk
     public class ItemsViewModel : BaseViewModel
     {
         public int start = 0;
-        bool result = false;
+        string result = string.Empty;
         public ObservableRangeCollection<Item> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
         public ICommand PostCommand { get; }
         public CustomEditor PostEditor { get; set; }
         public ICommand ILikeThis { get; }
         public User me;
-
+        public ICommand ICommentThis { get; }
+       
         string newPostDescription = string.Empty;
         public string NewPostDescription
         {
@@ -50,6 +51,7 @@ namespace StritWalk
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             PostCommand = new Command(async () => await PostTask());
             ILikeThis = new Command(async (par1) => await ILikeThisTask((object)par1));
+            ICommentThis = new Command(async (par1) => await ICommentThisTask((object)par1));
             me = new User();
             //Task.Run(() => GetMyUser());
 
@@ -77,9 +79,9 @@ namespace StritWalk
             finally
             {
                 IsLoading = false;
-                if (result)
+                if (!string.IsNullOrWhiteSpace(result))
                 {
-                    Items.Insert(0, new Item { Id = "new", Creator = Settings.UserId, Description = newPostDescription, Likes = "0", Comments_count = "0", Distanza = "0", Liked_me = "0" });
+                    Items.Insert(0, new Item { Id = result, Nuovo = true, Creator = Settings.UserId, Description = newPostDescription, Likes = "0", Comments_count = "0", Distanza = "0", Liked_me = "0" });
                     Settings.Num_posts += 1;
                     me.Num_posts += 1;
                     PostsN = new FormattedString
@@ -113,7 +115,7 @@ namespace StritWalk
             }
         }
 
-        public async Task<bool> TryPostAsync()
+        public async Task<string> TryPostAsync()
         {
             return await DataStore.Post("", "", "", "", "", newPostDescription);
         }
@@ -207,5 +209,10 @@ namespace StritWalk
                     }
             };
         }
+
+        async Task ICommentThisTask(object par1)
+        {
+			await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(par1)));
+		}
     }
 }

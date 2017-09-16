@@ -61,14 +61,17 @@ namespace StritWalk
 
                 var commentsButton = new Button() { TextColor = Color.Black, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
                 commentsButton.SetBinding(Button.TextProperty, "Comments_count");
-                grid.Children.Add(commentsButton, 1, 1);
+                commentsButton.Command = viewModel.ICommentThis;
+                commentsButton.SetBinding(Button.CommandParameterProperty, ".");
+				grid.Children.Add(commentsButton, 1, 1);
                 //Grid.SetColumnSpan(commentsButton, 2);                
 
                 //var otherButton = new Button { Text = "Actions" };                
                 //grid.Children.Add(otherButton, 4, 2);                
 
-                var commentsLabel = new Label { Margin = new Thickness(15, 10, 10, 10), Text = "", TextColor = Color.Gray, FontSize = 9, IsVisible = false };
-                commentsLabel.SetBinding(Label.TextProperty, "ViewComments");
+                var commentsLabel = new Label { Margin = new Thickness(15, 10, 10, 10), Text = "", TextColor = Color.Gray, FontSize = 9};
+                commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
+                commentsLabel.SetBinding(Label.IsVisibleProperty, "VisibleComments");
                 grid.Children.Add(commentsLabel, 0, 2);
                 Grid.SetColumnSpan(commentsLabel, 2);
 
@@ -76,11 +79,10 @@ namespace StritWalk
                 grid.Children.Add(whiteSeparator, 0, 3);
                 Grid.SetColumnSpan(whiteSeparator, 2);
 
-                var tapGestureRecognizer = new TapGestureRecognizer();
-                tapGestureRecognizer.Tapped += (s, e) => {
+                //var tapGestureRecognizer = new TapGestureRecognizer();
+                //tapGestureRecognizer.Tapped += (s, e) => {
                     
-                };
-
+                //};
                 //grid.GestureRecognizers.Add(tapGestureRecognizer);
 
                 CustomViewCell cell = new CustomViewCell();

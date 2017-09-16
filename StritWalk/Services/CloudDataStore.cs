@@ -141,7 +141,7 @@ namespace StritWalk
                 //string streamreader = await new StreamReader(stream).ReadToEndAsync();
                 //Console.WriteLine("###" + streamreader);
                 //var json = streamreader;
-                //var json = resp.Content.ReadAsStringAsync();                
+                //var json = resp.Content.ReadAsStringAsync();  
 
                 if (json == "[]")
                 {
@@ -228,9 +228,9 @@ namespace StritWalk
             return response.IsSuccessStatusCode ? true : false;
         }
 
-        public async Task<bool> Post(string id_user, string name, string audio, string lat, string lng, string description)
+        public async Task<string> Post(string id_user, string name, string audio, string lat, string lng, string description)
         {
-            bool result = false;
+            string result = string.Empty;
             if ((!string.IsNullOrEmpty(description) || !string.IsNullOrWhiteSpace(description)) && CrossConnectivity.Current.IsConnected)
             {
                 var contentType = "application/json";
@@ -242,8 +242,7 @@ namespace StritWalk
                 var resp = await req.Content.ReadAsStringAsync();
                 var ao = JObject.Parse(resp);
 
-                Console.WriteLine(resp);
-                result = true;
+                result = (string)ao["new_id"];
 
                 //Console.WriteLine(ao[0]["error"]);
                 //if ((int)ao[0]["data"] != 0)
@@ -304,8 +303,6 @@ namespace StritWalk
             var req = await client.PostAsync($"", httpContent);
             var resp = await req.Content.ReadAsStringAsync();            
             var ao = JObject.Parse(resp);
-
-            Console.WriteLine("### "+resp);
 
             Settings.Num_posts = (int)ao["num_posts"];
             Settings.Num_likes = (int)ao["num_likes"];
