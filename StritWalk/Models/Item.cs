@@ -273,7 +273,7 @@ namespace StritWalk
                     FormattedString result = new FormattedString();
                     Span testo = new Span
                     {
-                        Text = "View all " + comments_count + " comments" + "\n\n" + comments[0]["user_name"]
+                        Text = "View all " + comments_count + " comments" + "\n" + comments[0]["user_name"]
                             + ": " + comments[0]["comment"] + "\n" + comments[1]["user_name"] + ": " + comments[0]["comment"]
                     };
                     result.Spans.Add(testo);
