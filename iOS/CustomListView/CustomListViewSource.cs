@@ -16,7 +16,7 @@ namespace StritWalk.iOS
         readonly NSString cellIdentifier = new NSString("TableCell");
         private readonly UITableViewSource source;
         private readonly Dictionary<int, double> cachedHeights = new Dictionary<int, double>();
-        PropertyInfo specialProperty;        
+        PropertyInfo specialProperty;
 
         public IList<Item> ItemsSource
         {
@@ -52,28 +52,31 @@ namespace StritWalk.iOS
         #region user interaction methods
 
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
-        {
+        {            
             var cellForPath = GetCellForPath(indexPath);
             //listView.NotifyItemSelected(tableItems[indexPath.Row]);
             tableView.DeselectRow(indexPath, true);
+
+			UITapGestureRecognizer gesture = new UITapGestureRecognizer(() => { tableView.EndEditing(true); });
+			tableView.AddGestureRecognizer(gesture);
         }
 
         public override void RowDeselected(UITableView tableView, NSIndexPath indexPath)
         {
-            
+
         }
 
         #endregion
 
 
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
-        {                       
+        {
             //var cell = this.GetCellForPath(indexPath);
             return source.GetCell(tableView, indexPath);
         }
 
         public override void WillDisplay(UITableView tableView, UITableViewCell cell, NSIndexPath indexPath)
-        {                        
+        {
             cachedHeights[indexPath.Row] = cell.Frame.Size.Height;
             cell.SelectionStyle = UITableViewCellSelectionStyle.None;
         }
@@ -86,7 +89,7 @@ namespace StritWalk.iOS
 
             if (this.list.RowHeight == -1 && cellForPath.Height == -1.0 && cellForPath is CustomViewCell)
             {
-                
+
                 //var view = ((CustomViewCell)cellForPath).View;
 
                 ////var sizeRequest = view.GetSizeRequest(tableView.Frame.Width, double.PositiveInfinity);
@@ -94,8 +97,8 @@ namespace StritWalk.iOS
                 ////Console.WriteLine("@@@ " + sizeRequest);
 
                 //cachedHeights[indexPath.Row] = sizeRequest.Request.Height;
-                
-                
+
+
 
                 //return (nfloat)sizeRequest.Request.Height;
             }

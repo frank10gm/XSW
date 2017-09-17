@@ -5,6 +5,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using System.Reflection;
 using System.Collections.Specialized;
+using UIKit;
+using System;
 
 [assembly: ExportRenderer(typeof(CustomListView), typeof(CustomListViewRenderer))]
 namespace StritWalk.iOS
@@ -41,10 +43,11 @@ namespace StritWalk.iOS
 
             if (e.NewElement != null)
             {                
-                Control.ShowsVerticalScrollIndicator = false;                
+                Control.ShowsVerticalScrollIndicator = false;        
                 templatedItemsList = (INotifyCollectionChanged)ListViewTemplatedItemsPropertyInfo.GetValue(e.NewElement);                
                 templatedItemsList.CollectionChanged += this.OnCollectionChanged;
                 Control.Source = dataSource = new CustomListViewSource(Element as CustomListView, Control.Source, ListViewTemplatedItemsPropertyInfo);
+
                 //UpdateRowHeight();
             }
 

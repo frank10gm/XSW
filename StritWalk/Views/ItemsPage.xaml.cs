@@ -51,11 +51,11 @@ namespace StritWalk
                 grid.Children.Add(postLabel, 0, 0);
                 Grid.SetColumnSpan(postLabel, 2);
 
-                var likeButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) } ;
+                var likeButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
                 likeButton.SetBinding(Button.TextColorProperty, "Liked_me");
                 likeButton.SetBinding(Button.TextProperty, "Likes");
                 likeButton.Command = viewModel.ILikeThis;
-                likeButton.SetBinding(Button.CommandParameterProperty, ".");             
+                likeButton.SetBinding(Button.CommandParameterProperty, ".");
                 grid.Children.Add(likeButton, 0, 1);
                 //Grid.SetColumnSpan(likeButton, 2);
 
@@ -63,35 +63,36 @@ namespace StritWalk
                 commentsButton.SetBinding(Button.TextProperty, "Comments_count");
                 commentsButton.Command = viewModel.ICommentThis;
                 commentsButton.SetBinding(Button.CommandParameterProperty, ".");
-				grid.Children.Add(commentsButton, 1, 1);
+                grid.Children.Add(commentsButton, 1, 1);
                 //Grid.SetColumnSpan(commentsButton, 2);                
 
                 //var otherButton = new Button { Text = "Actions" };                
                 //grid.Children.Add(otherButton, 4, 2);                
 
-                var commentsLabel = new Label { Margin = new Thickness(15, 10, 10, 10), Text = "", TextColor = Color.Gray, FontSize = 9};
+                var commentsLabel = new Label { Margin = new Thickness(15, 10, 10, 10), Text = "", TextColor = Color.Gray, FontSize = 9 };
                 commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
                 commentsLabel.SetBinding(Label.IsVisibleProperty, "VisibleComments");
                 grid.Children.Add(commentsLabel, 0, 2);
                 Grid.SetColumnSpan(commentsLabel, 2);
-				var tapGestureRecognizer = new TapGestureRecognizer();
-				tapGestureRecognizer.Tapped += (s, e) => {
-                    
-				};
-                commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);			
+                var tapGestureRecognizer = new TapGestureRecognizer();
+                tapGestureRecognizer.Tapped += (s, e) =>
+                {
 
-				var whiteSeparator = new BoxView { BackgroundColor = Color.White, HeightRequest = 10 };
+                };
+                commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
+
+                var whiteSeparator = new BoxView { BackgroundColor = Color.White, HeightRequest = 10 };
                 grid.Children.Add(whiteSeparator, 0, 3);
                 Grid.SetColumnSpan(whiteSeparator, 2);
 
                 //var tapGestureRecognizer = new TapGestureRecognizer();
                 //tapGestureRecognizer.Tapped += (s, e) => {
-                    
+
                 //};
                 //grid.GestureRecognizers.Add(tapGestureRecognizer);
 
                 CustomViewCell cell = new CustomViewCell();
-                
+
                 cell.View = grid;
                 //cell.Height = 234;                
 
@@ -116,14 +117,13 @@ namespace StritWalk
 
         private void OnCellTapped(object sender, EventArgs args)
         {
-            PostEditor.Unfocus();
             ItemsListView.SelectedItem = null;
         }
 
         private void OnFocused(object sender, EventArgs args)
-        {            
+        {
             viewModel.IsPosting = true;
-            if(viewModel.NewPostDescription == PostEditor.Placeholder)
+            if (viewModel.NewPostDescription == PostEditor.Placeholder)
             {
                 viewModel.NewPostDescription = string.Empty;
             }
@@ -145,9 +145,11 @@ namespace StritWalk
         }
 
         void OnReachBottom(object sender, ItemVisibilityEventArgs args)
-        {            
+        {
+            if (PostEditor.IsFocused)
+                PostEditor.Unfocus();
             if (viewModel.Items[viewModel.Items.Count - 1] == args.Item && !Settings.listEnd)
-            {                       
+            {
                 Task.Run(() => LoadMoreItems(args.Item));
             }
             else
@@ -179,7 +181,7 @@ namespace StritWalk
             base.OnAppearing();
 
             if (viewModel.Items.Count == 0)
-                viewModel.LoadItemsCommand.Execute(null);                       
+                viewModel.LoadItemsCommand.Execute(null);
         }
 
     }

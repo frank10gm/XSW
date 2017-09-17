@@ -25,6 +25,7 @@ namespace StritWalk.iOS
             //controllo della tastiera
             UITapGestureRecognizer gesture = new UITapGestureRecognizer(() => { View.EndEditing(true); });
             View.AddGestureRecognizer(gesture);
+
         }
     }
 }
