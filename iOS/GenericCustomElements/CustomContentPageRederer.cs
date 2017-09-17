@@ -23,6 +23,7 @@ namespace StritWalk.iOS
         private bool _pageWasShiftedUp;
         private double _activeViewBottom;
         private bool _isKeyboardShown;
+        private Rectangle originalFrame;
 
         //public CustomContentPageRederer()
         //{
@@ -70,7 +71,11 @@ namespace StritWalk.iOS
         {
             base.OnElementChanged(e);
             gino = e.NewElement as ItemDetailPage;
-        }
+
+			//controllo della tastiera
+			UITapGestureRecognizer gesture = new UITapGestureRecognizer(KeyDismiss);
+			View.AddGestureRecognizer(gesture);
+		}
 
         public override void ViewWillDisappear(bool animated)
         {
@@ -175,6 +180,7 @@ namespace StritWalk.iOS
         private void ShiftPageUp(nfloat keyboardHeight, double activeViewBottom)
         {
             var pageFrame = Element.Bounds;
+            originalFrame = pageFrame;
 
             var newY = pageFrame.Y + CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
             var newH = pageFrame.Height + CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
@@ -189,14 +195,15 @@ namespace StritWalk.iOS
 
         private void ShiftPageDown(nfloat keyboardHeight, double activeViewBottom)
         {
-            var pageFrame = Element.Bounds;
+            //var pageFrame = Element.Bounds;
 
-            var newY = pageFrame.Y - CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
-            var newH = pageFrame.Height - CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
+            //var newY = pageFrame.Y - CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
+            //var newH = pageFrame.Height - CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
 
-            Element.LayoutTo(new Rectangle(pageFrame.X, pageFrame.Y,
-                                           pageFrame.Width, newH));
+            //Element.LayoutTo(new Rectangle(pageFrame.X, pageFrame.Y,
+            //                               pageFrame.Width, newH));
 
+            Element.LayoutTo(originalFrame);
             _pageWasShiftedUp = false;
         }
 
@@ -204,6 +211,11 @@ namespace StritWalk.iOS
         {
             return (pageHeight - activeViewBottom) - keyboardHeight;
         }
+
+		void KeyDismiss()
+		{
+			View.EndEditing(true);
+		}
 
     }
 }

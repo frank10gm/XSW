@@ -37,6 +37,11 @@ namespace StritWalk.iOS
 
             var custom = e.NewElement as CustomTabbedPage;
 
+            //controllo della tastiera
+            //UITapGestureRecognizer gesture = new UITapGestureRecognizer(KeyDismiss);
+            //View.Subviews[0].AddGestureRecognizer(gesture);
+            //View.AddGestureRecognizer(gesture);
+
 			this.Tabbed.PropertyChanging += (sender, eventArgs) => {                
 				if (eventArgs.PropertyName == "TabBarHidden")
 				{
@@ -100,5 +105,10 @@ namespace StritWalk.iOS
                 uiTabBarItem.ImageInsets = new UIEdgeInsets(5, 0, -5, 0);
 			}
 		}
+
+        void KeyDismiss()
+        {
+            View.Subviews[0].EndEditing(true);
+        }
     }
 }

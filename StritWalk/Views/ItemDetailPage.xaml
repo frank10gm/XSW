@@ -5,7 +5,7 @@
             <x:Arguments>
                 <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
             </x:Arguments>
-        </local:CustomListView>
-        <local:CustomEditor BackgroundColor="#f7f7f7" VerticalOptions="End" HorizontalOptions="FillAndExpand" Text="Comment here" Keyboard="Default" Placeholder="Comment here" FontSize="13.0" />
+        </local:CustomListView>      
+        <local:CustomEditor BackgroundColor="#f7f7f7" VerticalOptions="End" HorizontalOptions="FillAndExpand" Text="Comment here" Keyboard="Default" Placeholder="Comment here" FontSize="14.0" />
     </StackLayout>
 </ContentPage>
