@@ -26,6 +26,8 @@ namespace StritWalk.iOS
 
             //CreatePlaceholderLabel((CustomEditor)Element, Control);
 
+            this.Control.InputAccessoryView = null;
+
             Control.Ended += OnEnded;
             Control.Changed += OnChanged;
             Control.Started += OnFocused;

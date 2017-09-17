@@ -43,11 +43,11 @@ namespace StritWalk.iOS
 		//    base.ViewDidLoad();
 		//}
 
-		public static void Init()
-		{
-			var now = DateTime.Now;
-			Debug.WriteLine("Keyboard Overlap plugin initialized {0}", now);
-		}
+		//public static void Init()
+		//{
+		//	var now = DateTime.Now;
+		//	Debug.WriteLine("Keyboard Overlap plugin initialized {0}", now);
+		//}
 
 		public override void ViewWillAppear(bool animated)
 		{
