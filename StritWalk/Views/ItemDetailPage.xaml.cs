@@ -8,6 +8,7 @@ namespace StritWalk
     public partial class ItemDetailPage : ContentPage
     {
         ItemDetailViewModel viewModel;
+        public CustomTabbedPage page;
 
         public ItemDetailPage(ItemDetailViewModel viewModel)
         {
@@ -34,6 +35,19 @@ namespace StritWalk
 
 				return cell;
             });
+
+            page = Application.Current.MainPage as CustomTabbedPage;
+
+		}
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+		}
+
+        public void WillSparisci()
+        {
+            page.TabBarHidden = false;    
         }
 
 

@@ -6,6 +6,6 @@
                 <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
             </x:Arguments>
         </local:CustomListView>
-        <Entry BackgroundColor="Red" VerticalOptions="End" HorizontalOptions="FillAndExpand" Text="Comment here" Keyboard="Default" />
+        <Editor BackgroundColor="White" VerticalOptions="End" HorizontalOptions="FillAndExpand" Text="Comment here" Keyboard="Default" />
     </StackLayout>
 </ContentPage>

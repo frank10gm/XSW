@@ -33,13 +33,16 @@ namespace StritWalk.iOS
             //TabBar.BarTintColor = UIColor.FromRGB(255, 255, 255);
             TabBar.TintColor = UIColor.FromRGB(43, 152, 240);
 
+			if (e.NewElement == null) return;
 
-			this.Tabbed.PropertyChanging += (sender, eventArgs) => {
-				if (eventArgs.PropertyName == "TabBarHidden" && TabBar.SelectedItem == TabBar.Items[0])
+            var custom = e.NewElement as CustomTabbedPage;
+
+			this.Tabbed.PropertyChanging += (sender, eventArgs) => {                
+				if (eventArgs.PropertyName == "TabBarHidden")
 				{
-					bool tabBarHidden = true;
+                    bool tabBarHidden = !custom.TabBarHidden;
 					TabBar.Hidden = tabBarHidden;
-					Console.WriteLine(View.Frame.Width + " " + View.Frame.Height);
+					//Console.WriteLine(View.Frame.Width + " " + View.Frame.Height);
 
                     // The solution to the space left behind the invisible tab bar
                     if (TabBar.Hidden)

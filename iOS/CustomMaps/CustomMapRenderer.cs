@@ -57,7 +57,7 @@ namespace StritWalk.iOS
 
 				CLLocationCoordinate2D[] coords = new CLLocationCoordinate2D[formsMap.ShapeCoordinates.Count];
 
-                System.Diagnostics.Debug.WriteLine("shape coords : " + formsMap.ShapeCoordinates.Count);
+                //System.Diagnostics.Debug.WriteLine("shape coords : " + formsMap.ShapeCoordinates.Count);
 
 				int index = 0;
 				foreach (var position in formsMap.ShapeCoordinates)
