@@ -5,6 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 using TK.CustomMap.iOSUnified;
+using KeyboardOverlap.Forms.Plugin.iOSUnified;
 
 namespace StritWalk.iOS
 {
@@ -15,6 +16,7 @@ namespace StritWalk.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             Xamarin.FormsMaps.Init();
+            KeyboardOverlapRenderer.Init();
             LoadApplication(new App());
             TKCustomMapRenderer.InitMapRenderer();
 

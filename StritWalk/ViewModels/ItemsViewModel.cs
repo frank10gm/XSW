@@ -212,7 +212,8 @@ namespace StritWalk
 
         async Task ICommentThisTask(object par1)
         {
-			await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(par1)));
+            await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(par1)));
+            //await Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new ItemDetailPage(new ItemDetailViewModel(par1))));
 		}
     }
 }

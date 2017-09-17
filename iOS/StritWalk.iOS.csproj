@@ -163,6 +163,9 @@
     <Reference Include="Cirrious.FluentLayouts.Touch">
       <HintPath>..\packages\Cirrious.FluentLayout.2.6.0\lib\Xamarin.iOS10\Cirrious.FluentLayouts.Touch.dll</HintPath>
     </Reference>
+    <Reference Include="KeyboardOverlap.Forms.Plugin.iOSUnified">
+      <HintPath>..\packages\Xam.Plugins.Forms.KeyboardOverlap.1.0.0.4\lib\Xamarin.iOS10\KeyboardOverlap.Forms.Plugin.iOSUnified.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
@@ -264,6 +267,7 @@
     <Compile Include="GenericCustomElements\CustomEditorRenderer.cs" />
     <Compile Include="GenericCustomElements\CustomEntryRenderer.cs" />
     <Compile Include="GenericCustomElements\ExtendedTabbedPageRenderer.cs" />
+    <Compile Include="GenericCustomElements\CustomContentPageRederer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

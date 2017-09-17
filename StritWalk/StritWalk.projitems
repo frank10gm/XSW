@@ -59,6 +59,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\RegisterPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\CommentsItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GenericCustomElements\CustomContentPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />

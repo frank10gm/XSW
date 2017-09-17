@@ -38,7 +38,7 @@ namespace StritWalk.iOS
 
         public void ClearRowHeightCache()
         {
-            Console.WriteLine("@@@ clear cached");
+            //Console.WriteLine("@@@ clear cached");
             this.cachedHeights.Clear();
         }
 

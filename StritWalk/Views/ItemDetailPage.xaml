@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="StritWalk.ItemDetailPage" Title="{Binding Title}" xmlns:local="clr-namespace:StritWalk;" x:Name="CommentsPage">
-    <AbsoluteLayout>
-        <local:CustomListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" SeparatorVisibility="None" x:Name="CommentsListView" VerticalOptions="FillAndExpand" HasUnevenRows="true" IsPullToRefreshEnabled="false"
-            ItemsSource="{Binding CommentsItems}" RowHeight="-1">
+    <StackLayout>
+        <local:CustomListView SeparatorVisibility="None" x:Name="CommentsListView" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HasUnevenRows="true" IsPullToRefreshEnabled="false" ItemsSource="{Binding CommentsItems}" RowHeight="-1">
             <x:Arguments>
                 <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
             </x:Arguments>
         </local:CustomListView>
-    </AbsoluteLayout>
+        <Entry BackgroundColor="Red" VerticalOptions="End" HorizontalOptions="FillAndExpand" Text="Comment here" Keyboard="Default" />
+    </StackLayout>
 </ContentPage>
