@@ -55,13 +55,12 @@ namespace StritWalk.iOS
         {
             var cellForPath = GetCellForPath(indexPath);
             //listView.NotifyItemSelected(tableItems[indexPath.Row]);
-            Console.WriteLine("Row " + indexPath.Row.ToString() + " selected");
             tableView.DeselectRow(indexPath, true);
         }
 
         public override void RowDeselected(UITableView tableView, NSIndexPath indexPath)
         {
-            Console.WriteLine("Row " + indexPath.Row.ToString() + " deselected");
+            
         }
 
         #endregion

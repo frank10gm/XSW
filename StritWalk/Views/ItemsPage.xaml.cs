@@ -76,7 +76,7 @@ namespace StritWalk
                 Grid.SetColumnSpan(commentsLabel, 2);
 				var tapGestureRecognizer = new TapGestureRecognizer();
 				tapGestureRecognizer.Tapped += (s, e) => {
-                    //PostEditor.Unfocus();
+                    
 				};
                 commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);			
 
@@ -116,6 +116,7 @@ namespace StritWalk
 
         private void OnCellTapped(object sender, EventArgs args)
         {
+            PostEditor.Unfocus();
             ItemsListView.SelectedItem = null;
         }
 
