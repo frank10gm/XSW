@@ -16,7 +16,7 @@ namespace StritWalk.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             Xamarin.FormsMaps.Init();
-            KeyboardOverlapRenderer.Init();
+            //KeyboardOverlapRenderer.Init();
             LoadApplication(new App());
             TKCustomMapRenderer.InitMapRenderer();
 
