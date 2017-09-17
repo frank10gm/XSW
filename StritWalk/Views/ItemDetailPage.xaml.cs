@@ -34,7 +34,8 @@ namespace StritWalk
 
 				return cell;
             });
-
         }
+
+
     }
 }

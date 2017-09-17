@@ -212,6 +212,8 @@ namespace StritWalk
 
         async Task ICommentThisTask(object par1)
         {
+			CustomTabbedPage page = Application.Current.MainPage as CustomTabbedPage;
+			page.TabBarHidden = true;
             await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(par1)));
             //await Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new ItemDetailPage(new ItemDetailViewModel(par1))));
 		}

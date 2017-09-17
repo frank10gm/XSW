@@ -10,7 +10,7 @@ namespace StritWalk
     {
         public static bool UseMockDataStore = false;
         public static string BackendUrl = "http://www.hackweb.it/api";
-        public static TabbedPage tabbedPage;
+        public static CustomTabbedPage tabbedPage;
         public static IDictionary<string, string> LoginParameters => null;
 
         public App()
@@ -61,7 +61,7 @@ namespace StritWalk
         public static void GoToMainPage()
         {
             
-            tabbedPage = new TabbedPage
+            tabbedPage = new CustomTabbedPage
             {
                 Children = {
                     new NavigationPage(new ItemsPage())

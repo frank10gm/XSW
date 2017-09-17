@@ -4,17 +4,23 @@ using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using UIKit;
+using StritWalk;
 using StritWalk.iOS;
 
-[assembly: ExportRenderer(typeof(TabbedPage), typeof(ExtendedTabbedPageRenderer))]
+[assembly: ExportRenderer(typeof(CustomTabbedPage), typeof(ExtendedTabbedPageRenderer))]
 
 namespace StritWalk.iOS
 {
     public class ExtendedTabbedPageRenderer : TabbedRenderer
     {
+
+        public CoreGraphics.CGRect baseFrame;
+
 		protected override void OnElementChanged(VisualElementChangedEventArgs e)
 		{
-			base.OnElementChanged(e);
+            base.OnElementChanged(e);
+            baseFrame = View.Subviews[1].Frame;
+            //View.Subviews[1].Frame = new CoreGraphics.CGRect(View.Subviews[1].Frame.X, View.Subviews[1].Frame.Y, View.Subviews[1].Frame.Width, 49);
 
             // Set Text Font for unselected tab states
             //UITextAttributes normalTextAttributes = new UITextAttributes();
@@ -26,6 +32,23 @@ namespace StritWalk.iOS
             //TabBar.BackgroundColor = UIColor.FromRGB(255, 255, 255);
             //TabBar.BarTintColor = UIColor.FromRGB(255, 255, 255);
             TabBar.TintColor = UIColor.FromRGB(43, 152, 240);
+
+
+			this.Tabbed.PropertyChanging += (sender, eventArgs) => {
+				if (eventArgs.PropertyName == "TabBarHidden" && TabBar.SelectedItem == TabBar.Items[0])
+				{
+					bool tabBarHidden = true;
+					TabBar.Hidden = tabBarHidden;
+					Console.WriteLine(View.Frame.Width + " " + View.Frame.Height);
+
+                    // The solution to the space left behind the invisible tab bar
+                    if (TabBar.Hidden)
+                        View.Subviews[1].Frame = new CoreGraphics.CGRect(View.Subviews[1].Frame.X, View.Subviews[1].Frame.Y, View.Subviews[1].Frame.Width, 0);
+                    else
+                        View.Subviews[1].Frame = baseFrame;
+                    
+				}
+			};
 		}
 
 		public override UIViewController SelectedViewController
