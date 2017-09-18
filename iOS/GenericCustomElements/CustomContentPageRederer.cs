@@ -62,7 +62,7 @@ namespace StritWalk.iOS
 
                 if (contentScrollView != null)
                     return;
-
+                
                 RegisterForKeyboardNotifications();
             }
         }

@@ -52,6 +52,7 @@ namespace StritWalk
 
 		void OnReachBottom(object sender, ItemVisibilityEventArgs args)
 		{
+            
 			//if (CommentEditor.IsFocused)
 				//CommentEditor.Unfocus();            		
 		}
@@ -65,7 +66,6 @@ namespace StritWalk
         {
             CommentsListView.SelectedItem = null;
         }
-
 
     }
 }

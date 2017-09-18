@@ -18,6 +18,9 @@ namespace StritWalk.iOS
         private readonly Dictionary<int, double> cachedHeights = new Dictionary<int, double>();
         PropertyInfo specialProperty;
         UITableView table;
+        bool _keyOn = false;
+		NSObject _keyboardShowObserver;
+		NSObject _keyboardHideObserver;
 
         public IList<Item> ItemsSource
         {
@@ -81,6 +84,10 @@ namespace StritWalk.iOS
             cachedHeights[indexPath.Row] = cell.Frame.Size.Height;
             cell.SelectionStyle = UITableViewCellSelectionStyle.None;
             table = tableView;
+			if (_keyboardShowObserver == null)
+				_keyboardShowObserver = NSNotificationCenter.DefaultCenter.AddObserver(UIKeyboard.WillShowNotification, OnKeyboardShow);
+			if (_keyboardHideObserver == null)
+				_keyboardHideObserver = NSNotificationCenter.DefaultCenter.AddObserver(UIKeyboard.WillHideNotification, OnKeyboardHide);
         }
 
         public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
@@ -134,13 +141,39 @@ namespace StritWalk.iOS
 
         public override void Scrolled(UIScrollView scrollView)
         {
-            //if (table != null){
-            //    table.EndEditing(true);
-            //}             
+            if (table != null && _keyOn){
+                table.EndEditing(true);
+            }
         }
 
+		protected virtual void OnKeyboardShow(NSNotification notification)
+		{
+            _keyOn = true;
+		}
 
+		protected virtual void OnKeyboardHide(NSNotification notification)
+		{
+            _keyOn = false;
+		}
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            _keyOn = false;
+			if (_keyboardShowObserver != null)
+			{
+				NSNotificationCenter.DefaultCenter.RemoveObserver(_keyboardShowObserver);
+				_keyboardShowObserver.Dispose();
+				_keyboardShowObserver = null;
+			}
+
+			if (_keyboardHideObserver != null)
+			{
+				NSNotificationCenter.DefaultCenter.RemoveObserver(_keyboardHideObserver);
+				_keyboardHideObserver.Dispose();
+				_keyboardHideObserver = null;
+			}
+        }
 
     }
 }
