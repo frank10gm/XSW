@@ -50,6 +50,22 @@ namespace StritWalk
             page.TabBarHidden = false;    
         }
 
+		void OnReachBottom(object sender, ItemVisibilityEventArgs args)
+		{
+			if (CommentEditor.IsFocused)
+				CommentEditor.Unfocus();            		
+		}
+
+		private void OnItemTapped(object sender, ItemTappedEventArgs args)
+		{
+            CommentsListView.SelectedItem = null;
+		}
+
+        private void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
+        {
+            CommentsListView.SelectedItem = null;
+        }
+
 
     }
 }

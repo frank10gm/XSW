@@ -72,10 +72,10 @@ namespace StritWalk.iOS
             base.OnElementChanged(e);
             gino = e.NewElement as ItemDetailPage;
 
-			//controllo della tastiera
-			UITapGestureRecognizer gesture = new UITapGestureRecognizer(KeyDismiss);
-			View.AddGestureRecognizer(gesture);
-		}
+            //controllo della tastiera
+            UITapGestureRecognizer gesture = new UITapGestureRecognizer(() => { View.EndEditing(true); });
+            View.AddGestureRecognizer(gesture);
+        }
 
         public override void ViewWillDisappear(bool animated)
         {
@@ -212,10 +212,6 @@ namespace StritWalk.iOS
             return (pageHeight - activeViewBottom) - keyboardHeight;
         }
 
-		void KeyDismiss()
-		{
-			View.EndEditing(true);
-		}
 
     }
 }

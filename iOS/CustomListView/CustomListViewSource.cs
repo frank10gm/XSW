@@ -57,7 +57,6 @@ namespace StritWalk.iOS
             var cellForPath = GetCellForPath(indexPath);
             //listView.NotifyItemSelected(tableItems[indexPath.Row]);
             tableView.DeselectRow(indexPath, true);
-            table = tableView;
 
             UITapGestureRecognizer gesture = new UITapGestureRecognizer(() => { tableView.EndEditing(true); });
             tableView.AddGestureRecognizer(gesture);
@@ -81,6 +80,7 @@ namespace StritWalk.iOS
         {
             cachedHeights[indexPath.Row] = cell.Frame.Size.Height;
             cell.SelectionStyle = UITableViewCellSelectionStyle.None;
+            table = tableView;
         }
 
         public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
@@ -134,10 +134,13 @@ namespace StritWalk.iOS
 
         public override void Scrolled(UIScrollView scrollView)
         {
-            //base.Scrolled(scrollView);
-            if (table.Editing)
-                table.EndEditing(true);
+            //if (table != null){
+            //    table.EndEditing(true);
+            //}             
         }
+
+
+
 
     }
 }
