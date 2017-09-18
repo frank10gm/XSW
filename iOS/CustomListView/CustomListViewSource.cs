@@ -17,6 +17,7 @@ namespace StritWalk.iOS
         private readonly UITableViewSource source;
         private readonly Dictionary<int, double> cachedHeights = new Dictionary<int, double>();
         PropertyInfo specialProperty;
+        UITableView table;
 
         public IList<Item> ItemsSource
         {
@@ -52,13 +53,14 @@ namespace StritWalk.iOS
         #region user interaction methods
 
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
-        {            
+        {
             var cellForPath = GetCellForPath(indexPath);
             //listView.NotifyItemSelected(tableItems[indexPath.Row]);
             tableView.DeselectRow(indexPath, true);
+            table = tableView;
 
-			UITapGestureRecognizer gesture = new UITapGestureRecognizer(() => { tableView.EndEditing(true); });
-			tableView.AddGestureRecognizer(gesture);
+            UITapGestureRecognizer gesture = new UITapGestureRecognizer(() => { tableView.EndEditing(true); });
+            tableView.AddGestureRecognizer(gesture);
         }
 
         public override void RowDeselected(UITableView tableView, NSIndexPath indexPath)
@@ -128,6 +130,13 @@ namespace StritWalk.iOS
             //    templatedItemsList = (IReadOnlyList<Cell>)((IList)templatedItemsList)[indexPath.Section];
 
             return templatedItemsList[indexPath.Row];
+        }
+
+        public override void Scrolled(UIScrollView scrollView)
+        {
+            //base.Scrolled(scrollView);
+            if (table.Editing)
+                table.EndEditing(true);
         }
 
     }
