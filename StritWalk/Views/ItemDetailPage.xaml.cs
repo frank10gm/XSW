@@ -52,8 +52,8 @@ namespace StritWalk
 
 		void OnReachBottom(object sender, ItemVisibilityEventArgs args)
 		{
-			if (CommentEditor.IsFocused)
-				CommentEditor.Unfocus();            		
+			//if (CommentEditor.IsFocused)
+				//CommentEditor.Unfocus();            		
 		}
 
 		private void OnItemTapped(object sender, ItemTappedEventArgs args)
