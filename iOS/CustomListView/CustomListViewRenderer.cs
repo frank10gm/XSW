@@ -47,7 +47,6 @@ namespace StritWalk.iOS
                 templatedItemsList = (INotifyCollectionChanged)ListViewTemplatedItemsPropertyInfo.GetValue(e.NewElement);                
                 templatedItemsList.CollectionChanged += this.OnCollectionChanged;
                 Control.Source = dataSource = new CustomListViewSource(Element as CustomListView, Control.Source, ListViewTemplatedItemsPropertyInfo);
-
                 //UpdateRowHeight();
             }
 
@@ -57,6 +56,7 @@ namespace StritWalk.iOS
         protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             //Console.WriteLine("@@@ onpropertychanged");
+
             base.OnElementPropertyChanged(sender, e);
             Control.Source = dataSource = new CustomListViewSource(Element as CustomListView, Control.Source, ListViewTemplatedItemsPropertyInfo);
             ClearRowHeightCache();

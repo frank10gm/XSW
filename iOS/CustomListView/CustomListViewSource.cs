@@ -5,6 +5,7 @@ using Foundation;
 using UIKit;
 using Xamarin.Forms;
 using System.Reflection;
+//using KeyboardOverlap.Forms.Plugin.iOSUnified;
 
 namespace StritWalk.iOS
 {
@@ -17,14 +18,10 @@ namespace StritWalk.iOS
         private readonly UITableViewSource source;
         private readonly Dictionary<int, double> cachedHeights = new Dictionary<int, double>();
         PropertyInfo specialProperty;
-        UITableView table;
-        bool _keyOn = false;
-		NSObject _keyboardShowObserver;
-		NSObject _keyboardHideObserver;
+        AppDelegate ad;
 
         public IList<Item> ItemsSource
         {
-            //get{ }
             set
             {
                 tableItems = value.ToList();
@@ -38,6 +35,7 @@ namespace StritWalk.iOS
             list = view;
             source = dataSource;
             specialProperty = prop;
+            ad = (AppDelegate)UIApplication.SharedApplication.Delegate;
         }
 
         public void ClearRowHeightCache()
@@ -49,14 +47,7 @@ namespace StritWalk.iOS
 
         public override nint RowsInSection(UITableView tableview, nint section)
         {
-			//return tableItems.Count;
-			table = tableview;
-			
-			//if (_keyboardShowObserver == null)
-			//	_keyboardShowObserver = NSNotificationCenter.DefaultCenter.AddObserver(UIKeyboard.WillShowNotification, OnKeyboardShow);
-			//if (_keyboardHideObserver == null)
-				//_keyboardHideObserver = NSNotificationCenter.DefaultCenter.AddObserver(UIKeyboard.WillHideNotification, OnKeyboardHide);
-            
+            //return tableItems.Count;
             return source.RowsInSection(tableview, section);
         }
 
@@ -96,30 +87,28 @@ namespace StritWalk.iOS
         {
             return UITableView.AutomaticDimension;
 
-            var cellForPath = this.GetCellForPath(indexPath);
+            //var cellForPath = this.GetCellForPath(indexPath);
 
-            if (this.list.RowHeight == -1 && cellForPath.Height == -1.0 && cellForPath is CustomViewCell)
-            {
+            //if (this.list.RowHeight == -1 && cellForPath.Height == -1.0 && cellForPath is CustomViewCell)
+            //{
 
-                //var view = ((CustomViewCell)cellForPath).View;
+            //    //var view = ((CustomViewCell)cellForPath).View;
 
-                ////var sizeRequest = view.GetSizeRequest(tableView.Frame.Width, double.PositiveInfinity);
-                //var sizeRequest = view.Measure(tableView.Frame.Width, double.PositiveInfinity, MeasureFlags.IncludeMargins);
-                ////Console.WriteLine("@@@ " + sizeRequest);
+            //    ////var sizeRequest = view.GetSizeRequest(tableView.Frame.Width, double.PositiveInfinity);
+            //    //var sizeRequest = view.Measure(tableView.Frame.Width, double.PositiveInfinity, MeasureFlags.IncludeMargins);
+            //    ////Console.WriteLine("@@@ " + sizeRequest);
 
-                //cachedHeights[indexPath.Row] = sizeRequest.Request.Height;
+            //    //cachedHeights[indexPath.Row] = sizeRequest.Request.Height;
 
+            //    //return (nfloat)sizeRequest.Request.Height;
+            //}
 
+            //var renderHeight = cellForPath.RenderHeight;
 
-                //return (nfloat)sizeRequest.Request.Height;
-            }
+            //if (renderHeight <= 0.0)
+            //    return 44;
 
-            var renderHeight = cellForPath.RenderHeight;
-
-            if (renderHeight <= 0.0)
-                return 44;
-
-            return (nfloat)renderHeight;
+            //return (nfloat)renderHeight;
         }
 
         public override nfloat EstimatedHeight(UITableView tableView, NSIndexPath indexPath)
@@ -143,39 +132,10 @@ namespace StritWalk.iOS
 
         public override void Scrolled(UIScrollView scrollView)
         {
-            if (table != null){
-                table.EndEditing(true);
+            if (ad.KeyOn)
+            {
+                UIApplication.SharedApplication.KeyWindow.EndEditing(true);
             }
-        }
-
-		protected virtual void OnKeyboardShow(NSNotification notification)
-		{
-            _keyOn = true;
-		}
-
-		protected virtual void OnKeyboardHide(NSNotification notification)
-		{
-            _keyOn = false;         
-		}
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-			//Console.WriteLine("### dispose " + _keyOn);
-			//_keyOn = false;
-			//if (_keyboardShowObserver != null)
-			//{
-			//	NSNotificationCenter.DefaultCenter.RemoveObserver(_keyboardShowObserver);
-			//	_keyboardShowObserver.Dispose();
-			//	_keyboardShowObserver = null;
-			//}
-
-			//if (_keyboardHideObserver != null)
-			//{
-			//	NSNotificationCenter.DefaultCenter.RemoveObserver(_keyboardHideObserver);
-			//	_keyboardHideObserver.Dispose();
-			//	_keyboardHideObserver = null;
-			//}
         }
 
     }

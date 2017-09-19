@@ -160,7 +160,11 @@ namespace StritWalk
 
         async Task ILikeThisTask(object par1)
         {
-            Item item = par1 as Item;
+			if (IsBusy)
+				return;
+
+            IsBusy = true;
+			Item item = par1 as Item;
             string action = "addLikePost";
             if (item.Liked_me == "#2b98f0")
                 action = "removeLikePost";
@@ -178,7 +182,8 @@ namespace StritWalk
                 num += 1;
                 item.Likes = num.ToString();
                 item.Liked_me = "1";
-            }          
+            }        
+            IsBusy = false;
         }
 
         async Task GetMyUser()

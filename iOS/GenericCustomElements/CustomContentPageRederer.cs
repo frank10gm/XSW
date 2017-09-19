@@ -6,7 +6,7 @@ using Xamarin.Forms.Platform.iOS;
 using StritWalk;
 using StritWalk.iOS;
 using CoreGraphics;
-using KeyboardOverlap.Forms.Plugin.iOSUnified;
+//using KeyboardOverlap.Forms.Plugin.iOSUnified;
 using System.Diagnostics;
 
 [assembly: ExportRenderer(typeof(ItemDetailPage), typeof(CustomContentPageRederer))]
@@ -16,39 +16,49 @@ namespace StritWalk.iOS
     public class CustomContentPageRederer : PageRenderer
     {
 
-        ItemDetailPage gino;
-
+        ItemDetailPage thispage;
         NSObject _keyboardShowObserver;
         NSObject _keyboardHideObserver;
         private bool _pageWasShiftedUp;
         private double _activeViewBottom;
         private bool _isKeyboardShown;
         private Rectangle originalFrame;
+        AppDelegate ad;
 
-        //public CustomContentPageRederer()
-        //{
+        public CustomContentPageRederer()
+        {
+            ad = (AppDelegate)UIApplication.SharedApplication.Delegate;
+        }
 
-        //}
+		//public override void ViewWillAppear(bool animated)
+		//{
+		//base.ViewWillAppear(animated);
+		//this.HidesBottomBarWhenPushed = true;
+		//ParentViewController.TabBarController.TabBar.Hidden = true;
+		//ParentViewController.TabBarController.View.Subviews[1].Frame = new CGRect(TabBarController.View.Subviews[1].Frame.X, TabBarController.View.Subviews[1].Frame.Y, TabBarController.View.Subviews[1].Frame.Width, 0);
 
-        //public override void ViewWillAppear(bool animated)
-        //{
-        //base.ViewWillAppear(animated);
-        //this.HidesBottomBarWhenPushed = true;
-        //ParentViewController.TabBarController.TabBar.Hidden = true;
-        //ParentViewController.TabBarController.View.Subviews[1].Frame = new CGRect(TabBarController.View.Subviews[1].Frame.X, TabBarController.View.Subviews[1].Frame.Y, TabBarController.View.Subviews[1].Frame.Width, 0);
+		//}
 
-        //}
+		//public override void ViewDidLoad()
+		//{
+		//    base.ViewDidLoad();
+		//}
 
-        //public override void ViewDidLoad()
-        //{
-        //    base.ViewDidLoad();
-        //}
+		//public static void Init()
+		//{
+		//	var now = DateTime.Now;
+		//	Debug.WriteLine("Keyboard Overlap plugin initialized {0}", now);
+		//}
 
-        //public static void Init()
-        //{
-        //	var now = DateTime.Now;
-        //	Debug.WriteLine("Keyboard Overlap plugin initialized {0}", now);
-        //}
+		protected override void OnElementChanged(VisualElementChangedEventArgs e)
+		{
+			base.OnElementChanged(e);
+			thispage = e.NewElement as ItemDetailPage;
+
+			//controllo della tastiera
+			UITapGestureRecognizer gesture = new UITapGestureRecognizer(() => { View.EndEditing(true); });
+			View.AddGestureRecognizer(gesture);
+		}
 
         public override void ViewWillAppear(bool animated)
         {
@@ -62,24 +72,14 @@ namespace StritWalk.iOS
 
                 if (contentScrollView != null)
                     return;
-                
+
                 RegisterForKeyboardNotifications();
             }
         }
 
-        protected override void OnElementChanged(VisualElementChangedEventArgs e)
-        {
-            base.OnElementChanged(e);
-            gino = e.NewElement as ItemDetailPage;
-
-            //controllo della tastiera
-            UITapGestureRecognizer gesture = new UITapGestureRecognizer(() => { View.EndEditing(true); });
-            View.AddGestureRecognizer(gesture);
-        }
-
         public override void ViewWillDisappear(bool animated)
         {
-            gino.WillSparisci();
+            thispage.WillSparisci();
             base.ViewWillDisappear(animated);
             UnregisterForKeyboardNotifications();
         }
@@ -145,6 +145,7 @@ namespace StritWalk.iOS
                 return;
 
             _isKeyboardShown = true;
+            ad.KeyOn = true;
             var activeView = View.FindFirstResponder();
 
             if (activeView == null)
@@ -169,6 +170,7 @@ namespace StritWalk.iOS
                 return;
 
             _isKeyboardShown = false;
+            ad.KeyOn = false;
             var keyboardFrame = UIKeyboard.FrameEndFromNotification(notification);
 
             if (_pageWasShiftedUp)

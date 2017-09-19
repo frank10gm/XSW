@@ -269,6 +269,7 @@
     <Compile Include="GenericCustomElements\ExtendedTabbedPageRenderer.cs" />
     <Compile Include="GenericCustomElements\CustomContentPageRederer.cs" />
     <Compile Include="GenericCustomElements\GenericListPageRenderer.cs" />
+    <Compile Include="GenericCustomElements\ViewExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

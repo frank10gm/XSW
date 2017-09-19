@@ -32,7 +32,7 @@
                         </vm:CustomEntry.ReturnKeyType>
                     </vm:CustomEntry>
                 </StackLayout>
-                <Button x:Name="SignUpButton" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="Sign Up" HorizontalOptions="FillAndExpand" TextColor="White" BackgroundColor="{StaticResource Primary}" Command="{Binding SignUpCommand}" IsEnabled="{Binding FormIsNotReady, Converter={StaticResource cnv}}" />
+                <Button x:Name="SignUpButton" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="Sign Up" HorizontalOptions="FillAndExpand" TextColor="{StaticResource Primary}" Command="{Binding SignUpCommand}" IsEnabled="{Binding FormIsNotReady, Converter={StaticResource cnv}}" />
                 <StackLayout Grid.Row="2" Grid.ColumnSpan="2" VerticalOptions="Center" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                     <ActivityIndicator IsRunning="{Binding IsBusy}" HorizontalOptions="EndAndExpand" VerticalOptions="Center">
                         <ActivityIndicator.Color>
