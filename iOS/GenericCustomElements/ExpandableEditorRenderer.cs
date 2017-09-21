@@ -79,16 +79,16 @@ namespace StritWalk.iOS
 
                 Console.WriteLine("TOTAL LINES " + lines + "\n");
 
-                if (lines > 3)
-                {
-                    Control.ScrollEnabled = true;
-                    element.ScrollReady = true;
-                }
-                else
-                {
-                    Control.ScrollEnabled = false;
-                    element.ScrollReady = false;
-                }
+                //if (lines > 3)
+                //{
+                //    Control.ScrollEnabled = true;
+                //    element.ScrollReady = true;
+                //}
+                //else
+                //{
+                //    Control.ScrollEnabled = false;
+                //    element.ScrollReady = false;
+                //}
 
                 if (Control.Text == element.Placeholder)
                 {

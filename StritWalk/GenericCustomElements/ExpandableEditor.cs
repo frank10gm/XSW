@@ -68,13 +68,15 @@ namespace StritWalk
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
             //if (!ScrollReady)
-            //this.InvalidateMeasure();
-            //if(this.Height != -1){
-            //    this.HeightRequest = this.Height * 2;
-            //}
-            var bounds = this.Bounds;
-            bounds.Y = 0;
-            this.LayoutTo(bounds);
+
+            if(this.Height != -1){
+				//this.HeightRequest = this.Height * 2;
+                var bounds = this.Bounds;
+				this.InvalidateMeasure();
+				//bounds.Y = 20;
+				this.LayoutTo(bounds);
+            }
+
         }
 
     }
