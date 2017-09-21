@@ -27,7 +27,7 @@ namespace StritWalk.iOS
             if (Control == null)
                 return;
 
-            //Control.ScrollEnabled = false;
+            Control.ScrollEnabled = false;
             var numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
 
             element = (ExpandableEditor)Element;
@@ -79,16 +79,16 @@ namespace StritWalk.iOS
 
                 Console.WriteLine("TOTAL LINES " + lines + "\n");
 
-                //if (lines > 3)
-                //{
-                //    Control.ScrollEnabled = true;
-                //    element.ScrollReady = true;
-                //}
-                //else
-                //{
-                //    Control.ScrollEnabled = false;
-                //    element.ScrollReady = false;
-                //}
+                if (lines > 3)
+                {
+                    Control.ScrollEnabled = true;
+                    element.ScrollReady = true;
+                }
+                else
+                {
+                    Control.ScrollEnabled = false;
+                    element.ScrollReady = false;
+                }
 
                 if (Control.Text == element.Placeholder)
                 {

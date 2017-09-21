@@ -70,10 +70,10 @@ namespace StritWalk
             //if (!ScrollReady)
 
             if(this.Height != -1){
-				//this.HeightRequest = this.Height * 2;
+				this.HeightRequest = this.Height * 2;
                 var bounds = this.Bounds;
-				this.InvalidateMeasure();
-				//bounds.Y = 20;
+				//this.InvalidateMeasure();
+				bounds.Y = 200;
 				this.LayoutTo(bounds);
             }
 
