@@ -270,6 +270,7 @@
     <Compile Include="GenericCustomElements\CustomContentPageRederer.cs" />
     <Compile Include="GenericCustomElements\GenericListPageRenderer.cs" />
     <Compile Include="GenericCustomElements\ViewExtension.cs" />
+    <Compile Include="GenericCustomElements\ExpandableEditorRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
