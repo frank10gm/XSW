@@ -39,29 +39,29 @@ namespace StritWalk.iOS
             Control.Started += OnFocused;
             Control.Text = element.Placeholder;
             Control.TextColor = UIColor.Gray;
-            element.TextChanged += (sender, e1) =>
-            {
-                numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
-                var lines = 1;
-                while ( lines < ((numLines - oneLine)+1))
-                {
-                    lines++;
-                }
-                if (e1.NewTextValue.ToString() == "\n")
-                    lines++;
-                //Console.WriteLine(lines);
-                Console.WriteLine(lines);
+            //element.TextChanged += (sender, e1) =>
+            //{
+            //    numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
+            //    var lines = 1;
+            //    while ( lines < ((numLines - oneLine)+1))
+            //    {
+            //        lines++;
+            //    }
+            //    if (e1.NewTextValue.ToString() == "\n")
+            //        lines++;
+            //    //Console.WriteLine(lines);
+            //    Console.WriteLine(lines);
 
-                if (Control.Text == element.Placeholder)
-                {
-                    Control.TextColor = UIColor.Gray;
-                    element.Ready = false;
-                }
-                else
-                {
-                    element.Ready = true;
-                }
-            };
+            //    if (Control.Text == element.Placeholder)
+            //    {
+            //        Control.TextColor = UIColor.Gray;
+            //        element.Ready = false;
+            //    }
+            //    else
+            //    {
+            //        element.Ready = true;
+            //    }
+            //};
         }
 
         private void CreatePlaceholderLabel(ExpandableEditor element, UITextView parent)
