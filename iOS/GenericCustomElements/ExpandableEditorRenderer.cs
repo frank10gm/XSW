@@ -23,9 +23,9 @@ namespace StritWalk.iOS
                 return;
 
             Control.ScrollEnabled = false;
-            //Control.scroll;
 
-			element = (ExpandableEditor)Element;
+
+            element = (ExpandableEditor)Element;
 
             //CreatePlaceholderLabel((ExpandableEditor)Element, Control);
 
