@@ -6,6 +6,7 @@ using System;
 using Cirrious.FluentLayouts.Touch;
 using Foundation;
 using UIKit;
+using CoreGraphics;
 
 [assembly: ExportRenderer(typeof(ExpandableEditor), typeof(ExpandableEditorRenderer))]
 namespace StritWalk.iOS
@@ -14,6 +15,8 @@ namespace StritWalk.iOS
     {
         private UILabel _placeholderLabel;
         ExpandableEditor element;
+        double oneLine;
+        bool toStart = true;
 
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Editor> e)
         {
@@ -23,7 +26,7 @@ namespace StritWalk.iOS
                 return;
 
             Control.ScrollEnabled = false;
-
+            var numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
 
             element = (ExpandableEditor)Element;
 
@@ -38,6 +41,17 @@ namespace StritWalk.iOS
             Control.TextColor = UIColor.Gray;
             element.TextChanged += (sender, e1) =>
             {
+                numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
+                var lines = 1;
+                while ( lines < ((numLines - oneLine)+1))
+                {
+                    lines++;
+                }
+                if (e1.NewTextValue.ToString() == "\n")
+                    lines++;
+                //Console.WriteLine(lines);
+                Console.WriteLine(lines);
+
                 if (Control.Text == element.Placeholder)
                 {
                     Control.TextColor = UIColor.Gray;
@@ -99,6 +113,9 @@ namespace StritWalk.iOS
                 Control.Text = "";
             }
             Control.TextColor = UIColor.Black;
+
+            if (toStart)
+                oneLine = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
         }
 
         protected override void Dispose(bool disposing)
