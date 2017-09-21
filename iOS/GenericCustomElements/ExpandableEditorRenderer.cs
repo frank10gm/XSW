@@ -7,6 +7,8 @@ using Cirrious.FluentLayouts.Touch;
 using Foundation;
 using UIKit;
 using CoreGraphics;
+using System.Linq;
+using System.Drawing;
 
 [assembly: ExportRenderer(typeof(ExpandableEditor), typeof(ExpandableEditorRenderer))]
 namespace StritWalk.iOS
@@ -25,7 +27,7 @@ namespace StritWalk.iOS
             if (Control == null)
                 return;
 
-            Control.ScrollEnabled = false;
+            //Control.ScrollEnabled = false;
             var numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
 
             element = (ExpandableEditor)Element;
@@ -37,31 +39,67 @@ namespace StritWalk.iOS
             Control.Ended += OnEnded;
             Control.Changed += OnChanged;
             Control.Started += OnFocused;
+
             Control.Text = element.Placeholder;
             Control.TextColor = UIColor.Gray;
-            //element.TextChanged += (sender, e1) =>
-            //{
-            //    numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
-            //    var lines = 1;
-            //    while ( lines < ((numLines - oneLine)+1))
-            //    {
-            //        lines++;
-            //    }
-            //    if (e1.NewTextValue.ToString() == "\n")
-            //        lines++;
-            //    //Console.WriteLine(lines);
-            //    Console.WriteLine(lines);
 
-            //    if (Control.Text == element.Placeholder)
-            //    {
-            //        Control.TextColor = UIColor.Gray;
-            //        element.Ready = false;
-            //    }
-            //    else
-            //    {
-            //        element.Ready = true;
-            //    }
-            //};
+            element.TextChanged += (sender, e1) =>
+            {
+                numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
+                var lines = 1;
+
+                Console.WriteLine((numLines));
+
+                while (lines < ((numLines - oneLine) + 1))
+                {
+                    lines++;
+                }
+
+                int count = e1.NewTextValue.Count(c => c == '\n');
+
+                if (e1.NewTextValue.LastIndexOf("\n", StringComparison.CurrentCulture) == e1.NewTextValue.Length - 1)
+                {
+                    if (count > 0)
+                    {
+                        if (e1.NewTextValue.Length < e1.OldTextValue.Length)
+                        {
+                            lines--;
+                        }
+                        else
+                        {
+                            lines++;
+                        }
+                    }
+                    else
+                    {
+                        lines--;
+                    }
+                    Console.WriteLine("intervento secondario");
+                }
+
+                Console.WriteLine("TOTAL LINES " + lines + "\n");
+
+                if (lines > 3)
+                {
+                    Control.ScrollEnabled = true;
+                    element.ScrollReady = true;
+                }
+                else
+                {
+                    Control.ScrollEnabled = false;
+                    element.ScrollReady = false;
+                }
+
+                if (Control.Text == element.Placeholder)
+                {
+                    Control.TextColor = UIColor.Gray;
+                    element.Ready = false;
+                }
+                else
+                {
+                    element.Ready = true;
+                }
+            };
         }
 
         private void CreatePlaceholderLabel(ExpandableEditor element, UITextView parent)
