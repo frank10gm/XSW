@@ -69,14 +69,15 @@ namespace StritWalk
         {
             //if (!ScrollReady)
 
-            if(this.Height != -1){
-                Console.WriteLine(this.Height + " " + this.HeightRequest);
-                var bounds = this.Bounds;			
-				bounds.Y = 200;
-                bounds.Height += 33;
-				this.LayoutTo(bounds);
-				//this.InvalidateMeasure();
-			}
+            if (this.Height != -1)
+            {
+                //Console.WriteLine(this.Height + " " + this.HeightRequest);
+                //var bounds = this.Bounds;
+                //bounds.Y = 200;
+                //bounds.Height += 33;
+                //this.LayoutTo(bounds);
+                //this.InvalidateMeasure();
+            }
 
         }
 

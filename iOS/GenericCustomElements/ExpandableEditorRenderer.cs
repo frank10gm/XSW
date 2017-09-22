@@ -19,6 +19,10 @@ namespace StritWalk.iOS
         ExpandableEditor element;
         double oneLine;
         bool toStart = true;
+        NSObject _keyboardShowObserver;
+        NSObject _keyboardHideObserver;
+        private Xamarin.Forms.Rectangle originalFrame;
+        private CGRect originalKeyFrame;
 
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Editor> e)
         {
@@ -27,35 +31,28 @@ namespace StritWalk.iOS
             if (Control == null)
                 return;
 
-            Control.ScrollEnabled = false;
-            var numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
-
+            RegisterForKeyboardNotifications();
             element = (ExpandableEditor)Element;
-
             //CreatePlaceholderLabel((ExpandableEditor)Element, Control);
-
             this.Control.InputAccessoryView = null;
-
             Control.Ended += OnEnded;
             Control.Changed += OnChanged;
             Control.Started += OnFocused;
-
             Control.Text = element.Placeholder;
             Control.TextColor = UIColor.Gray;
 
+            Control.ScrollEnabled = false;
+
             element.TextChanged += (sender, e1) =>
             {
-                numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
+                var numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
                 var lines = 1;
-
-                Console.WriteLine((numLines));
+                int count = e1.NewTextValue.Count(c => c == '\n');
 
                 while (lines < ((numLines - oneLine) + 1))
                 {
                     lines++;
                 }
-
-                int count = e1.NewTextValue.Count(c => c == '\n');
 
                 if (e1.NewTextValue.LastIndexOf("\n", StringComparison.CurrentCulture) == e1.NewTextValue.Length - 1)
                 {
@@ -138,13 +135,13 @@ namespace StritWalk.iOS
             }
         }
 
-        private void OnChanged(object sender, EventArgs args)
+        void OnChanged(object sender, EventArgs args)
         {
             //if (_placeholderLabel != null)
             //_placeholderLabel.Hidden = ((UITextView)sender).HasText;
         }
 
-        private void OnFocused(object sender, EventArgs args)
+        void OnFocused(object sender, EventArgs args)
         {
             if (Control.Text == element.Placeholder)
             {
@@ -158,16 +155,54 @@ namespace StritWalk.iOS
 
         protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
             if (disposing)
             {
                 Control.Ended -= OnEnded;
                 Control.Changed -= OnChanged;
                 Control.Started -= OnFocused;
 
-                //_placeholderLabel?.Dispose();
-                //_placeholderLabel = null;
             }
-            base.Dispose(disposing);
+            UnregisterForKeyboardNotifications();
         }
+
+        void RegisterForKeyboardNotifications()
+        {
+            if (_keyboardShowObserver == null)
+                _keyboardShowObserver = NSNotificationCenter.DefaultCenter.AddObserver(UIKeyboard.WillShowNotification, OnKeyboardShow);
+            if (_keyboardHideObserver == null)
+                _keyboardHideObserver = NSNotificationCenter.DefaultCenter.AddObserver(UIKeyboard.WillHideNotification, OnKeyboardHide);
+        }
+
+        void UnregisterForKeyboardNotifications()
+        {
+            if (_keyboardShowObserver != null)
+            {
+                NSNotificationCenter.DefaultCenter.RemoveObserver(_keyboardShowObserver);
+                _keyboardShowObserver.Dispose();
+                _keyboardShowObserver = null;
+            }
+            if (_keyboardHideObserver != null)
+            {
+                NSNotificationCenter.DefaultCenter.RemoveObserver(_keyboardHideObserver);
+                _keyboardHideObserver.Dispose();
+                _keyboardHideObserver = null;
+            }
+        }
+
+        protected virtual void OnKeyboardShow(NSNotification notification)
+        {
+            var keyboardFrame = UIKeyboard.FrameEndFromNotification(notification);
+            var editorFrame = Element.Bounds;
+            originalKeyFrame = keyboardFrame;
+            originalFrame = editorFrame;
+            Element.LayoutTo(new Xamarin.Forms.Rectangle(editorFrame.X, (editorFrame.Y - keyboardFrame.Height), editorFrame.Width, editorFrame.Height));
+        }
+
+        protected virtual void OnKeyboardHide(NSNotification notification)
+        {
+            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalFrame.Y, originalFrame.Width, originalFrame.Height));
+        }
+
     }
 }

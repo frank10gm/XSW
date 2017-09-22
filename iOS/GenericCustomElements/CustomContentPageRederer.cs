@@ -30,51 +30,52 @@ namespace StritWalk.iOS
             ad = (AppDelegate)UIApplication.SharedApplication.Delegate;
         }
 
-		//public override void ViewWillAppear(bool animated)
-		//{
-		//base.ViewWillAppear(animated);
-		//this.HidesBottomBarWhenPushed = true;
-		//ParentViewController.TabBarController.TabBar.Hidden = true;
-		//ParentViewController.TabBarController.View.Subviews[1].Frame = new CGRect(TabBarController.View.Subviews[1].Frame.X, TabBarController.View.Subviews[1].Frame.Y, TabBarController.View.Subviews[1].Frame.Width, 0);
+        //public override void ViewWillAppear(bool animated)
+        //{
+        //base.ViewWillAppear(animated);
+        //this.HidesBottomBarWhenPushed = true;
+        //ParentViewController.TabBarController.TabBar.Hidden = true;
+        //ParentViewController.TabBarController.View.Subviews[1].Frame = new CGRect(TabBarController.View.Subviews[1].Frame.X, TabBarController.View.Subviews[1].Frame.Y, TabBarController.View.Subviews[1].Frame.Width, 0);
 
-		//}
+        //}
 
-		//public override void ViewDidLoad()
-		//{
-		//    base.ViewDidLoad();
-		//}
+        //public override void ViewDidLoad()
+        //{
+        //    base.ViewDidLoad();
+        //}
 
-		//public static void Init()
-		//{
-		//	var now = DateTime.Now;
-		//	Debug.WriteLine("Keyboard Overlap plugin initialized {0}", now);
-		//}
+        //public static void Init()
+        //{
+        //	var now = DateTime.Now;
+        //	Debug.WriteLine("Keyboard Overlap plugin initialized {0}", now);
+        //}
 
-		protected override void OnElementChanged(VisualElementChangedEventArgs e)
-		{
-			base.OnElementChanged(e);
-			thispage = e.NewElement as ItemDetailPage;
+        protected override void OnElementChanged(VisualElementChangedEventArgs e)
+        {
+            base.OnElementChanged(e);
+            thispage = e.NewElement as ItemDetailPage;
 
-			//controllo della tastiera
-			UITapGestureRecognizer gesture = new UITapGestureRecognizer(() => { View.EndEditing(true); });
-			View.AddGestureRecognizer(gesture);
-		}
+            //controllo della tastiera
+            UITapGestureRecognizer gesture = new UITapGestureRecognizer(() => { View.EndEditing(true); });
+            View.AddGestureRecognizer(gesture);
+        }
 
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
+            RegisterForKeyboardNotifications();
 
-            var page = Element as ContentPage;
+            //var page = Element as ContentPage;
 
-            if (page != null)
-            {
-                var contentScrollView = page.Content as ScrollView;
+            //if (page != null)
+            //{
+            //var contentScrollView = page.Content as ScrollView;
 
-                if (contentScrollView != null)
-                    return;
+            //if (contentScrollView != null)
+            //return;
 
-                RegisterForKeyboardNotifications();
-            }
+            //    RegisterForKeyboardNotifications();
+            //}
         }
 
         public override void ViewWillDisappear(bool animated)
@@ -146,22 +147,22 @@ namespace StritWalk.iOS
 
             _isKeyboardShown = true;
             ad.KeyOn = true;
-            var activeView = View.FindFirstResponder();
+            //var activeView = View.FindFirstResponder();
 
-            if (activeView == null)
-                return;
+            //if (activeView == null)
+            //    return;
 
-            var keyboardFrame = UIKeyboard.FrameEndFromNotification(notification);
-            var isOverlapping = activeView.IsKeyboardOverlapping(View, keyboardFrame);
+            //var keyboardFrame = UIKeyboard.FrameEndFromNotification(notification);
+            //var isOverlapping = activeView.IsKeyboardOverlapping(View, keyboardFrame);
 
-            if (!isOverlapping)
-                return;
+            //if (!isOverlapping)
+            //    return;
 
-            if (isOverlapping)
-            {
-                _activeViewBottom = activeView.GetViewRelativeBottom(View);
-                ShiftPageUp(keyboardFrame.Height, _activeViewBottom);
-            }
+            //if (isOverlapping)
+            //{
+            //    _activeViewBottom = activeView.GetViewRelativeBottom(View);
+            //    ShiftPageUp(keyboardFrame.Height, _activeViewBottom);
+            //}
         }
 
         private void OnKeyboardHide(NSNotification notification)
@@ -171,12 +172,12 @@ namespace StritWalk.iOS
 
             _isKeyboardShown = false;
             ad.KeyOn = false;
-            var keyboardFrame = UIKeyboard.FrameEndFromNotification(notification);
+            //var keyboardFrame = UIKeyboard.FrameEndFromNotification(notification);
 
-            if (_pageWasShiftedUp)
-            {
-                ShiftPageDown(keyboardFrame.Height, _activeViewBottom);
-            }
+            //if (_pageWasShiftedUp)
+            //{
+            //    ShiftPageDown(keyboardFrame.Height, _activeViewBottom);
+            //}
         }
 
         private void ShiftPageUp(nfloat keyboardHeight, double activeViewBottom)
