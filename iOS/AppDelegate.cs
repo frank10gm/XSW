@@ -12,12 +12,22 @@ namespace StritWalk.iOS
     [Register("AppDelegate")]
     public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
+        public event EventHandler KeyAppeared;
+        public CoreGraphics.CGRect KeyFrame
+        {
+            get;
+            set;
+        }
+        public bool KeyOn
+        {
+            get;
+            set;
+        }
 
-		public bool KeyOn
-		{
-			get;
-			set;
-		}
+        public void TriggerKey()
+        {
+            KeyAppeared(KeyFrame, null);
+        }
 
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {

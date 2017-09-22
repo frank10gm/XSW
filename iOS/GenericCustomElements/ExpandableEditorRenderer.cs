@@ -15,6 +15,7 @@ namespace StritWalk.iOS
 {
     public class ExpandableEditorRenderer : EditorRenderer
     {
+
         private UILabel _placeholderLabel;
         ExpandableEditor element;
         double oneLine;
@@ -23,6 +24,12 @@ namespace StritWalk.iOS
         NSObject _keyboardHideObserver;
         private Xamarin.Forms.Rectangle originalFrame;
         private CGRect originalKeyFrame;
+        AppDelegate ad;
+
+        public ExpandableEditorRenderer()
+        {
+            ad = (AppDelegate)UIApplication.SharedApplication.Delegate;
+        }
 
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Editor> e)
         {
@@ -31,75 +38,95 @@ namespace StritWalk.iOS
             if (Control == null)
                 return;
 
-            RegisterForKeyboardNotifications();
-            element = (ExpandableEditor)Element;
-            //CreatePlaceholderLabel((ExpandableEditor)Element, Control);
-            this.Control.InputAccessoryView = null;
-            Control.Ended += OnEnded;
-            Control.Changed += OnChanged;
-            Control.Started += OnFocused;
-            Control.Text = element.Placeholder;
-            Control.TextColor = UIColor.Gray;
-
-            Control.ScrollEnabled = false;
-
-            element.TextChanged += (sender, e1) =>
+            if (e.OldElement != null)
             {
-                var numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
-                var lines = 1;
-                int count = e1.NewTextValue.Count(c => c == '\n');
+                ad.KeyAppeared -= KeyRaise;
+                //UnregisterForKeyboardNotifications();
+                element.TextChanged -= Element_TextChanged;
+            }
 
-                while (lines < ((numLines - oneLine) + 1))
-                {
-                    lines++;
-                }
+            if (e.NewElement != null)
+            {
+                element = (ExpandableEditor)Element;
+                ad.KeyAppeared += KeyRaise;
+                //RegisterForKeyboardNotifications();
+                //CreatePlaceholderLabel((ExpandableEditor)Element, Control);
+                Control.InputAccessoryView = null;
+                Control.Ended += OnEnded;
+                Control.Changed += OnChanged;
+                Control.Started += OnFocused;
+                Control.Text = element.Placeholder;
+                Control.TextColor = UIColor.Gray;
+                Control.ScrollEnabled = false;
 
-                if (e1.NewTextValue.LastIndexOf("\n", StringComparison.CurrentCulture) == e1.NewTextValue.Length - 1)
+                element.TextChanged += Element_TextChanged;
+            }
+        }
+
+        void KeyRaise(object sender, EventArgs args)
+        {
+            originalKeyFrame = (CGRect)sender;
+            originalFrame = Element.Bounds;
+            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, (originalFrame.Y - originalKeyFrame.Height), originalFrame.Width, originalFrame.Height));
+        }
+
+        void Element_TextChanged(object sender, TextChangedEventArgs e1)
+        {
+            var numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
+            var lines = 1;
+            int count = e1.NewTextValue.Count(c => c == '\n');
+
+            while (lines < ((numLines - oneLine) + 1))
+            {
+                lines++;
+            }
+
+
+            if (e1.NewTextValue.LastIndexOf("\n", StringComparison.CurrentCulture) == e1.NewTextValue.Length - 1)
+            {
+                if (count > 0)
                 {
-                    if (count > 0)
-                    {
-                        if (e1.NewTextValue.Length < e1.OldTextValue.Length)
-                        {
-                            lines--;
-                        }
-                        else
-                        {
-                            lines++;
-                        }
-                    }
-                    else
+                    if (e1.NewTextValue.Length < e1.OldTextValue.Length)
                     {
                         lines--;
                     }
-                    Console.WriteLine("intervento secondario");
-                }
-
-                Console.WriteLine("TOTAL LINES " + lines + "\n");
-
-                if (lines > 3)
-                {
-                    Control.ScrollEnabled = true;
-                    element.ScrollReady = true;
+                    else
+                    {
+                        lines++;
+                    }
                 }
                 else
                 {
-                    Control.ScrollEnabled = false;
-                    element.ScrollReady = false;
+                    lines--;
                 }
+                Console.WriteLine("intervento secondario");
+            }
 
-                if (Control.Text == element.Placeholder)
-                {
-                    Control.TextColor = UIColor.Gray;
-                    element.Ready = false;
-                }
-                else
-                {
-                    element.Ready = true;
-                }
-            };
+            Console.WriteLine("TOTAL LINES " + lines + "\n");
+
+            if (lines > 3)
+            {
+                Control.ScrollEnabled = true;
+                element.ScrollReady = true;
+            }
+            else
+            {
+                //Control.ScrollEnabled = false;
+                //element.ScrollReady = false;
+            }
+
+            if (Control.Text == element.Placeholder)
+            {
+                Control.TextColor = UIColor.Gray;
+                element.Ready = false;
+            }
+            else
+            {
+                element.Ready = true;
+            }
         }
 
-        private void CreatePlaceholderLabel(ExpandableEditor element, UITextView parent)
+        void CreatePlaceholderLabel(ExpandableEditor element, UITextView parent)
         {
             _placeholderLabel = new UILabel
             {
@@ -123,7 +150,7 @@ namespace StritWalk.iOS
             _placeholderLabel.Hidden = parent.HasText;
         }
 
-        private void OnEnded(object sender, EventArgs args)
+        void OnEnded(object sender, EventArgs args)
         {
             //if (!((UITextView)sender).HasText && _placeholderLabel != null)
             //_placeholderLabel.Hidden = false;
@@ -133,6 +160,8 @@ namespace StritWalk.iOS
                 Control.Text = element.Placeholder;
                 Control.TextColor = UIColor.Gray;
             }
+
+            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalFrame.Y, originalFrame.Width, originalFrame.Height));
         }
 
         void OnChanged(object sender, EventArgs args)
@@ -161,9 +190,10 @@ namespace StritWalk.iOS
                 Control.Ended -= OnEnded;
                 Control.Changed -= OnChanged;
                 Control.Started -= OnFocused;
-
+                ad.KeyAppeared -= KeyRaise;
+                element.TextChanged -= Element_TextChanged;
+                //UnregisterForKeyboardNotifications();
             }
-            UnregisterForKeyboardNotifications();
         }
 
         void RegisterForKeyboardNotifications()
