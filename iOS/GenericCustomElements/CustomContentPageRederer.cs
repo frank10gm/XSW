@@ -168,6 +168,7 @@ namespace StritWalk.iOS
             xel.BackgroundColor = Color.Red;
             Console.WriteLine(el.Comment);
             xel.ScrollTo(el, ScrollToPosition.MakeVisible, false);
+            xel.ScrollTo();
         }
 
         private void ShiftPageDown(nfloat keyboardHeight, double activeViewBottom)
