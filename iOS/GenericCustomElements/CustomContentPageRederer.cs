@@ -150,12 +150,10 @@ namespace StritWalk.iOS
 
             //Element.LayoutTo(new Rectangle(pageFrame.X, newY, pageFrame.Width, pageFrame.Height));
             await Element.LayoutTo(new Rectangle(pageFrame.X, pageFrame.Y, pageFrame.Width, newH));
-
             _pageWasShiftedUp = true;
 
-            await Task.Delay(10);
+            await Task.Delay(500);
 
-            Console.WriteLine(View.Subviews[0].Subviews[0]);
             //var gino = View.Subviews[0].Subviews[0].Subviews[0] as UITableView;
             var gino2 = View.Subviews[0].Subviews[0] as CustomListViewRenderer;
             //gino2.BackgroundColor = Color.Red;
@@ -166,9 +164,9 @@ namespace StritWalk.iOS
             IList<CommentsItem> items = list.list.ItemsSource as IList<CommentsItem>;
 
             var el = items[items.Count - 1];
-            Console.WriteLine(el.Comment);
             xel.ScrollTo(el, ScrollToPosition.End, true);
 
+            await Task.Delay(5000);
             ad.KeyOn = true;
         }
 
