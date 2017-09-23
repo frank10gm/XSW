@@ -8,6 +8,8 @@ using StritWalk.iOS;
 using CoreGraphics;
 //using KeyboardOverlap.Forms.Plugin.iOSUnified;
 using System.Diagnostics;
+using System.Collections;
+using System.Collections.Generic;
 
 [assembly: ExportRenderer(typeof(ItemDetailPage), typeof(CustomContentPageRederer))]
 namespace StritWalk.iOS
@@ -18,7 +20,10 @@ namespace StritWalk.iOS
         ItemDetailPage thispage;
         NSObject _keyboardShowObserver;
         NSObject _keyboardHideObserver;
+        bool _pageWasShiftedUp;
+        double _activeViewBottom;
         bool _isKeyboardShown;
+        Rectangle originalFrame;
         AppDelegate ad;
 
         public CustomContentPageRederer()
@@ -39,7 +44,20 @@ namespace StritWalk.iOS
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
-            RegisterForKeyboardNotifications();
+
+            var page = Element as ContentPage;
+
+            if (page != null)
+            {
+                var contentScrollView = page.Content as ScrollView;
+
+                if (contentScrollView != null)
+                    return;
+
+                RegisterForKeyboardNotifications();
+            }
+
+            //RegisterForKeyboardNotifications();
         }
 
         public override void ViewWillDisappear(bool animated)
@@ -87,15 +105,88 @@ namespace StritWalk.iOS
             var keyboardFrame = UIKeyboard.FrameEndFromNotification(notification);
             ad.KeyFrame = keyboardFrame;
             ad.TriggerKey();
+
+            var activeView = View.FindFirstResponder();
+
+            if (activeView == null)
+                return;
+
+            var isOverlapping = activeView.IsKeyboardOverlapping(View, keyboardFrame);
+
+            if (!isOverlapping)
+                return;
+
+            if (isOverlapping)
+            {
+                _activeViewBottom = activeView.GetViewRelativeBottom(View);
+                ShiftPageUp(keyboardFrame.Height, _activeViewBottom);
+            }
+
+
         }
 
-        private void OnKeyboardHide(NSNotification notification)
+        void OnKeyboardHide(NSNotification notification)
         {
             if (!IsViewLoaded)
                 return;
 
             _isKeyboardShown = false;
             ad.KeyOn = false;
+            var keyboardFrame = UIKeyboard.FrameEndFromNotification(notification);
+
+            if (_pageWasShiftedUp)
+            {
+                ShiftPageDown(keyboardFrame.Height, _activeViewBottom);
+            }
+        }
+
+        void ShiftPageUp(nfloat keyboardHeight, double activeViewBottom)
+        {
+            var pageFrame = Element.Bounds;
+            originalFrame = pageFrame;
+
+            //var newY = pageFrame.Y + CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
+            var newH = pageFrame.Height + CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
+
+            //Element.LayoutTo(new Rectangle(pageFrame.X, newY, pageFrame.Width, pageFrame.Height));
+            Element.LayoutTo(new Rectangle(pageFrame.X, pageFrame.Y, pageFrame.Width, newH));
+
+            _pageWasShiftedUp = true;
+
+
+            Console.WriteLine(View.Subviews[0].Subviews[0]);
+            //var gino = View.Subviews[0].Subviews[0].Subviews[0] as UITableView;
+            var gino2 = View.Subviews[0].Subviews[0] as CustomListViewRenderer;
+            //gino2.BackgroundColor = Color.Red;
+            var xel = gino2.Element as CustomListView;
+
+            //var lista = gino2.Element.ItemsSource as System.Collections.Generic.IList<Item>;
+            var list = gino2.Control.Source as CustomListViewSource;
+            IList<CommentsItem> items = list.list.ItemsSource as IList<CommentsItem>;
+
+            var el = items[items.Count - 1];
+            xel.BackgroundColor = Color.Red;
+            Console.WriteLine(el.Comment);
+            xel.ScrollTo(el, ScrollToPosition.MakeVisible, false);
+        }
+
+        private void ShiftPageDown(nfloat keyboardHeight, double activeViewBottom)
+        {
+            //var pageFrame = Element.Bounds;
+
+            //var newY = pageFrame.Y - CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
+            //var newH = pageFrame.Height - CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
+
+            //Element.LayoutTo(new Rectangle(pageFrame.X, pageFrame.Y,
+            //                               pageFrame.Width, newH));
+
+            Element.LayoutTo(originalFrame);
+            _pageWasShiftedUp = false;
+        }
+
+        private double CalculateShiftByAmount(double pageHeight, nfloat keyboardHeight, double activeViewBottom)
+        {
+            return (pageHeight - activeViewBottom) - keyboardHeight;
         }
 
     }

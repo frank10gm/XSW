@@ -12,21 +12,21 @@ namespace StritWalk.iOS
     public class CustomListViewSource : UITableViewSource
     {
         // declare vars
-        IList<Item> tableItems;
-        CustomListView list;
+        public IList<Item> tableItems;
+        public CustomListView list;
         readonly NSString cellIdentifier = new NSString("TableCell");
         private readonly UITableViewSource source;
         private readonly Dictionary<int, double> cachedHeights = new Dictionary<int, double>();
         PropertyInfo specialProperty;
         AppDelegate ad;
 
-        public IList<Item> ItemsSource
-        {
-            set
-            {
-                tableItems = value.ToList();
-            }
-        }
+        //public IList<Item> ItemsSource
+        //{
+        //    set
+        //    {
+        //        tableItems = value.ToList();
+        //    }
+        //}
 
         public CustomListViewSource(CustomListView view, UITableViewSource dataSource, PropertyInfo prop)
         {
@@ -134,7 +134,7 @@ namespace StritWalk.iOS
         {
             if (ad.KeyOn)
             {
-                UIApplication.SharedApplication.KeyWindow.EndEditing(true);
+                //UIApplication.SharedApplication.KeyWindow.EndEditing(true);
             }
         }
 

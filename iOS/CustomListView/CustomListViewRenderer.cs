@@ -42,7 +42,7 @@ namespace StritWalk.iOS
             }
 
             if (e.NewElement != null)
-            {                
+            {
                 Control.ShowsVerticalScrollIndicator = false;        
                 templatedItemsList = (INotifyCollectionChanged)ListViewTemplatedItemsPropertyInfo.GetValue(e.NewElement);                
                 templatedItemsList.CollectionChanged += this.OnCollectionChanged;

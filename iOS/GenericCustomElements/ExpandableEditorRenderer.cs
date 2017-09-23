@@ -23,6 +23,7 @@ namespace StritWalk.iOS
         NSObject _keyboardShowObserver;
         NSObject _keyboardHideObserver;
         private Xamarin.Forms.Rectangle originalFrame;
+        private Xamarin.Forms.Rectangle originalWithKeyFrame;
         private CGRect originalKeyFrame;
         AppDelegate ad;
 
@@ -67,11 +68,14 @@ namespace StritWalk.iOS
         {
             originalKeyFrame = (CGRect)sender;
             originalFrame = Element.Bounds;
-            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, (originalFrame.Y - originalKeyFrame.Height), originalFrame.Width, originalFrame.Height));
+            //Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, (originalFrame.Y - originalKeyFrame.Height), originalFrame.Width, originalFrame.Height));
         }
 
         void Element_TextChanged(object sender, TextChangedEventArgs e1)
         {
+            originalWithKeyFrame = Element.Bounds;
+            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalWithKeyFrame.X, originalWithKeyFrame.Y - originalFrame.Height, originalWithKeyFrame.Width, originalWithKeyFrame.Height + originalFrame.Height));
+
             var numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
             var lines = 1;
             int count = e1.NewTextValue.Count(c => c == '\n');
@@ -80,7 +84,6 @@ namespace StritWalk.iOS
             {
                 lines++;
             }
-
 
             if (e1.NewTextValue.LastIndexOf("\n", StringComparison.CurrentCulture) == e1.NewTextValue.Length - 1)
             {
