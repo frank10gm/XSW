@@ -49,10 +49,10 @@ namespace StritWalk.iOS
 
             if (page != null)
             {
-                var contentScrollView = page.Content as ScrollView;
+                //var contentScrollView = page.Content as ScrollView;
 
-                if (contentScrollView != null)
-                    return;
+                //if (contentScrollView != null)
+                    //return;
 
                 RegisterForKeyboardNotifications();
             }
@@ -165,10 +165,8 @@ namespace StritWalk.iOS
             IList<CommentsItem> items = list.list.ItemsSource as IList<CommentsItem>;
 
             var el = items[items.Count - 1];
-            xel.BackgroundColor = Color.Red;
             Console.WriteLine(el.Comment);
-            xel.ScrollTo(el, ScrollToPosition.MakeVisible, false);
-            xel.ScrollTo();
+            xel.ScrollTo(el, ScrollToPosition.End, true);
         }
 
         private void ShiftPageDown(nfloat keyboardHeight, double activeViewBottom)
