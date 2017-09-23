@@ -10,6 +10,7 @@ using CoreGraphics;
 using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 [assembly: ExportRenderer(typeof(ItemDetailPage), typeof(CustomContentPageRederer))]
 namespace StritWalk.iOS
@@ -99,7 +100,6 @@ namespace StritWalk.iOS
                 return;
 
             _isKeyboardShown = true;
-            ad.KeyOn = true;
 
             //sending event
             var keyboardFrame = UIKeyboard.FrameEndFromNotification(notification);
@@ -140,7 +140,7 @@ namespace StritWalk.iOS
             }
         }
 
-        void ShiftPageUp(nfloat keyboardHeight, double activeViewBottom)
+        async void ShiftPageUp(nfloat keyboardHeight, double activeViewBottom)
         {
             var pageFrame = Element.Bounds;
             originalFrame = pageFrame;
@@ -149,23 +149,11 @@ namespace StritWalk.iOS
             var newH = pageFrame.Height + CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
 
             //Element.LayoutTo(new Rectangle(pageFrame.X, newY, pageFrame.Width, pageFrame.Height));
-            Element.LayoutTo(new Rectangle(pageFrame.X, pageFrame.Y, pageFrame.Width, newH));
+            await Element.LayoutTo(new Rectangle(pageFrame.X, pageFrame.Y, pageFrame.Width, newH));
 
             _pageWasShiftedUp = true;
 
-
-
-        }
-
-        private void ShiftPageDown(nfloat keyboardHeight, double activeViewBottom)
-        {
-            //var pageFrame = Element.Bounds;
-
-            //var newY = pageFrame.Y - CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
-            //var newH = pageFrame.Height - CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
-
-            //Element.LayoutTo(new Rectangle(pageFrame.X, pageFrame.Y,
-            //                               pageFrame.Width, newH));
+            await Task.Delay(10);
 
             Console.WriteLine(View.Subviews[0].Subviews[0]);
             //var gino = View.Subviews[0].Subviews[0].Subviews[0] as UITableView;
@@ -181,7 +169,20 @@ namespace StritWalk.iOS
             Console.WriteLine(el.Comment);
             xel.ScrollTo(el, ScrollToPosition.End, true);
 
-            //Element.LayoutTo(originalFrame);
+            ad.KeyOn = true;
+        }
+
+        private void ShiftPageDown(nfloat keyboardHeight, double activeViewBottom)
+        {
+            //var pageFrame = Element.Bounds;
+
+            //var newY = pageFrame.Y - CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
+            //var newH = pageFrame.Height - CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
+
+            //Element.LayoutTo(new Rectangle(pageFrame.X, pageFrame.Y,
+            //                               pageFrame.Width, newH));                     
+
+            Element.LayoutTo(originalFrame);
             _pageWasShiftedUp = false;
         }
 
