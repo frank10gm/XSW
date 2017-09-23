@@ -154,6 +154,19 @@ namespace StritWalk.iOS
             _pageWasShiftedUp = true;
 
 
+
+        }
+
+        private void ShiftPageDown(nfloat keyboardHeight, double activeViewBottom)
+        {
+            //var pageFrame = Element.Bounds;
+
+            //var newY = pageFrame.Y - CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
+            //var newH = pageFrame.Height - CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
+
+            //Element.LayoutTo(new Rectangle(pageFrame.X, pageFrame.Y,
+            //                               pageFrame.Width, newH));
+
             Console.WriteLine(View.Subviews[0].Subviews[0]);
             //var gino = View.Subviews[0].Subviews[0].Subviews[0] as UITableView;
             var gino2 = View.Subviews[0].Subviews[0] as CustomListViewRenderer;
@@ -167,19 +180,8 @@ namespace StritWalk.iOS
             var el = items[items.Count - 1];
             Console.WriteLine(el.Comment);
             xel.ScrollTo(el, ScrollToPosition.End, true);
-        }
 
-        private void ShiftPageDown(nfloat keyboardHeight, double activeViewBottom)
-        {
-            //var pageFrame = Element.Bounds;
-
-            //var newY = pageFrame.Y - CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
-            //var newH = pageFrame.Height - CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
-
-            //Element.LayoutTo(new Rectangle(pageFrame.X, pageFrame.Y,
-            //                               pageFrame.Width, newH));
-
-            Element.LayoutTo(originalFrame);
+            //Element.LayoutTo(originalFrame);
             _pageWasShiftedUp = false;
         }
 

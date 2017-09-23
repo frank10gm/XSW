@@ -59,7 +59,7 @@ namespace StritWalk.iOS
             //listView.NotifyItemSelected(tableItems[indexPath.Row]);
             tableView.DeselectRow(indexPath, true);
 
-            UITapGestureRecognizer gesture = new UITapGestureRecognizer(() => { tableView.EndEditing(true); });
+            UITapGestureRecognizer gesture = new UITapGestureRecognizer(() => { UIApplication.SharedApplication.KeyWindow.EndEditing(true); });
             tableView.AddGestureRecognizer(gesture);
         }
 
@@ -134,7 +134,7 @@ namespace StritWalk.iOS
         {
             if (ad.KeyOn)
             {
-                //UIApplication.SharedApplication.KeyWindow.EndEditing(true);
+                UIApplication.SharedApplication.KeyWindow.EndEditing(true);
             }
         }
 
