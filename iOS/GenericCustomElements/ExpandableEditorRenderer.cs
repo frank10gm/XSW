@@ -9,6 +9,8 @@ using UIKit;
 using CoreGraphics;
 using System.Linq;
 using System.Drawing;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 [assembly: ExportRenderer(typeof(ExpandableEditor), typeof(ExpandableEditorRenderer))]
 namespace StritWalk.iOS
@@ -26,7 +28,9 @@ namespace StritWalk.iOS
         private Xamarin.Forms.Rectangle originalWithKeyFrame;
         private Xamarin.Forms.Rectangle originalPageFrame;
         private Xamarin.Forms.Rectangle originalListFrame;
+        private nfloat scrolly;
         private CGRect originalKeyFrame;
+        int numlines = 1;
         AppDelegate ad;
 
         public ExpandableEditorRenderer()
@@ -75,51 +79,34 @@ namespace StritWalk.iOS
 
         void Element_TextChanged(object sender, TextChangedEventArgs e1)
         {
-            //ridefinizione editor
-            originalWithKeyFrame = Element.Bounds;
-            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalWithKeyFrame.X, originalWithKeyFrame.Y - originalFrame.Height, originalWithKeyFrame.Width, originalWithKeyFrame.Height + originalFrame.Height));
-            		
-			//definizione pagina commenti
-			ItemDetailPage page = Element.Parent.Parent as ItemDetailPage;
-			originalPageFrame = page.Bounds;
 
-            //definizione listview
-            Console.WriteLine(Control.Superview.Superview.Subviews[0]);
-            var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
-            originalListFrame = list.Element.Bounds;
-            list.Element.LayoutTo(new Xamarin.Forms.Rectangle(originalListFrame.X, originalListFrame.Y, originalListFrame.Width, originalListFrame.Height - originalWithKeyFrame.Height ));
-
-
+            //definizione delle righe di testo
             var numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
             var lines = 1;
             int count = e1.NewTextValue.Count(c => c == '\n');
 
-            while (lines < ((numLines - oneLine) + 1))
-            {
-                lines++;
-            }
+            //while (lines < ((numLines - oneLine) + 1))
+            //{
+            //    lines++;
+            //    AgumentView();
+            //}
 
             if (e1.NewTextValue.LastIndexOf("\n", StringComparison.CurrentCulture) == e1.NewTextValue.Length - 1)
             {
-                if (count > 0)
-                {
-                    if (e1.NewTextValue.Length < e1.OldTextValue.Length)
-                    {
-                        lines--;
-                    }
-                    else
-                    {
-                        lines++;
-                    }
-                }
-                else
-                {
-                    lines--;
-                }
-                Console.WriteLine("intervento secondario");
+                numlines++;
+                AgumentView();
+                //if (e1.NewTextValue.Length < e1.OldTextValue.Length)
+                //{
+                //    numlines--;
+                //}
+                //else
+                //{
+                //    numlines++;
+                //    AgumentView();
+                //}
             }
 
-            Console.WriteLine("TOTAL LINES " + lines + "\n");
+            Console.WriteLine("TOTAL LINES " + numlines + "\n");
 
             if (lines > 3)
             {
@@ -128,10 +115,11 @@ namespace StritWalk.iOS
             }
             else
             {
-                //Control.ScrollEnabled = false;
-                //element.ScrollReady = false;
+                Control.ScrollEnabled = false;
+                element.ScrollReady = false;
             }
 
+            //placeholder
             if (Control.Text == element.Placeholder)
             {
                 Control.TextColor = UIColor.Gray;
@@ -141,6 +129,37 @@ namespace StritWalk.iOS
             {
                 element.Ready = true;
             }
+        }
+
+        async void AgumentView()
+        {
+            //aggiunta riga
+            //definizione pagina commenti
+            ItemDetailPage page = Element.Parent.Parent as ItemDetailPage;
+            originalPageFrame = page.Bounds;
+            //definizione listview
+            var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
+            var listv = list.Element;
+            var source = list.Control.Source as CustomListViewSource;
+            IList<CommentsItem> items = source.list.ItemsSource as IList<CommentsItem>;
+            var el = items[items.Count - 1];
+            originalListFrame = list.Element.Bounds;
+            scrolly = list.Control.ContentOffset.Y;
+            //Console.WriteLine(newy + " ");
+            await listv.LayoutTo(new Xamarin.Forms.Rectangle(originalListFrame.X, originalListFrame.Y, originalListFrame.Width, originalListFrame.Height - originalFrame.Height), 0, Easing.Linear);
+            //CGRect lframe = Control.Frame;
+            //lframe.Size.Height = originalListFrame.Height - originalFrame.Height;
+            //Control.Frame = new CGRect(originalListFrame.X, originalListFrame.Y, originalListFrame.Width, 0);
+            await Task.Delay(1);
+            //var newy = list.Control.ContentSize.Height + list.Control.ContentInset.Bottom - list.Control.Bounds.Size.Height;			
+            var newy = list.Control.ContentSize.Height + list.Control.ContentInset.Bottom - list.Control.Bounds.Size.Height;
+            Console.WriteLine(newy + " ");
+            list.Control.SetContentOffset(new CGPoint(0, newy), true);
+            //listv.ScrollTo(el, ScrollToPosition.End, true);
+            //await Task.Delay(10);
+            //ridefinizione editor
+            originalWithKeyFrame = Element.Bounds;
+            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalWithKeyFrame.X, originalWithKeyFrame.Y - originalFrame.Height, originalWithKeyFrame.Width, originalWithKeyFrame.Height + originalFrame.Height), 250, Easing.Linear);
         }
 
         void CreatePlaceholderLabel(ExpandableEditor element, UITextView parent)

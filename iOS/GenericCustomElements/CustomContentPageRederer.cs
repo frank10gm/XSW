@@ -149,7 +149,7 @@ namespace StritWalk.iOS
             await Element.LayoutTo(new Rectangle(pageFrame.X, pageFrame.Y, pageFrame.Width, newH));
             _pageWasShiftedUp = true;
 
-            await Task.Delay(500);
+            await Task.Delay(10);
 
             var gino2 = View.Subviews[0].Subviews[0] as CustomListViewRenderer;
             var xel = gino2.Element as CustomListView;
