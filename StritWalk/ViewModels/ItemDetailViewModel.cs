@@ -20,7 +20,6 @@ namespace StritWalk
             CommentsItems = new ObservableRangeCollection<CommentsItem>();
             if (Item.Comments != null)
             {                
-                Console.WriteLine("### array : " + Item.Comments);
                 var items = Item.Comments.ToObject<IList<CommentsItem>>();
                 CommentsItems.ReplaceRange(items);
             }

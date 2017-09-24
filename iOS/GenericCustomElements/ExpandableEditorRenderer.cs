@@ -24,6 +24,8 @@ namespace StritWalk.iOS
         NSObject _keyboardHideObserver;
         private Xamarin.Forms.Rectangle originalFrame;
         private Xamarin.Forms.Rectangle originalWithKeyFrame;
+        private Xamarin.Forms.Rectangle originalPageFrame;
+        private Xamarin.Forms.Rectangle originalListFrame;
         private CGRect originalKeyFrame;
         AppDelegate ad;
 
@@ -73,8 +75,20 @@ namespace StritWalk.iOS
 
         void Element_TextChanged(object sender, TextChangedEventArgs e1)
         {
+            //ridefinizione editor
             originalWithKeyFrame = Element.Bounds;
             Element.LayoutTo(new Xamarin.Forms.Rectangle(originalWithKeyFrame.X, originalWithKeyFrame.Y - originalFrame.Height, originalWithKeyFrame.Width, originalWithKeyFrame.Height + originalFrame.Height));
+            		
+			//definizione pagina commenti
+			ItemDetailPage page = Element.Parent.Parent as ItemDetailPage;
+			originalPageFrame = page.Bounds;
+
+            //definizione listview
+            Console.WriteLine(Control.Superview.Superview.Subviews[0]);
+            var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
+            originalListFrame = list.Element.Bounds;
+            list.Element.LayoutTo(new Xamarin.Forms.Rectangle(originalListFrame.X, originalListFrame.Y, originalListFrame.Width, originalListFrame.Height - originalWithKeyFrame.Height ));
+
 
             var numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
             var lines = 1;

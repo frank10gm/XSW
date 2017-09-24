@@ -99,6 +99,7 @@ namespace StritWalk.iOS
             if (!IsViewLoaded || _isKeyboardShown)
                 return;
 
+            ad.KeyOn = false;
             _isKeyboardShown = true;
 
             //sending event
@@ -144,30 +145,21 @@ namespace StritWalk.iOS
         {
             var pageFrame = Element.Bounds;
             originalFrame = pageFrame;
-
-            //var newY = pageFrame.Y + CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
             var newH = pageFrame.Height + CalculateShiftByAmount(pageFrame.Height, keyboardHeight, activeViewBottom);
-
-            //Element.LayoutTo(new Rectangle(pageFrame.X, newY, pageFrame.Width, pageFrame.Height));
             await Element.LayoutTo(new Rectangle(pageFrame.X, pageFrame.Y, pageFrame.Width, newH));
             _pageWasShiftedUp = true;
 
             await Task.Delay(500);
 
-            //var gino = View.Subviews[0].Subviews[0].Subviews[0] as UITableView;
             var gino2 = View.Subviews[0].Subviews[0] as CustomListViewRenderer;
-            //gino2.BackgroundColor = Color.Red;
             var xel = gino2.Element as CustomListView;
-
-            //var lista = gino2.Element.ItemsSource as System.Collections.Generic.IList<Item>;
             var list = gino2.Control.Source as CustomListViewSource;
             IList<CommentsItem> items = list.list.ItemsSource as IList<CommentsItem>;
-
             var el = items[items.Count - 1];
             xel.ScrollTo(el, ScrollToPosition.End, true);
 
             await Task.Delay(5000);
-            ad.KeyOn = true;
+            //ad.KeyOn = true;
         }
 
         private void ShiftPageDown(nfloat keyboardHeight, double activeViewBottom)
