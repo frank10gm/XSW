@@ -79,7 +79,6 @@ namespace StritWalk.iOS
 
         void Element_TextChanged(object sender, TextChangedEventArgs e1)
         {
-
             //definizione delle righe di testo
             var numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
             var lines = 1;
@@ -94,7 +93,7 @@ namespace StritWalk.iOS
             if (e1.NewTextValue.LastIndexOf("\n", StringComparison.CurrentCulture) == e1.NewTextValue.Length - 1)
             {
                 numlines++;
-                AgumentView();
+                AgumentView2();
                 //if (e1.NewTextValue.Length < e1.OldTextValue.Length)
                 //{
                 //    numlines--;
@@ -130,6 +129,23 @@ namespace StritWalk.iOS
                 element.Ready = true;
             }
         }
+
+		void AgumentView2()
+		{	
+			//definizione pagina commenti
+			ItemDetailPage page = Element.Parent.Parent as ItemDetailPage;
+			originalPageFrame = page.Bounds;
+
+			//definizione listview
+			var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
+			var listview = list.Element;
+			var listsource = list.Control.Source as CustomListViewSource;
+			
+            //aumento riga
+            originalWithKeyFrame = Element.Bounds;
+            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalWithKeyFrame.X, originalWithKeyFrame.Y - (originalFrame.Height-16), originalWithKeyFrame.Width, originalWithKeyFrame.Height + (originalFrame.Height - 16) ));
+            Console.WriteLine("stocazzo " + Control.Font.LineHeight);
+		}
 
         async void AgumentView()
         {

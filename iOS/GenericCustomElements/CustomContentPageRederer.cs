@@ -182,8 +182,7 @@ namespace StritWalk.iOS
 
             _pageWasShiftedUp = false;
 
-			var editor = View.Subviews[0].Subviews[1] as ExpandableEditorRenderer;
-			originalEditorFrame = editor.Element.Bounds;
+			var editor = View.Subviews[0].Subviews[1] as ExpandableEditorRenderer;		
 			editor.Element.LayoutTo(new Rectangle(originalEditorFrame.X, originalEditorFrame.Y, originalEditorFrame.Width, originalEditorFrame.Height));
 		}
 
