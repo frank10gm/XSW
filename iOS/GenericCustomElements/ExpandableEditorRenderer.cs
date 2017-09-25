@@ -154,12 +154,12 @@ namespace StritWalk.iOS
             //var newy = list.Control.ContentSize.Height + list.Control.ContentInset.Bottom - list.Control.Bounds.Size.Height;			
             var newy = list.Control.ContentSize.Height + list.Control.ContentInset.Bottom - list.Control.Bounds.Size.Height;
             Console.WriteLine(newy + " ");
-            list.Control.SetContentOffset(new CGPoint(0, newy), true);
+            list.Control.SetContentOffset(new CGPoint(0, newy), false);
             //listv.ScrollTo(el, ScrollToPosition.End, true);
             //await Task.Delay(10);
             //ridefinizione editor
             originalWithKeyFrame = Element.Bounds;
-            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalWithKeyFrame.X, originalWithKeyFrame.Y - originalFrame.Height, originalWithKeyFrame.Width, originalWithKeyFrame.Height + originalFrame.Height), 250, Easing.Linear);
+            await Element.LayoutTo(new Xamarin.Forms.Rectangle(originalWithKeyFrame.X, originalWithKeyFrame.Y - originalFrame.Height, originalWithKeyFrame.Width, originalWithKeyFrame.Height + originalFrame.Height), 0, Easing.Linear);
         }
 
         void CreatePlaceholderLabel(ExpandableEditor element, UITextView parent)
