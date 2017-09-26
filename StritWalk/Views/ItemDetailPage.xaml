@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="StritWalk.ItemDetailPage" Title="{Binding Title}" xmlns:local="clr-namespace:StritWalk;" x:Name="CommentsPage">
     <StackLayout>
-        <local:CustomListView SeparatorVisibility="None" x:Name="CommentsListView" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" HasUnevenRows="true" IsPullToRefreshEnabled="false" ItemsSource="{Binding CommentsItems}" RowHeight="-1" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom" >
+        <local:CustomListView SeparatorVisibility="None" x:Name="CommentsListView" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HasUnevenRows="true" IsPullToRefreshEnabled="false" ItemsSource="{Binding CommentsItems}" RowHeight="-1" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom" BackgroundColor="Red">
             <x:Arguments>
                 <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
             </x:Arguments>

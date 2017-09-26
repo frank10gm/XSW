@@ -38,28 +38,6 @@ namespace StritWalk
 
             page = Application.Current.MainPage as CustomTabbedPage;
 
-            //        CommentEditor.TextChanged += (sender, e) =>
-            //        {
-            //if (CommentEditor.lineHeight != 0)
-            //{
-            //	double newHeight;
-            //	int count = CommentEditor.Text.Count(c => c == '\n');
-            //	if (count == 0)
-            //	{
-            //		newHeight = CommentEditor.lineHeight;
-            //	}
-            //	else
-            //	{
-            //		newHeight = ((CommentEditor.lineHeight) * (count + 1));
-            //                    Console.WriteLine("### " + CommentEditor.Height);
-            //	}
-            //	if (CommentEditor.Height != newHeight)
-            //	{
-            //		CommentEditor.HeightRequest = newHeight;
-            //	}
-            //}
-            //};
-
         }
 
         protected override void OnAppearing()
@@ -79,7 +57,6 @@ namespace StritWalk
 
         void OnReachBottom(object sender, ItemVisibilityEventArgs args)
         {
-
             //if (CommentEditor.IsFocused)
             //CommentEditor.Unfocus();            		
         }
