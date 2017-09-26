@@ -147,8 +147,11 @@ namespace StritWalk.iOS
             listcontrol.ScrollIndicatorInsets = contentinsets;
 
             IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
-            var el = items[items.Count - 1];
-            listview.ScrollTo(el, ScrollToPosition.End, true);
+			if (items.Count > 0)
+			{
+				var el = items[items.Count - 1];
+				listview.ScrollTo(el, ScrollToPosition.End, true);
+			}
 
             //aumento riga
             originalWithKeyFrame = Element.Bounds;

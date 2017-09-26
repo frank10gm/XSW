@@ -55,7 +55,7 @@ namespace StritWalk.iOS
                 //var contentScrollView = page.Content as ScrollView;
 
                 //if (contentScrollView != null)
-                    //return;
+                //return;
 
                 RegisterForKeyboardNotifications();
             }
@@ -146,21 +146,25 @@ namespace StritWalk.iOS
 
         void ShiftPageUp2(nfloat keyboardHeight, double activeViewBottom)
         {
-			var pageFrame = Element.Bounds;
-			originalFrame = pageFrame;
+            var pageFrame = Element.Bounds;
+            originalFrame = pageFrame;
 
-			var list = View.Subviews[0].Subviews[0] as CustomListViewRenderer;
-			var listview = list.Element as CustomListView;
-			var listsource = list.Control.Source as CustomListViewSource;
+            var list = View.Subviews[0].Subviews[0] as CustomListViewRenderer;
+            var listview = list.Element as CustomListView;
+            var listsource = list.Control.Source as CustomListViewSource;
             var listcontrol = list.Control;
 
             UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, keyboardHeight, 0);
             listcontrol.ContentInset = contentinsets;
             listcontrol.ScrollIndicatorInsets = contentinsets;
 
-			IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
-			var el = items[items.Count - 1];
-            listview.ScrollTo(el, ScrollToPosition.End, true);
+
+            IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
+            if (items.Count > 0)
+            {
+				var el = items[items.Count - 1];
+				listview.ScrollTo(el, ScrollToPosition.End, true);
+            }
 
             _pageWasShiftedUp = true;
 
@@ -169,22 +173,22 @@ namespace StritWalk.iOS
             editor.Element.LayoutTo(new Rectangle(originalEditorFrame.X, originalEditorFrame.Y - keyboardHeight, originalEditorFrame.Width, originalEditorFrame.Height));
         }
 
-		private void ShiftPageDown2(nfloat keyboardHeight, double activeViewBottom)
-		{
-			var list = View.Subviews[0].Subviews[0] as CustomListViewRenderer;
-			var listview = list.Element as CustomListView;
-			var listsource = list.Control.Source as CustomListViewSource;
-			var listcontrol = list.Control;
+        private void ShiftPageDown2(nfloat keyboardHeight, double activeViewBottom)
+        {
+            var list = View.Subviews[0].Subviews[0] as CustomListViewRenderer;
+            var listview = list.Element as CustomListView;
+            var listsource = list.Control.Source as CustomListViewSource;
+            var listcontrol = list.Control;
 
-			UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, 0, 0);
-			listcontrol.ContentInset = contentinsets;
-			listcontrol.ScrollIndicatorInsets = contentinsets;
+            UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, 0, 0);
+            listcontrol.ContentInset = contentinsets;
+            listcontrol.ScrollIndicatorInsets = contentinsets;
 
             _pageWasShiftedUp = false;
 
-			var editor = View.Subviews[0].Subviews[1] as ExpandableEditorRenderer;		
-			editor.Element.LayoutTo(new Rectangle(originalEditorFrame.X, originalEditorFrame.Y, originalEditorFrame.Width, originalEditorFrame.Height));
-		}
+            var editor = View.Subviews[0].Subviews[1] as ExpandableEditorRenderer;
+            editor.Element.LayoutTo(new Rectangle(originalEditorFrame.X, originalEditorFrame.Y, originalEditorFrame.Width, originalEditorFrame.Height));
+        }
 
         async void ShiftPageUp(nfloat keyboardHeight, double activeViewBottom)
         {
