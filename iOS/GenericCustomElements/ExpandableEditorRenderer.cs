@@ -130,22 +130,30 @@ namespace StritWalk.iOS
             }
         }
 
-		void AgumentView2()
-		{	
-			//definizione pagina commenti
-			ItemDetailPage page = Element.Parent.Parent as ItemDetailPage;
-			originalPageFrame = page.Bounds;
+        void AgumentView2()
+        {
+            //definizione pagina commenti
+            ItemDetailPage page = Element.Parent.Parent as ItemDetailPage;
+            originalPageFrame = page.Bounds;
 
-			//definizione listview
-			var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
-			var listview = list.Element;
-			var listsource = list.Control.Source as CustomListViewSource;
-			
+            //definizione listview
+            var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
+            var listview = list.Element;
+            var listsource = list.Control.Source as CustomListViewSource;
+            var listcontrol = list.Control;
+
+            UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, listcontrol.ContentInset.Bottom + ((nfloat)originalFrame.Height - 16), 0);
+            listcontrol.ContentInset = contentinsets;
+            listcontrol.ScrollIndicatorInsets = contentinsets;
+
+            IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
+            var el = items[items.Count - 1];
+            listview.ScrollTo(el, ScrollToPosition.End, true);
+
             //aumento riga
             originalWithKeyFrame = Element.Bounds;
-            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalWithKeyFrame.X, originalWithKeyFrame.Y - (originalFrame.Height-16), originalWithKeyFrame.Width, originalWithKeyFrame.Height + (originalFrame.Height - 16) ));
-            Console.WriteLine("stocazzo " + Control.Font.LineHeight);
-		}
+            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalWithKeyFrame.X, originalWithKeyFrame.Y - (originalFrame.Height - 16), originalWithKeyFrame.Width, originalWithKeyFrame.Height + (originalFrame.Height - 16)));
+        }
 
         async void AgumentView()
         {
@@ -169,7 +177,6 @@ namespace StritWalk.iOS
             await Task.Delay(1);
             //var newy = list.Control.ContentSize.Height + list.Control.ContentInset.Bottom - list.Control.Bounds.Size.Height;			
             var newy = list.Control.ContentSize.Height + list.Control.ContentInset.Bottom - list.Control.Bounds.Size.Height;
-            Console.WriteLine(newy + " ");
             list.Control.SetContentOffset(new CGPoint(0, newy), false);
             //listv.ScrollTo(el, ScrollToPosition.End, true);
             //await Task.Delay(10);
