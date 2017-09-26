@@ -173,7 +173,7 @@ namespace StritWalk.iOS
             editor.Element.LayoutTo(new Rectangle(originalEditorFrame.X, originalEditorFrame.Y - keyboardHeight, originalEditorFrame.Width, originalEditorFrame.Height));
         }
 
-        private void ShiftPageDown2(nfloat keyboardHeight, double activeViewBottom)
+        void ShiftPageDown2(nfloat keyboardHeight, double activeViewBottom)
         {
             var list = View.Subviews[0].Subviews[0] as CustomListViewRenderer;
             var listview = list.Element as CustomListView;

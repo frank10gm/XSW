@@ -105,7 +105,7 @@ namespace StritWalk.iOS
                 //}
             }
 
-            Console.WriteLine("TOTAL LINES " + numlines + "\n");
+            Console.WriteLine("TOTAL LINES " + numlines + "");
 
             if (lines > 3)
             {
@@ -142,20 +142,22 @@ namespace StritWalk.iOS
             var listsource = list.Control.Source as CustomListViewSource;
             var listcontrol = list.Control;
 
+            Console.WriteLine("orignalframe:" + originalFrame.Height + " originalwithkey:" + originalWithKeyFrame.Height + " insetbottom:" + listcontrol.ContentInset.Bottom);
+
+            //aumento riga
+            originalWithKeyFrame = Element.Bounds;
+            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalWithKeyFrame.X, originalWithKeyFrame.Y - (originalFrame.Height - 16), originalWithKeyFrame.Width, originalWithKeyFrame.Height + (originalFrame.Height - 16)));
+
             UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, listcontrol.ContentInset.Bottom + ((nfloat)originalFrame.Height - 16), 0);
             listcontrol.ContentInset = contentinsets;
             listcontrol.ScrollIndicatorInsets = contentinsets;
 
             IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
-			if (items.Count > 0)
-			{
-				var el = items[items.Count - 1];
-				listview.ScrollTo(el, ScrollToPosition.End, true);
-			}
-
-            //aumento riga
-            originalWithKeyFrame = Element.Bounds;
-            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalWithKeyFrame.X, originalWithKeyFrame.Y - (originalFrame.Height - 16), originalWithKeyFrame.Width, originalWithKeyFrame.Height + (originalFrame.Height - 16)));
+            if (items.Count > 0)
+            {
+                var el = items[items.Count - 1];
+                listview.ScrollTo(el, ScrollToPosition.End, true);
+            }
         }
 
         async void AgumentView()
