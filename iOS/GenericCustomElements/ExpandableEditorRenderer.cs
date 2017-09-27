@@ -339,12 +339,26 @@ namespace StritWalk.iOS
             newh = requestSize.Height;
             originalWithKeyFrame = new Xamarin.Forms.Rectangle(originalFrame.X, newy, originalFrame.Width, newh);
             //Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalWithKeyFrame.Y - (originalFrame.Height - 16), originalWithKeyFrame.Width, originalWithKeyFrame.Height + (originalFrame.Height - 16)));
-            Element.LayoutTo(originalWithKeyFrame);
 
-            UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, listcontrol.ContentInset.Bottom + ((nfloat)requestSize.Height - 0), 0);
-            contentinsets = new UIEdgeInsets(0, 0, originalKeyFrame.Height + ((nfloat)requestSize.Height - 0), 0);
-            listcontrol.ContentInset = contentinsets;
-            listcontrol.ScrollIndicatorInsets = contentinsets;
+            if (requestSize.Height < 100)
+            {
+                Element.LayoutTo(originalWithKeyFrame);
+                UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, listcontrol.ContentInset.Bottom + ((nfloat)requestSize.Height - 0), 0);
+                contentinsets = new UIEdgeInsets(0, 0, originalKeyFrame.Height + ((nfloat)requestSize.Height - 0), 0);
+                listcontrol.ContentInset = contentinsets;
+                listcontrol.ScrollIndicatorInsets = contentinsets;
+				Control.ScrollEnabled = false;
+				element.ScrollReady = false;
+            }
+            else
+            {
+                newh = Element.Bounds.Height - 16;
+                newy = Element.Bounds.Y - 16;
+                originalWithKeyFrame = new Xamarin.Forms.Rectangle(Element.Bounds.X, Element.Bounds.Y, Element.Bounds.Width, newh);
+                //Element.LayoutTo(originalWithKeyFrame);
+				Control.ScrollEnabled = true;
+				element.ScrollReady = true;
+            }
 
             IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
             if (items.Count > 0)
@@ -357,18 +371,10 @@ namespace StritWalk.iOS
         void Element_TextChanged(object sender, TextChangedEventArgs e1)
         {
             requestSize = Control.SizeThatFits(new CGSize(Element.Bounds.Width, 99999));
-            if (numlines > 2)
-            {
-                Control.ScrollEnabled = true;
-                element.ScrollReady = true;
-            }
-            else
-            {
-                Control.ScrollEnabled = false;
-                element.ScrollReady = false;
-                if (keyOn)
-                    AgumentView3();
-            }
+
+            if (keyOn)
+                AgumentView3();
+
             //Control.SizeToFit();
             //Control.LayoutIfNeeded();
 
@@ -416,16 +422,16 @@ namespace StritWalk.iOS
             //    //DegumentView2();
             //}
 
-            if (numlines > 2)
-            {
-                Control.ScrollEnabled = true;
-                element.ScrollReady = true;
-            }
-            else
-            {
-                Control.ScrollEnabled = false;
-                element.ScrollReady = false;
-            }
+            //if (numlines > 2)
+            //{
+            //    Control.ScrollEnabled = true;
+            //    element.ScrollReady = true;
+            //}
+            //else
+            //{
+            //    Control.ScrollEnabled = false;
+            //    element.ScrollReady = false;
+            //}
 
             //placeholder
             if (Control.Text == element.Placeholder)
