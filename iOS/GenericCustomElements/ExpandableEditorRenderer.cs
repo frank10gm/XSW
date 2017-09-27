@@ -344,7 +344,7 @@ namespace StritWalk.iOS
             {
                 Element.LayoutTo(originalWithKeyFrame);
                 UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, listcontrol.ContentInset.Bottom + ((nfloat)requestSize.Height - 0), 0);
-                contentinsets = new UIEdgeInsets(0, 0, originalKeyFrame.Height + ((nfloat)requestSize.Height - 0), 0);
+                contentinsets = new UIEdgeInsets(0, 0, originalKeyFrame.Height + ((nfloat)requestSize.Height - (nfloat)originalFrame.Height), 0);
                 listcontrol.ContentInset = contentinsets;
                 listcontrol.ScrollIndicatorInsets = contentinsets;
 				Control.ScrollEnabled = false;
