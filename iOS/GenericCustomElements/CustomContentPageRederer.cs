@@ -57,7 +57,7 @@ namespace StritWalk.iOS
                 //if (contentScrollView != null)
                 //return;
 
-                RegisterForKeyboardNotifications();
+                //RegisterForKeyboardNotifications();
             }
 
             //RegisterForKeyboardNotifications();
@@ -67,7 +67,7 @@ namespace StritWalk.iOS
         {
             thispage.WillSparisci();
             base.ViewWillDisappear(animated);
-            UnregisterForKeyboardNotifications();
+            //UnregisterForKeyboardNotifications();
         }
 
         void RegisterForKeyboardNotifications()
@@ -158,7 +158,6 @@ namespace StritWalk.iOS
             listcontrol.ContentInset = contentinsets;
             listcontrol.ScrollIndicatorInsets = contentinsets;
 
-
             IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
             if (items.Count > 0)
             {
@@ -179,15 +178,14 @@ namespace StritWalk.iOS
             var listview = list.Element as CustomListView;
             var listsource = list.Control.Source as CustomListViewSource;
             var listcontrol = list.Control;
+            var editor = View.Subviews[0].Subviews[1] as ExpandableEditorRenderer;
 
-            UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, 0, 0);
+            UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, (nfloat)editor.Element.Height - 16, 0);
             listcontrol.ContentInset = contentinsets;
             listcontrol.ScrollIndicatorInsets = contentinsets;
+            editor.Element.LayoutTo(new Rectangle(originalEditorFrame.X, originalEditorFrame.Y - editor.Element.Height + originalEditorFrame.Height - 16, originalEditorFrame.Width, editor.Element.Height - 16));
 
             _pageWasShiftedUp = false;
-
-            var editor = View.Subviews[0].Subviews[1] as ExpandableEditorRenderer;
-            editor.Element.LayoutTo(new Rectangle(originalEditorFrame.X, originalEditorFrame.Y, originalEditorFrame.Width, originalEditorFrame.Height));
         }
 
         async void ShiftPageUp(nfloat keyboardHeight, double activeViewBottom)

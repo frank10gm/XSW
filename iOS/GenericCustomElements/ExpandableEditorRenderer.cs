@@ -22,17 +22,20 @@ namespace StritWalk.iOS
         ExpandableEditor element;
         double oneLine;
         bool toStart = true;
+        bool keyOn;
         NSObject _keyboardShowObserver;
         NSObject _keyboardHideObserver;
-        private Xamarin.Forms.Rectangle originalFrame;
-        private Xamarin.Forms.Rectangle originalWithKeyFrame;
-        private Xamarin.Forms.Rectangle originalPageFrame;
-        private Xamarin.Forms.Rectangle originalListFrame;
-        private nfloat scrolly;
-        private CGRect originalKeyFrame;
+        Xamarin.Forms.Rectangle originalFrame;
+        Xamarin.Forms.Rectangle originalWithKeyFrame;
+        Xamarin.Forms.Rectangle originalPageFrame;
+        Xamarin.Forms.Rectangle originalListFrame;
+        bool firstassignment;
+        nfloat scrolly;
+        CGRect originalKeyFrame;
         int numlines = 1;
-        int framelines = 1;
+        int framelines = 0;
         AppDelegate ad;
+        CGSize requestSize;
 
         public ExpandableEditorRenderer()
         {
@@ -49,7 +52,7 @@ namespace StritWalk.iOS
             if (e.OldElement != null)
             {
                 ad.KeyAppeared -= KeyRaise;
-                //UnregisterForKeyboardNotifications();
+                UnregisterForKeyboardNotifications();
                 element.TextChanged -= Element_TextChanged;
             }
 
@@ -57,7 +60,7 @@ namespace StritWalk.iOS
             {
                 element = (ExpandableEditor)Element;
                 ad.KeyAppeared += KeyRaise;
-                //RegisterForKeyboardNotifications();
+                RegisterForKeyboardNotifications();
                 //CreatePlaceholderLabel((ExpandableEditor)Element, Control);
                 Control.InputAccessoryView = null;
                 Control.Ended += OnEnded;
@@ -66,7 +69,6 @@ namespace StritWalk.iOS
                 Control.Text = element.Placeholder;
                 Control.TextColor = UIColor.Gray;
                 Control.ScrollEnabled = false;
-
                 element.TextChanged += Element_TextChanged;
             }
         }
@@ -76,96 +78,6 @@ namespace StritWalk.iOS
             originalKeyFrame = (CGRect)sender;
             originalFrame = Element.Bounds;
             //Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, (originalFrame.Y - originalKeyFrame.Height), originalFrame.Width, originalFrame.Height));
-        }
-
-        void Element_TextChanged(object sender, TextChangedEventArgs e1)
-        {
-            //definizione delle righe di testo
-            var numLines = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
-            var lines = 1;
-            int count = e1.NewTextValue.Count(c => c == '\n');
-
-            //while (lines < ((numLines - oneLine) + 1))
-            //{
-            //    lines++;
-            //    AgumentView();
-            //}
-
-            if (e1.NewTextValue.LastIndexOf("\n", StringComparison.CurrentCulture) == e1.NewTextValue.Length - 1)
-            {
-                numlines++;
-                AgumentView2();
-                //if (e1.NewTextValue.Length < e1.OldTextValue.Length)
-                //{
-                //    numlines--;
-                //}
-                //else
-                //{
-                //    numlines++;
-                //    AgumentView();
-                //}
-            }
-
-            Console.WriteLine("TOTAL LINES " + numlines + "");
-
-            if (lines > 3)
-            {
-                Control.ScrollEnabled = true;
-                element.ScrollReady = true;
-            }
-            else
-            {
-                Control.ScrollEnabled = false;
-                element.ScrollReady = false;
-            }
-
-            //placeholder
-            if (Control.Text == element.Placeholder)
-            {
-                Control.TextColor = UIColor.Gray;
-                element.Ready = false;
-            }
-            else
-            {
-                element.Ready = true;
-            }
-        }
-
-        void AgumentView2()
-        {
-            //definizione pagina commenti
-            ItemDetailPage page = Element.Parent.Parent as ItemDetailPage;
-            originalPageFrame = page.Bounds;
-
-            //definizione listview
-            var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
-            var listview = list.Element;
-            var listsource = list.Control.Source as CustomListViewSource;
-            var listcontrol = list.Control;
-
-            //Console.WriteLine("orignalframe:" + originalFrame.Height + " originalwithkey:" + originalWithKeyFrame.Height + " insetbottom:" + listcontrol.ContentInset.Bottom);
-
-            //aumento riga
-            //originalWithKeyFrame = Element.Bounds;
-            Console.WriteLine(Element.Bounds.Y - (originalFrame.Height - 16));
-            var newy = ((originalFrame.Y) - originalKeyFrame.Height) - (originalFrame.Height - 16) * framelines;
-            var newh = (originalFrame.Height * framelines) + (originalFrame.Height - 16);
-            Console.WriteLine(newy);
-            originalWithKeyFrame = new Xamarin.Forms.Rectangle(originalFrame.X, newy, originalFrame.Width, newh);
-            //Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalWithKeyFrame.Y - (originalFrame.Height - 16), originalWithKeyFrame.Width, originalWithKeyFrame.Height + (originalFrame.Height - 16)));
-            Element.LayoutTo(originalWithKeyFrame);
-            framelines++;
-
-            UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, listcontrol.ContentInset.Bottom + ((nfloat)originalFrame.Height - 16), 0);
-            listcontrol.ContentInset = contentinsets;
-            listcontrol.ScrollIndicatorInsets = contentinsets;
-
-            IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
-            if (items.Count > 0)
-            {
-                var el = items[items.Count - 1];
-                listview.ScrollTo(el, ScrollToPosition.End, true);
-            }
         }
 
         async void AgumentView()
@@ -233,7 +145,7 @@ namespace StritWalk.iOS
                 Control.TextColor = UIColor.Gray;
             }
 
-            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalFrame.Y, originalFrame.Width, originalFrame.Height));
+            //Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalFrame.Y, originalFrame.Width, originalFrame.Height));
         }
 
         void OnChanged(object sender, EventArgs args)
@@ -264,7 +176,7 @@ namespace StritWalk.iOS
                 Control.Started -= OnFocused;
                 ad.KeyAppeared -= KeyRaise;
                 element.TextChanged -= Element_TextChanged;
-                //UnregisterForKeyboardNotifications();
+                UnregisterForKeyboardNotifications();
             }
         }
 
@@ -294,16 +206,237 @@ namespace StritWalk.iOS
 
         protected virtual void OnKeyboardShow(NSNotification notification)
         {
-            var keyboardFrame = UIKeyboard.FrameEndFromNotification(notification);
-            var editorFrame = Element.Bounds;
-            originalKeyFrame = keyboardFrame;
-            originalFrame = editorFrame;
-            Element.LayoutTo(new Xamarin.Forms.Rectangle(editorFrame.X, (editorFrame.Y - keyboardFrame.Height), editorFrame.Width, editorFrame.Height));
+            if (!firstassignment)
+            {
+                originalKeyFrame = UIKeyboard.FrameEndFromNotification(notification);
+                originalFrame = Element.Bounds;
+                firstassignment = true;
+            }
+            var currentFrame = Element.Bounds;
+            var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
+            var listview = list.Element;
+            var listsource = list.Control.Source as CustomListViewSource;
+            var listcontrol = list.Control;
+
+            UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, originalKeyFrame.Height + (nfloat)currentFrame.Height - (nfloat)originalFrame.Height, 0);
+            listcontrol.ContentInset = contentinsets;
+            listcontrol.ScrollIndicatorInsets = contentinsets;
+            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalFrame.Y - originalKeyFrame.Height - currentFrame.Height + originalFrame.Height, originalFrame.Width, currentFrame.Height));
+
+            IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
+            if (items.Count > 0)
+            {
+                var el = items[items.Count - 1];
+                listview.ScrollTo(el, ScrollToPosition.End, true);
+            }
+
+            keyOn = true;
         }
 
         protected virtual void OnKeyboardHide(NSNotification notification)
         {
-            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalFrame.Y, originalFrame.Width, originalFrame.Height));
+            keyOn = false;
+            var currentFrame = Element.Bounds;
+            var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
+            var listview = list.Element;
+            var listsource = list.Control.Source as CustomListViewSource;
+            var listcontrol = list.Control;
+            Console.WriteLine(currentFrame.Height + " " + originalFrame.Height);
+            UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, (nfloat)currentFrame.Height - (nfloat)originalFrame.Height, 0);
+            listcontrol.ContentInset = contentinsets;
+            listcontrol.ScrollIndicatorInsets = contentinsets;
+            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalFrame.Y - currentFrame.Height + originalFrame.Height, originalFrame.Width, currentFrame.Height));
+            IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
+            if (items.Count > 0)
+            {
+                var el = items[items.Count - 1];
+                listview.ScrollTo(el, ScrollToPosition.End, true);
+            }
+        }
+
+        void AgumentView2()
+        {
+            //definizione listview
+            var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
+            var listview = list.Element;
+            var listsource = list.Control.Source as CustomListViewSource;
+            var listcontrol = list.Control;
+
+            //aumento riga
+            //originalWithKeyFrame = Element.Bounds;
+            framelines++;
+            numlines++;
+            var newy = ((originalFrame.Y) - originalKeyFrame.Height) - (originalFrame.Height - 0) * framelines;
+            var newh = (originalFrame.Height * framelines) + (originalFrame.Height - 0);
+            originalWithKeyFrame = new Xamarin.Forms.Rectangle(originalFrame.X, newy, originalFrame.Width, newh);
+            //Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalWithKeyFrame.Y - (originalFrame.Height - 16), originalWithKeyFrame.Width, originalWithKeyFrame.Height + (originalFrame.Height - 16)));
+            Element.LayoutTo(originalWithKeyFrame);
+
+            UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, listcontrol.ContentInset.Bottom + ((nfloat)originalFrame.Height - 0), 0);
+            listcontrol.ContentInset = contentinsets;
+            listcontrol.ScrollIndicatorInsets = contentinsets;
+
+            IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
+            if (items.Count > 0)
+            {
+                var el = items[items.Count - 1];
+                listview.ScrollTo(el, ScrollToPosition.End, true);
+            }
+        }
+
+        void DegumentView2()
+        {
+            //definizione listview
+            var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
+            var listview = list.Element;
+            var listsource = list.Control.Source as CustomListViewSource;
+            var listcontrol = list.Control;
+
+            framelines--;
+            numlines--;
+            var newy = ((originalFrame.Y) - originalKeyFrame.Height) - (originalFrame.Height - 0) * framelines;
+            var newh = (originalFrame.Height * framelines) + (originalFrame.Height - 0);
+            originalWithKeyFrame = new Xamarin.Forms.Rectangle(originalFrame.X, newy, originalFrame.Width, newh);
+            UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, listcontrol.ContentInset.Bottom - ((nfloat)originalFrame.Height - 0), 0);
+
+            if (framelines < 1)
+            {
+                newy = originalFrame.Y - originalKeyFrame.Height;
+                originalWithKeyFrame = new Xamarin.Forms.Rectangle(originalFrame.X, newy, originalFrame.Width, originalFrame.Height);
+                contentinsets = new UIEdgeInsets(0, 0, originalKeyFrame.Height, 0);
+                framelines = 0;
+                numlines = 1;
+            }
+
+            Element.LayoutTo(originalWithKeyFrame);
+
+            listcontrol.ContentInset = contentinsets;
+            listcontrol.ScrollIndicatorInsets = contentinsets;
+
+            IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
+            if (items.Count > 0)
+            {
+                var el = items[items.Count - 1];
+                listview.ScrollTo(el, ScrollToPosition.End, true);
+            }
+        }
+
+        void AgumentView3()
+        {
+            //definizione listview
+            var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
+            var listview = list.Element;
+            var listsource = list.Control.Source as CustomListViewSource;
+            var listcontrol = list.Control;
+
+            //aumento riga
+            //originalWithKeyFrame = Element.Bounds;
+            framelines++;
+            numlines++;
+            var newy = ((originalFrame.Y) - originalKeyFrame.Height) - (originalFrame.Height - 0) * framelines;
+            newy = originalFrame.Y - originalKeyFrame.Height + originalFrame.Height - requestSize.Height;
+            var newh = (originalFrame.Height * framelines) + (originalFrame.Height - 0);
+            newh = requestSize.Height;
+            originalWithKeyFrame = new Xamarin.Forms.Rectangle(originalFrame.X, newy, originalFrame.Width, newh);
+            //Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalWithKeyFrame.Y - (originalFrame.Height - 16), originalWithKeyFrame.Width, originalWithKeyFrame.Height + (originalFrame.Height - 16)));
+            Element.LayoutTo(originalWithKeyFrame);
+
+            UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, listcontrol.ContentInset.Bottom + ((nfloat)requestSize.Height - 0), 0);
+            contentinsets = new UIEdgeInsets(0, 0, originalKeyFrame.Height + ((nfloat)requestSize.Height - 0), 0);
+            listcontrol.ContentInset = contentinsets;
+            listcontrol.ScrollIndicatorInsets = contentinsets;
+
+            IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
+            if (items.Count > 0)
+            {
+                var el = items[items.Count - 1];
+                listview.ScrollTo(el, ScrollToPosition.End, true);
+            }
+        }
+
+        void Element_TextChanged(object sender, TextChangedEventArgs e1)
+        {
+            requestSize = Control.SizeThatFits(new CGSize(Element.Bounds.Width, 99999));
+            if (numlines > 2)
+            {
+                Control.ScrollEnabled = true;
+                element.ScrollReady = true;
+            }
+            else
+            {
+                Control.ScrollEnabled = false;
+                element.ScrollReady = false;
+                if (keyOn)
+                    AgumentView3();
+            }
+            //Control.SizeToFit();
+            //Control.LayoutIfNeeded();
+
+            //definizione delle righe di testo
+            //var numLinesHeight = Math.Round(Control.ContentSize.Height / Control.Font.LineHeight);
+            //var lines = 1;
+            //int count = e1.NewTextValue.Count(c => c == '\n');
+
+            //while (lines < ((numLines - oneLine) + 1))
+            //{
+            //    lines++;
+            //    AgumentView();
+            //}
+
+            //if (e1.NewTextValue.LastIndexOf("\n", StringComparison.CurrentCulture) == e1.NewTextValue.Length - 1)
+            //{
+            //    if (keyOn)
+            //    {
+            //        if (numlines > 2)
+            //        {
+
+            //        }
+            //        else
+            //        {
+            //            //AgumentView2();
+            //        }
+            //    }
+
+            //    //if (e1.NewTextValue.Length < e1.OldTextValue.Length)
+            //    //{
+            //    //    numlines--;
+            //    //}
+            //    //else
+            //    //{
+            //    //    numlines++;
+            //    //    AgumentView();
+            //    //}
+            //}
+            //else
+            //{
+            //    if (keyOn)
+            //    {
+            //        //DegumentView2();
+            //    }
+            //    //DegumentView2();
+            //}
+
+            if (numlines > 2)
+            {
+                Control.ScrollEnabled = true;
+                element.ScrollReady = true;
+            }
+            else
+            {
+                Control.ScrollEnabled = false;
+                element.ScrollReady = false;
+            }
+
+            //placeholder
+            if (Control.Text == element.Placeholder)
+            {
+                Control.TextColor = UIColor.Gray;
+                element.Ready = false;
+            }
+            else
+            {
+                element.Ready = true;
+            }
         }
 
     }
