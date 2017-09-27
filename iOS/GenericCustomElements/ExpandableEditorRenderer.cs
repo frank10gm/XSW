@@ -31,6 +31,7 @@ namespace StritWalk.iOS
         private nfloat scrolly;
         private CGRect originalKeyFrame;
         int numlines = 1;
+        int framelines = 1;
         AppDelegate ad;
 
         public ExpandableEditorRenderer()
@@ -142,11 +143,18 @@ namespace StritWalk.iOS
             var listsource = list.Control.Source as CustomListViewSource;
             var listcontrol = list.Control;
 
-            Console.WriteLine("orignalframe:" + originalFrame.Height + " originalwithkey:" + originalWithKeyFrame.Height + " insetbottom:" + listcontrol.ContentInset.Bottom);
+            //Console.WriteLine("orignalframe:" + originalFrame.Height + " originalwithkey:" + originalWithKeyFrame.Height + " insetbottom:" + listcontrol.ContentInset.Bottom);
 
             //aumento riga
-            originalWithKeyFrame = Element.Bounds;
-            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalWithKeyFrame.X, originalWithKeyFrame.Y - (originalFrame.Height - 16), originalWithKeyFrame.Width, originalWithKeyFrame.Height + (originalFrame.Height - 16)));
+            //originalWithKeyFrame = Element.Bounds;
+            Console.WriteLine(Element.Bounds.Y - (originalFrame.Height - 16));
+            var newy = ((originalFrame.Y) - originalKeyFrame.Height) - (originalFrame.Height - 16) * framelines;
+            var newh = (originalFrame.Height * framelines) + (originalFrame.Height - 16);
+            Console.WriteLine(newy);
+            originalWithKeyFrame = new Xamarin.Forms.Rectangle(originalFrame.X, newy, originalFrame.Width, newh);
+            //Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalWithKeyFrame.Y - (originalFrame.Height - 16), originalWithKeyFrame.Width, originalWithKeyFrame.Height + (originalFrame.Height - 16)));
+            Element.LayoutTo(originalWithKeyFrame);
+            framelines++;
 
             UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, listcontrol.ContentInset.Bottom + ((nfloat)originalFrame.Height - 16), 0);
             listcontrol.ContentInset = contentinsets;
