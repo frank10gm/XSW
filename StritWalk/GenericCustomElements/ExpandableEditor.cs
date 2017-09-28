@@ -7,6 +7,7 @@ namespace StritWalk
     {
         //bool sized = false;
         public double lineHeight = 0;
+        public new event EventHandler<EventArgs> Completed;
 
         public static BindableProperty PlaceholderProperty
         = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(ExpandableEditor));
@@ -79,6 +80,11 @@ namespace StritWalk
             }
 
         }
+
+		public void InvokeCompleted()
+		{
+			this.Completed?.Invoke(this, null);
+		}
 
     }
 }

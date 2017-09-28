@@ -71,5 +71,9 @@ namespace StritWalk
             CommentsListView.SelectedItem = null;
         }
 
+        void Handle_Completed(object sender, System.EventArgs e)
+        {
+            Console.WriteLine("stoca");
+        }
     }
 }

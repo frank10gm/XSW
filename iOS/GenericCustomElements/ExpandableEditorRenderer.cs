@@ -77,6 +77,7 @@ namespace StritWalk.iOS
                     if (text.Equals("\n"))
                     {
                         Control.EndEditing(true);
+                        element?.InvokeCompleted();
                         return false;
                     }
                     return true;
@@ -202,7 +203,7 @@ namespace StritWalk.iOS
             UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, originalKeyFrame.Height + (nfloat)currentFrame.Height - (nfloat)originalFrame.Height, 0);
             listcontrol.ContentInset = contentinsets;
             listcontrol.ScrollIndicatorInsets = contentinsets;
-            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalFrame.Y - originalKeyFrame.Height - currentFrame.Height + originalFrame.Height, originalFrame.Width, currentFrame.Height));
+            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalFrame.Y - originalKeyFrame.Height - currentFrame.Height + originalFrame.Height, originalFrame.Width, currentFrame.Height), 260, Easing.Linear);
 
             IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
             if (items.Count > 0)
@@ -226,7 +227,7 @@ namespace StritWalk.iOS
             UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, (nfloat)currentFrame.Height - (nfloat)originalFrame.Height, 0);
             listcontrol.ContentInset = contentinsets;
             listcontrol.ScrollIndicatorInsets = contentinsets;
-            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalFrame.Y - currentFrame.Height + originalFrame.Height, originalFrame.Width, currentFrame.Height));
+            Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalFrame.Y - currentFrame.Height + originalFrame.Height, originalFrame.Width, currentFrame.Height), 260, Easing.Linear);
             IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
             if (items.Count > 0)
             {
@@ -256,7 +257,7 @@ namespace StritWalk.iOS
 
             if (requestSize.Height < 100)
             {
-                Element.LayoutTo(originalWithKeyFrame);
+                Element.LayoutTo(originalWithKeyFrame, 260, Easing.Linear);
                 UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, listcontrol.ContentInset.Bottom + ((nfloat)requestSize.Height - 0), 0);
                 contentinsets = new UIEdgeInsets(0, 0, originalKeyFrame.Height + ((nfloat)requestSize.Height - (nfloat)originalFrame.Height), 0);
                 listcontrol.ContentInset = contentinsets;
@@ -288,9 +289,6 @@ namespace StritWalk.iOS
 
             if (keyOn)
                 AgumentView3();
-
-			//Control.SizeToFit();
-			//Control.LayoutIfNeeded();
 
             //placeholder
             if (Control.Text == element.Placeholder)
