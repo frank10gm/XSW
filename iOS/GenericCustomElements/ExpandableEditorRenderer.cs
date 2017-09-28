@@ -72,6 +72,15 @@ namespace StritWalk.iOS
                 element.TextChanged += Element_TextChanged;
 				//Control.EnablesReturnKeyAutomatically = true;
 				Control.ReturnKeyType = UIReturnKeyType.Send;
+                Control.ShouldChangeText = (textView, range, text) => 
+                {
+                    if (text.Equals("\n"))
+                    {
+                        Control.EndEditing(true);
+                        return false;
+                    }
+                    return true;
+                };
             }
         }
 
