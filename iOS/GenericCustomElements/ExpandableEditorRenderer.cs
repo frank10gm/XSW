@@ -73,21 +73,23 @@ namespace StritWalk.iOS
                 element.TextChanged += Element_TextChanged;
                 //Control.EnablesReturnKeyAutomatically = true;
                 Control.ReturnKeyType = UIReturnKeyType.Send;
+
+                //Control.Superview.TranslatesAutoresizingMaskIntoConstraints = false;
+                //Control.TranslatesAutoresizingMaskIntoConstraints = false;
+                //Control.Frame = new CGRect(Control.Frame.X, 0, Control.Frame.Width, Control.Frame.Height);
+                //LayoutSubviews();
+
                 Control.ShouldChangeText = (textView, range, text) =>
                 {
                     if (text.Equals("\n"))
                     {
-                        Control.EndEditing(true);
+                        Control.Text = "";
+                        //Control.EndEditing(true);
                         element?.InvokeCompleted();
                         return false;
                     }
                     return true;
                 };
-
-				Control.AutoresizingMask = UIViewAutoresizing.All;
-				Control.ContentMode = UIViewContentMode.ScaleToFill;
-				Element.Layout(Control.Frame.ToRectangle());
-				Control.SetNeedsLayout();
             }
         }
 
@@ -192,15 +194,16 @@ namespace StritWalk.iOS
             }
         }
 
-        protected virtual void OnKeyboardShow(NSNotification notification)
+        protected virtual async void OnKeyboardShow(NSNotification notification)
         {
             if (!firstassignment)
             {
                 originalKeyFrame = UIKeyboard.FrameEndFromNotification(notification);
                 originalFrame = Element.Bounds;
                 originalRect = Control.Frame;
-                firstassignment = true;               			
-			}
+                firstassignment = true;
+            }
+
             var currentFrame = Element.Bounds;
             var currentRect = Control.Frame;
             var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
@@ -211,17 +214,19 @@ namespace StritWalk.iOS
             UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, originalKeyFrame.Height + (nfloat)currentRect.Height - (nfloat)originalRect.Height, 0);
             listcontrol.ContentInset = contentinsets;
             listcontrol.ScrollIndicatorInsets = contentinsets;
-            //Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalFrame.Y - originalKeyFrame.Height - currentFrame.Height + originalFrame.Height, originalFrame.Width, currentFrame.Height), 260, Easing.Linear);
+
             BeginAnimations("AnimateForKeyboard");
             SetAnimationBeginsFromCurrentState(true);
             SetAnimationDuration(UIKeyboard.AnimationDurationFromNotification(notification));
             SetAnimationCurve((UIViewAnimationCurve)UIKeyboard.AnimationCurveFromNotification(notification));
+
             var newFrame = new CGRect(originalRect.X, (originalRect.Y - originalKeyFrame.Height - currentRect.Height + originalRect.Height), originalRect.Width, currentRect.Height);
-            //newFrame = new CGRect(originalRect.X, -500, originalRect.Width, currentRect.Height);
             Control.Frame = newFrame;
             CommitAnimations();
 
-            //Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalFrame.Y - originalKeyFrame.Height - currentFrame.Height + originalFrame.Height, originalFrame.Width, currentFrame.Height), 0, Easing.Linear);
+            await Task.Delay(100);
+            Element.Layout(new Xamarin.Forms.Rectangle(originalFrame.X, (originalFrame.Y - originalKeyFrame.Height - currentFrame.Height + originalFrame.Height), originalFrame.Width, currentFrame.Height));
+            LayoutSubviews();
 
             IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
             if (items.Count > 0)
@@ -233,7 +238,7 @@ namespace StritWalk.iOS
             keyOn = true;
         }
 
-        protected virtual void OnKeyboardHide(NSNotification notification)
+        protected virtual async void OnKeyboardHide(NSNotification notification)
         {
             keyOn = false;
             var currentFrame = Element.Bounds;
@@ -242,20 +247,25 @@ namespace StritWalk.iOS
             var listview = list.Element;
             var listsource = list.Control.Source as CustomListViewSource;
             var listcontrol = list.Control;
-            Console.WriteLine(currentFrame.Height + " " + originalFrame.Height);
+
             UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, (nfloat)currentFrame.Height - (nfloat)originalFrame.Height, 0);
             listcontrol.ContentInset = contentinsets;
             listcontrol.ScrollIndicatorInsets = contentinsets;
-			BeginAnimations("AnimateForKeyboard");
-			SetAnimationBeginsFromCurrentState(true);
-			SetAnimationDuration(UIKeyboard.AnimationDurationFromNotification(notification));
-			SetAnimationCurve((UIViewAnimationCurve)UIKeyboard.AnimationCurveFromNotification(notification));
-            var newFrame = new CGRect(originalRect.X, originalRect.Y - currentRect.Height + originalRect.Height, originalRect.Width, currentRect.Height);
-			
-			Control.Frame = newFrame;
-            //Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalFrame.Y - currentFrame.Height + originalFrame.Height, originalFrame.Width, currentFrame.Height), 0, Easing.Linear);
 
-			CommitAnimations();
+            BeginAnimations("AnimateForKeyboard");
+            SetAnimationBeginsFromCurrentState(true);
+            SetAnimationDuration(UIKeyboard.AnimationDurationFromNotification(notification));
+            SetAnimationCurve((UIViewAnimationCurve)UIKeyboard.AnimationCurveFromNotification(notification));
+
+            var newFrame = new CGRect(originalRect.X, originalRect.Y - currentRect.Height + originalRect.Height, originalRect.Width, currentRect.Height);
+            newFrame = new CGRect(originalRect.X, originalRect.Y + originalKeyFrame.Height, originalRect.Width, currentRect.Height);
+            Control.Frame = newFrame;
+            CommitAnimations();
+
+            await Task.Delay(100);
+            Element.Layout(new Xamarin.Forms.Rectangle(originalFrame.X, originalFrame.Y - currentFrame.Height + originalFrame.Height, originalFrame.Width, currentFrame.Height));
+            LayoutSubviews();
+
             IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
             if (items.Count > 0)
             {
@@ -295,22 +305,19 @@ namespace StritWalk.iOS
 
             if (requestSize.Height < 100)
             {
-                //Element.LayoutTo(originalWithKeyFrame);
+                Element.LayoutTo(originalWithKeyFrame, 50, Easing.Linear);
                 //Control.Frame = newFrame;
+
                 UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, listcontrol.ContentInset.Bottom + ((nfloat)requestSize.Height - 0), 0);
                 contentinsets = new UIEdgeInsets(0, 0, originalKeyFrame.Height + ((nfloat)requestSize.Height - (nfloat)originalFrame.Height), 0);
                 listcontrol.ContentInset = contentinsets;
                 listcontrol.ScrollIndicatorInsets = contentinsets;
+
                 Control.ScrollEnabled = false;
-                element.ScrollReady = false;
-                //Console.WriteLine(Control.TranslatesAutoresizingMaskIntoConstraints);
-                Console.WriteLine(Control.Bounds.Y);
-                Console.WriteLine(Control.Frame.Y);
-                Console.WriteLine(Control.Frame.Size.Height);
-				Control.Frame = newFrame;
+                element.ScrollReady = false;            
             }
             else
-            {                
+            {
                 Console.WriteLine("maggiore di scroll limit");
                 newh = Element.Bounds.Height - 16;
                 newy = Element.Bounds.Y - 16;
@@ -352,23 +359,23 @@ namespace StritWalk.iOS
             }
         }
 
-		public static UIView ConvertFormsToNative(Xamarin.Forms.View view, CGRect size)
-		{
-			var renderer = RendererFactory.GetRenderer(view);
+        public static UIView ConvertFormsToNative(Xamarin.Forms.View view, CGRect size)
+        {
+            var renderer = RendererFactory.GetRenderer(view);
 
-			renderer.NativeView.Frame = size;
+            renderer.NativeView.Frame = size;
 
-			renderer.NativeView.AutoresizingMask = UIViewAutoresizing.All;
-			renderer.NativeView.ContentMode = UIViewContentMode.ScaleToFill;
+            renderer.NativeView.AutoresizingMask = UIViewAutoresizing.All;
+            renderer.NativeView.ContentMode = UIViewContentMode.ScaleToFill;
 
-			renderer.Element.Layout(size.ToRectangle());
+            renderer.Element.Layout(size.ToRectangle());
 
-			var nativeView = renderer.NativeView;
+            var nativeView = renderer.NativeView;
 
-			nativeView.SetNeedsLayout();
+            nativeView.SetNeedsLayout();
 
-			return nativeView;
-		}
+            return nativeView;
+        }
 
     }
 }
