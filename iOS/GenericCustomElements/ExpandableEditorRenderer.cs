@@ -84,6 +84,8 @@ namespace StritWalk.iOS
                     if (text.Equals("\n"))
                     {
                         Control.Text = "";
+                        requestSize = Control.SizeThatFits(new CGSize(Control.Frame.Width, 99999));
+                        AgumentView3();
                         //Control.EndEditing(true);
                         element?.InvokeCompleted();
                         return false;
@@ -282,30 +284,19 @@ namespace StritWalk.iOS
             var listsource = list.Control.Source as CustomListViewSource;
             var listcontrol = list.Control;
 
-            //aumento riga
-            //originalWithKeyFrame = Element.Bounds;
-            framelines++;
-            numlines++;
-
             var currentRect = Control.Frame;
             var currentFrame = Element.Bounds;
 
-            var newy = ((originalFrame.Y) - originalKeyFrame.Height) - (originalFrame.Height - 0) * framelines;
-            newy = originalRect.Y - originalKeyFrame.Height;
-            newy = originalFrame.Y - originalKeyFrame.Height + originalFrame.Height - requestSize.Height;
-            newy = originalFrame.Y - originalKeyFrame.Height + originalFrame.Height - requestSize.Height;
-            var newh = (originalFrame.Height * framelines) + (originalFrame.Height - 0);
-            newh = requestSize.Height;
+            var newy = originalFrame.Y - originalKeyFrame.Height + originalFrame.Height - requestSize.Height;
+            var newh = requestSize.Height;
 
             originalWithKeyFrame = new Xamarin.Forms.Rectangle(originalRect.X, newy - Control.Frame.Y, originalRect.Width, newh);
             var newFrame = new CGRect(originalRect.X, currentRect.Y, originalRect.Width, newh);
-            //newFrame = currentRect;
             newFrame.Size = new CGSize(currentRect.Size.Width, requestSize.Height);
-            //Element.LayoutTo(new Xamarin.Forms.Rectangle(originalFrame.X, originalWithKeyFrame.Y - (originalFrame.Height - 16), originalWithKeyFrame.Width, originalWithKeyFrame.Height + (originalFrame.Height - 16)));
 
             if (requestSize.Height < 100)
             {
-                Element.LayoutTo(originalWithKeyFrame, 50, Easing.Linear);
+                Element.LayoutTo(originalWithKeyFrame, 0, Easing.Linear);
                 //Control.Frame = newFrame;
 
                 UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, listcontrol.ContentInset.Bottom + ((nfloat)requestSize.Height - 0), 0);
@@ -317,12 +308,9 @@ namespace StritWalk.iOS
                 element.ScrollReady = false;            
             }
             else
-            {
-                Console.WriteLine("maggiore di scroll limit");
-                newh = Element.Bounds.Height - 16;
-                newy = Element.Bounds.Y - 16;
+            {                
                 originalWithKeyFrame = new Xamarin.Forms.Rectangle(Element.Bounds.X, Element.Bounds.Y, Element.Bounds.Width, newh);
-                //Element.LayoutTo(originalWithKeyFrame);
+
                 Control.ScrollEnabled = true;
                 element.ScrollReady = true;
             }
@@ -331,7 +319,7 @@ namespace StritWalk.iOS
             if (items.Count > 0)
             {
                 var el = items[items.Count - 1];
-                listview.ScrollTo(el, ScrollToPosition.End, true);
+                listview.ScrollTo(el, ScrollToPosition.End, false);
             }
         }
 
@@ -357,24 +345,6 @@ namespace StritWalk.iOS
             {
                 element.Ready = true;
             }
-        }
-
-        public static UIView ConvertFormsToNative(Xamarin.Forms.View view, CGRect size)
-        {
-            var renderer = RendererFactory.GetRenderer(view);
-
-            renderer.NativeView.Frame = size;
-
-            renderer.NativeView.AutoresizingMask = UIViewAutoresizing.All;
-            renderer.NativeView.ContentMode = UIViewContentMode.ScaleToFill;
-
-            renderer.Element.Layout(size.ToRectangle());
-
-            var nativeView = renderer.NativeView;
-
-            nativeView.SetNeedsLayout();
-
-            return nativeView;
         }
 
     }
