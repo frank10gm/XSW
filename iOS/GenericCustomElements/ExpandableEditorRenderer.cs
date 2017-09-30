@@ -71,6 +71,7 @@ namespace StritWalk.iOS
                 element.TextChanged += Element_TextChanged;
                 //Control.EnablesReturnKeyAutomatically = true;
                 Control.ReturnKeyType = UIReturnKeyType.Send;
+                element.MeasureInvalidated += Element_MeasureInvalidated;
 
                 //Control.Superview.TranslatesAutoresizingMaskIntoConstraints = false;
                 //Control.TranslatesAutoresizingMaskIntoConstraints = false;
@@ -81,12 +82,12 @@ namespace StritWalk.iOS
                 {
                     if (text.Equals("\n"))
                     {
-                        //Control.Text = "";
-                        //requestSize = Control.SizeThatFits(new CGSize(Control.Frame.Width, 99999));
+                        Control.Text = "";
+                        requestSize = Control.SizeThatFits(new CGSize(Control.Frame.Width, 99999));
                         //AgumentView3();
-                        // //Control.EndEditing(true);
-                        //element?.InvokeCompleted();
-                        //return false;
+                        //Control.EndEditing(true);
+                        element?.InvokeCompleted();
+                        return false;
                     }
                     return true;
                 };
@@ -213,17 +214,17 @@ namespace StritWalk.iOS
             //dev10n		
             var superframe = Control.Superview.Superview.Frame;
             superframe.Y = superframe.Y - originalKeyFrame.Height;
-            superframe.Height = 123;
             Control.Superview.Superview.Frame = superframe;
-            //         UIEdgeInsets contentinsets2 = new UIEdgeInsets(originalKeyFrame.Height, 0, 0, 0);
-            //listcontrol.ContentInset = contentinsets2;
-            //listcontrol.ScrollIndicatorInsets = contentinsets2;		
-            //IList<CommentsItem> items2 = listsource.list.ItemsSource as IList<CommentsItem>;
-            //if (items2.Count > 0)
-            //{
-            //	var el = items2[items2.Count - 1];
-            //	listview.ScrollTo(el, ScrollToPosition.End, true);
-            //}
+            UIEdgeInsets contentinsets2 = new UIEdgeInsets(originalKeyFrame.Height, 0, 0, 0);
+            listcontrol.ContentInset = contentinsets2;
+            listcontrol.ScrollIndicatorInsets = contentinsets2;
+            IList<CommentsItem> items2 = listsource.list.ItemsSource as IList<CommentsItem>;
+            if (items2.Count > 0)
+            {
+                var el = items2[items2.Count - 1];
+                listview.ScrollTo(el, ScrollToPosition.End, true);
+            }
+            keyOn = true;
             return;
 
             UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, originalKeyFrame.Height + (nfloat)currentRect.Height - (nfloat)originalRect.Height, 0);
@@ -255,7 +256,6 @@ namespace StritWalk.iOS
 
         protected virtual async void OnKeyboardHide(NSNotification notification)
         {
-            Console.WriteLine("key hide");
             keyOn = false;
             var currentFrame = Element.Bounds;
             var currentRect = Control.Frame;
@@ -266,9 +266,9 @@ namespace StritWalk.iOS
 
             //dev10n		
             var superframe = Control.Superview.Superview.Frame;
-            //superframe.Height = superframe.Height - originalKeyFrame.Height;
             superframe.Y = superframe.Y + originalKeyFrame.Height;
             Control.Superview.Superview.Frame = superframe;
+            keyOn = false;
             return;
 
             UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, (nfloat)currentFrame.Height - (nfloat)originalFrame.Height, 0);
@@ -315,7 +315,7 @@ namespace StritWalk.iOS
             var newFrame = new CGRect(originalRect.X, currentRect.Y, originalRect.Width, newh);
             newFrame.Size = new CGSize(currentRect.Size.Width, requestSize.Height);
 
-            if (requestSize.Height < 100)
+            if (requestSize.Height < 100 && Math.Round(requestSize.Height) != Math.Round(currentFrame.Height)) // 
             {
                 Element.LayoutTo(originalWithKeyFrame, 0, Easing.Linear);
                 //Control.Frame = newFrame;
@@ -353,6 +353,7 @@ namespace StritWalk.iOS
         {
             requestSize = Control.SizeThatFits(new CGSize(Control.Frame.Width, 99999));
 
+            //if (keyOn)
             //waitMeasure();
 
             //if (keyOn)
@@ -378,7 +379,7 @@ namespace StritWalk.iOS
             var listview = list.Element;
             var listsource = list.Control.Source as CustomListViewSource;
             var listcontrol = list.Control;
-            await Task.Delay(500);
+            await Task.Delay(20);
             UIEdgeInsets contentinsets2 = new UIEdgeInsets(originalKeyFrame.Height, 0, 0, 0);
             listcontrol.ContentInset = contentinsets2;
             listcontrol.ScrollIndicatorInsets = contentinsets2;
@@ -386,9 +387,15 @@ namespace StritWalk.iOS
             if (items2.Count > 0)
             {
                 var el = items2[items2.Count - 1];
-                listview.ScrollTo(el, ScrollToPosition.End, true);
+                listview.ScrollTo(el, ScrollToPosition.End, false);
             }
         }
 
+        void Element_MeasureInvalidated(object sender, EventArgs e)
+        {
+            Console.WriteLine("measure");
+            if (keyOn)
+                waitMeasure();
+        }
     }
 }
