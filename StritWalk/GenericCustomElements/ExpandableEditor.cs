@@ -75,7 +75,6 @@ namespace StritWalk
         public void InvokeCompleted()
         {
             Completed?.Invoke(this, null);
-            //InvalidateMeasure();
         }
 
     }
