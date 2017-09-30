@@ -69,13 +69,13 @@ namespace StritWalk
         void OnTextChanged(object sender, TextChangedEventArgs e)
         {
             //if (Device.RuntimePlatform == Device.Android)
-            InvalidateMeasure();
+                //InvalidateMeasure();
         }
 
         public void InvokeCompleted()
         {
             Completed?.Invoke(this, null);
-            InvalidateMeasure();
+            //InvalidateMeasure();
         }
 
     }
