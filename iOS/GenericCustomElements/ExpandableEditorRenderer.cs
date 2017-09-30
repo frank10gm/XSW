@@ -316,7 +316,7 @@ namespace StritWalk.iOS
 
             if (requestSize.Height < 100) // && originalWithKeyFrame != Element.Bounds
 			{
-                await Element.LayoutTo(originalWithKeyFrame, 0, Easing.Linear);
+                await Element.LayoutTo(originalWithKeyFrame, 1, Easing.Linear);
                 //Control.Frame = newFrame;
 
                 UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, listcontrol.ContentInset.Bottom + ((nfloat)requestSize.Height - 0), 0);
