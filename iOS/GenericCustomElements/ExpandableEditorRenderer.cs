@@ -213,10 +213,8 @@ namespace StritWalk.iOS
             //dev10n		
             var superframe = Control.Superview.Superview.Frame;
             superframe.Y = superframe.Y - originalKeyFrame.Height;
+            superframe.Height = 123;
             Control.Superview.Superview.Frame = superframe;
-            ItemDetailPage page = Element.Parent.Parent as ItemDetailPage;
-            originalPageFrame = page.Bounds;
-            page.Layout(new Xamarin.Forms.Rectangle(page.X, page.Y, page.Width, page.Height - originalKeyFrame.Height));
             //         UIEdgeInsets contentinsets2 = new UIEdgeInsets(originalKeyFrame.Height, 0, 0, 0);
             //listcontrol.ContentInset = contentinsets2;
             //listcontrol.ScrollIndicatorInsets = contentinsets2;		
@@ -257,6 +255,7 @@ namespace StritWalk.iOS
 
         protected virtual async void OnKeyboardHide(NSNotification notification)
         {
+            Console.WriteLine("key hide");
             keyOn = false;
             var currentFrame = Element.Bounds;
             var currentRect = Control.Frame;
