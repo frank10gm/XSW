@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using StritWalk;
 using StritWalk.Droid;
+using System.Reflection;
 
 [assembly: ExportRenderer(typeof(ExpandableEditor), typeof(ExpandableEditorRenderer))]
 namespace StritWalk.Droid
@@ -31,22 +32,20 @@ namespace StritWalk.Droid
 
                 Control.TextChanged += (object sender, Android.Text.TextChangedEventArgs e1) =>
                 {
-                    
                     Control.Hint = element.Placeholder;
                     //Element.LayoutTo(new Rectangle(Element.X, Element.Y - Element.Height, Element.Width, Element.Height * 2));
                 };
 
-                Control.LayoutParameters = new LayoutParams(LayoutParams.MatchParent, LayoutParams.WrapContent);
-                Control.InputType = Android.Text.InputTypes.TextFlagMultiLine;
-
+                //Control.LayoutParameters = new LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
+                //Control.InputType = Android.Text.InputTypes.TextFlagMultiLine;
             }
         }
 
         protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-
-            //Control.SetMaxLines(4);
+            Control.SetMaxLines(4);
         }
+
     }
 }

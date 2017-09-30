@@ -66,25 +66,16 @@ namespace StritWalk
             TextChanged -= OnTextChanged;
         }
 
-        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        void OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            //this.InvalidateMeasure();
-
-            if (this.Height != -1)
-            {
-                //Console.WriteLine(this.Height + " " + this.HeightRequest);
-                //var bounds = this.Bounds;
-                //bounds.Y = 200;
-                //bounds.Height += 33;
-                //this.LayoutTo(bounds);
-            }
-
+            //if (Device.RuntimePlatform == Device.Android)
+            InvalidateMeasure();
         }
 
-		public void InvokeCompleted()
-		{
-			this.Completed?.Invoke(this, null);
-		}
+        public void InvokeCompleted()
+        {
+            Completed?.Invoke(this, null);
+        }
 
     }
 }
