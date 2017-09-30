@@ -27,8 +27,8 @@ namespace StritWalk.iOS
         NSObject _keyboardHideObserver;
         Xamarin.Forms.Rectangle originalFrame;
         Xamarin.Forms.Rectangle originalWithKeyFrame;
-        //Xamarin.Forms.Rectangle originalPageFrame;
-        //Xamarin.Forms.Rectangle originalListFrame;
+        Xamarin.Forms.Rectangle originalPageFrame;
+        Xamarin.Forms.Rectangle originalListFrame;
         bool firstassignment;
         //nfloat scrolly;
         CGRect originalKeyFrame;
@@ -81,12 +81,12 @@ namespace StritWalk.iOS
                 {
                     if (text.Equals("\n"))
                     {
-                        Control.Text = "";
-                        requestSize = Control.SizeThatFits(new CGSize(Control.Frame.Width, 99999));
-                        AgumentView3();
-                        //Control.EndEditing(true);
-                        element?.InvokeCompleted();
-                        return false;
+                        //Control.Text = "";
+                        //requestSize = Control.SizeThatFits(new CGSize(Control.Frame.Width, 99999));
+                        //AgumentView3();
+                        // //Control.EndEditing(true);
+                        //element?.InvokeCompleted();
+                        //return false;
                     }
                     return true;
                 };
@@ -203,13 +203,30 @@ namespace StritWalk.iOS
                 originalRect = Control.Frame;
                 firstassignment = true;
             }
-
             var currentFrame = Element.Bounds;
             var currentRect = Control.Frame;
             var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
             var listview = list.Element;
             var listsource = list.Control.Source as CustomListViewSource;
             var listcontrol = list.Control;
+
+            //dev10n		
+            var superframe = Control.Superview.Superview.Frame;
+            superframe.Y = superframe.Y - originalKeyFrame.Height;
+            Control.Superview.Superview.Frame = superframe;
+            ItemDetailPage page = Element.Parent.Parent as ItemDetailPage;
+            originalPageFrame = page.Bounds;
+            page.Layout(new Xamarin.Forms.Rectangle(page.X, page.Y, page.Width, page.Height - originalKeyFrame.Height));
+            //         UIEdgeInsets contentinsets2 = new UIEdgeInsets(originalKeyFrame.Height, 0, 0, 0);
+            //listcontrol.ContentInset = contentinsets2;
+            //listcontrol.ScrollIndicatorInsets = contentinsets2;		
+            //IList<CommentsItem> items2 = listsource.list.ItemsSource as IList<CommentsItem>;
+            //if (items2.Count > 0)
+            //{
+            //	var el = items2[items2.Count - 1];
+            //	listview.ScrollTo(el, ScrollToPosition.End, true);
+            //}
+            return;
 
             UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, originalKeyFrame.Height + (nfloat)currentRect.Height - (nfloat)originalRect.Height, 0);
             listcontrol.ContentInset = contentinsets;
@@ -247,6 +264,13 @@ namespace StritWalk.iOS
             var listview = list.Element;
             var listsource = list.Control.Source as CustomListViewSource;
             var listcontrol = list.Control;
+
+            //dev10n		
+            var superframe = Control.Superview.Superview.Frame;
+            //superframe.Height = superframe.Height - originalKeyFrame.Height;
+            superframe.Y = superframe.Y + originalKeyFrame.Height;
+            Control.Superview.Superview.Frame = superframe;
+            return;
 
             UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, (nfloat)currentFrame.Height - (nfloat)originalFrame.Height, 0);
             listcontrol.ContentInset = contentinsets;
@@ -303,10 +327,10 @@ namespace StritWalk.iOS
                 listcontrol.ScrollIndicatorInsets = contentinsets;
 
                 Control.ScrollEnabled = false;
-                element.ScrollReady = false;            
+                element.ScrollReady = false;
             }
             else
-            {                
+            {
                 originalWithKeyFrame = new Xamarin.Forms.Rectangle(Element.Bounds.X, Element.Bounds.Y, Element.Bounds.Width, newh);
 
                 Control.ScrollEnabled = true;
@@ -330,8 +354,10 @@ namespace StritWalk.iOS
         {
             requestSize = Control.SizeThatFits(new CGSize(Control.Frame.Width, 99999));
 
-            if (keyOn)
-                AgumentView3();
+            //waitMeasure();
+
+            //if (keyOn)
+            //AgumentView3();
 
             //placeholder
             if (Control.Text == element.Placeholder)
@@ -342,6 +368,26 @@ namespace StritWalk.iOS
             else
             {
                 element.Ready = true;
+            }
+        }
+
+        async void waitMeasure()
+        {
+            var currentFrame = Element.Bounds;
+            var currentRect = Control.Frame;
+            var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
+            var listview = list.Element;
+            var listsource = list.Control.Source as CustomListViewSource;
+            var listcontrol = list.Control;
+            await Task.Delay(500);
+            UIEdgeInsets contentinsets2 = new UIEdgeInsets(originalKeyFrame.Height, 0, 0, 0);
+            listcontrol.ContentInset = contentinsets2;
+            listcontrol.ScrollIndicatorInsets = contentinsets2;
+            IList<CommentsItem> items2 = listsource.list.ItemsSource as IList<CommentsItem>;
+            if (items2.Count > 0)
+            {
+                var el = items2[items2.Count - 1];
+                listview.ScrollTo(el, ScrollToPosition.End, true);
             }
         }
 

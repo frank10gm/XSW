@@ -55,7 +55,7 @@ namespace StritWalk.iOS
 
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
-            var cellForPath = GetCellForPath(indexPath);
+            //var cellForPath = GetCellForPath(indexPath);
             //listView.NotifyItemSelected(tableItems[indexPath.Row]);
             tableView.DeselectRow(indexPath, true);
 

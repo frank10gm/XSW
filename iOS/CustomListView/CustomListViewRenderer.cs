@@ -13,13 +13,13 @@ namespace StritWalk.iOS
 {
     public class CustomListViewRenderer : ListViewRenderer
     {
-        private CustomListViewSource dataSource;
-        private static readonly PropertyInfo ListViewTemplatedItemsPropertyInfo;
+        CustomListViewSource dataSource;
+        static readonly PropertyInfo ListViewTemplatedItemsPropertyInfo;
         INotifyCollectionChanged templatedItemsList;
 
         static CustomListViewRenderer()
         {
-            ListViewTemplatedItemsPropertyInfo = typeof(ListView).GetProperty("TemplatedItems", BindingFlags.GetProperty | BindingFlags.NonPublic | BindingFlags.Instance);
+            //ListViewTemplatedItemsPropertyInfo = typeof(ListView).GetProperty("TemplatedItems", BindingFlags.GetProperty | BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<ListView> e)
@@ -38,15 +38,19 @@ namespace StritWalk.iOS
             {
                 // Unsubscribe
                 //templatedItemsList = (INotifyCollectionChanged)ListViewTemplatedItemsPropertyInfo.GetValue(e.NewElement);
-                templatedItemsList.CollectionChanged -= this.OnCollectionChanged;
+                //templatedItemsList.CollectionChanged -= OnCollectionChanged;
             }
 
             if (e.NewElement != null)
             {
                 Control.ShowsVerticalScrollIndicator = false;        
-                templatedItemsList = (INotifyCollectionChanged)ListViewTemplatedItemsPropertyInfo.GetValue(e.NewElement);                
-                templatedItemsList.CollectionChanged += this.OnCollectionChanged;
                 Control.Source = dataSource = new CustomListViewSource(Element as CustomListView, Control.Source, ListViewTemplatedItemsPropertyInfo);
+
+                //           if(ListViewTemplatedItemsPropertyInfo != null)
+                //           {
+                //templatedItemsList = (INotifyCollectionChanged)ListViewTemplatedItemsPropertyInfo.GetValue(e.NewElement);
+                //templatedItemsList.CollectionChanged += OnCollectionChanged;    
+                //}			
                 //UpdateRowHeight();
             }
 
@@ -88,9 +92,9 @@ namespace StritWalk.iOS
 
             if (Element != null)
             {
-                templatedItemsList = (INotifyCollectionChanged)ListViewTemplatedItemsPropertyInfo.GetValue(Element);
+                //templatedItemsList = (INotifyCollectionChanged)ListViewTemplatedItemsPropertyInfo.GetValue(Element);
 
-                templatedItemsList.CollectionChanged -= OnCollectionChanged;
+                //templatedItemsList.CollectionChanged -= OnCollectionChanged;
             }
         }
        
