@@ -33,8 +33,6 @@ namespace StritWalk.iOS
         //nfloat scrolly;
         CGRect originalKeyFrame;
         CGRect originalRect;
-        int numlines = 1;
-        int framelines = 0;
         AppDelegate ad;
         CGSize requestSize;
 
