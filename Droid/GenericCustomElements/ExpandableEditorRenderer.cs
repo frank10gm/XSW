@@ -4,6 +4,7 @@ using Xamarin.Forms.Platform.Android;
 using StritWalk;
 using StritWalk.Droid;
 using System.Reflection;
+using Android.Graphics;
 
 [assembly: ExportRenderer(typeof(ExpandableEditor), typeof(ExpandableEditorRenderer))]
 namespace StritWalk.Droid
@@ -11,6 +12,13 @@ namespace StritWalk.Droid
     public class ExpandableEditorRenderer : EditorRenderer
     {
         ExpandableEditor element;
+        int originalheight;
+        int originallineheight;
+        Rectangle originalframe;
+        Rectangle originalwkframe;
+        bool startedkey;
+        bool startedkey2;
+        double originalflineheight;
 
         protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
         {
@@ -31,28 +39,60 @@ namespace StritWalk.Droid
                 Control.SetHintTextColor(element.PlaceholderColor.ToAndroid());
                 Control.SetMaxLines(4);
                 Control.SetImeActionLabel("Send", Android.Views.InputMethods.ImeAction.Send);
+                Control.ImeOptions = Android.Views.InputMethods.ImeAction.Send;
+
                 Control.KeyPress += Control_KeyPress;
                 Control.EditorAction += Control_EditorAction;
+                Control.TextChanged += Control_TextChanged;
                 element.TextChanged += Element_TextChanged;
+                element.MeasureInvalidated += Element_MeasureInvalidated;
 
-                Control.TextChanged += (object sender, Android.Text.TextChangedEventArgs e1) =>
-                {
-                    if (e1.AfterCount > e1.BeforeCount)
-                    {
-                        var t = e1.Text.ToString();
-                        if (t.Contains("\n"))
-                        {
-                            element?.InvokeCompleted(Control.Text.ToString());
-                            Control.Text = "";
-                        }
-                    }
-                    Control.Hint = element.Placeholder;
-                    //Element.LayoutTo(new Rectangle(Element.X, Element.Y - Element.Height, Element.Width, Element.Height * 2));
-                };
+                Control.InputType = Android.Text.InputTypes.TextFlagImeMultiLine | Android.Text.InputTypes.ClassText | Android.Text.InputTypes.TextVariationNormal | Android.Text.InputTypes.NumberVariationNormal;
+                Control.LayoutParameters = new LayoutParams(LayoutParams.MatchParent, LayoutParams.WrapContent);
+                Control.SetHorizontallyScrolling(false);
 
-                //Control.LayoutParameters = new LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
-                //Control.InputType = Android.Text.InputTypes.TextFlagImeMultiLine;
             }
+        }
+
+        private void Element_MeasureInvalidated(object sender, EventArgs e)
+        {
+            //if (Control.LineCount >= 1 && Control.LineCount <= 4)
+            //{
+            //    Control.SetHeight(originalheight + ((Control.LineCount - 1) * originallineheight));
+            //}
+        }
+
+        private void Control_TextChanged(object sender, Android.Text.TextChangedEventArgs e)
+        {
+            if(!startedkey2 && element.Y != 0)
+            {                
+                originalwkframe = new Rectangle(originalframe.X, originalframe.Y - (originalframe.Y - element.Y), originalframe.Width, originalframe.Height);
+                originalflineheight = (originalframe.Height * originallineheight) / originalheight;
+                startedkey2 = true;                      
+            }            
+
+            if (Control.LineCount >= 1 && Control.LineCount <= 4)
+            {
+                var newh = originalheight + (originallineheight * (Control.LineCount - 1));
+                var newfy = originalwkframe.Y - (originalflineheight * (Control.LineCount - 1));
+                var newfh = originalframe.Height + (originalflineheight * (Control.LineCount - 1));
+                Control.SetHeight(newh);
+                element.Layout(new Rectangle(element.X, newfy, element.Width, newfh));            
+                //inset della lista di seguito                
+            }
+
+            if (e.AfterCount > e.BeforeCount)
+            {
+                var t = e.Text.ToString();
+                if (t.Contains("\n"))
+                {
+                    element?.InvokeCompleted(Control.Text.ToString());
+                    Control.Text = "";
+                }
+            }
+            Control.Hint = element.Placeholder;
+
+            //Element.LayoutTo(new Rectangle(Element.X, Element.Y - Element.Height, Element.Width, Element.Height * 2));                                                                                          
         }
 
         protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -63,17 +103,32 @@ namespace StritWalk.Droid
         void Control_KeyPress(object sender, KeyEventArgs e)
         {
 
-        }
+        }       
 
         void Control_EditorAction(object sender, Android.Widget.TextView.EditorActionEventArgs e)
         {
-
+            element?.InvokeCompleted(Control.Text.ToString());
+            Control.Text = "";
         }
 
         void Element_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
+
+        public override void Draw(Canvas canvas)
+        {
+            base.Draw(canvas);
+
+            //controllo altezza
+            if (!startedkey)
+            {
+                originalframe = element.Bounds;
+                originallineheight = Control.LineHeight;
+                originalheight = Control.Height;                
+                startedkey = true;
+            }
+        }        
 
     }
 }
