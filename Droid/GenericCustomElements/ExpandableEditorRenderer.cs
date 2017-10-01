@@ -29,15 +29,19 @@ namespace StritWalk.Droid
                 element = (ExpandableEditor)Element;
                 Control.Hint = element.Placeholder;
                 Control.SetHintTextColor(element.PlaceholderColor.ToAndroid());
+                Control.SetMaxLines(4);
+                Control.SetImeActionLabel("Send", Android.Views.InputMethods.ImeAction.Send);
+                Control.KeyPress += Control_KeyPress;
 
                 Control.TextChanged += (object sender, Android.Text.TextChangedEventArgs e1) =>
                 {
                     Control.Hint = element.Placeholder;
+
                     //Element.LayoutTo(new Rectangle(Element.X, Element.Y - Element.Height, Element.Width, Element.Height * 2));
                 };
 
                 //Control.LayoutParameters = new LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
-                //Control.InputType = Android.Text.InputTypes.TextFlagMultiLine;
+                //Control.InputType = Android.Text.InputTypes.TextFlagImeMultiLine;
             }
         }
 
@@ -47,5 +51,9 @@ namespace StritWalk.Droid
             Control.SetMaxLines(4);
         }
 
+        void Control_KeyPress(object sender, KeyEventArgs e)
+        {
+            Console.WriteLine("### " + e.KeyCode);
+        }
     }
 }

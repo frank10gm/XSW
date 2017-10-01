@@ -372,7 +372,6 @@ namespace StritWalk.iOS
             requestSize = Control.SizeThatFits(new CGSize(Control.Frame.Width, 99999));
             if (requestSize.Height > 70)
             {
-
                 Control.ScrollEnabled = true;
                 element.ScrollReady = true;
                 return;
