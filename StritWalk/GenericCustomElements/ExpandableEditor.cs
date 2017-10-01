@@ -72,8 +72,9 @@ namespace StritWalk
                 InvalidateMeasure();
         }
 
-        public void InvokeCompleted()
+        public void InvokeCompleted(string text)
         {
+            Console.WriteLine("### " + text);
             Completed?.Invoke(this, null);
         }
 

@@ -81,11 +81,11 @@ namespace StritWalk.iOS
                 {
                     if (text.Equals("\n"))
                     {
-                        Control.Text = "";
                         requestSize = Control.SizeThatFits(new CGSize(Control.Frame.Width, 99999));
                         AgumentView3();
                         //Control.EndEditing(true);
-                        element?.InvokeCompleted();
+                        element?.InvokeCompleted(Control.Text.ToString());
+                        Control.Text = "";
                         return false;
                     }
                     return true;

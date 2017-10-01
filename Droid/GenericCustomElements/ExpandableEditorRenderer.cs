@@ -21,7 +21,7 @@ namespace StritWalk.Droid
 
             if (e.OldElement != null)
             {
-
+                Control.KeyPress -= Control_KeyPress;
             }
 
             if (e.NewElement != null)
@@ -32,11 +32,21 @@ namespace StritWalk.Droid
                 Control.SetMaxLines(4);
                 Control.SetImeActionLabel("Send", Android.Views.InputMethods.ImeAction.Send);
                 Control.KeyPress += Control_KeyPress;
+                Control.EditorAction += Control_EditorAction;
+                element.TextChanged += Element_TextChanged;
 
                 Control.TextChanged += (object sender, Android.Text.TextChangedEventArgs e1) =>
                 {
+                    if (e1.AfterCount > e1.BeforeCount)
+                    {
+                        var t = e1.Text.ToString();
+                        if (t.Contains("\n"))
+                        {
+                            element?.InvokeCompleted(Control.Text.ToString());
+                            Control.Text = "";
+                        }
+                    }
                     Control.Hint = element.Placeholder;
-
                     //Element.LayoutTo(new Rectangle(Element.X, Element.Y - Element.Height, Element.Width, Element.Height * 2));
                 };
 
@@ -48,12 +58,22 @@ namespace StritWalk.Droid
         protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-            Control.SetMaxLines(4);
         }
 
         void Control_KeyPress(object sender, KeyEventArgs e)
         {
-            Console.WriteLine("### " + e.KeyCode);
+
         }
+
+        void Control_EditorAction(object sender, Android.Widget.TextView.EditorActionEventArgs e)
+        {
+
+        }
+
+        void Element_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
     }
 }
