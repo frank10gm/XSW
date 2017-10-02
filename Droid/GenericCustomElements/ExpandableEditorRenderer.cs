@@ -5,6 +5,7 @@ using StritWalk;
 using StritWalk.Droid;
 using System.Reflection;
 using Android.Graphics;
+using Android.Views;
 
 [assembly: ExportRenderer(typeof(ExpandableEditor), typeof(ExpandableEditorRenderer))]
 namespace StritWalk.Droid
@@ -19,6 +20,12 @@ namespace StritWalk.Droid
         bool startedkey;
         bool startedkey2;
         double originalflineheight;
+
+        ItemDetailPage page;
+        ViewGroup pagecontrol;
+        CustomListViewRenderer list;
+        CustomListView listview;
+        Android.Widget.ListView listcontrol;
 
         protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
         {
@@ -50,7 +57,6 @@ namespace StritWalk.Droid
                 Control.InputType = Android.Text.InputTypes.TextFlagImeMultiLine | Android.Text.InputTypes.ClassText | Android.Text.InputTypes.TextVariationNormal | Android.Text.InputTypes.NumberVariationNormal;
                 Control.LayoutParameters = new LayoutParams(LayoutParams.MatchParent, LayoutParams.WrapContent);
                 Control.SetHorizontallyScrolling(false);
-
             }
         }
 
@@ -64,12 +70,20 @@ namespace StritWalk.Droid
 
         private void Control_TextChanged(object sender, Android.Text.TextChangedEventArgs e)
         {
-            if(!startedkey2 && element.Y != 0)
-            {                
+
+
+            if (!startedkey2 && Math.Abs(element.Y) > 0)
+            {
                 originalwkframe = new Rectangle(originalframe.X, originalframe.Y - (originalframe.Y - element.Y), originalframe.Width, originalframe.Height);
                 originalflineheight = (originalframe.Height * originallineheight) / originalheight;
-                startedkey2 = true;                      
-            }            
+                startedkey2 = true;
+
+                page = Element.Parent.Parent as ItemDetailPage;
+                pagecontrol = Control.Parent.Parent as ViewGroup;
+                list = pagecontrol.GetChildAt(0) as CustomListViewRenderer;
+                listview = list.Element as CustomListView;
+                listcontrol = list.Control as Android.Widget.ListView;
+            }
 
             if (Control.LineCount >= 1 && Control.LineCount <= 4)
             {
@@ -77,8 +91,9 @@ namespace StritWalk.Droid
                 var newfy = originalwkframe.Y - (originalflineheight * (Control.LineCount - 1));
                 var newfh = originalframe.Height + (originalflineheight * (Control.LineCount - 1));
                 Control.SetHeight(newh);
-                element.Layout(new Rectangle(element.X, newfy, element.Width, newfh));            
-                //inset della lista di seguito                
+                element.Layout(new Rectangle(element.X, newfy, element.Width, newfh));
+                //inset della lista di seguito  
+                listcontrol.SetPadding(0, 0, 0, newh - originalheight);
             }
 
             if (e.AfterCount > e.BeforeCount)
@@ -103,7 +118,7 @@ namespace StritWalk.Droid
         void Control_KeyPress(object sender, KeyEventArgs e)
         {
 
-        }       
+        }
 
         void Control_EditorAction(object sender, Android.Widget.TextView.EditorActionEventArgs e)
         {
@@ -125,10 +140,10 @@ namespace StritWalk.Droid
             {
                 originalframe = element.Bounds;
                 originallineheight = Control.LineHeight;
-                originalheight = Control.Height;                
+                originalheight = Control.Height;
                 startedkey = true;
             }
-        }        
+        }
 
     }
 }
