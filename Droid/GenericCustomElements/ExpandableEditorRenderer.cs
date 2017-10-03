@@ -83,6 +83,8 @@ namespace StritWalk.Droid
                 list = pagecontrol.GetChildAt(0) as CustomListViewRenderer;
                 listview = list.Element as CustomListView;
                 listcontrol = list.Control as Android.Widget.ListView;
+                listcontrol.StackFromBottom = true;
+                listcontrol.TranscriptMode = Android.Widget.TranscriptMode.AlwaysScroll;
             }
 
             if (Control.LineCount >= 1 && Control.LineCount <= 4)
@@ -94,6 +96,11 @@ namespace StritWalk.Droid
                 element.Layout(new Rectangle(element.X, newfy, element.Width, newfh));
                 //inset della lista di seguito  
                 listcontrol.SetPadding(0, 0, 0, newh - originalheight);
+                //scroll della lista
+                listcontrol.Post(() =>
+                {
+					listcontrol.SetSelection(list.Control.Count - 1);			
+                });
             }
 
             if (e.AfterCount > e.BeforeCount)
