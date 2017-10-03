@@ -6,6 +6,7 @@ using StritWalk.Droid;
 using System.Reflection;
 using Android.Graphics;
 using Android.Views;
+using System.Threading.Tasks;
 
 [assembly: ExportRenderer(typeof(ExpandableEditor), typeof(ExpandableEditorRenderer))]
 namespace StritWalk.Droid
@@ -53,12 +54,17 @@ namespace StritWalk.Droid
                 Control.TextChanged += Control_TextChanged;
                 element.TextChanged += Element_TextChanged;
                 element.MeasureInvalidated += Element_MeasureInvalidated;
+                element.Focused += Element_Focused;
+                Control.FocusChange += Control_FocusChange;
 
                 Control.InputType = Android.Text.InputTypes.TextFlagImeMultiLine | Android.Text.InputTypes.ClassText | Android.Text.InputTypes.TextVariationNormal | Android.Text.InputTypes.NumberVariationNormal;
                 Control.LayoutParameters = new LayoutParams(LayoutParams.MatchParent, LayoutParams.WrapContent);
                 Control.SetHorizontallyScrolling(false);
+
             }
         }
+
+
 
         private void Element_MeasureInvalidated(object sender, EventArgs e)
         {
@@ -99,7 +105,7 @@ namespace StritWalk.Droid
                 //scroll della lista
                 listcontrol.Post(() =>
                 {
-					listcontrol.SetSelection(list.Control.Count - 1);			
+                    listcontrol.SetSelection(list.Control.Count - 1);
                 });
             }
 
@@ -150,7 +156,31 @@ namespace StritWalk.Droid
                 originalheight = Control.Height;
                 startedkey = true;
             }
+
+
         }
 
+        async void checkLoad()
+        {
+            var pagecontrol = Control.Parent.Parent as ViewGroup;
+            var list = pagecontrol.GetChildAt(0) as CustomListViewRenderer;
+            var listcontrol = list.Control as Android.Widget.ListView;
+            await Task.Delay(200);
+            listcontrol.Post(() =>
+            {
+                listcontrol.SetSelection(list.Control.Count - 1);
+            });
+        }
+
+        void Element_Focused(object sender, FocusEventArgs e)
+        {
+
+        }
+
+        void Control_FocusChange(object sender, FocusChangeEventArgs e)
+        {
+            Console.WriteLine("### focused editor");
+            checkLoad();
+        }
     }
 }
