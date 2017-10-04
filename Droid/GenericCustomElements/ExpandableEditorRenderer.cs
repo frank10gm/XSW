@@ -38,6 +38,12 @@ namespace StritWalk.Droid
             if (e.OldElement != null)
             {
                 Control.KeyPress -= Control_KeyPress;
+				Control.EditorAction -= Control_EditorAction;
+				Control.TextChanged -= Control_TextChanged;
+				element.TextChanged -= Element_TextChanged;
+				element.MeasureInvalidated -= Element_MeasureInvalidated;
+				element.Focused -= Element_Focused;
+				Control.FocusChange -= Control_FocusChange;
             }
 
             if (e.NewElement != null)

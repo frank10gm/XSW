@@ -31,9 +31,9 @@ namespace StritWalk.iOS
             //    //cell.NativeCell.PropertyChanged -= OnNativeCellPropertyChanged;
             //}
 
-            ////nativeCell.PropertyChanged += OnNativeCellPropertyChanged;
+            // //nativeCell.PropertyChanged += OnNativeCellPropertyChanged;
 
-            ////cell.UpdateCell(nativeCell);
+            // //cell.UpdateCell(nativeCell);
 
             cell.SelectionStyle = UITableViewCellSelectionStyle.None;
             //cell.BackgroundColor = UIColor.Red;

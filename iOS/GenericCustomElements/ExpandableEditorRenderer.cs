@@ -48,10 +48,15 @@ namespace StritWalk.iOS
                 return;
 
             if (e.OldElement != null)
-            {
-                ad.KeyAppeared -= KeyRaise;
+            {                
                 UnregisterForKeyboardNotifications();
+
+                ad.KeyAppeared -= KeyRaise;
                 element.TextChanged -= Element_TextChanged;
+                Control.Ended -= OnEnded;
+                Control.Changed -= OnChanged;
+                Control.Started -= OnFocused;
+                element.MeasureInvalidated -= Element_MeasureInvalidated;
             }
 
             if (e.NewElement != null)

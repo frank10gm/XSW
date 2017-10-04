@@ -22,6 +22,14 @@ namespace StritWalk.iOS
 			if (Element == null)
 				return;
 
+            if(ev.OldElement != null)
+            {
+				Control.Ended -= OnEnded;
+				Control.Changed -= OnChanged;
+				Control.Started -= OnFocused;
+                element.TextChanged -= Element_TextChanged;
+            }
+
             element = (CustomEditor)Element;
 
             //CreatePlaceholderLabel((CustomEditor)Element, Control);
@@ -33,17 +41,8 @@ namespace StritWalk.iOS
             Control.Started += OnFocused;
             Control.Text = element.Placeholder;
             Control.TextColor = UIColor.Gray;
-            element.TextChanged += (sender, e) => 
-            {
-				if (Control.Text == element.Placeholder)
-				{			
-					Control.TextColor = UIColor.Gray;
-                    element.Ready = false;
-                }else
-                {
-                    element.Ready = true;    
-                }
-            };
+            element.TextChanged += Element_TextChanged;
+
 		}
 
         private void CreatePlaceholderLabel(CustomEditor element, UITextView parent)
@@ -103,12 +102,25 @@ namespace StritWalk.iOS
 			{
 				Control.Ended -= OnEnded;
 				Control.Changed -= OnChanged;
-                Control.Started -= OnFocused;
-
+                Control.Started -= OnFocused;			
+				element.TextChanged -= Element_TextChanged;
 				//_placeholderLabel?.Dispose();
 				//_placeholderLabel = null;
 			}
 			base.Dispose(disposing);
 		}
+
+        void Element_TextChanged(object sender, TextChangedEventArgs e)
+        {
+			if (Control.Text == element.Placeholder)
+			{
+				Control.TextColor = UIColor.Gray;
+				element.Ready = false;
+			}
+			else
+			{
+				element.Ready = true;
+			}
+        }
     }
 }

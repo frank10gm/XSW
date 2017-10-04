@@ -45,6 +45,10 @@ namespace StritWalk.iOS
 					polygonRenderer = null;
                     nativeMap.ShowsCompass = true;
                     nativeMap.UserTrackingMode = MKUserTrackingMode.FollowWithHeading;
+
+					nativeMap.RegionChanged -= OnClusterChange;
+					nativeMap.GetViewForAnnotation -= GetClusterView;
+					nativeMap.DidSelectAnnotationView -= OnDidSelectAnnotationView;
 				}
 			}
 
