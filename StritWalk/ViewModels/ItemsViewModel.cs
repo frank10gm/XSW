@@ -19,7 +19,7 @@ namespace StritWalk
         public ICommand ILikeThis { get; }
         public User me;
         public ICommand ICommentThis { get; }
-       
+
         string newPostDescription = string.Empty;
         public string NewPostDescription
         {
@@ -81,7 +81,8 @@ namespace StritWalk
                 IsLoading = false;
                 if (!string.IsNullOrWhiteSpace(result))
                 {
-                    Items.Insert(0, new Item { Id = result, Nuovo = true, Creator = Settings.UserId, Description = newPostDescription, Likes = "0", Comments_count = "0", Distanza = "0", Liked_me = "0" });
+                    if (Items != null)
+                        Items.Insert(0, new Item { Id = result, Nuovo = true, Creator = Settings.UserId, Description = newPostDescription, Likes = "0", Comments_count = "0", Distanza = "0", Liked_me = "0" });
                     Settings.Num_posts += 1;
                     me.Num_posts += 1;
                     PostsN = new FormattedString
@@ -125,7 +126,7 @@ namespace StritWalk
             if (IsBusy)
                 return;
 
-            IsBusy = true;            
+            IsBusy = true;
 
             try
             {
@@ -134,7 +135,7 @@ namespace StritWalk
                 start = 0;
                 IsNotEnd = false;
                 Settings.listEnd = false;
-                Items.Clear();
+                //Items.Clear();
                 var items = await DataStore.GetItemsAsync(true);
                 Items.ReplaceRange(items);
                 IsNotEnd = true;
@@ -160,11 +161,11 @@ namespace StritWalk
 
         async Task ILikeThisTask(object par1)
         {
-			if (IsBusy)
-				return;
+            if (IsBusy)
+                return;
 
             IsBusy = true;
-			Item item = par1 as Item;
+            Item item = par1 as Item;
             string action = "addLikePost";
             if (item.Liked_me == "#2b98f0")
                 action = "removeLikePost";
@@ -182,7 +183,7 @@ namespace StritWalk
                 num += 1;
                 item.Likes = num.ToString();
                 item.Liked_me = "1";
-            }        
+            }
             IsBusy = false;
         }
 
@@ -217,10 +218,10 @@ namespace StritWalk
 
         async Task ICommentThisTask(object par1)
         {
-			CustomTabbedPage page = Application.Current.MainPage as CustomTabbedPage;
+            CustomTabbedPage page = Application.Current.MainPage as CustomTabbedPage;
             page.TabBarHidden = true;
             await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(par1)));
             //await Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new ItemDetailPage(new ItemDetailViewModel(par1))));
-		}
+        }
     }
 }
