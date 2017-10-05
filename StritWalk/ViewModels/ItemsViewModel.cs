@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Threading;
 
 using Xamarin.Forms;
+using System.Collections.Generic;
 
 namespace StritWalk
 {
@@ -66,14 +67,20 @@ namespace StritWalk
             {
                 IsNotEnd = arg;
             });
+
+            MessagingCenter.Subscribe<ItemsViewModel, Item>(this, "addItem", (sender, arg) =>
+			{
+                
+			});
         }
 
         void insertItem(Item item)
         {
             try
             {
-				Console.WriteLine(Items[0].Description);
+				//Console.WriteLine(Items[0].Description);
 				Items.Insert(0, item);    
+                //MessagingCenter.Send<ItemsViewModel, Item>(this, "addItem", item);
             }
             catch(Exception ex)
             {

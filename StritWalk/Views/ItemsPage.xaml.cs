@@ -172,7 +172,7 @@ namespace StritWalk
             }
         }
 
-        async void AddItem_Clicked(object sender, EventArgs e)
+        void AddItem_Clicked(object sender, EventArgs e)
         {
             //await Navigation.PushAsync(new NewItemPage());
         }
