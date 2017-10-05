@@ -72,7 +72,7 @@
                                 </Button>
                                 <Button FontAttributes="None" Grid.Row="0" Grid.Column="1" Text="Audio" TextColor="#333" HorizontalOptions="Center" VerticalOptions="Center">
                                 </Button>
-                                <Button FontAttributes="Bold" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#2b98f0" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PostCommand}" IsEnabled="{Binding IsPosting}">
+                                <Button FontAttributes="Bold" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#2b98f0" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PostCommand}" CommandParameter="{Binding Items}" IsEnabled="{Binding IsPosting}">
                                 </Button>
                                 <!--<Label FontSize="14.0" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#2b98f0" HorizontalOptions="Center" VerticalOptions="Center" IsEnabled="{Binding IsPosting}">
                                     <Label.GestureRecognizers>
