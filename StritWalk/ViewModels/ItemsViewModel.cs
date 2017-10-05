@@ -154,34 +154,30 @@ namespace StritWalk
 
             IsBusy = true;
 
+			await Task.Run(() => GetMyUser());
+			EndText = "";
+			start = 0;
+			IsNotEnd = false;
+			Settings.listEnd = false;
+
             try
             {
-                await Task.Run(() => GetMyUser());
-                EndText = "";
-                start = 0;
-                IsNotEnd = false;
-                Settings.listEnd = false;
+                Console.WriteLine("### inizio ricarica elementi");
                 Items.Clear();
                 var items = await DataStore.GetItemsAsync(true);
-				//Items.ReplaceRange(items);
-				//Items.Clear();			
+				//Items.ReplaceRange(items);			
 				foreach (var item in items)
 				{
+                    Console.WriteLine(item.Description);
 					Items.Add(item);
 				}
+
                 IsNotEnd = true;
                 EndText = "";
-                //Items.Insert(0, new Item());
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
-                MessagingCenter.Send(new MessagingCenterAlert
-                {
-                    Title = "Error",
-                    Message = "Unable to load items.",
-                    Cancel = "OK"
-                }, "message");
             }
             finally
             {

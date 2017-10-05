@@ -15,7 +15,7 @@ namespace StritWalk
     public partial class ItemsPage : ContentPage
     {
         ItemsViewModel viewModel;
-        IList<Item> items;
+        //IList<Item> items;
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
         public ICommand LoadMoreCommand { get; }
 
@@ -163,16 +163,18 @@ namespace StritWalk
         {
             try
             {
+                Console.WriteLine("### INIZIO DELLA CARICA DI NUOVI ELEMENTI");
                 viewModel.start += 20;
-                items = await DataStore.GetItemsAsync(true, viewModel.start);
-            }
-            finally
-            {
+                var items = await DataStore.GetItemsAsync(true, viewModel.start);
 				//viewModel.Items.AddRange(items);
 				foreach (var item in items)
 				{
 					viewModel.Items.Add(item);
 				}
+            }
+            finally
+            {
+				
             }
         }
 
