@@ -68,6 +68,20 @@ namespace StritWalk
             });
         }
 
+        void insertItem(Item item)
+        {
+            try
+            {
+				Console.WriteLine(Items[0].Description);
+				Items.Insert(0, item);    
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("### EX ### " + ex);
+            }
+
+        }
+
         async Task PostTask(object par1)
         {
             try
@@ -82,9 +96,10 @@ namespace StritWalk
                 if (!string.IsNullOrWhiteSpace(result))
                 {
                     var newitem = new Item { Id = result, Nuovo = true, Creator = Settings.UserId, Description = newPostDescription, Likes = "0", Comments_count = "0", Distanza = "0", Liked_me = "0" };
-                    //var newitem = new Item{ Id = "999", Creator = "rocco", Description ="blabla", Nuovo = true, Likes = "0", Comments_count = "0", Distanza = "0", Liked_me = "0" };
-                    ObservableRangeCollection<Item> Items2 = par1 as ObservableRangeCollection<Item>;
-                    Items2.Insert(0, newitem);
+                    ObservableRangeCollection<Item> Items2 = new ObservableRangeCollection<Item>();
+                    //Items.Insert(0, newitem);
+                    insertItem(newitem);
+
                     Settings.Num_posts += 1;
                     me.Num_posts += 1;
                     PostsN = new FormattedString
@@ -137,7 +152,7 @@ namespace StritWalk
                 start = 0;
                 IsNotEnd = false;
                 Settings.listEnd = false;
-                Items.Clear();
+                //Items.Clear();
                 var items = await DataStore.GetItemsAsync(true);
                 Items.ReplaceRange(items);
                 IsNotEnd = true;
