@@ -37,7 +37,10 @@ namespace StritWalk
         public void AddRange(IList<T> collection, NotifyCollectionChangedAction notificationMode = NotifyCollectionChangedAction.Add)
         {
             if (collection == null)
-                throw new ArgumentNullException("collection");
+            {
+                //Console.WriteLine("### la collextion è nulla");
+                throw new ArgumentNullException("collection");   
+            }
 
             CheckReentrancy();
 

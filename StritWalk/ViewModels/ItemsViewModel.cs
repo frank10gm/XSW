@@ -6,6 +6,7 @@ using System.Threading;
 
 using Xamarin.Forms;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace StritWalk
 {
@@ -13,7 +14,8 @@ namespace StritWalk
     {
         public int start = 0;
         string result = string.Empty;
-        public ObservableRangeCollection<Item> Items { get; set; }
+        //public ObservableRangeCollection<Item> Items { get; set; }
+        public ObservableCollection<Item> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
         public ICommand PostCommand { get; }
         public CustomEditor PostEditor { get; set; }
@@ -48,7 +50,8 @@ namespace StritWalk
         public ItemsViewModel()
         {
             Title = "Seahorse";
-            Items = new ObservableRangeCollection<Item>();
+            //Items = new ObservableRangeCollection<Item>();
+            Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             PostCommand = new Command(async (par1) => await PostTask((object)par1));
             ILikeThis = new Command(async (par1) => await ILikeThisTask((object)par1));
@@ -103,7 +106,6 @@ namespace StritWalk
                 if (!string.IsNullOrWhiteSpace(result))
                 {
                     var newitem = new Item { Id = result, Nuovo = true, Creator = Settings.UserId, Description = newPostDescription, Likes = "0", Comments_count = "0", Distanza = "0", Liked_me = "0" };
-                    ObservableRangeCollection<Item> Items2 = new ObservableRangeCollection<Item>();
                     //Items.Insert(0, newitem);
                     insertItem(newitem);
 
@@ -159,9 +161,14 @@ namespace StritWalk
                 start = 0;
                 IsNotEnd = false;
                 Settings.listEnd = false;
-                //Items.Clear();
+                Items.Clear();
                 var items = await DataStore.GetItemsAsync(true);
-                Items.ReplaceRange(items);
+				//Items.ReplaceRange(items);
+				//Items.Clear();			
+				foreach (var item in items)
+				{
+					Items.Add(item);
+				}
                 IsNotEnd = true;
                 EndText = "";
                 //Items.Insert(0, new Item());

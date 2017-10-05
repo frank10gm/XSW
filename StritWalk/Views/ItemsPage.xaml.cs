@@ -168,7 +168,11 @@ namespace StritWalk
             }
             finally
             {
-                viewModel.Items.AddRange(items);
+				//viewModel.Items.AddRange(items);
+				foreach (var item in items)
+				{
+					viewModel.Items.Add(item);
+				}
             }
         }
 
