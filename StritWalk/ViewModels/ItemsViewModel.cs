@@ -67,7 +67,10 @@ namespace StritWalk
                 IsNotEnd = arg;
             });
 
-        }
+			if (Items.Count == 0)
+                LoadItemsCommand.Execute(null);
+
+		}
 
         void insertItem(Item item)
         {

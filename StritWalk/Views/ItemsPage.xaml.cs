@@ -29,77 +29,77 @@ namespace StritWalk
             viewModel.PostEditor = PostEditor;
             LoadMoreCommand = new Command(async () => await LoadMoreItems(null));
 
-            ItemsListView.ItemTemplate = new DataTemplate(() =>
-            {
-                var grid = new Grid();
-                grid.Padding = 0;
+            //ItemsListView.ItemTemplate = new DataTemplate(() =>
+            //{
+            //    var grid = new Grid();
+            //    grid.Padding = 0;
 
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(10) });
+            //    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            //    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+            //    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+            //    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(10) });
 
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            //    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            //    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-                //var userLabel = new Label { Margin = new Thickness(20, 10, 10, 5) };
-                //userLabel.SetBinding(Label.FormattedTextProperty, "Username");
-                //grid.Children.Add(userLabel, 0, 0);
-                //Grid.SetColumnSpan(userLabel, 4);
+            //    //var userLabel = new Label { Margin = new Thickness(20, 10, 10, 5) };
+            //    //userLabel.SetBinding(Label.FormattedTextProperty, "Username");
+            //    //grid.Children.Add(userLabel, 0, 0);
+            //    //Grid.SetColumnSpan(userLabel, 4);
 
-                var postLabel = new Label { Margin = new Thickness(20, 10, 20, 20) };
-                postLabel.SetBinding(Label.FormattedTextProperty, "Post");
-                grid.Children.Add(postLabel, 0, 0);
-                Grid.SetColumnSpan(postLabel, 2);
+            //    var postLabel = new Label { Margin = new Thickness(20, 10, 20, 20) };
+            //    postLabel.SetBinding(Label.FormattedTextProperty, "Post");
+            //    grid.Children.Add(postLabel, 0, 0);
+            //    Grid.SetColumnSpan(postLabel, 2);
 
-                var likeButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
-                likeButton.SetBinding(Button.TextColorProperty, "Liked_meText");
-                likeButton.SetBinding(Button.TextProperty, "LikesText");
-                likeButton.Command = viewModel.ILikeThis;
-                likeButton.SetBinding(Button.CommandParameterProperty, ".");
-                grid.Children.Add(likeButton, 0, 1);
-                //Grid.SetColumnSpan(likeButton, 2);
+            //    var likeButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
+            //    likeButton.SetBinding(Button.TextColorProperty, "Liked_meText");
+            //    likeButton.SetBinding(Button.TextProperty, "LikesText");
+            //    likeButton.Command = viewModel.ILikeThis;
+            //    likeButton.SetBinding(Button.CommandParameterProperty, ".");
+            //    grid.Children.Add(likeButton, 0, 1);
+            //    //Grid.SetColumnSpan(likeButton, 2);
 
-                var commentsButton = new Button() { TextColor = Color.Black, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
-                commentsButton.SetBinding(Button.TextProperty, "Comments_countText");
-                commentsButton.Command = viewModel.ICommentThis;
-                commentsButton.SetBinding(Button.CommandParameterProperty, ".");
-                grid.Children.Add(commentsButton, 1, 1);
-                //Grid.SetColumnSpan(commentsButton, 2);                
+            //    var commentsButton = new Button() { TextColor = Color.Black, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
+            //    commentsButton.SetBinding(Button.TextProperty, "Comments_countText");
+            //    commentsButton.Command = viewModel.ICommentThis;
+            //    commentsButton.SetBinding(Button.CommandParameterProperty, ".");
+            //    grid.Children.Add(commentsButton, 1, 1);
+            //    //Grid.SetColumnSpan(commentsButton, 2);                
 
-                //var otherButton = new Button { Text = "Actions" };                
-                //grid.Children.Add(otherButton, 4, 2);                
+            //    //var otherButton = new Button { Text = "Actions" };                
+            //    //grid.Children.Add(otherButton, 4, 2);                
 
-                var commentsLabel = new Label { Margin = new Thickness(15, 10, 10, 10), Text = "", TextColor = Color.Gray, FontSize = 9 };
-                commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
-                commentsLabel.SetBinding(Label.IsVisibleProperty, "VisibleComments");
-                grid.Children.Add(commentsLabel, 0, 2);
-                Grid.SetColumnSpan(commentsLabel, 2);
-                var tapGestureRecognizer = new TapGestureRecognizer();
-                tapGestureRecognizer.Tapped += (s, e) =>
-                {
+            //    var commentsLabel = new Label { Margin = new Thickness(15, 10, 10, 10), Text = "", TextColor = Color.Gray, FontSize = 9 };
+            //    commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
+            //    commentsLabel.SetBinding(Label.IsVisibleProperty, "VisibleComments");
+            //    grid.Children.Add(commentsLabel, 0, 2);
+            //    Grid.SetColumnSpan(commentsLabel, 2);
+            //    var tapGestureRecognizer = new TapGestureRecognizer();
+            //    tapGestureRecognizer.Tapped += (s, e) =>
+            //    {
 
-                };
-                commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
+            //    };
+            //    commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
 
-                var whiteSeparator = new BoxView { BackgroundColor = Color.White, HeightRequest = 10 };
-                grid.Children.Add(whiteSeparator, 0, 3);
-                Grid.SetColumnSpan(whiteSeparator, 2);
+            //    var whiteSeparator = new BoxView { BackgroundColor = Color.White, HeightRequest = 10 };
+            //    grid.Children.Add(whiteSeparator, 0, 3);
+            //    Grid.SetColumnSpan(whiteSeparator, 2);
 
-                //var tapGestureRecognizer = new TapGestureRecognizer();
-                //tapGestureRecognizer.Tapped += (s, e) => {
+            //    //var tapGestureRecognizer = new TapGestureRecognizer();
+            //    //tapGestureRecognizer.Tapped += (s, e) => {
 
-                //};
-                //grid.GestureRecognizers.Add(tapGestureRecognizer);
+            //    //};
+            //    //grid.GestureRecognizers.Add(tapGestureRecognizer);
 
-                CustomViewCell cell = new CustomViewCell();
+            //    CustomViewCell cell = new CustomViewCell();
 
-                cell.View = grid;
-                //cell.Height = 234;                
+            //    cell.View = grid;
+            //    //cell.Height = 234;                
 
-                return cell;
+            //    return cell;
 
-            });
+            //});
 
         }
 
@@ -195,8 +195,8 @@ namespace StritWalk
         {
             base.OnAppearing();
 
-            if (viewModel.Items.Count == 0)
-                viewModel.LoadItemsCommand.Execute(null);
+            //if (viewModel.Items.Count == 0)
+                //viewModel.LoadItemsCommand.Execute(null);
         }
 
     }

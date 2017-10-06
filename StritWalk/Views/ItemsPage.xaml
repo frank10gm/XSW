@@ -102,6 +102,18 @@
                         </Grid>
                     </Grid>
                 </ListView.Header>
+                
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10">
+                                <Label Text="{Binding Text}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="16" />
+                                <Label Text="{Binding Description}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
                 <ListView.Footer>
                     <StackLayout Padding="0,30,0,30">
                         <Label Text="{Binding EndText}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Gray" IsVisible="{Binding IsNotEnd, Converter={StaticResource cnv}}">
