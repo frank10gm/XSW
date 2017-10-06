@@ -150,9 +150,10 @@ namespace StritWalk
             if (PostEditor.IsFocused)
                 PostEditor.Unfocus();
 
-            if (viewModel.Items[viewModel.Items.Count - 1] == args.Item && !Settings.listEnd && !viewModel.IsBusy)
+            if (viewModel.Items[viewModel.Items.Count - 1] == args.Item && !Settings.listEnd)
             {
-                Task.Run(() => LoadMoreItems(args.Item));
+                if (!viewModel.IsBusy)
+                    Task.Run(() => LoadMoreItems(args.Item));
             }
             else
             {
@@ -167,7 +168,7 @@ namespace StritWalk
             {
                 Debug.WriteLine("xxx load more items");
                 viewModel.start += 20;
-                viewModel.IsBusy = true;
+                viewModel.IsBusy = false;
                 var items = await DataStore.GetItemsAsync(true, viewModel.start);
                 //viewModel.Items.AddRange(items);
                 foreach (var item in items)
@@ -175,7 +176,7 @@ namespace StritWalk
                     viewModel.Items.Add(item);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine("xxx there was a fuckin exception: " + ex);
             }
