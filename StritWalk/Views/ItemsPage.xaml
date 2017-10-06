@@ -8,14 +8,15 @@
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="New" Clicked="AddItem_Clicked" />
-    </ContentPage.ToolbarItems>  
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <AbsoluteLayout>               
+        <AbsoluteLayout>
             <local:CustomListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" SeparatorColor="White" SeparatorVisibility="None" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="ItemsListView" VerticalOptions="FillAndExpand" HasUnevenRows="true" RefreshCommand="{Binding LoadItemsCommand}" IsPullToRefreshEnabled="true"
-                IsRefreshing="{Binding IsBusy, Mode=OneWay}" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom" ItemsSource="{Binding Items}" RowHeight="-1">
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom" ItemsSource="{Binding Items}" RowHeight="-1" ItemTemplate="{StaticResource newTemplate}">
+                <!--ItemTemplate="{Binding ItemTemplate}"-->
                 <x:Arguments>
                     <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
-                </x:Arguments>               
+                </x:Arguments>
                 <ListView.Header>
                     <Grid Padding="0,20,0,15" RowSpacing="20" ColumnSpacing="0">
                         <Grid.RowDefinitions>
@@ -102,18 +103,27 @@
                         </Grid>
                     </Grid>
                 </ListView.Header>
-                
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Padding="10">
-                                <Label Text="{Binding Text}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="16" />
-                                <Label Text="{Binding Description}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
-                            </StackLayout>
-                        </ViewCell>
+                        <local:CustomViewCell>
+                            <Grid Padding="0" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="40" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="30" />
+                                </Grid.ColumnDefinitions>
+                            </Grid>
+                        </local:CustomViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-                
                 <ListView.Footer>
                     <StackLayout Padding="0,30,0,30">
                         <Label Text="{Binding EndText}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Gray" IsVisible="{Binding IsNotEnd, Converter={StaticResource cnv}}">
