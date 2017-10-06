@@ -61,6 +61,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)GenericCustomElements\CustomContentPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GenericCustomElements\CustomTabbedPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GenericCustomElements\ExpandableEditor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />

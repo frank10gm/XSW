@@ -53,15 +53,15 @@ namespace StritWalk
                 Grid.SetColumnSpan(postLabel, 2);
 
                 var likeButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
-                likeButton.SetBinding(Button.TextColorProperty, "Liked_meText");
-                likeButton.SetBinding(Button.TextProperty, "LikesText");
+                likeButton.SetBinding(Button.TextColorProperty, "Liked_me");
+                likeButton.SetBinding(Button.TextProperty, "Likes");
                 likeButton.Command = viewModel.ILikeThis;
                 likeButton.SetBinding(Button.CommandParameterProperty, ".");
                 grid.Children.Add(likeButton, 0, 1);
                 //Grid.SetColumnSpan(likeButton, 2);
 
                 var commentsButton = new Button() { TextColor = Color.Black, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
-                commentsButton.SetBinding(Button.TextProperty, "Comments_countText");
+                commentsButton.SetBinding(Button.TextProperty, "Comments_count");
                 commentsButton.Command = viewModel.ICommentThis;
                 commentsButton.SetBinding(Button.CommandParameterProperty, ".");
                 grid.Children.Add(commentsButton, 1, 1);
@@ -75,12 +75,11 @@ namespace StritWalk
                 commentsLabel.SetBinding(Label.IsVisibleProperty, "VisibleComments");
                 grid.Children.Add(commentsLabel, 0, 2);
                 Grid.SetColumnSpan(commentsLabel, 2);
-                var tapGestureRecognizer = new TapGestureRecognizer();
-                tapGestureRecognizer.Tapped += (s, e) =>
-                {
+				var tapGestureRecognizer = new TapGestureRecognizer();
+				tapGestureRecognizer.Tapped += (s, e) => {
 
-                };
-                commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
+				};
+				//commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
 
                 var whiteSeparator = new BoxView { BackgroundColor = Color.White, HeightRequest = 10 };
                 grid.Children.Add(whiteSeparator, 0, 3);
@@ -100,11 +99,7 @@ namespace StritWalk
                 return cell;
             });
 
-            //Resources = new ResourceDictionary();
-            //Resources.Add("newTemplate", dataTemplate);
-
-            //ItemsListView.ItemTemplate = dataTemplate;
-            //ItemsListView.ItemTemplate = (DataTemplate)Resources["personTemplate"];
+            ItemsListView.ItemTemplate = dataTemplate;
 
         }
 
@@ -171,15 +166,14 @@ namespace StritWalk
         {
             try
             {
-                Debug.WriteLine("xxx load more items");
                 viewModel.start += 20;
                 viewModel.IsBusy = false;
                 var items = await DataStore.GetItemsAsync(true, viewModel.start);
-                //viewModel.Items.AddRange(items);
-                foreach (var item in items)
-                {
-                    viewModel.Items.Add(item);
-                }
+                viewModel.Items.AddRange(items);
+                //foreach (var item in items)
+                //{
+                //    viewModel.Items.Add(item);
+                //}
             }
             catch (Exception ex)
             {
