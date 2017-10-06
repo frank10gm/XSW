@@ -52,7 +52,7 @@ namespace StritWalk
                 IsLoading = false;
                 if (!string.IsNullOrWhiteSpace(result))
                 {
-                    Debug.WriteLine("### insert id: " + result);
+                    CommentsItems.Add(new CommentsItem { User_name = Settings.UserId, Comment = (string)par1 });
                     //var newitem = new Item { Id = result, Nuovo = true, Creator = Settings.UserId, Description = newPostDescription, Likes = "0", Comments_count = "0", Distanza = "0", Liked_me = "0" };
                     //Items.Insert(0, newitem);
 
