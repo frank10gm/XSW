@@ -106,24 +106,34 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <local:CustomViewCell>
-                            <Grid Padding="0" >
+                            <Grid Padding="0">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="10" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="30" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="30" />
                                 </Grid.ColumnDefinitions>
+                                <Label Margin="20,10,20,20" FormattedText="{Binding Post}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                                </Label>
+                                <Button FontSize="12" FontAttributes="Bold" Margin="10,0,10,0" Text="{Binding LikesText}" TextColor="{Binding Liked_meText}" Command="{Binding ILikeThis}" CommandParameter="{Binding .}" Grid.Row="1" Grid.Column="0">
+                                </Button>
+                                <Button FontSize="12" FontAttributes="Bold" Margin="10,0,10,0" Text="{Binding Comments_countText}" TextColor="Black" Command="{Binding ICommentThis}" CommandParameter="{Binding .}" Grid.Row="1" Grid.Column="1">
+                                </Button>
+                                <Label Margin="15,10,10,10" TextColor="Gray" FontSize="9" FormattedText="{Binding ViewComments}" IsVisible="{Binding VisibleComments}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Handle_Tapped" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <BoxView BackgroundColor="White" HeightRequest="10" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ></BoxView>
                             </Grid>
                         </local:CustomViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                
                 <ListView.Footer>
                     <StackLayout Padding="0,30,0,30">
                         <Label Text="{Binding EndText}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Gray" IsVisible="{Binding IsNotEnd, Converter={StaticResource cnv}}">

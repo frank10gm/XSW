@@ -204,5 +204,9 @@ namespace StritWalk
                 viewModel.LoadItemsCommand.Execute(null);
         }
 
+        void Handle_Tapped(object sender, System.EventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
     }
 }
