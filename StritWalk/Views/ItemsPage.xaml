@@ -12,7 +12,7 @@
     <ContentPage.Content>
         <AbsoluteLayout>
             <local:CustomListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" SeparatorColor="White" SeparatorVisibility="None" BackgroundColor="{StaticResource LightBackgroundColor}" x:Name="ItemsListView" VerticalOptions="FillAndExpand" HasUnevenRows="true" RefreshCommand="{Binding LoadItemsCommand}" IsPullToRefreshEnabled="true"
-                IsRefreshing="{Binding IsBusy, Mode=OneWay}" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom" ItemsSource="{Binding Items}" RowHeight="-1" ItemTemplate="{StaticResource newTemplate}">
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom" ItemsSource="{Binding Items}" RowHeight="-1" ItemTemplate="{Binding ItemTemplate}" >
                 <!--ItemTemplate="{Binding ItemTemplate}"-->
                 <x:Arguments>
                     <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
@@ -103,7 +103,7 @@
                         </Grid>
                     </Grid>
                 </ListView.Header>
-                <ListView.ItemTemplate>
+                <!--<ListView.ItemTemplate>
                     <DataTemplate>
                         <local:CustomViewCell>
                             <Grid Padding="0">
@@ -132,8 +132,7 @@
                             </Grid>
                         </local:CustomViewCell>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-                
+                </ListView.ItemTemplate>-->
                 <ListView.Footer>
                     <StackLayout Padding="0,30,0,30">
                         <Label Text="{Binding EndText}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Gray" IsVisible="{Binding IsNotEnd, Converter={StaticResource cnv}}">
