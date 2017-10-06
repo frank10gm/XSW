@@ -7,107 +7,89 @@ using Newtonsoft.Json.Linq;
 
 namespace StritWalk
 {
-    public class Item : ObservableObject
+    public class Item
     {
+        
 
-        public Item()
-        {
-
-        }
-
-        string id = string.Empty;
         //[JsonIgnore]
         public string Id
         {
-            get { return id; }
-            set { SetProperty(ref id, value); }
+            get;
+            set;
         }
 
-        bool primo = true;
         public bool Primo
         {
-            get { return primo; }
-            set { SetProperty(ref primo, value); }
+            get;
+            set;
         }
 
-        bool nuovo = false;
         public bool Nuovo
         {
-            get { return nuovo; }
-            set { SetProperty(ref nuovo, value); }
+            get;
+            set;
         }
 
-        bool secondo = false;
         public bool Secondo
         {
-            get { return secondo; }
-            set { SetProperty(ref secondo, value); }
+            get;
+            set;
         }
 
-        string lat = string.Empty;
         public string Lat
         {
-            get { return lat; }
-            set { SetProperty(ref lat, value); }
+            get;
+            set;
         }
 
-        string lng = string.Empty;
         public string Lng
         {
-            get { return lng; }
-            set { SetProperty(ref lng, value); }
+            get;
+            set;
         }
 
-        string text = string.Empty;
         public string Text
         {
-            get { return text; }
-            set { SetProperty(ref text, value); }
+            get;
+            set;
         }
 
-        string name = string.Empty;
         public string Name
         {
-            get { return name; }
-            set { SetProperty(ref name, value); }
+            get;
+            set;
         }
 
-        string creator = string.Empty;
         public string Creator
         {
-            get { return creator; }
-            set { SetProperty(ref creator, value); }
+            get;
+            set;
         }
 
-        string audio = string.Empty;
         public string Audio
         {
-            get { return audio; }
-            set { SetProperty(ref audio, value); }
+            get;
+            set;
         }
 
-        string distanza = string.Empty;
         public string Distanza
         {
-            get { return distanza; }
-            set { SetProperty(ref distanza, value); }
+            get;
+            set;
         }
 
-        string description = string.Empty;
         public string Description
         {
-            get { return description; }
-            set { SetProperty(ref description, value); }
+            get;
+            set;
         }
 
-        string added = string.Empty;
         public string Added
         {
-            get { return added; }
-            set { SetProperty(ref added, value); }
+            get;
+            set;
         }
 
-        string details = string.Empty;
         public string Details
         {
             get
@@ -123,7 +105,6 @@ namespace StritWalk
                 }
                 return Added + "ago, " + Distanza + " km away";
             }
-            set { SetProperty(ref details, value); }
         }
 
         //string post = string.Empty;
@@ -168,7 +149,6 @@ namespace StritWalk
                 return result;
 
             }
-            set { }
         }
 
         public FormattedString Username
@@ -196,57 +176,59 @@ namespace StritWalk
                 return result;
 
             }
-            set { }
         }
 
-        string likes = string.Empty;
-        public string Likes
+        public string LikesText
         {
             get
             {
                 string text = "  Likes";
-                if (Int32.Parse(likes) == 1) text = "  Like";
-                return likes + text;
+                if (Int32.Parse(Likes) == 1) text = "  Like";
+                return Likes + text;
             }
-            set { SetProperty(ref likes, value); }
-        }
-        public string LikesNum
-        {
-            get { return likes; }
         }
 
-        string comments_count = string.Empty;
-        public string Comments_count
+        public string Likes
+        {
+            get;
+            set;
+        }
+
+        public string LikesNum
+        {
+            get { return Likes; }
+        }
+
+
+        public string Comments_count { get; set; }
+
+        public string Comments_countText
         {
             get
             {
                 string text = "  Comments";
-                if (Int32.Parse(comments_count) == 1) text = " Comment";
-                return comments_count + text;
+                if (Int32.Parse(Comments_count) == 1) text = " Comment";
+                return Comments_count + text;
             }
-            set { SetProperty(ref comments_count, value); }
         }
 
-        string liked_me = string.Empty;
-        public string Liked_me
+        public string Liked_meText
         {
-            get
-            {
-                if (Int32.Parse(liked_me) == 1)
-                    return "#2b98f0";
-                else return "#000000";
-            }
-            set { SetProperty(ref liked_me, value); }
+			get
+			{
+                if (Int32.Parse(Liked_me) == 1)
+					return "#2b98f0";
+				else return "#000000";
+			}
+		
         }
 
-        JArray comments = null;
+        public string Liked_me { get; set; }
+
         public JArray Comments
         {
-            get
-            {
-                return comments;
-            }
-            set { SetProperty(ref comments, value); }
+            get;
+            set;
         }
 
         [JsonIgnore]
@@ -254,7 +236,7 @@ namespace StritWalk
         {
             get
             {
-                if (comments != null) return true;
+                if (Comments != null) return true;
                 return false;
             }
         }
@@ -264,7 +246,7 @@ namespace StritWalk
         {
             get
             {
-                if (Int32.Parse(comments_count) == 0)
+                if (Int32.Parse(Comments_count) == 0)
                 {
                     return "";
                 }
@@ -273,8 +255,8 @@ namespace StritWalk
                     FormattedString result = new FormattedString();
                     Span testo = new Span
                     {
-                        Text = "View all " + comments_count + " comments" + "\n" + comments[0]["user_name"]
-                            + ": " + comments[0]["comment"] + "\n" + comments[1]["user_name"] + ": " + comments[0]["comment"]
+                        Text = "View all " + Comments_count + " comments" + "\n" + Comments[0]["user_name"]
+                            + ": " + Comments[0]["comment"] + "\n" + Comments[1]["user_name"] + ": " + Comments[0]["comment"]
                     };
                     result.Spans.Add(testo);
                     return result;

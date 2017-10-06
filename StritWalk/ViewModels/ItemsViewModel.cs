@@ -1,27 +1,23 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Threading;
-
 using Xamarin.Forms;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace StritWalk
 {
     public class ItemsViewModel : BaseViewModel
     {
-        public int start = 0;
+        public int start;
         string result = string.Empty;
         //public ObservableRangeCollection<Item> Items { get; set; }
         public ObservableCollection<Item> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
-        public ICommand PostCommand { get; }
+        public Command PostCommand { get; }
         public CustomEditor PostEditor { get; set; }
-        public ICommand ILikeThis { get; }
+        public Command ILikeThis { get; }
         public User me;
-        public ICommand ICommentThis { get; }
+        public Command ICommentThis { get; }
 
         string newPostDescription = string.Empty;
         public string NewPostDescription
@@ -71,21 +67,15 @@ namespace StritWalk
                 IsNotEnd = arg;
             });
 
-            MessagingCenter.Subscribe<ItemsViewModel, Item>(this, "addItem", (sender, arg) =>
-			{
-                
-			});
         }
 
         void insertItem(Item item)
         {
             try
             {
-				//Console.WriteLine(Items[0].Description);
-				Items.Insert(0, item);    
-                //MessagingCenter.Send<ItemsViewModel, Item>(this, "addItem", item);
+                Items.Insert(0, item);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("### EX ### " + ex);
             }
@@ -153,7 +143,6 @@ namespace StritWalk
                 return;
 
             IsBusy = true;
-
 			await Task.Run(() => GetMyUser());
 			EndText = "";
 			start = 0;
@@ -162,15 +151,13 @@ namespace StritWalk
 
             try
             {
-                Console.WriteLine("### inizio ricarica elementi");
                 Items.Clear();
                 var items = await DataStore.GetItemsAsync(true);
-				//Items.ReplaceRange(items);			
-				foreach (var item in items)
-				{
-                    Console.WriteLine(item.Description);
-					Items.Add(item);
-				}
+                //Items.ReplaceRange(items);			
+                foreach (var item in items)
+                {
+                    Items.Add(item);
+                }
 
                 IsNotEnd = true;
                 EndText = "";

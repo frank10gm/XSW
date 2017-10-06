@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Plugin.MediaManager;
-using System.Windows.Input;
+//using System.Windows.Input;
 using Plugin.Geolocator.Abstractions;
 using Plugin.Geolocator;
+using System.Diagnostics;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace StritWalk
@@ -17,7 +18,7 @@ namespace StritWalk
         ItemsViewModel viewModel;
         //IList<Item> items;
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
-        public ICommand LoadMoreCommand { get; }
+        public Command LoadMoreCommand { get; }
 
         public ItemsPage()
         {
@@ -52,15 +53,15 @@ namespace StritWalk
                 Grid.SetColumnSpan(postLabel, 2);
 
                 var likeButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
-                likeButton.SetBinding(Button.TextColorProperty, "Liked_me");
-                likeButton.SetBinding(Button.TextProperty, "Likes");
+                likeButton.SetBinding(Button.TextColorProperty, "Liked_meText");
+                likeButton.SetBinding(Button.TextProperty, "LikesText");
                 likeButton.Command = viewModel.ILikeThis;
                 likeButton.SetBinding(Button.CommandParameterProperty, ".");
                 grid.Children.Add(likeButton, 0, 1);
                 //Grid.SetColumnSpan(likeButton, 2);
 
                 var commentsButton = new Button() { TextColor = Color.Black, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
-                commentsButton.SetBinding(Button.TextProperty, "Comments_count");
+                commentsButton.SetBinding(Button.TextProperty, "Comments_countText");
                 commentsButton.Command = viewModel.ICommentThis;
                 commentsButton.SetBinding(Button.CommandParameterProperty, ".");
                 grid.Children.Add(commentsButton, 1, 1);
@@ -146,10 +147,10 @@ namespace StritWalk
 
         void OnReachBottom(object sender, ItemVisibilityEventArgs args)
         {
-            //if (PostEditor.IsFocused)
-                //PostEditor.Unfocus();
-            
-            if (viewModel.Items[viewModel.Items.Count - 1] == args.Item && !Settings.listEnd)
+            if (PostEditor.IsFocused)
+                PostEditor.Unfocus();
+
+            if (viewModel.Items[viewModel.Items.Count - 1] == args.Item && !Settings.listEnd && !viewModel.IsBusy)
             {
                 Task.Run(() => LoadMoreItems(args.Item));
             }
@@ -157,24 +158,30 @@ namespace StritWalk
             {
                 viewModel.EndText = "The End";
             }
+
         }
 
         async Task LoadMoreItems(object x)
         {
             try
             {
-                Console.WriteLine("### INIZIO DELLA CARICA DI NUOVI ELEMENTI");
+                Debug.WriteLine("xxx load more items");
                 viewModel.start += 20;
+                viewModel.IsBusy = true;
                 var items = await DataStore.GetItemsAsync(true, viewModel.start);
-				//viewModel.Items.AddRange(items);
-				foreach (var item in items)
-				{
-					viewModel.Items.Add(item);
-				}
+                //viewModel.Items.AddRange(items);
+                foreach (var item in items)
+                {
+                    viewModel.Items.Add(item);
+                }
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine("xxx there was a fuckin exception: " + ex);
             }
             finally
             {
-				
+                viewModel.IsBusy = false;
             }
         }
 

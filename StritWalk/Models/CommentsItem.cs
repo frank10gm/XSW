@@ -6,24 +6,22 @@ using Newtonsoft.Json.Linq;
 
 namespace StritWalk
 {
-    public class CommentsItem : ObservableObject
+    public class CommentsItem 
     {
         public CommentsItem()
         {
         }
-
-		string comment = string.Empty;
+	
 		public string Comment
 		{
-            get { return comment; }
-            set { SetProperty(ref comment, value); }
+            get;
+            set;
 		}
 
-        string user_name = string.Empty;
         public string User_name
         {
-			get { return user_name; }
-			set { SetProperty(ref user_name, value); }
+            get;
+            set;
         }
     }
 }
