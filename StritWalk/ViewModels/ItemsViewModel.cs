@@ -42,71 +42,60 @@ namespace StritWalk
 
         public DataTemplate ItemTemplate
         {
-            get 
+            get
             {
-				var dataTemplate = new DataTemplate(() =>
-				{
-					var grid = new Grid();
-					grid.Padding = 0;
+                var dataTemplate = new DataTemplate(() =>
+                {
+                    var grid = new Grid();
+                    grid.Padding = 0;
 
-					grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-					grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-					grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-					grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(10) });
+                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(10) });
 
-					grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-					grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                    			
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-					var postLabel = new Label { Margin = new Thickness(20, 10, 20, 20) };
-					postLabel.SetBinding(Label.FormattedTextProperty, "Post");
-					//grid.Children.Add(postLabel, 0, 0);
-					//Grid.SetColumnSpan(postLabel, 2);
 
-					var likeButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
-					likeButton.SetBinding(Button.TextColorProperty, "Liked_meText");
-					likeButton.SetBinding(Button.TextProperty, "LikesText");
-					likeButton.Command = ILikeThis;
-					likeButton.SetBinding(Button.CommandParameterProperty, ".");
-					//grid.Children.Add(likeButton, 0, 1);
-					//Grid.SetColumnSpan(likeButton, 2);
+                    var postLabel = new Label { Margin = new Thickness(20, 10, 20, 20) };
+                    postLabel.SetBinding(Label.FormattedTextProperty, "Post");
+                    grid.Children.Add(postLabel, 0, 0);
+                    Grid.SetColumnSpan(postLabel, 2);
 
-					var commentsButton = new Button() { TextColor = Color.Black, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
-					commentsButton.SetBinding(Button.TextProperty, "Comments_countText");
-					commentsButton.Command = ICommentThis;
-					commentsButton.SetBinding(Button.CommandParameterProperty, ".");
-					//grid.Children.Add(commentsButton, 1, 1);
-					//Grid.SetColumnSpan(commentsButton, 2);                
+                    var likeButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
+                    likeButton.SetBinding(Button.TextColorProperty, "Liked_meText");
+                    likeButton.SetBinding(Button.TextProperty, "LikesText");
+                    likeButton.Command = ILikeThis;
+                    likeButton.SetBinding(Button.CommandParameterProperty, ".");
+                    grid.Children.Add(likeButton, 0, 1);
 
-					var commentsLabel = new Label { Margin = new Thickness(15, 10, 10, 10), Text = "", TextColor = Color.Gray, FontSize = 9 };
-					commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
-					commentsLabel.SetBinding(Label.IsVisibleProperty, "VisibleComments");					
-					var tapGestureRecognizer = new TapGestureRecognizer();
-					tapGestureRecognizer.Tapped += (s, e) =>
-					{
+                    var commentsButton = new Button() { TextColor = Color.Black, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
+                    commentsButton.SetBinding(Button.TextProperty, "Comments_countText");
+                    commentsButton.Command = ICommentThis;
+                    commentsButton.SetBinding(Button.CommandParameterProperty, ".");
+                    grid.Children.Add(commentsButton, 1, 1);
 
-					};
-					//commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
-					//grid.Children.Add(commentsLabel, 0, 2);
-					//Grid.SetColumnSpan(commentsLabel, 2);
+                    var commentsLabel = new Label { Margin = new Thickness(15, 10, 10, 10), Text = "", TextColor = Color.Gray, FontSize = 9 };
+                    commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
+                    commentsLabel.SetBinding(Label.IsVisibleProperty, "VisibleComments");
+                    var tapGestureRecognizer = new TapGestureRecognizer();
+                    tapGestureRecognizer.Tapped += (s, e) =>
+                    {
 
-					var whiteSeparator = new BoxView { BackgroundColor = Color.White, HeightRequest = 10 };
-					grid.Children.Add(whiteSeparator, 0, 3);
-					Grid.SetColumnSpan(whiteSeparator, 2);
+                    };
+                    //commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
+                    grid.Children.Add(commentsLabel, 0, 2);
+                    Grid.SetColumnSpan(commentsLabel, 2);
 
-					//var tapGestureRecognizer = new TapGestureRecognizer();
-					//tapGestureRecognizer.Tapped += (s, e) => {
+                    var whiteSeparator = new BoxView { BackgroundColor = Color.White, HeightRequest = 10 };
+                    grid.Children.Add(whiteSeparator, 0, 3);
+                    Grid.SetColumnSpan(whiteSeparator, 2);
 
-					//};
-					//grid.GestureRecognizers.Add(tapGestureRecognizer);
-
-					CustomViewCell cell = new CustomViewCell();
-
-					cell.View = grid;
-					//cell.Height = 234;                
-
-					return cell;
-				});
+                    CustomViewCell cell = new CustomViewCell();
+                    cell.View = grid;
+                    return cell;
+                });
                 return dataTemplate;
             }
         }
@@ -138,7 +127,7 @@ namespace StritWalk
                 IsNotEnd = arg;
             });
 
-		}
+        }
 
         void insertItem(Item item)
         {
@@ -214,11 +203,11 @@ namespace StritWalk
                 return;
 
             IsBusy = true;
-			await Task.Run(() => GetMyUser());
-			EndText = "";
-			start = 0;
-			IsNotEnd = false;
-			Settings.listEnd = false;
+            await Task.Run(() => GetMyUser());
+            EndText = "";
+            start = 0;
+            IsNotEnd = false;
+            Settings.listEnd = false;
 
             try
             {
