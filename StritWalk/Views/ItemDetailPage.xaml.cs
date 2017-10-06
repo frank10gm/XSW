@@ -71,9 +71,9 @@ namespace StritWalk
             CommentsListView.SelectedItem = null;
         }
 
-        void Handle_Completed(object sender, System.EventArgs e)
+        void Handle_Completed(object sender, TextChangedEventArgs e)
         {
-            Console.WriteLine("### stoca");
+            viewModel.PostCommentCommand.Execute(e.NewTextValue);
         }
     }
 }

@@ -327,5 +327,23 @@ namespace StritWalk
             else if (resp == "removed like.") return 2;
             else return 3;
         }
+
+        public async Task<string> PostComment(string post_id, string comment)
+        {
+            string result = string.Empty;
+            if ((!string.IsNullOrEmpty(comment) || !string.IsNullOrWhiteSpace(comment)) && CrossConnectivity.Current.IsConnected)
+            {
+                var contentType = "application/json";
+                var json = $"{{ action: 'addCommentPost', user_id: '{Settings.AuthToken}', post_id: '{post_id}', comment: '{comment}' }}";
+                JObject o = JObject.Parse(json);
+                json = o.ToString(Formatting.None);
+                var httpContent = new StringContent(json, Encoding.UTF8, contentType);
+                var req = await client.PostAsync($"", httpContent);
+                var resp = await req.Content.ReadAsStringAsync();
+                var ao = JObject.Parse(resp);
+                result = (string)ao["new_id"];                
+            }
+            return result;
+        }
     }
 }

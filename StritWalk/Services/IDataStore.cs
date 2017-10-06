@@ -18,5 +18,6 @@ namespace StritWalk
         Task<string> SignUp(string username, string password, string email);
         Task<User> GetMyUser(User me);
         Task<int> ILikeThis(string post_id, string action);
+        Task<string> PostComment(string post_id, string comment);
     }
 }

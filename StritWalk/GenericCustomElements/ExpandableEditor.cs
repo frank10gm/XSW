@@ -74,8 +74,8 @@ namespace StritWalk
 
         public void InvokeCompleted(string text)
         {
-            Console.WriteLine("### " + text);
-            Completed?.Invoke(this, null);
+            Completed?.Invoke(text, new TextChangedEventArgs(text, text));
+            
         }
 
     }
