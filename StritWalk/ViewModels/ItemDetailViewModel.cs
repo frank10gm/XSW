@@ -71,7 +71,7 @@ namespace StritWalk
                     jitem["comment"] = item.Comment;
                     Item.Comments.Insert(0, jitem);
                     Item.ViewComments = "";
-                    MessagingCenter.Send(this, "NewComment", Item);
+                    //MessagingCenter.Send(this, "NewComment", Item);
                 }                
             }
         }
