@@ -26,12 +26,11 @@ namespace StritWalk
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-                var postLabel = new Label { Margin = new Thickness(10, 5, 10, 5) };
+                var postLabel = new Label { Margin = new Thickness(10, 5, 10, 5), TextColor = Color.Black };
                 postLabel.SetBinding(Label.TextProperty, "Comment");
                 grid.Children.Add(postLabel, 0, 0);
 
-                cell.View = grid;
-                //cell.Height = 234;                
+                cell.View = grid;                
                 return cell;
             });
 

@@ -262,6 +262,7 @@ namespace StritWalk
         }
 
         [JsonIgnore]
+        FormattedString viewComments = string.Empty;
         public FormattedString ViewComments
         {
             get
@@ -302,6 +303,7 @@ namespace StritWalk
                     return result;
                 }
             }
+            set { SetProperty(ref viewComments, value); }
         }
 
     }

@@ -35,6 +35,7 @@ namespace StritWalk
 
         public async Task LoadComments()
         {
+            IsLoading = true;
             try
             {
                 if (Item.Comments != null)
@@ -47,27 +48,31 @@ namespace StritWalk
             {
                 Debug.WriteLine("xxx " + ex);
             }
+            IsLoading = false;
         }
 
         async Task PostCommentTask(object par1)
         {
             try
             {                
-                IsLoading = true;
                 result = await DataStore.PostComment(Item.Id, (string)par1);
             }
             finally
-            {
-                IsLoading = false;
+            {                
                 if (!string.IsNullOrWhiteSpace(result))
                 {
                     var item = new CommentsItem { User_name = Settings.UserId, Comment = (string)par1 };
                     CommentsItems.Add(item);
                     if (Device.RuntimePlatform == Device.iOS)
                         listView.ScrollTo(item, ScrollToPosition.End, true);
-                    MessagingCenter.Send(this, "NewComment", item);
-                }
-                IsPosting = false;
+                    Item.Comments_count = CommentsItems.Count.ToString();                    
+                    var jitem = new JObject();
+                    jitem["user_name"] = item.User_name;
+                    jitem["comment"] = item.Comment;
+                    Item.Comments.Insert(0, jitem);
+                    Item.ViewComments = "";
+                    MessagingCenter.Send(this, "NewComment", Item);
+                }                
             }
         }
     }

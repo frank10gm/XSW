@@ -52,17 +52,22 @@ namespace StritWalk
             me = new User();
             //Task.Run(() => GetMyUser());
 
-            MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
-            {
-                var _item = item as Item;
-                Items.Add(_item);
-                await DataStore.AddItemAsync(_item);
-            });
+            //MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
+            //{
+            //    var _item = item as Item;
+            //    Items.Add(_item);
+            //    await DataStore.AddItemAsync(_item);
+            //});
 
             MessagingCenter.Subscribe<CloudDataStore, bool>(this, "NotEnd", (sender, arg) =>
             {
                 IsNotEnd = arg;
             });
+
+            //MessagingCenter.Subscribe<ItemDetailViewModel, bool>(this, "NotEnd", (sender, arg) =>
+            //{
+            //    IsNotEnd = arg;
+            //});
 
         }
 
