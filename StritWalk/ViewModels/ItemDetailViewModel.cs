@@ -12,7 +12,7 @@ namespace StritWalk
     public class ItemDetailViewModel : BaseViewModel
     {
 
-        string result = string.Empty;     
+        string result = string.Empty;
         public Item Item { get; set; }
         public ObservableRangeCollection<CommentsItem> CommentsItems { get; set; }
         public Command PostCommentCommand { get; }
@@ -29,14 +29,7 @@ namespace StritWalk
         {
             Item = item as Item;
             Title = "Comments";
-            CommentsItems = new ObservableRangeCollection<CommentsItem>();
-            if (Item.Comments != null)
-            {
-                //var items = Item.Comments.ToObject<IList<CommentsItem>>();
-                //CommentsItems.ReplaceRange(items);
-                //LoadComments();
-            }
-
+            CommentsItems = new ObservableRangeCollection<CommentsItem>();            
             PostCommentCommand = new Command(async (par1) => await PostCommentTask((object)par1));
         }
 
@@ -46,10 +39,8 @@ namespace StritWalk
             {
                 if (Item.Comments != null)
                 {
-                    //var items = await DataStore.GetComments(Item.Id);
-                    //CommentsItems.ReplaceRange(items);                    
-                    //var items = Item.Comments.ToObject<IList<CommentsItem>>();
-                    //CommentsItems.ReplaceRange(items);
+                    var items = await DataStore.GetComments(Item.Id);
+                    CommentsItems.ReplaceRange(items);                    
                 }
             }
             catch (Exception ex)
@@ -58,13 +49,12 @@ namespace StritWalk
             }
         }
 
-            async Task PostCommentTask(object par1)
+        async Task PostCommentTask(object par1)
         {
             try
-            {
-                // Post method
+            {                
                 IsLoading = true;
-                result = await DataStore.PostComment(Item.Id, (string)par1);                
+                result = await DataStore.PostComment(Item.Id, (string)par1);
             }
             finally
             {
@@ -73,8 +63,9 @@ namespace StritWalk
                 {
                     var item = new CommentsItem { User_name = Settings.UserId, Comment = (string)par1 };
                     CommentsItems.Add(item);
-                    listView.ScrollTo(item, ScrollToPosition.End, true);
-                   
+                    if (Device.RuntimePlatform == Device.iOS)
+                        listView.ScrollTo(item, ScrollToPosition.End, true);
+                    MessagingCenter.Send(this, "NewComment", item);
                 }
                 IsPosting = false;
             }

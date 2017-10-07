@@ -351,7 +351,8 @@ namespace StritWalk
             if (!CrossConnectivity.Current.IsConnected) return null;
 
             var contentType = "application/json";
-            var json = $"{{ action: 'getMyUser', user: {Settings.AuthToken} }}";
+            var data = $"{{ post_id: '{post_id}' }}";
+            var json = $"{{ action: 'getComments', data: {data} }}";
             JObject o = JObject.Parse(json);
             json = o.ToString(Formatting.None);
             var httpContent = new StringContent(json, Encoding.UTF8, contentType);

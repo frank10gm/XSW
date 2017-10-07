@@ -26,7 +26,7 @@ namespace StritWalk
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-                var postLabel = new Label { Margin = new Thickness(20, 10, 20, 20) };
+                var postLabel = new Label { Margin = new Thickness(10, 5, 10, 5) };
                 postLabel.SetBinding(Label.TextProperty, "Comment");
                 grid.Children.Add(postLabel, 0, 0);
 
@@ -43,11 +43,14 @@ namespace StritWalk
         {
             base.OnAppearing();
             await viewModel.LoadComments();
-            var item = viewModel.CommentsItems[viewModel.CommentsItems.Count - 1];
-            bool scrollanimation = false;
-            if (Device.RuntimePlatform == Device.iOS)
-                scrollanimation = true;
-            CommentsListView.ScrollTo(item, ScrollToPosition.End, scrollanimation);
+            if(viewModel.CommentsItems.Count > 0)
+            {
+                var item = viewModel.CommentsItems[viewModel.CommentsItems.Count - 1];
+                bool scrollanimation = false;
+                if (Device.RuntimePlatform == Device.iOS)
+                    scrollanimation = true;
+                CommentsListView.ScrollTo(item, ScrollToPosition.End, scrollanimation);
+            }            
         }
 
         protected override void OnDisappearing()
