@@ -276,11 +276,25 @@ namespace StritWalk
                     if (Comments == null)
                         return result;
 
-                    Span testo = new Span
+                    Span testo;
+
+                    if (Int32.Parse(comments_count) == 1)
                     {
-                        Text = "View all " + comments_count + " comments" + "\n" + comments[0]["user_name"]
+                        testo = new Span
+                        {
+                            Text = "There is " + comments_count + " comment" + "\n" + comments[0]["user_name"]
+                            + ": " + comments[0]["comment"] + ""
+                        };
+                    }
+                    else
+                    {
+                        testo = new Span
+                        {
+                            Text = "There are " + comments_count + " comments" + "\n" + comments[0]["user_name"]
                             + ": " + comments[0]["comment"] + "\n"
-                    };
+                        };
+                    }
+                        
                     if (Int32.Parse(comments_count) > 1)
                         testo.Text += comments[1]["user_name"] + ": " + comments[1]["comment"];
 

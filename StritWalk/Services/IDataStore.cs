@@ -19,5 +19,6 @@ namespace StritWalk
         Task<User> GetMyUser(User me);
         Task<int> ILikeThis(string post_id, string action);
         Task<string> PostComment(string post_id, string comment);
+        Task<IList<CommentsItem>> GetComments(string post_id);
     }
 }

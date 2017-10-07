@@ -345,5 +345,27 @@ namespace StritWalk
             }
             return result;
         }
+
+        public async Task<IList<CommentsItem>> GetComments(string post_id)
+        {
+            if (!CrossConnectivity.Current.IsConnected) return null;
+
+            var contentType = "application/json";
+            var json = $"{{ action: 'getMyUser', user: {Settings.AuthToken} }}";
+            JObject o = JObject.Parse(json);
+            json = o.ToString(Formatting.None);
+            var httpContent = new StringContent(json, Encoding.UTF8, contentType);
+            var req = await client.PostAsync($"", httpContent);
+            var resp = await req.Content.ReadAsStringAsync();
+            //var ao = JObject.Parse(resp);        
+            //Settings.Num_posts = (int)ao["num_posts"];
+            if (resp == "[]")
+            {                
+                MessagingCenter.Send(this, "CommentsEnd", false);
+            }
+            var commentslist = await Task.Run(() => JsonConvert.DeserializeObject<IList<CommentsItem>>(resp));       
+            return commentslist;            
+        }
+
     }
 }

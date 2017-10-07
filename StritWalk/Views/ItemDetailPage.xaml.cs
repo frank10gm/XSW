@@ -12,9 +12,9 @@ namespace StritWalk
 
         public ItemDetailPage(ItemDetailViewModel viewModel)
         {
-            InitializeComponent();
-
+            InitializeComponent();        
             BindingContext = this.viewModel = viewModel;
+            viewModel.listView = CommentsListView;
 
             CommentsListView.ItemTemplate = new DataTemplate(() =>
             {
@@ -32,7 +32,6 @@ namespace StritWalk
 
                 cell.View = grid;
                 //cell.Height = 234;                
-
                 return cell;
             });
 
@@ -40,9 +39,15 @@ namespace StritWalk
 
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
+            await viewModel.LoadComments();
+            var item = viewModel.CommentsItems[viewModel.CommentsItems.Count - 1];
+            bool scrollanimation = false;
+            if (Device.RuntimePlatform == Device.iOS)
+                scrollanimation = true;
+            CommentsListView.ScrollTo(item, ScrollToPosition.End, scrollanimation);
         }
 
         protected override void OnDisappearing()

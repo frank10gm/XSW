@@ -38,12 +38,12 @@ namespace StritWalk.Droid
             if (e.OldElement != null)
             {
                 Control.KeyPress -= Control_KeyPress;
-				Control.EditorAction -= Control_EditorAction;
-				Control.TextChanged -= Control_TextChanged;
-				element.TextChanged -= Element_TextChanged;
-				element.MeasureInvalidated -= Element_MeasureInvalidated;
-				element.Focused -= Element_Focused;
-				Control.FocusChange -= Control_FocusChange;
+                Control.EditorAction -= Control_EditorAction;
+                Control.TextChanged -= Control_TextChanged;
+                element.TextChanged -= Element_TextChanged;
+                element.MeasureInvalidated -= Element_MeasureInvalidated;
+                element.Focused -= Element_Focused;
+                Control.FocusChange -= Control_FocusChange;
             }
 
             if (e.NewElement != null)
@@ -82,8 +82,7 @@ namespace StritWalk.Droid
 
         private void Control_TextChanged(object sender, Android.Text.TextChangedEventArgs e)
         {
-
-
+        
             if (!startedkey2 && Math.Abs(element.Y) > 0)
             {
                 originalwkframe = new Rectangle(originalframe.X, originalframe.Y - (originalframe.Y - element.Y), originalframe.Width, originalframe.Height);
@@ -95,7 +94,7 @@ namespace StritWalk.Droid
                 list = pagecontrol.GetChildAt(0) as CustomListViewRenderer;
                 listview = list.Element as CustomListView;
                 listcontrol = list.Control as Android.Widget.ListView;
-                listcontrol.StackFromBottom = true;
+                //listcontrol.StackFromBottom = true;
                 listcontrol.TranscriptMode = Android.Widget.TranscriptMode.AlwaysScroll;
             }
 
@@ -140,9 +139,9 @@ namespace StritWalk.Droid
         }
 
         void Control_EditorAction(object sender, Android.Widget.TextView.EditorActionEventArgs e)
-        {
+        {            
             element?.InvokeCompleted(Control.Text.ToString());
-            Control.Text = "";
+            Control.Text = "";            
         }
 
         void Element_TextChanged(object sender, TextChangedEventArgs e)
@@ -162,8 +161,6 @@ namespace StritWalk.Droid
                 originalheight = Control.Height;
                 startedkey = true;
             }
-
-
         }
 
         async void checkLoad()
@@ -185,8 +182,8 @@ namespace StritWalk.Droid
 
         void Control_FocusChange(object sender, FocusChangeEventArgs e)
         {
-            Console.WriteLine("### focused editor");
-            checkLoad();
+            if (e.HasFocus)
+                checkLoad();
         }
     }
 }
