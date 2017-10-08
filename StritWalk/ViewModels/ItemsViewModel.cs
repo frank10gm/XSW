@@ -97,7 +97,8 @@ namespace StritWalk
                 IsLoading = false;
                 if (!string.IsNullOrWhiteSpace(result))
                 {
-                    var newitem = new Item { Id = result, Nuovo = true, Creator = Settings.UserId, Description = newPostDescription, Likes = "0", Comments_count = "0", Distanza = "0", Liked_me = "0" };
+                    var newitem = new Item { Id = result, Nuovo = true, Creator = Settings.UserId, Description = newPostDescription, Likes = "0", Comments_count = "0", Distanza = "0", Liked_me = "0",
+                    Comments = new Newtonsoft.Json.Linq.JArray()};
                     //Items.Insert(0, newitem);
                     insertItem(newitem);
 
