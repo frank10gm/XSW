@@ -70,6 +70,7 @@ namespace StritWalk
                     jitem["user_name"] = item.User_name;
                     jitem["comment"] = item.Comment;
                     Item.Comments.Insert(0, jitem);
+                    Item.VisibleComments = true;
                     Item.ViewComments = "";
                     //MessagingCenter.Send(this, "NewComment", Item);
                 }                

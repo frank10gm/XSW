@@ -241,17 +241,20 @@ namespace StritWalk
             set { SetProperty(ref liked_me, value); }
         }
 
-        JArray comments = null;
+        JArray comments = new JArray();
         public JArray Comments
         {
             get
             {
+                if (comments == null)
+                    return new JArray();
                 return comments;
             }
             set { SetProperty(ref comments, value); }
         }
 
         [JsonIgnore]
+        bool visibleComments = false;
         public bool VisibleComments
         {
             get
@@ -259,6 +262,7 @@ namespace StritWalk
                 if (comments != null) return true;
                 return false;
             }
+            set { SetProperty(ref visibleComments, value); }
         }
 
         [JsonIgnore]
@@ -274,7 +278,7 @@ namespace StritWalk
                 else
                 {
                     FormattedString result = new FormattedString();
-                    if (Comments == null)
+                    if (Comments == null || Comments.Count == 0)
                         return result;
 
                     Span testo;
@@ -295,7 +299,7 @@ namespace StritWalk
                             + ": " + comments[0]["comment"] + "\n"
                         };
                     }
-                        
+
                     if (Int32.Parse(comments_count) > 1)
                         testo.Text += comments[1]["user_name"] + ": " + comments[1]["comment"];
 
