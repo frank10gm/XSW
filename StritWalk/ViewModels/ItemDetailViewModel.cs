@@ -61,7 +61,7 @@ namespace StritWalk
             {                
                 if (!string.IsNullOrWhiteSpace(result))
                 {
-                    var item = new CommentsItem { User_name = Settings.UserId, Comment = (string)par1 };
+                    var item = new CommentsItem { User_name = Settings.UserId, Comment = (string)par1, NewComment = true };
                     CommentsItems.Add(item);
                     if (Device.RuntimePlatform == Device.iOS)
                         listView.ScrollTo(item, ScrollToPosition.End, true);

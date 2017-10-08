@@ -6,25 +6,25 @@ using Newtonsoft.Json.Linq;
 
 namespace StritWalk
 {
-	public class CommentsItem : ObservableObject
-	{
-		public CommentsItem()
-		{
-		}
+    public class CommentsItem : ObservableObject
+    {
+        public CommentsItem()
+        {
+        }
 
-		string comment = string.Empty;
-		public string Comment
-		{
-			get { return comment; }
-			set { SetProperty(ref comment, value); }
-		}
+        string comment = string.Empty;
+        public string Comment
+        {
+            get { return comment; }
+            set { SetProperty(ref comment, value); }
+        }
 
-		string user_name = string.Empty;
-		public string User_name
-		{
-			get { return user_name; }
-			set { SetProperty(ref user_name, value); }
-		}
+        string user_name = string.Empty;
+        public string User_name
+        {
+            get { return user_name; }
+            set { SetProperty(ref user_name, value); }
+        }
 
         string added = string.Empty;
         public string Added
@@ -33,14 +33,25 @@ namespace StritWalk
             set { SetProperty(ref added, value); }
         }
 
+        bool newcomment = false;
+        [JsonIgnore]
+        public bool NewComment
+        {
+            get { return newcomment; }
+            set { SetProperty(ref newcomment, value); }
+        }
+
         [JsonIgnore]
         public FormattedString Result
         {
-            get {
+            get
+            {
                 FormattedString result = new FormattedString();
-                Span user = new Span { Text = user_name + " ", FontAttributes = FontAttributes.Bold, FontSize = 12.0F, ForegroundColor = Color.FromHex("#2b98f0") };
+                Span user = new Span { Text = user_name + " ", FontAttributes = FontAttributes.Bold, FontSize = 12.0F, ForegroundColor = Color.FromHex("#2b98f0") }; //2b98f0 blue
                 Span text = new Span { Text = comment + "\n", FontSize = 12.0F, ForegroundColor = Color.FromHex("#000000") };
-                Span details = new Span { Text = added + " ago", FontSize = 8.0F, ForegroundColor = Color.FromHex("#333333") };
+                Span details = new Span { Text = added + "ago", FontSize = 8.0F, ForegroundColor = Color.FromHex("#333333") };
+                if (newcomment)
+                    details.Text = "now";
                 //return user_name + ": " + comment + " (" + added + " ago)";
                 result.Spans.Add(user);
                 result.Spans.Add(text);
@@ -48,5 +59,5 @@ namespace StritWalk
                 return result;
             }
         }
-	}
+    }
 }
