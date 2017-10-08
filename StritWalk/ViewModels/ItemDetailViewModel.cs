@@ -69,6 +69,8 @@ namespace StritWalk
                     var jitem = new JObject();
                     jitem["user_name"] = item.User_name;
                     jitem["comment"] = item.Comment;
+                    if (Item.Comments == null)
+                        Item.Comments = new JArray();
                     Item.Comments.Insert(0, jitem);
                     Item.VisibleComments = true;
                     Item.ViewComments = "";

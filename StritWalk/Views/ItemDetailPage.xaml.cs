@@ -27,7 +27,7 @@ namespace StritWalk
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
                 var postLabel = new Label { Margin = new Thickness(10, 5, 10, 5), TextColor = Color.Black };
-                postLabel.SetBinding(Label.TextProperty, "Comment");
+                postLabel.SetBinding(Label.FormattedTextProperty, "Result");
                 grid.Children.Add(postLabel, 0, 0);
 
                 cell.View = grid;                

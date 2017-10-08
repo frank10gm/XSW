@@ -241,13 +241,11 @@ namespace StritWalk
             set { SetProperty(ref liked_me, value); }
         }
 
-        JArray comments = new JArray();
+        JArray comments = null;
         public JArray Comments
         {
             get
             {
-                if (comments == null)
-                    return new JArray();
                 return comments;
             }
             set { SetProperty(ref comments, value); }
@@ -258,8 +256,8 @@ namespace StritWalk
         public bool VisibleComments
         {
             get
-            {
-                if (comments != null) return true;
+            {                
+                if (Int32.Parse(comments_count) > 0) return true;
                 return false;
             }
             set { SetProperty(ref visibleComments, value); }
@@ -278,7 +276,7 @@ namespace StritWalk
                 else
                 {
                     FormattedString result = new FormattedString();
-                    if (Comments == null || Comments.Count == 0)
+                    if (comments == null)
                         return result;
 
                     Span testo;

@@ -25,5 +25,28 @@ namespace StritWalk
 			get { return user_name; }
 			set { SetProperty(ref user_name, value); }
 		}
+
+        string added = string.Empty;
+        public string Added
+        {
+            get { return added; }
+            set { SetProperty(ref added, value); }
+        }
+
+        [JsonIgnore]
+        public FormattedString Result
+        {
+            get {
+                FormattedString result = new FormattedString();
+                Span user = new Span { Text = user_name + " ", FontAttributes = FontAttributes.Bold, FontSize = 12.0F, ForegroundColor = Color.FromHex("#2b98f0") };
+                Span text = new Span { Text = comment + "\n", FontSize = 12.0F, ForegroundColor = Color.FromHex("#000000") };
+                Span details = new Span { Text = added + " ago", FontSize = 8.0F, ForegroundColor = Color.FromHex("#333333") };
+                //return user_name + ": " + comment + " (" + added + " ago)";
+                result.Spans.Add(user);
+                result.Spans.Add(text);
+                result.Spans.Add(details);
+                return result;
+            }
+        }
 	}
 }
