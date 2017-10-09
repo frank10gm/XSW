@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -148,7 +149,15 @@ namespace StritWalk
                     Settings.listEnd = true;
                 }
 
-                items = await Task.Run(() => JsonConvert.DeserializeObject<IList<Item>>(json));
+                try
+                {
+                    items = await Task.Run(() => JsonConvert.DeserializeObject<IList<Item>>(json));
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+
             }
 
             return items;
@@ -301,14 +310,28 @@ namespace StritWalk
             json = o.ToString(Formatting.None);
             var httpContent = new StringContent(json, Encoding.UTF8, contentType);
             var req = await client.PostAsync($"", httpContent);
-            var resp = await req.Content.ReadAsStringAsync();            
-            var ao = JObject.Parse(resp);
+            var resp = await req.Content.ReadAsStringAsync();
+            try
+            {
+                var ao = JObject.Parse(resp);
+                Settings.Num_posts = (int)ao["num_posts"];
+                Settings.Num_likes = (int)ao["num_likes"];
+                Settings.Num_friends = (int)ao["num_friends"];
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
 
-            Settings.Num_posts = (int)ao["num_posts"];
-            Settings.Num_likes = (int)ao["num_likes"];
-            Settings.Num_friends = (int)ao["num_friends"];
+            try
+            {
+                me = await Task.Run(() => JsonConvert.DeserializeObject<User>(resp));
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
 
-            me = await Task.Run(() => JsonConvert.DeserializeObject<User>(resp));
             return me;
         }
 
@@ -317,7 +340,7 @@ namespace StritWalk
             if (!CrossConnectivity.Current.IsConnected) return 1;
 
             var contentType = "application/json";
-            var json = $"{{ action: '{action}', post_id: {post_id}, user_id: {Settings.AuthToken} }}";            
+            var json = $"{{ action: '{action}', post_id: {post_id}, user_id: {Settings.AuthToken} }}";
             JObject o = JObject.Parse(json);
             json = o.ToString(Formatting.None);
             var httpContent = new StringContent(json, Encoding.UTF8, contentType);
@@ -341,7 +364,7 @@ namespace StritWalk
                 var req = await client.PostAsync($"", httpContent);
                 var resp = await req.Content.ReadAsStringAsync();
                 var ao = JObject.Parse(resp);
-                result = (string)ao["new_id"];                
+                result = (string)ao["new_id"];
             }
             return result;
         }
@@ -361,11 +384,11 @@ namespace StritWalk
             //var ao = JObject.Parse(resp);        
             //Settings.Num_posts = (int)ao["num_posts"];
             if (resp == "[]")
-            {                
+            {
                 MessagingCenter.Send(this, "CommentsEnd", false);
             }
-            var commentslist = await Task.Run(() => JsonConvert.DeserializeObject<IList<CommentsItem>>(resp));       
-            return commentslist;            
+            var commentslist = await Task.Run(() => JsonConvert.DeserializeObject<IList<CommentsItem>>(resp));
+            return commentslist;
         }
 
     }
