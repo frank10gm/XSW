@@ -387,7 +387,15 @@ namespace StritWalk
             {
                 MessagingCenter.Send(this, "CommentsEnd", false);
             }
-            var commentslist = await Task.Run(() => JsonConvert.DeserializeObject<IList<CommentsItem>>(resp));
+            IList<CommentsItem> commentslist = null;
+            try
+            {
+                commentslist = await Task.Run(() => JsonConvert.DeserializeObject<IList<CommentsItem>>(resp));
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
             return commentslist;
         }
 
