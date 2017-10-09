@@ -48,7 +48,7 @@ namespace StritWalk.iOS
                 return;
 
             if (e.OldElement != null)
-            {                
+            {
                 UnregisterForKeyboardNotifications();
 
                 ad.KeyAppeared -= KeyRaise;
@@ -85,12 +85,12 @@ namespace StritWalk.iOS
                 Control.ShouldChangeText = (textView, range, text) =>
                 {
                     if (text.Equals("\n"))
-                    {
-                        requestSize = Control.SizeThatFits(new CGSize(Control.Frame.Width, 99999));
-                        AgumentView3();
+                    {                        
                         //Control.EndEditing(true);
-                        element?.InvokeCompleted(Control.Text.ToString());
+                        element?.InvokeCompleted(Control.Text);
                         Control.Text = "";
+                        requestSize = Control.SizeThatFits(new CGSize(Control.Frame.Width, 99999));
+                        AgumentView3(true);
                         return false;
                     }
                     return true;
@@ -301,7 +301,7 @@ namespace StritWalk.iOS
             }
         }
 
-        async void AgumentView3()
+        async void AgumentView3(bool wait = false)
         {
             //definizione listview
             var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
@@ -320,7 +320,7 @@ namespace StritWalk.iOS
             newFrame.Size = new CGSize(currentRect.Size.Width, requestSize.Height);
 
             if (requestSize.Height < 100) // && originalWithKeyFrame != Element.Bounds
-			{
+            {
                 await Element.LayoutTo(originalWithKeyFrame, 1, Easing.Linear);
                 //Control.Frame = newFrame;
 
