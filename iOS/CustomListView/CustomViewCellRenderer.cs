@@ -1,6 +1,7 @@
 ﻿using StritWalk;
 using StritWalk.iOS;
 using System;
+using System.Diagnostics;
 using System.ComponentModel;
 using UIKit;
 using Xamarin.Forms;
@@ -18,6 +19,7 @@ namespace StritWalk.iOS
         public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
         {
             var cell = base.GetCell(item, reusableCell, tv);
+            var xcell = item as CustomViewCell;
 
             //var customViewCell = (CustomViewCell)item;
             //cell = reusableCell as CustomListViewCell;
@@ -36,9 +38,23 @@ namespace StritWalk.iOS
             // //cell.UpdateCell(nativeCell);
 
             cell.SelectionStyle = UITableViewCellSelectionStyle.None;
-            //cell.BackgroundColor = UIColor.Red;
 
-			return cell;
+            try
+            {
+                UILabel comments = cell.Subviews[0].Subviews[0].Subviews[3].Subviews[0] as UILabel;
+                comments.UserInteractionEnabled = true;
+                UITapGestureRecognizer tapgesture = new UITapGestureRecognizer(() =>
+                {
+                    xcell.InvokeTap();
+                });
+                comments.AddGestureRecognizer(tapgesture);
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);   
+            }
+
+            return cell;
         }
 
     }

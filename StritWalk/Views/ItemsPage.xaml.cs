@@ -75,7 +75,7 @@ namespace StritWalk
                 commentsLabel.SetBinding(IsVisibleProperty, "VisibleComments");
                 grid.Children.Add(commentsLabel, 0, 2);
                 Grid.SetColumnSpan(commentsLabel, 2);
-				//var tapGestureRecognizer = new TapGestureRecognizer();
+                //var tapGestureRecognizer = new TapGestureRecognizer();
                 //tapGestureRecognizer.Command = viewModel.ICommentThis;
                 //tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandParameterProperty, ".");
                 //commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
@@ -93,8 +93,11 @@ namespace StritWalk
                 CustomViewCell cell = new CustomViewCell();
 
                 cell.View = grid;
-                //cell.Height = 234;                
-
+                cell.Tapges += (sender, e) =>
+                {
+                    viewModel.ICommentThis.Execute(sender);
+                };
+                            
                 return cell;
             });
 
