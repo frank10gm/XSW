@@ -75,10 +75,10 @@ namespace StritWalk
                 commentsLabel.SetBinding(IsVisibleProperty, "VisibleComments");
                 grid.Children.Add(commentsLabel, 0, 2);
                 Grid.SetColumnSpan(commentsLabel, 2);
-				var tapGestureRecognizer = new TapGestureRecognizer();
-                tapGestureRecognizer.Command = viewModel.ICommentThis;
-                tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandParameterProperty, ".");
-                commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
+				//var tapGestureRecognizer = new TapGestureRecognizer();
+                //tapGestureRecognizer.Command = viewModel.ICommentThis;
+                //tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandParameterProperty, ".");
+                //commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
 
                 var whiteSeparator = new BoxView { BackgroundColor = Color.White, HeightRequest = 10 };
                 grid.Children.Add(whiteSeparator, 0, 3);
