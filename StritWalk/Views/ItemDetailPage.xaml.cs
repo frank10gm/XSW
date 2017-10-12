@@ -41,6 +41,8 @@ namespace StritWalk
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+
+            //caricamento dei commenti
             await viewModel.LoadComments();
             if(viewModel.CommentsItems.Count > 0)
             {
@@ -60,6 +62,11 @@ namespace StritWalk
         public void WillSparisci()
         {
             page.TabBarHidden = false;
+        }
+
+        public void WillAppari()
+        {
+            page.TabBarHidden = true;
         }
 
         void OnReachBottom(object sender, ItemVisibilityEventArgs args)

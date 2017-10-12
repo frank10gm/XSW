@@ -49,18 +49,22 @@ namespace StritWalk.iOS
             base.ViewWillAppear(animated);
 
             var page = Element as ContentPage;
+            thispage.WillAppari();
 
-            if (page != null)
-            {
-                //var contentScrollView = page.Content as ScrollView;
-
-                //if (contentScrollView != null)
-                //return;
-
-                //RegisterForKeyboardNotifications();
-            }
-
+            //if (page != null)
+            //{
+            //var contentScrollView = page.Content as ScrollView;
+            //if (contentScrollView != null)
+            //return;
             //RegisterForKeyboardNotifications();
+            //}
+            //RegisterForKeyboardNotifications();
+        }
+
+        public override void ViewDidAppear(bool animated)
+        {
+            thispage.WillAppari();
+            base.ViewDidAppear(animated);
         }
 
         public override void ViewWillDisappear(bool animated)
@@ -68,6 +72,12 @@ namespace StritWalk.iOS
             thispage.WillSparisci();
             base.ViewWillDisappear(animated);
             //UnregisterForKeyboardNotifications();
+        }
+
+        public override void ViewDidDisappear(bool animated)
+        {
+            thispage.WillSparisci();
+            base.ViewDidDisappear(animated);
         }
 
         void RegisterForKeyboardNotifications()
@@ -161,8 +171,8 @@ namespace StritWalk.iOS
             IList<CommentsItem> items = listsource.list.ItemsSource as IList<CommentsItem>;
             if (items.Count > 0)
             {
-				var el = items[items.Count - 1];
-				listview.ScrollTo(el, ScrollToPosition.End, true);
+                var el = items[items.Count - 1];
+                listview.ScrollTo(el, ScrollToPosition.End, true);
             }
 
             _pageWasShiftedUp = true;

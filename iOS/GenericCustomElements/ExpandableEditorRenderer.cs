@@ -167,12 +167,12 @@ namespace StritWalk.iOS
             base.Dispose(disposing);
             if (disposing)
             {
+                UnregisterForKeyboardNotifications();
                 Control.Ended -= OnEnded;
                 Control.Changed -= OnChanged;
                 Control.Started -= OnFocused;
                 ad.KeyAppeared -= KeyRaise;
                 element.TextChanged -= Element_TextChanged;
-                UnregisterForKeyboardNotifications();
             }
         }
 
@@ -325,6 +325,7 @@ namespace StritWalk.iOS
 
             var newy = originalFrame.Y - originalKeyFrame.Height + originalFrame.Height - requestSize.Height;
             var newh = requestSize.Height;
+
             if (keyOn)
                 originalWithKeyFrame = new Xamarin.Forms.Rectangle(originalRect.X, newy - Control.Frame.Y, originalRect.Width, newh);
             else
@@ -335,8 +336,6 @@ namespace StritWalk.iOS
 
             if (requestSize.Height < 100) // && originalWithKeyFrame != Element.Bounds
             {
-                Debug.WriteLine("xxx " + currentFrame.Y);
-
                 await Element.LayoutTo(originalWithKeyFrame, 1, Easing.Linear);
 
                 //Control.Frame = newFrame;
