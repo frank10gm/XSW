@@ -11,6 +11,7 @@ using System.Linq;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 [assembly: ExportRenderer(typeof(ExpandableEditor), typeof(ExpandableEditorRenderer))]
 namespace StritWalk.iOS
@@ -85,7 +86,7 @@ namespace StritWalk.iOS
                 Control.ShouldChangeText = (textView, range, text) =>
                 {
                     if (text.Equals("\n"))
-                    {                        
+                    {
                         //Control.EndEditing(true);
                         element?.InvokeCompleted(Control.Text);
                         Control.Text = "";
@@ -260,7 +261,8 @@ namespace StritWalk.iOS
 
         protected virtual async void OnKeyboardHide(NSNotification notification)
         {
-            keyOn = false;
+            if (!keyOn) return;
+
             var currentFrame = Element.Bounds;
             var currentRect = Control.Frame;
             var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
@@ -299,10 +301,19 @@ namespace StritWalk.iOS
                 var el = items[items.Count - 1];
                 listview.ScrollTo(el, ScrollToPosition.End, true);
             }
+
+            keyOn = false;
         }
 
         async void AgumentView3(bool wait = false)
         {
+            if (!firstassignment)
+            {
+                originalFrame = Element.Bounds;
+                originalRect = Control.Frame;
+                firstassignment = true;
+            }
+
             //definizione listview
             var list = Control.Superview.Superview.Subviews[0] as CustomListViewRenderer;
             var listview = list.Element;
@@ -314,14 +325,20 @@ namespace StritWalk.iOS
 
             var newy = originalFrame.Y - originalKeyFrame.Height + originalFrame.Height - requestSize.Height;
             var newh = requestSize.Height;
+            if (keyOn)
+                originalWithKeyFrame = new Xamarin.Forms.Rectangle(originalRect.X, newy - Control.Frame.Y, originalRect.Width, newh);
+            else
+                originalWithKeyFrame = new Xamarin.Forms.Rectangle(originalFrame.X, originalFrame.Y + originalFrame.Height - requestSize.Height, originalFrame.Width, requestSize.Height);
 
-            originalWithKeyFrame = new Xamarin.Forms.Rectangle(originalRect.X, newy - Control.Frame.Y, originalRect.Width, newh);
-            var newFrame = new CGRect(originalRect.X, currentRect.Y, originalRect.Width, newh);
-            newFrame.Size = new CGSize(currentRect.Size.Width, requestSize.Height);
+            //var newFrame = new CGRect(originalRect.X, currentRect.Y, originalRect.Width, newh);
+            //newFrame.Size = new CGSize(currentRect.Size.Width, requestSize.Height);
 
             if (requestSize.Height < 100) // && originalWithKeyFrame != Element.Bounds
             {
+                Debug.WriteLine("xxx " + currentFrame.Y);
+
                 await Element.LayoutTo(originalWithKeyFrame, 1, Easing.Linear);
+
                 //Control.Frame = newFrame;
 
                 UIEdgeInsets contentinsets = new UIEdgeInsets(0, 0, listcontrol.ContentInset.Bottom + ((nfloat)requestSize.Height - 0), 0);
@@ -334,7 +351,7 @@ namespace StritWalk.iOS
             }
             else
             {
-                originalWithKeyFrame = new Xamarin.Forms.Rectangle(Element.Bounds.X, Element.Bounds.Y, Element.Bounds.Width, newh);
+                //originalWithKeyFrame = new Xamarin.Forms.Rectangle(Element.Bounds.X, Element.Bounds.Y, Element.Bounds.Width, newh);
 
                 Control.ScrollEnabled = true;
                 element.ScrollReady = true;
@@ -357,8 +374,8 @@ namespace StritWalk.iOS
         {
             requestSize = Control.SizeThatFits(new CGSize(Control.Frame.Width, 99999));
 
-            if (keyOn)
-                AgumentView3();
+            //if (keyOn)
+            AgumentView3();
 
             //placeholder
             if (Control.Text == element.Placeholder)

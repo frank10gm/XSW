@@ -31,16 +31,12 @@ namespace StritWalk.Droid
 
 			try
 			{                
-                var child1 = parent.GetChildAt(0) as ViewGroup;
-                var child2 = child1.GetChildAt(0) as ViewGroup;
-                var child3 = child2.GetChildAt(3) as ViewGroup;
-                //var comments = child3.GetChildAt(0) as FormsTextView;
-                Debug.WriteLine("xxx " + child2);
-                //comments.Clickable = true;
-                //comments.Click += (sender, e) => {
-                //    xcell.InvokeTap();
-                //    Debug.WriteLine("xxx tapped");
-                //};			
+                var child1 = cellview.GetChildAt(0) as ViewGroup;
+                var comments = child1.GetChildAt(3) as LabelRenderer;
+                comments.Control.Clickable = true;
+                comments.Control.Click += (sender, e) => {
+                    xcell.InvokeTap();
+                };			
 			}
 			catch (Exception ex)
 			{

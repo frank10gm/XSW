@@ -38,7 +38,6 @@ namespace StritWalk
             IsLoading = true;
             try
             {
-                Console.WriteLine("xxx " + Item.Comments);
                 if (Item.Comments != null)
                 {
                     var items = await DataStore.GetComments(Item.Id);
