@@ -123,13 +123,15 @@ namespace StritWalk
             ItemsListView.SelectedItem = null;
         }
 
-        private void OnFocused(object sender, EventArgs args)
-        {
-            viewModel.IsPosting = true;
+        private async void OnFocused(object sender, EventArgs args)
+        {            
             if (viewModel.NewPostDescription == PostEditor.Placeholder)
             {
                 viewModel.NewPostDescription = string.Empty;
             }
+
+            await Task.Delay(250);
+            viewModel.IsPosting = true;
         }
 
         private void OnCheckTest(object sender, EventArgs args)
@@ -149,7 +151,8 @@ namespace StritWalk
 
         void OnReachBottom(object sender, ItemVisibilityEventArgs args)
         {
-            if (PostEditor.IsFocused)
+
+            if (PostEditor.IsFocused && viewModel.IsPosting)
                 PostEditor.Unfocus();
 
             if (viewModel.Items[viewModel.Items.Count - 1] == args.Item && !Settings.listEnd)
