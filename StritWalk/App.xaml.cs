@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 
 using Xamarin.Forms;
+using Com.OneSignal;
+using Com.OneSignal.Abstractions;
 
 
 namespace StritWalk
@@ -23,6 +25,9 @@ namespace StritWalk
                 DependencyService.Register<CloudDataStore>();
 
             SetMainPage();
+            //OneSignal.Current.SetLogLevel(LOG_LEVEL.DEBUG, LOG_LEVEL.DEBUG);
+            OneSignal.Current.StartInit("31828451-4096-4355-8b1f-e54183b4a6c9")
+                             .EndInit();
         }
 
         public static void SetMainPage()
