@@ -16,7 +16,7 @@
             android:protectionLevel="signature" />
   <uses-permission android:name="it.hackweb.stritwalk.permission.C2D_MESSAGE" />
 	<application android:label="Seahorse" android:icon="@drawable/profile_generic">
-		<meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyC4TOxAcT8iM6_PFoTszKdizbai4ICwj9Q" />
+		<meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyC0VGMk_n9qvoFLQRNaE145415Pc_Di8hk" />
     <receiver android:name="com.onesignal.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
       <intent-filter>
