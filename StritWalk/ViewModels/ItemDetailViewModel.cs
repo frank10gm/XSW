@@ -30,7 +30,7 @@ namespace StritWalk
         {
             Item = item as Item;
             Title = "Comments";
-            CommentsItems = new ObservableRangeCollection<CommentsItem>();            
+            CommentsItems = new ObservableRangeCollection<CommentsItem>();
             PostCommentCommand = new Command(async (par1) => await PostCommentTask((object)par1));
         }
 
@@ -42,7 +42,23 @@ namespace StritWalk
                 if (Item.Comments != null)
                 {
                     var items = await DataStore.GetComments(Item.Id);
-                    CommentsItems.ReplaceRange(items);                    
+                    CommentsItems.ReplaceRange(items);
+                    Item.Comments_count = CommentsItems.Count.ToString();
+                    if (Item.Comments == null)
+                        Item.Comments = new JArray();
+                    var jitem = new JObject();
+                    if (CommentsItems.Count() > 1)
+                    {
+                        jitem["user_name"] = items[items.Count() - 2].User_name;
+                        jitem["comment"] = items[items.Count() - 2].Comment;
+                        Item.Comments.Insert(0, jitem);
+                        jitem = new JObject();
+                    }
+                    jitem["user_name"] = items[items.Count() - 1].User_name;
+                    jitem["comment"] = items[items.Count() - 1].Comment;
+                    Item.Comments.Insert(0, jitem);
+                    Item.VisibleComments = true;
+                    Item.ViewComments = "";
                 }
             }
             catch (Exception ex)
@@ -55,18 +71,18 @@ namespace StritWalk
         async Task PostCommentTask(object par1)
         {
             try
-            {                
+            {
                 result = await DataStore.PostComment(Item.Id, (string)par1);
             }
             finally
-            {                
+            {
                 if (!string.IsNullOrWhiteSpace(result))
                 {
                     var item = new CommentsItem { User_name = Settings.UserId, Comment = (string)par1, NewComment = true };
                     CommentsItems.Add(item);
                     if (Device.RuntimePlatform == Device.iOS)
                         listView.ScrollTo(item, ScrollToPosition.End, true);
-                    Item.Comments_count = CommentsItems.Count.ToString();                    
+                    Item.Comments_count = CommentsItems.Count.ToString();
                     var jitem = new JObject();
                     jitem["user_name"] = item.User_name;
                     jitem["comment"] = item.Comment;
@@ -90,8 +106,8 @@ namespace StritWalk
                     if (Item.Notification_id != null && !string.IsNullOrEmpty(Item.Notification_id))
                     {
                         //OneSignal.Current.PostNotification(notification);                        
-                    }                    
-                }                
+                    }
+                }
             }
         }
     }
