@@ -86,6 +86,7 @@ namespace StritWalk
                     //notification["send_after"] = System.DateTime.Now.ToUniversalTime().AddSeconds(30).ToString("U");
                     if (Item.Notification_id != null && string.IsNullOrEmpty(Item.Notification_id))
                     {
+                        Console.WriteLine("### invio notifica...");
                         OneSignal.Current.PostNotification(notification);
                     }                    
                 }                
