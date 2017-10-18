@@ -424,15 +424,33 @@ namespace StritWalk
             if (!CrossConnectivity.Current.IsConnected) return false;
 
             var contentType = "application/json";
-            var data = $"{{ user_id: '{Settings.AuthToken}' }}";
+            var data = $"{{ user_id: '{Settings.AuthToken}', notification_id: '{Settings.Notification_id}' }}";
             var json = $"{{ action: 'removePushId', data: {data} }}";
             JObject o = JObject.Parse(json);
             json = o.ToString(Formatting.None);
             var httpContent = new StringContent(json, Encoding.UTF8, contentType);
             var req = await client.PostAsync($"", httpContent);
-            var resp = await req.Content.ReadAsStringAsync();            
+            var resp = await req.Content.ReadAsStringAsync();
+            Console.WriteLine("### response " + resp);
             var ao = JObject.Parse(resp);
             var result = (string)ao["response"];
+            return true;
+        }
+
+        public async Task<bool> sendNotifications(string data)
+        {
+            if (!CrossConnectivity.Current.IsConnected) return false;
+
+            var contentType = "application/json";            
+            var json = $"{{ action: 'sendNotifications', data: {data} }}";
+            JObject o = JObject.Parse(json);
+            json = o.ToString(Formatting.None);
+            var httpContent = new StringContent(json, Encoding.UTF8, contentType);
+            var req = await client.PostAsync($"", httpContent);
+            var resp = await req.Content.ReadAsStringAsync();
+            Console.WriteLine("### response " + resp);
+            //var ao = JObject.Parse(resp);
+            //var result = (string)ao["response"];
             return true;
         }
     }

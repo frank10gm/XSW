@@ -105,5 +105,11 @@ namespace StritWalk
             get => AppSettings.GetValueOrDefault(nameof(Num_friends), 0);
             set => AppSettings.AddOrUpdateValue(nameof(Num_friends), value);
         }
+
+        public static string Notification_id
+        {
+            get => AppSettings.GetValueOrDefault(nameof(Notification_id), string.Empty);
+            set => AppSettings.AddOrUpdateValue(nameof(Notification_id), value);
+        }
     }
 }

@@ -274,7 +274,8 @@ namespace StritWalk
         private void getNotifId(string userID, string pushToken)
         {
             //salvare notification id nel server
-            Console.WriteLine("### " + userID);
+            Console.WriteLine("### notification_id: " + userID);
+            Settings.Notification_id = userID;
             DataStore.addPushId(userID);
         }
 

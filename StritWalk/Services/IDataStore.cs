@@ -22,5 +22,6 @@ namespace StritWalk
         Task<IList<CommentsItem>> GetComments(string post_id);
         Task<bool> addPushId(string notification_id);
         Task<bool> removePushId();
+        Task<bool> sendNotifications(string data);
     }
 }

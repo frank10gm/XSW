@@ -33,6 +33,16 @@ namespace StritWalk
             set { SetProperty(ref notification_id, value); }
         }
 
+        string creator_id = string.Empty;
+        public string Creator_id
+        {
+            get
+            {
+                return creator_id;
+            }
+            set { SetProperty(ref creator_id, value); }
+        }
+
         bool primo = true;
         public bool Primo
         {
