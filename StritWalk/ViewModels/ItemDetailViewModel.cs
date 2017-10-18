@@ -80,13 +80,13 @@ namespace StritWalk
                     //invio della notifica
                     Console.WriteLine("### notification_id " + Item.Notification_id);
                     var notification = new Dictionary<string, object>();
-                    notification["contents"] = new Dictionary<string, string>() { { "en", "Test Message" } };
+                    notification["headings"] = new Dictionary<string, string>() { { "en", Settings.UserId } };
+                    notification["contents"] = new Dictionary<string, string>() { { "en", "commented: " + (string)par1 } };
                     notification["include_player_ids"] = new List<string>() { Item.Notification_id };
                     // Example of scheduling a notification in the future.
                     //notification["send_after"] = System.DateTime.Now.ToUniversalTime().AddSeconds(30).ToString("U");
-                    if (Item.Notification_id != null && string.IsNullOrEmpty(Item.Notification_id))
-                    {
-                        Console.WriteLine("### invio notifica...");
+                    if (Item.Notification_id != null && !string.IsNullOrEmpty(Item.Notification_id))
+                    {         
                         OneSignal.Current.PostNotification(notification);
                     }                    
                 }                
