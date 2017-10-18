@@ -20,5 +20,7 @@ namespace StritWalk
         Task<int> ILikeThis(string post_id, string action);
         Task<string> PostComment(string post_id, string comment);
         Task<IList<CommentsItem>> GetComments(string post_id);
+        Task<bool> addPushId(string notification_id);
+        Task<bool> removePushId();
     }
 }

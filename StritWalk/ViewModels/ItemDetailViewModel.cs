@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Xamarin.Forms;
+using Com.OneSignal;
 
 namespace StritWalk
 {
@@ -75,6 +76,18 @@ namespace StritWalk
                     Item.VisibleComments = true;
                     Item.ViewComments = "";
                     //MessagingCenter.Send(this, "NewComment", Item);
+
+                    //invio della notifica
+                    Console.WriteLine("### notification_id " + Item.Notification_id);
+                    var notification = new Dictionary<string, object>();
+                    notification["contents"] = new Dictionary<string, string>() { { "en", "Test Message" } };
+                    notification["include_player_ids"] = new List<string>() { Item.Notification_id };
+                    // Example of scheduling a notification in the future.
+                    //notification["send_after"] = System.DateTime.Now.ToUniversalTime().AddSeconds(30).ToString("U");
+                    if (Item.Notification_id != null && string.IsNullOrEmpty(Item.Notification_id))
+                    {
+                        OneSignal.Current.PostNotification(notification);
+                    }                    
                 }                
             }
         }

@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using Com.OneSignal;
 
 namespace StritWalk
 {
@@ -69,6 +71,8 @@ namespace StritWalk
             //    IsNotEnd = arg;
             //});
 
+            //start with notifications
+            OneSignal.Current.GetTags(getNotifTags);
         }
 
         void insertItem(Item item)
@@ -239,5 +243,40 @@ namespace StritWalk
             await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(par1)));
             //await Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new ItemDetailPage(new ItemDetailViewModel(par1))));
         }
+
+        //notifications
+        private void getNotifTags(Dictionary<string, object> tags)
+        {            
+            try
+            {
+                Console.WriteLine("### how many tags? " + tags.Count);
+                if (tags == null || tags.Count == 0)
+                {
+                    Console.WriteLine("### no tags");
+                    OneSignal.Current.SetSubscription(true);
+                    OneSignal.Current.SendTags(new Dictionary<string, string>()
+                    {
+                        {"UserId", Settings.AuthToken }, //purtroppo il nome della variabile è rimasto quello da inizio sviluppo... :( 
+                        {"UserName", Settings.UserId }
+                    });
+                    OneSignal.Current.IdsAvailable(getNotifId);
+                    return;
+                }
+                foreach (var tag in tags)
+                    Console.WriteLine("### tags : " + tag.Key + ":" + tag.Value);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("### exception " + ex);
+            }
+        }
+
+        private void getNotifId(string userID, string pushToken)
+        {
+            //salvare notification id nel server
+            Console.WriteLine("### " + userID);
+            DataStore.addPushId(userID);
+        }
+
     }
 }

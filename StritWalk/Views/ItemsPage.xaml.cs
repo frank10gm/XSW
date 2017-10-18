@@ -9,6 +9,7 @@ using Plugin.MediaManager;
 using Plugin.Geolocator.Abstractions;
 using Plugin.Geolocator;
 using System.Diagnostics;
+using Com.OneSignal;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace StritWalk
@@ -97,7 +98,7 @@ namespace StritWalk
                 {
                     viewModel.ICommentThis.Execute(sender);
                 };
-                            
+
                 return cell;
             });
 
@@ -124,7 +125,7 @@ namespace StritWalk
         }
 
         private async void OnFocused(object sender, EventArgs args)
-        {            
+        {
             if (viewModel.NewPostDescription == PostEditor.Placeholder)
             {
                 viewModel.NewPostDescription = string.Empty;
@@ -200,8 +201,9 @@ namespace StritWalk
             base.OnAppearing();
 
             if (viewModel.Items.Count == 0)
-                viewModel.LoadItemsCommand.Execute(null);
+                viewModel.LoadItemsCommand.Execute(null);            
         }
+      
 
         void Handle_Tapped(object sender, System.EventArgs e)
         {

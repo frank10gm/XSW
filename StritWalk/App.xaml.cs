@@ -13,7 +13,7 @@ namespace StritWalk
         public static bool UseMockDataStore = false;
         public static string BackendUrl = "http://www.hackweb.it/api";
         public static CustomTabbedPage tabbedPage;
-        public static IDictionary<string, string> LoginParameters => null;
+        public static IDictionary<string, string> LoginParameters => null;        
 
         public App()
         {
@@ -27,7 +27,24 @@ namespace StritWalk
             SetMainPage();
             //OneSignal.Current.SetLogLevel(LOG_LEVEL.DEBUG, LOG_LEVEL.DEBUG);
             OneSignal.Current.StartInit("31828451-4096-4355-8b1f-e54183b4a6c9")
-                             .EndInit();
+                .InFocusDisplaying(OSInFocusDisplayOption.Notification)
+                .EndInit();            
+        }
+
+        private void getNotifTags(Dictionary<string, object> tags)
+        {
+            try
+            {
+                foreach (var tag in tags)
+                {
+                    Console.WriteLine("### " + tag.Key + ":" + tag.Value);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
         }
 
         public static void SetMainPage()
@@ -49,12 +66,15 @@ namespace StritWalk
 
         public static void LogOut()
         {
+            OneSignal.Current.DeleteTags(new List<string>() { "UserId", "UserName" });
+            OneSignal.Current.SetSubscription(false);
+            //rimuovere id da server            
+
             Settings.UserId = "";
             Settings.AuthToken = "";
             Settings.Num_friends = 0;
             Settings.Num_likes = 0;
-            Settings.Num_posts = 0;
-
+            Settings.Num_posts = 0;            
 
             Current.MainPage = new NavigationPage(new LoginPage())
             {
@@ -65,12 +85,12 @@ namespace StritWalk
 
         public static void GoToMainPage()
         {
-            
+
             tabbedPage = new CustomTabbedPage
             {
                 Children = {
                     new NavigationPage(new ItemsPage())
-                    {                        
+                    {
                         Icon = Platformer("tab_about.png", null, null),
                         Title = Platformer(null, "Home", "Home")
                         //Title = "home"
@@ -101,7 +121,7 @@ namespace StritWalk
                 //tabbedPage.BarBackgroundColor = Color.FromHex("#ffffff");
                 //tabbedPage.BackgroundColor = Color.FromHex("#2b98f0");
                 //tabbedPage.BarTextColor = Color.FromHex("#2b98f0");
-            }      
+            }
 
             Current.MainPage = tabbedPage;
 

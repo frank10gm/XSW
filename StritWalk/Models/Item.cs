@@ -23,6 +23,16 @@ namespace StritWalk
             set { SetProperty(ref id, value); }
         }
 
+        string notification_id = string.Empty;
+        public string Notification_id
+        {
+            get
+            {                
+                return notification_id;
+            }
+            set { SetProperty(ref notification_id, value); }
+        }
+
         bool primo = true;
         public bool Primo
         {
@@ -256,7 +266,7 @@ namespace StritWalk
         public bool VisibleComments
         {
             get
-            {                
+            {
                 if (Int32.Parse(comments_count) > 0) return true;
                 return false;
             }

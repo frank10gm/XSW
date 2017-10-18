@@ -7,15 +7,18 @@ namespace StritWalk
 {
     public partial class MenuPage : ContentPage
     {
+        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+
         public MenuPage()
         {
             InitializeComponent();
         }
 
 
-        void Handle_Clicked(object sender, System.EventArgs e)
+        async void Handle_Clicked(object sender, System.EventArgs e)
         {
-            App.LogOut();
+            await DataStore.removePushId();
+            App.LogOut();        
         }
     }
 }

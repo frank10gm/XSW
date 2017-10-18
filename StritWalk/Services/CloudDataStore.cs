@@ -109,6 +109,8 @@ namespace StritWalk
                     MessagingCenter.Send<CloudDataStore, bool>(this, "NotEnd", false);
                 }
 
+                //Console.WriteLine("### notif id: " + json);
+
                 items = await Task.Run(() => JsonConvert.DeserializeObject<IList<Item>>(json));
             }
 
@@ -399,5 +401,39 @@ namespace StritWalk
             return commentslist;
         }
 
+        public async Task<bool> addPushId(string notification_id)
+        {
+            if (!CrossConnectivity.Current.IsConnected) return false;
+
+            var contentType = "application/json";
+            var data = $"{{ user_id: '{Settings.AuthToken}', notification_id: '{notification_id}' }}";
+            var json = $"{{ action: 'addPushId', data: {data} }}";
+            JObject o = JObject.Parse(json);
+            json = o.ToString(Formatting.None);
+            var httpContent = new StringContent(json, Encoding.UTF8, contentType);
+            var req = await client.PostAsync($"", httpContent);
+            var resp = await req.Content.ReadAsStringAsync();
+            Console.WriteLine("### response " + resp);
+            var ao = JObject.Parse(resp);
+            var result = (string)ao["response"];
+            return true;
+        }
+
+        public async Task<bool> removePushId()
+        {
+            if (!CrossConnectivity.Current.IsConnected) return false;
+
+            var contentType = "application/json";
+            var data = $"{{ user_id: '{Settings.AuthToken}' }}";
+            var json = $"{{ action: 'removePushId', data: {data} }}";
+            JObject o = JObject.Parse(json);
+            json = o.ToString(Formatting.None);
+            var httpContent = new StringContent(json, Encoding.UTF8, contentType);
+            var req = await client.PostAsync($"", httpContent);
+            var resp = await req.Content.ReadAsStringAsync();            
+            var ao = JObject.Parse(resp);
+            var result = (string)ao["response"];
+            return true;
+        }
     }
 }
