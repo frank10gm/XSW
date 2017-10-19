@@ -33,7 +33,14 @@ namespace StritWalk
 			set { SetProperty(ref isBusy, value); }
 		}
 
-		bool formIsNotReady = true;
+        bool isWorking = false;
+        public bool IsWorking
+        {
+            get { return isWorking; }
+            set { SetProperty(ref isWorking, value); }
+        }
+
+        bool formIsNotReady = true;
 		public bool FormIsNotReady
 		{
 			get { return formIsNotReady; }
