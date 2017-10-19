@@ -253,7 +253,7 @@ namespace StritWalk
         public string Liked_me
         {
             get
-            {
+            {                
                 if (Int32.Parse(liked_me) == 1)
                     return "#2b98f0";
                 else return "#000000";

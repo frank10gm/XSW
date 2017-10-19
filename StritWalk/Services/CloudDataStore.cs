@@ -96,7 +96,7 @@ namespace StritWalk
                 }
 
                 var contentType = "application/json";
-                var req = "{\"action\":\"getPosts\", \"num\":\"" + start + "\", \"order\":\"added\", \"order2\":\"20\", \"lat\":\"" + Settings.lat + "\", \"lng\":\"" + Settings.lng + "\", \"user_id\":\"1\" }";
+                var req = "{\"action\":\"getPosts\", \"num\":\"" + start + "\", \"order\":\"added\", \"order2\":\"20\", \"lat\":\"" + Settings.lat + "\", \"lng\":\"" + Settings.lng + "\", \"user_id\":\"" + Settings.AuthToken + "\" }";
                 var httpContent = new StringContent(req, Encoding.UTF8, contentType);
 
                 //var json = await client.GetStringAsync($"api/item");
@@ -347,7 +347,7 @@ namespace StritWalk
             json = o.ToString(Formatting.None);
             var httpContent = new StringContent(json, Encoding.UTF8, contentType);
             var req = await client.PostAsync($"", httpContent);
-            var resp = await req.Content.ReadAsStringAsync();
+            var resp = await req.Content.ReadAsStringAsync();            
             if (resp == "added like.") return 0;
             else if (resp == "removed like.") return 2;
             else return 3;
