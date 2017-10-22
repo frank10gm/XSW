@@ -191,9 +191,9 @@ namespace StritWalk
             }
         }
 
-        void AddItem_Clicked(object sender, EventArgs e)
-        {
-            //await Navigation.PushAsync(new NewItemPage());
+        async void AddItem_Clicked(object sender, EventArgs e)
+        {            
+            await Navigation.PushAsync(new NewItemPage(viewModel.Items));
         }
 
         protected override void OnAppearing()

@@ -23,6 +23,25 @@ namespace StritWalk
             set { SetProperty(ref id, value); }
         }
 
+        string deadline = string.Empty;
+        public string Deadline
+        {
+            get
+            {
+                return deadline;
+            }
+            set { SetProperty(ref deadline, value); }
+        }
+
+        public DateTime Duedate
+        {
+            get
+            {
+                return DateTime.ParseExact(deadline, "yyyyMMdd", CultureInfo.InvariantCulture);
+            }
+            set { }
+        }
+
         string notification_id = string.Empty;
         public string Notification_id
         {
@@ -118,6 +137,16 @@ namespace StritWalk
         {
             get { return description; }
             set { SetProperty(ref description, value); }
+        }
+
+        string todo_list = string.Empty;
+        public string Todo_list
+        {
+            get
+            {
+                return todo_list;
+            }
+            set { SetProperty(ref todo_list, value); }
         }
 
         string added = string.Empty;
