@@ -109,7 +109,7 @@ namespace StritWalk
                     MessagingCenter.Send<CloudDataStore, bool>(this, "NotEnd", false);
                 }
 
-                //Console.WriteLine("### notif id: " + json);
+                //Console.WriteLine("### response getposts: " + json);
 
                 items = await Task.Run(() => JsonConvert.DeserializeObject<IList<Item>>(json));
             }
@@ -447,11 +447,27 @@ namespace StritWalk
             json = o.ToString(Formatting.None);
             var httpContent = new StringContent(json, Encoding.UTF8, contentType);
             var req = await client.PostAsync($"", httpContent);
-            var resp = await req.Content.ReadAsStringAsync();
-            Console.WriteLine("### response " + resp);
+            var resp = await req.Content.ReadAsStringAsync();            
             //var ao = JObject.Parse(resp);
             //var result = (string)ao["response"];
             return true;
+        }
+
+        public async Task<string> postActivity(string data)
+        {
+            if (!CrossConnectivity.Current.IsConnected) return "not connected";            
+            string result = string.Empty;
+            var contentType = "application/json";
+            var json = $"{{ action: 'postActivity', data: {data} }}";
+            JObject o = JObject.Parse(json);
+            json = o.ToString(Formatting.None);
+            var httpContent = new StringContent(json, Encoding.UTF8, contentType);
+            var req = await client.PostAsync($"", httpContent);
+            var resp = await req.Content.ReadAsStringAsync();
+            Console.WriteLine("### response " + resp);
+            var ao = JObject.Parse(resp);
+            result = (string)ao["new_id"];
+            return result;           
         }
     }
 }

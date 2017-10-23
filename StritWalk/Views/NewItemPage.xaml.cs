@@ -10,6 +10,7 @@ namespace StritWalk
         public Item Item { get; set; }
         public StackLayout mainLayout;
         public StackLayout listLayout;
+        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
 
         public NewItemPage(ObservableRangeCollection<Item> Items)
         {
@@ -53,14 +54,14 @@ namespace StritWalk
             mainLayout.Children.Add(title);
 
             Label duedate_l = new Label() { FontSize = 16, Text = "Due Date" };
-            DatePicker duedate = new DatePicker()
+            DatePicker duedate_p = new DatePicker()
             {
                 Format = "yyyy-MM-dd",
                 Date = DateTime.Now.AddMonths(1)
             };
-            duedate.SetBinding(DatePicker.DateProperty, "Item.Duedate");
+            duedate_p.SetBinding(DatePicker.DateProperty, "Item.Duedate_insert");
             mainLayout.Children.Add(duedate_l);
-            mainLayout.Children.Add(duedate);
+            mainLayout.Children.Add(duedate_p);
 
             Label description_l = new Label() { FontSize = 16, Text = "Description" };
             Editor description = new Editor();
@@ -79,7 +80,7 @@ namespace StritWalk
             newstep.Clicked += Newstep_Clicked;
             mainLayout.Children.Add(newstep);
 
-            duedate.Date = DateTime.Now.AddMonths(1);            
+            Item.Duedate_insert = DateTime.Now.AddMonths(1);
 
             view.Content = mainLayout;
         }
@@ -92,12 +93,24 @@ namespace StritWalk
 
         async void Save_Clicked(object sender, EventArgs e)
         {
+            //recupero i dati dall'input dell'utente
             string todo_list = "";
             foreach(Entry step in listLayout.Children)
             {
                 todo_list += "[ ] " + step.Text + "\n";
             }
             Item.Todo_list = todo_list;
+
+            double duedate = (Item.Duedate_insert.ToUniversalTime().Subtract(new DateTime(1970, 1, 1))).TotalSeconds;            
+
+            //invio i dati al server
+            var data = $"{{ id_user: '{Settings.AuthToken}', lat: '{Settings.lat}', lng: '{Settings.lng}', name: '{Item.Name}', audio: '', private: 0, " +
+                $"description: '{Item.Description}', " +
+                $"todo_list: '{Item.Todo_list}', " +
+                $"duedate: '{duedate}' }}";
+
+            await DataStore.postActivity(data);
+            //ritorno alla pagina precedente
             await Navigation.PopToRootAsync();
         }
 

@@ -33,11 +33,37 @@ namespace StritWalk
             set { SetProperty(ref deadline, value); }
         }
 
-        public DateTime Duedate
+        string duedate = String.Empty;
+        public string Duedate
+        {
+            get
+            {                
+                return duedate;
+            }
+            set { SetProperty(ref duedate, value); }
+        }
+
+        DateTime duedate_insert;
+        public DateTime Duedate_insert
         {
             get
             {
-                return DateTime.ParseExact(deadline, "yyyyMMdd", CultureInfo.InvariantCulture);
+                return duedate_insert;
+            }
+            set { SetProperty(ref duedate_insert, value); }
+        }
+
+        public DateTime Duedate_show
+        {
+            get
+            {
+                if (duedate == null || duedate == "0000-00-00 00:00:00")
+                    return DateTime.Now;
+                Console.WriteLine("### conversione " + duedate);
+                //DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+                //dtDateTime = dtDateTime.AddSeconds(Convert.ToDouble(duedate)).ToLocalTime();                
+                DateTime dtDateTime = DateTime.Parse(duedate);
+                return dtDateTime;
             }
             set { }
         }
@@ -189,11 +215,13 @@ namespace StritWalk
         {
             get
             {
-
                 FormattedString result = new FormattedString();
-
+                var duedate_topost = "";
+                if(duedate != null || duedate != "0000-00-00 00:00:00") {
+                    duedate_topost = " - due date: " + Duedate_show.ToString("dd/MM/yyyy");
+                }
                 Span creator = new Span { Text = Creator + "\n", FontAttributes = FontAttributes.Bold, FontSize = 16.0F, ForegroundColor = Color.FromHex("#2b98f0") };
-                Span details = new Span { Text = Details + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#333333") };
+                Span details = new Span { Text = Details + duedate_topost + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#333333") };
                 Span brace1 = new Span { Text = "{ ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#2b98f0") };
                 Span brace2 = new Span { Text = " } ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#2b98f0") };
                 Span name = new Span { Text = Name, FontAttributes = FontAttributes.Bold, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };

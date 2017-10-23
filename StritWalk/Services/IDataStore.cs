@@ -23,5 +23,6 @@ namespace StritWalk
         Task<bool> addPushId(string notification_id);
         Task<bool> removePushId();
         Task<bool> sendNotifications(string data);
+        Task<string> postActivity(string data);
     }
 }
