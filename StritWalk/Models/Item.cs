@@ -37,7 +37,7 @@ namespace StritWalk
         public string Duedate
         {
             get
-            {                
+            {
                 return duedate;
             }
             set { SetProperty(ref duedate, value); }
@@ -68,11 +68,24 @@ namespace StritWalk
             set { }
         }
 
+        public string Duedate_post
+        {
+            get
+            {
+                if (duedate != null || duedate != "0000-00-00 00:00:00")
+                {
+                    return " - due date: " + Duedate_show.ToString("dd/MM/yyyy");
+                }
+                else return "";
+            }
+            set { }
+        }
+
         string notification_id = string.Empty;
         public string Notification_id
         {
             get
-            {                
+            {
                 return notification_id;
             }
             set { SetProperty(ref notification_id, value); }
@@ -215,13 +228,9 @@ namespace StritWalk
         {
             get
             {
-                FormattedString result = new FormattedString();
-                var duedate_topost = "";
-                if(duedate != null || duedate != "0000-00-00 00:00:00") {
-                    duedate_topost = " - due date: " + Duedate_show.ToString("dd/MM/yyyy");
-                }
+                FormattedString result = new FormattedString();                              
                 Span creator = new Span { Text = Creator + "\n", FontAttributes = FontAttributes.Bold, FontSize = 16.0F, ForegroundColor = Color.FromHex("#2b98f0") };
-                Span details = new Span { Text = Details + duedate_topost + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#333333") };
+                Span details = new Span { Text = Details + Duedate_post + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#333333") };
                 Span brace1 = new Span { Text = "{ ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#2b98f0") };
                 Span brace2 = new Span { Text = " } ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#2b98f0") };
                 Span name = new Span { Text = Name, FontAttributes = FontAttributes.Bold, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };
@@ -310,7 +319,7 @@ namespace StritWalk
         public string Liked_me
         {
             get
-            {                
+            {
                 if (Int32.Parse(liked_me) == 1)
                     return "#2b98f0";
                 else return "#000000";
