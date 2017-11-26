@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Robotics.Mobile.Core.Bluetooth.LE;
 using Foundation;
 using UIKit;
 using TK.CustomMap.iOSUnified;
@@ -34,8 +34,10 @@ namespace StritWalk.iOS
             global::Xamarin.Forms.Forms.Init();
             Xamarin.FormsMaps.Init();
             //KeyboardOverlapRenderer.Init();
-            LoadApplication(new App());
+            App.SetAdapter(Adapter.Current);
             TKCustomMapRenderer.InitMapRenderer();
+
+            LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
         }

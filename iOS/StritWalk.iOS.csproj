@@ -182,6 +182,39 @@
     <Reference Include="TK.CustomMap.iOSUnified">
       <HintPath>..\packages\TK.CustomMap.1.6.1\lib\Xamarin.iOS10\TK.CustomMap.iOSUnified.dll</HintPath>
     </Reference>
+    <Reference Include="UniversalBeacon.Library.Core">
+      <HintPath>..\packages\UniversalBeaconLibrary.3.2.0\lib\netstandard1.3\UniversalBeacon.Library.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenNETCF.Forms">
+      <HintPath>..\packages\com.opennetcf.xamarin.forms.1.0.17137.0\lib\Xamarin.iOS10\OpenNETCF.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenNETCF.Forms.iOS">
+      <HintPath>..\packages\com.opennetcf.xamarin.forms.1.0.17137.0\lib\Xamarin.iOS10\OpenNETCF.Forms.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenNETCF.Extensions">
+      <HintPath>..\packages\opennetcf-extensions-standard.1.0.17160.0\lib\netstandard1.1\OpenNETCF.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenNETCF.IoC">
+      <HintPath>..\packages\opennetcf-ioc-standard.1.0.17213\lib\netstandard1.3\OpenNETCF.IoC.dll</HintPath>
+    </Reference>
+    <Reference Include="Robotics.Mobile.Core">
+      <HintPath>..\packages\Monkey.Robotics.0.5.2\lib\Xamarin.iOS10\Robotics.Mobile.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Robotics.Mobile.Core.iOS">
+      <HintPath>..\packages\Monkey.Robotics.0.5.2\lib\Xamarin.iOS10\Robotics.Mobile.Core.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Beahat.Abstractions">
+      <HintPath>..\packages\Plugin.Beahat.0.4.3\lib\Xamarin.iOS10\Plugin.Beahat.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Beahat">
+      <HintPath>..\packages\Plugin.Beahat.0.4.3\lib\Xamarin.iOS10\Plugin.Beahat.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism">
+      <HintPath>..\packages\Prism.Core.6.3.0\lib\Xamarin.iOS10\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Forms">
+      <HintPath>..\packages\Prism.Forms.6.3.0\lib\Xamarin.iOS1.0\Prism.Forms.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
@@ -241,6 +274,7 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon-83.5%402x.png">
       <InProject>false</InProject>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Contents.json" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\profile_generic.png" />
@@ -287,6 +321,7 @@
     <Compile Include="GenericCustomElements\ViewExtension.cs" />
     <Compile Include="GenericCustomElements\ExpandableEditorRenderer.cs" />
     <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="CustomPages\MonkeyPageRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -298,6 +333,9 @@
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="CustomPages\" />
+  </ItemGroup>
   <Import Project="..\StritWalk\StritWalk.projitems" Label="Shared" Condition="Exists('..\StritWalk\StritWalk.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

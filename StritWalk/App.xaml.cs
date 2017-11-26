@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using StritWalk.Views;
 using Xamarin.Forms;
 using Com.OneSignal;
 using Com.OneSignal.Abstractions;
-
 
 namespace StritWalk
 {
@@ -13,7 +12,8 @@ namespace StritWalk
         public static bool UseMockDataStore = false;
         public static string BackendUrl = "http://www.hackweb.it/api";
         public static CustomTabbedPage tabbedPage;
-        public static IDictionary<string, string> LoginParameters => null;        
+        public static IDictionary<string, string> LoginParameters => null;    
+        static Robotics.Mobile.Core.Bluetooth.LE.IAdapter Adapter;
 
         public App()
         {
@@ -101,13 +101,13 @@ namespace StritWalk
                         Title = Platformer(null, "Map", "Map")
                         //Title = "map"
                     },
-                    new NavigationPage(new MenuPage())
+                    new NavigationPage(new MonkeyPage())
                     {
-                        Icon = Platformer("tab_about.png", null, null),
-                        Title = Platformer(null, "News", "News")
+                        Icon = Platformer("tab_feed.png", null, null),
+                        Title = Platformer(null, "Monkeys", "Monkeys")
                         //Title = "map"
                     },
-                    new NavigationPage(new MenuPage())
+                    new NavigationPage(new MenuPage(Adapter))
                     {
                         Icon = Platformer("slideout.png", null, null),
                         Title = Platformer(null, "Menu", "Menu")
@@ -155,6 +155,11 @@ namespace StritWalk
             }
 
             return stringa;
+        }
+
+        public static void SetAdapter(Robotics.Mobile.Core.Bluetooth.LE.IAdapter adapter)
+        {
+            Adapter = adapter;
         }
     }
 }

@@ -43,6 +43,10 @@ namespace StritWalk.Droid
             //global::Xamarin.FormsGoogleMaps.Init(this, bundle);
             Toolkit.Init(this, bundle);
 
+            //mokey robotics ble
+            var a = new Robotics.Mobile.Core.Bluetooth.LE.Adapter();
+            App.SetAdapter(a);
+
             LoadApplication(new App());
         }
 

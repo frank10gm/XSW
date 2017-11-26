@@ -20,7 +20,8 @@
                         <Label HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" LineBreakMode="WordWrap" FontSize="Large" Text="Settings">
                         </Label>
                         <Button Text="Log Out" Clicked="Handle_Clicked" IsEnabled="true"/>
-
+<!--                        <Button Text="Scan Bikes" Clicked="Handle_Clicked2" IsEnabled="true"/>-->
+                        <Label x:Name="BeaLabel" Text="" FontSize="9"></Label>
                     </StackLayout>
                 </Grid>
             </ScrollView>
