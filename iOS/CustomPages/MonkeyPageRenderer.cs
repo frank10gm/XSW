@@ -93,6 +93,18 @@ namespace StritWalk.iOS
                 //InitPitchAndVolume();
 
                 locationMgr = new CLLocationManager();
+                locationMgr.PausesLocationUpdatesAutomatically = false;
+                locationMgr.RequestAlwaysAuthorization();
+                locationMgr.AllowsBackgroundLocationUpdates = true;
+
+                if (CLLocationManager.LocationServicesEnabled)
+                {
+                    //set the desired accuracy, in meters 
+                    //LocMgr.DesiredAccuracy = 1; 
+                    //LocMgr.LocationsUpdated += (object sender, CLLocationsUpdatedEventArgs e) => { 
+                    // fire our custom Location Updated event LocationUpdated (this, new LocationUpdatedEventArgs (e.Locations [e.Locations.Length - 1])); }; LocMgr.StartUpdatingLocation(); 
+                    //}
+                }
 
                 //locationMgr.RequestWhenInUseAuthorization();
 
@@ -171,7 +183,7 @@ namespace StritWalk.iOS
             var speechUtterance = new AVSpeechUtterance(text)
             {
                 //Rate = AVSpeechUtterance.MaximumSpeechRate / 16,
-                Rate = 0.1f,
+                Rate = 0.5f,
                 Voice = AVSpeechSynthesisVoice.FromLanguage("it-IT"),
                 Volume = volume,
                 PitchMultiplier = pitch

@@ -2,30 +2,35 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleIdentifier</key>
-	<string>it.hackweb.stritwalk</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
-	<key>CFBundleVersion</key>
-	<string>1.0</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>MinimumOSVersion</key>
-	<string>8.0</string>
-	<key>UIDeviceFamily</key>
-	<array>
-		<integer>1</integer>
-		<integer>2</integer>
-	</array>
+	<key></key>
+	<string></string>
+	<key>CFBundleName</key>
+	<string>SCR Town</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>location</string>
+		<string>bluetooth-central</string>
+		<string>bluetooth-peripheral</string>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string></string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
-	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -34,33 +39,32 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>XSAppIconAssets</key>
-	<string>Assets.xcassets/AppIcon-1.appiconset</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string> </string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string> </string>
-	<key></key>
-	<string></string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>audio</string>
-		<string>remote-notification</string>
-	</array>
-	<key>CFBundleName</key>
-	<string>SCR Town</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string></string>
+	<key>MinimumOSVersion</key>
+	<string>8.0</string>
+	<key>CFBundleIdentifier</key>
+	<string>it.hackweb.stritwalk</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AkzidGroProBolExt.otf</string>
 	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+		<integer>2</integer>
+	</array>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app will use your location to find iBeacons around you.</string>
+	<key>XSAppIconAssets</key>
+	<string>Assets.xcassets/AppIcon-1.appiconset</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string> This app will use your location for maps functionality.</string>
 </dict>
 </plist>
