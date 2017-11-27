@@ -294,6 +294,9 @@
     <BundleResource Include="Resources\cluster.png" />
     <BundleResource Include="Resources\cluster%402x.png" />
     <BundleResource Include="Resources\cluster%403x.png" />
+    <BundleResource Include="Resources\AkzidGroProBolExt.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppDelegate.cs" />

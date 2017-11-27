@@ -58,5 +58,9 @@
 	<string>SCR Town</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>AkzidGroProBolExt.otf</string>
+	</array>
 </dict>
 </plist>
