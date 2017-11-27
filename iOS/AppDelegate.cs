@@ -42,5 +42,15 @@ namespace StritWalk.iOS
             return base.FinishedLaunching(app, options);
         }
 
+        public override void DidEnterBackground(UIApplication app)
+        {
+            Console.WriteLine("App entering background state.");
+        }
+
+        public override void WillEnterForeground(UIApplication app)
+        {
+            Console.WriteLine("App will enter foreground");
+        }
+
     }
 }

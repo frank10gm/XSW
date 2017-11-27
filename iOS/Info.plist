@@ -66,5 +66,7 @@
 	<string>Assets.xcassets/AppIcon-1.appiconset</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string> This app will use your location for maps functionality.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app will use your location to find iBeacons around you and for maps functionality.</string>
 </dict>
 </plist>
