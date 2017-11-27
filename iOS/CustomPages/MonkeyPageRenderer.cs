@@ -90,7 +90,7 @@ namespace StritWalk.iOS
             if (UserInterfaceIdiomIsPhone)
             {
 
-                InitPitchAndVolume();
+                //InitPitchAndVolume();
 
                 locationMgr = new CLLocationManager();
 
@@ -134,8 +134,7 @@ namespace StritWalk.iOS
                                 break;
                             case CLProximity.Unknown:
                                 message = "I'm not sure how close you are to the monkey";
-
-                                //View.BackgroundColor = UIColor.Gray;
+                                View.BackgroundColor = UIColor.Gray;
                                 break;
                         }
 
@@ -234,8 +233,8 @@ namespace StritWalk.iOS
             {
                 InvokeOnMainThread(() =>
                 {
-                    var alert = new UIAlertView("", data.ToString(), null, "OK");
-                    alert.Show();
+                    //var alert = new UIAlertView("", data.ToString(), null, "OK");
+                    //alert.Show();
                 });
             }
 

@@ -44,7 +44,8 @@ namespace StritWalk
 
         public ItemsViewModel()
         {
-            Title = "Seahorse";
+            Title = "Scrambler Town";
+            //Title = "Seahorse";
             Items = new ObservableRangeCollection<Item>();
             //Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());

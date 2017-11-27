@@ -3,7 +3,7 @@
 	<ContentPage.Content>
         <StackLayout Padding="10">
             <Button Text="Start Scan" Command="{Binding StartScanCommand}"/>
-            <Label x:Name="BeaLabel" Text="{Binding Monkeys}" FontSize="10"></Label>
+            <Label x:Name="BeaLabel" Text="{Binding Monkeys}" FontSize="10" FontFamily="Akzidenz-Grotesk Pro"></Label>
         </StackLayout>
 	</ContentPage.Content>
 </ContentPage>
