@@ -99,7 +99,6 @@ namespace StritWalk.iOS
                 locationMgr.RegionEntered += (object sender, CLRegionEventArgs e) =>
                 {
                     Debug.WriteLine("new region");
-                    Debug.WriteLine(e.Region.Identifier);
                     if (e.Region.Identifier == monkeyId)
                     {
                         UILocalNotification notification = new UILocalNotification() { AlertBody = "There's a monkey hiding nearby!" };
@@ -109,32 +108,34 @@ namespace StritWalk.iOS
 
                 locationMgr.DidRangeBeacons += (object sender, CLRegionBeaconsRangedEventArgs e) =>
                 {
+                    Debug.WriteLine(e.Beacons.Length);
+
                     if (e.Beacons.Length > 0)
                     {
-
+                        
                         CLBeacon beacon = e.Beacons[0];
                         string message = "";
 
                         switch (beacon.Proximity)
                         {
                             case CLProximity.Immediate:
-                                message = "You found the monkey!";
+                                message = "Birillooooooooo! Birillooooooo!";
 
                                 View.BackgroundColor = UIColor.Green;
                                 break;
                             case CLProximity.Near:
-                                message = "You're getting warmer";
+                                message = "Sei vicino a Birillo!";
 
                                 View.BackgroundColor = UIColor.Yellow;
                                 break;
                             case CLProximity.Far:
-                                message = "You're freezing cold";
+                                message = "Birillo si trova in quest'area!";
 
                                 View.BackgroundColor = UIColor.Blue;
                                 break;
                             case CLProximity.Unknown:
-                                message = "I'm not sure how close you are to the monkey";
-                                View.BackgroundColor = UIColor.Gray;
+                                //message = "I'm not sure how close you are to the monkey";
+                                //View.BackgroundColor = UIColor.FromRGB(239,239,239);
                                 break;
                         }
 
@@ -147,6 +148,8 @@ namespace StritWalk.iOS
                                 SendMessage();
                         }
                         previousProximity = beacon.Proximity;
+                    }else{
+                        View.BackgroundColor = UIColor.FromRGB(239,239,239);
                     }
                 };
 
@@ -167,8 +170,9 @@ namespace StritWalk.iOS
 
             var speechUtterance = new AVSpeechUtterance(text)
             {
-                Rate = AVSpeechUtterance.MaximumSpeechRate / 4,
-                Voice = AVSpeechSynthesisVoice.FromLanguage("en-AU"),
+                //Rate = AVSpeechUtterance.MaximumSpeechRate / 16,
+                Rate = 0.1f,
+                Voice = AVSpeechSynthesisVoice.FromLanguage("it-IT"),
                 Volume = volume,
                 PitchMultiplier = pitch
             };

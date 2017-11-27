@@ -24,7 +24,7 @@ namespace StritWalk.ViewModels
 
         #region PROPERTIES
 
-        string monkeys = "Monkeys:\n\n";
+        string monkeys = "MONKEYS\n\n";
         public string Monkeys
         {
             get { return monkeys; }
