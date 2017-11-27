@@ -191,9 +191,6 @@
     <Reference Include="OpenNETCF.Forms.iOS">
       <HintPath>..\packages\com.opennetcf.xamarin.forms.1.0.17137.0\lib\Xamarin.iOS10\OpenNETCF.Forms.iOS.dll</HintPath>
     </Reference>
-    <Reference Include="OpenNETCF.Extensions">
-      <HintPath>..\packages\opennetcf-extensions-standard.1.0.17160.0\lib\netstandard1.1\OpenNETCF.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="OpenNETCF.IoC">
       <HintPath>..\packages\opennetcf-ioc-standard.1.0.17213\lib\netstandard1.3\OpenNETCF.IoC.dll</HintPath>
     </Reference>
@@ -214,6 +211,9 @@
     </Reference>
     <Reference Include="Prism.Forms">
       <HintPath>..\packages\Prism.Forms.6.3.0\lib\Xamarin.iOS1.0\Prism.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenNETCF.Extensions">
+      <HintPath>..\packages\com.opennetcf.extensions.pcl.1.0.17150.0\lib\Xamarin.iOS10\OpenNETCF.Extensions.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
