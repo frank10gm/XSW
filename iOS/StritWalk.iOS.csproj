@@ -275,6 +275,15 @@
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-40.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-60.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-58.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-87.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-120.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-180.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-48.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-55.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-80.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\profile_generic.png" />
@@ -325,6 +334,7 @@
     <Compile Include="GenericCustomElements\ExpandableEditorRenderer.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="CustomPages\MonkeyPageRenderer.cs" />
+    <Compile Include="Services\IBeaconService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -338,6 +348,7 @@
   <ItemGroup />
   <ItemGroup>
     <Folder Include="CustomPages\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="..\StritWalk\StritWalk.projitems" Label="Shared" Condition="Exists('..\StritWalk\StritWalk.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

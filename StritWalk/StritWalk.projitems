@@ -67,6 +67,7 @@
       <DependentUpon>MonkeyPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MonkeyViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\IIBeaconService.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />

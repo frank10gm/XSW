@@ -10,16 +10,20 @@ namespace StritWalk.ViewModels
     public class MonkeyViewModel : ObservableObject
     {
 
+        IIBeaconService iBeaconService;
+
         public MonkeyViewModel()
         {
             StartScanCommand = new Command(async () => await ScanTask());
-
+            iBeaconService = DependencyService.Get<IIBeaconService>();
+            iBeaconService.StartTracking();
         }
 
         async Task ScanTask()
         {
             MessagingCenter.Send(this, "NotImp", "Not Implemented");
         }
+
 
 
         #region PROPERTIES
