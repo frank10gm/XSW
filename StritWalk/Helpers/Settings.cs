@@ -1,4 +1,5 @@
-﻿using Plugin.Settings;
+﻿using System;
+using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 
 namespace StritWalk
@@ -110,6 +111,12 @@ namespace StritWalk
         {
             get => AppSettings.GetValueOrDefault(nameof(Notification_id), string.Empty);
             set => AppSettings.AddOrUpdateValue(nameof(Notification_id), value);
+        }
+
+        public static DateTime LastBea
+        {
+            get => AppSettings.GetValueOrDefault(nameof(LastBea), DateTime.UtcNow.Date.AddDays(-5));
+            set => AppSettings.AddOrUpdateValue(nameof(LastBea), value);
         }
     }
 }

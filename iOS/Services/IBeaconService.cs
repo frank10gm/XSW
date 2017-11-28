@@ -41,6 +41,7 @@ namespace StritWalk.iOS
         float volume = 0.5f;
         float pitch = 1.0f;
         bool inRange = false;
+        DateTime lastOpen;
 
         MCSession session;
         MCPeerID peer;
@@ -117,11 +118,21 @@ namespace StritWalk.iOS
                     string message = "";
                     string status = "no";
 
+
+
                     if (e.Beacons.Length > 0)
                     {
-                        if(!inRange){
-                            UILocalNotification notification = new UILocalNotification() { AlertBody = "There is a Monkey near!!!" };
+                        if(DateTime.UtcNow.Date != Settings.LastBea)
+                        {
+                            Debug.WriteLine(Settings.LastBea);
+                            Debug.WriteLine(DateTime.UtcNow.Date);
+                            Settings.LastBea = DateTime.UtcNow.Date;
+                            UILocalNotification notification = new UILocalNotification() { AlertBody = "There is a Monkey nearby!!!" };
                             UIApplication.SharedApplication.PresentLocalNotificationNow(notification);
+                        }
+
+                        if(!inRange){
+                            
                         }
                         inRange = true;
 

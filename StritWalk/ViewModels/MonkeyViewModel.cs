@@ -13,17 +13,19 @@ namespace StritWalk.ViewModels
         IIBeaconService iBeaconService;
 
         public MonkeyViewModel()
-        {
+        {            
+
             StartScanCommand = new Command(async () => await ScanTask());
 
-            if (Xamarin.Forms.Device.iOS == Xamarin.Forms.Device.RuntimePlatform){
+            if (Xamarin.Forms.Device.iOS == Xamarin.Forms.Device.RuntimePlatform)
+            {
                 iBeaconService = DependencyService.Get<IIBeaconService>();
                 iBeaconService.StartTracking();
                 iBeaconService.LocationChanged += (sender, e) =>
                 {
                     if (e != "no")
                         Monkeys = "There is a SCRAMBLER " + e;
-                };    
+                };
             }
         }
 
