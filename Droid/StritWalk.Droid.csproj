@@ -219,6 +219,27 @@
     <Reference Include="Robotics.Mobile.Core.Droid">
       <HintPath>..\packages\Monkey.Robotics.0.5.2\lib\MonoAndroid10\Robotics.Mobile.Core.Droid.dll</HintPath>
     </Reference>
+    <Reference Include="UniversalBeacon.Library.Android">
+      <HintPath>..\packages\UniversalBeaconLibrary.3.2.0\lib\MonoAndroid10\UniversalBeacon.Library.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="UniversalBeacon.Library.Core">
+      <HintPath>..\packages\UniversalBeaconLibrary.3.2.0\lib\MonoAndroid10\UniversalBeacon.Library.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenNETCF.Google.Analytics.Android">
+      <HintPath>..\packages\opennetcf-analytics-netstandard.1.0.17184.0\lib\MonoAndroid10\OpenNETCF.Google.Analytics.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenNETCF.Google.Analytics">
+      <HintPath>..\packages\opennetcf-analytics-netstandard.1.0.17184.0\lib\MonoAndroid10\OpenNETCF.Google.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenNETCF.Xamarin.MVVM">
+      <HintPath>..\packages\opennetcf-xamarin-mvvm.1.0.17184\lib\netstandard1.3\OpenNETCF.Xamarin.MVVM.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenNETCF.Extensions">
+      <HintPath>..\packages\com.opennetcf.extensions.pcl.1.0.17110.0\lib\MonoAndroid10\OpenNETCF.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenNETCF.IoC">
+      <HintPath>..\packages\com.opennetcf.ioc.pcl.1.0.17135.0\lib\portable-net45+netcore45+wpa81+wp8\OpenNETCF.IoC.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

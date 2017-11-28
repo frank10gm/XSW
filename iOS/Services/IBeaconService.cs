@@ -36,11 +36,11 @@ namespace StritWalk.iOS
         BTPeripheralDelegate peripheralDelegate;
         CLLocationManager locationMgr;
         CLProximity previousProximity;
-        bool inRange = false;
         CLBeaconRegion beaconRegion;
         NSMutableDictionary peripheralData;
         float volume = 0.5f;
         float pitch = 1.0f;
+        bool inRange = false;
 
         MCSession session;
         MCPeerID peer;
@@ -51,7 +51,7 @@ namespace StritWalk.iOS
         NSDictionary dict = new NSDictionary();
         static readonly string serviceType = "FindTheMonkey";
 
-        public event EventHandler<GeographicLocation> LocationChanged;
+        public event EventHandler<string> LocationChanged;
 
         public IBeaconService()
         {
@@ -105,39 +105,43 @@ namespace StritWalk.iOS
 
                 locationMgr.RegionEntered += (object sender, CLRegionEventArgs e) =>
                 {
-                    Debug.WriteLine("new region");
                     if (e.Region.Identifier == monkeyId)
                     {
-                        UILocalNotification notification = new UILocalNotification() { AlertBody = "There's a monkey hiding nearby!" };
+                        UILocalNotification notification = new UILocalNotification() { AlertBody = "There's a monkey hiding in this region!" };
                         UIApplication.SharedApplication.PresentLocalNotificationNow(notification);
                     }
                 };
 
                 locationMgr.DidRangeBeacons += (object sender, CLRegionBeaconsRangedEventArgs e) =>
                 {
-                    Debug.WriteLine(e.Beacons.Length);
+                    string message = "";
+                    string status = "no";
 
                     if (e.Beacons.Length > 0)
                     {
+                        if(!inRange){
+                            UILocalNotification notification = new UILocalNotification() { AlertBody = "There is a Monkey near!!!" };
+                            UIApplication.SharedApplication.PresentLocalNotificationNow(notification);
+                        }
+                        inRange = true;
 
                         CLBeacon beacon = e.Beacons[0];
-                        string message = "";
 
                         switch (beacon.Proximity)
                         {
                             case CLProximity.Immediate:
-                                message = "Birillooooooooo! Birillooooooo!";
-
+                                message = "Birillo is here!";
+                                status = "here";
                                 //View.BackgroundColor = UIColor.Green;
                                 break;
                             case CLProximity.Near:
                                 message = "Sei vicino a Birillo!";
-
+                                status = "near";
                                 //View.BackgroundColor = UIColor.Yellow;
                                 break;
                             case CLProximity.Far:
                                 message = "Birillo si trova in quest'area!";
-
+                                status = "far";
                                 //View.BackgroundColor = UIColor.Blue;
                                 break;
                             case CLProximity.Unknown:
@@ -148,17 +152,25 @@ namespace StritWalk.iOS
 
                         if (previousProximity != beacon.Proximity)
                         {
-                            Speak(message);
+                            //Speak(message);
 
                             // demo send message using multipeer connectivity
-                            if (beacon.Proximity == CLProximity.Immediate)
-                                SendMessage();
+                            //if (beacon.Proximity == CLProximity.Immediate)
+                                //SendMessage();
                         }
                         previousProximity = beacon.Proximity;
                     }
                     else
                     {
+                        inRange = false;
+                        status = "no";
                         //View.BackgroundColor = UIColor.FromRGB(239, 239, 239);
+                    }
+
+                    EventHandler<string> handler = LocationChanged;
+                    if (handler != null)
+                    {
+                        handler(this, status);
                     }
                 };
 

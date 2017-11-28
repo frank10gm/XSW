@@ -15,20 +15,31 @@ namespace StritWalk.ViewModels
         public MonkeyViewModel()
         {
             StartScanCommand = new Command(async () => await ScanTask());
-            iBeaconService = DependencyService.Get<IIBeaconService>();
-            iBeaconService.StartTracking();
+
+            if (Xamarin.Forms.Device.iOS == Xamarin.Forms.Device.RuntimePlatform){
+                iBeaconService = DependencyService.Get<IIBeaconService>();
+                iBeaconService.StartTracking();
+                iBeaconService.LocationChanged += (sender, e) =>
+                {
+                    if (e != "no")
+                        Monkeys = "There is a SCRAMBLER " + e;
+                };    
+            }
         }
 
         async Task ScanTask()
         {
-            MessagingCenter.Send(this, "NotImp", "Not Implemented");
+            await Task.Run(() =>
+            {
+                MessagingCenter.Send(this, "NotImp", "Not Implemented");
+            });
         }
 
 
 
         #region PROPERTIES
 
-        string monkeys = "MONKEYS\n\n";
+        string monkeys = "There are no SCRAMBLERs here\n\n";
         public string Monkeys
         {
             get { return monkeys; }

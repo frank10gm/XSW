@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace StritWalk.Models
-{
+{   
     public class BeaconService : IDisposable
     {
 

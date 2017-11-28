@@ -3,7 +3,7 @@ namespace StritWalk
 {
     public interface IIBeaconService
     {
-        event EventHandler<GeographicLocation> LocationChanged;
+        event EventHandler<string> LocationChanged;
 
         void StartTracking();
 
