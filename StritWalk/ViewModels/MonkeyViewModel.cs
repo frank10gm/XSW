@@ -24,7 +24,7 @@ namespace StritWalk.ViewModels
                 iBeaconService.LocationChanged += (sender, e) =>
                 {
                     if (e != "no")
-                        Monkeys = "There is a SCRAMBLER " + e;
+                        Monkeys = "There is a SCR " + e + "\n\n" + Settings.LastBea;
                 };
             }
         }
@@ -41,7 +41,7 @@ namespace StritWalk.ViewModels
 
         #region PROPERTIES
 
-        string monkeys = "There are no SCRAMBLERs here\n\n";
+        string monkeys = "There are no SCRs here\n\n" + "" + Settings.LastBea;
         public string Monkeys
         {
             get { return monkeys; }
