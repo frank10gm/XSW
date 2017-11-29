@@ -105,10 +105,12 @@ namespace StritWalk.iOS
 
                 locationMgr.RegionEntered += (object sender, CLRegionEventArgs e) =>
                 {
+                    UILocalNotification notification = new UILocalNotification() { AlertBody = "There's a SCR hiding in this region! " + e.Region.Identifier };
+                    UIApplication.SharedApplication.PresentLocalNotificationNow(notification);
+
                     if (e.Region.Identifier == monkeyId)
                     {
-                        UILocalNotification notification = new UILocalNotification() { AlertBody = "There's a SCR hiding in this region!" };
-                        UIApplication.SharedApplication.PresentLocalNotificationNow(notification);
+                        //
                     }
                 };
 
@@ -119,15 +121,16 @@ namespace StritWalk.iOS
 
                     if (e.Beacons.Length > 0)
                     {
-                        if(DateTime.UtcNow > Settings.LastBea.AddHours(1))
+                        if (DateTime.UtcNow > Settings.LastBea.AddHours(1))
                         {
                             Settings.LastBea = DateTime.UtcNow;
                             UILocalNotification notification = new UILocalNotification() { AlertBody = "There is a SCR nearby!!!" };
                             UIApplication.SharedApplication.PresentLocalNotificationNow(notification);
                         }
 
-                        if(!inRange){
-                            
+                        if (!inRange)
+                        {
+
                         }
                         inRange = true;
 
@@ -162,7 +165,7 @@ namespace StritWalk.iOS
 
                             // demo send message using multipeer connectivity
                             //if (beacon.Proximity == CLProximity.Immediate)
-                                //SendMessage();
+                            //SendMessage();
                         }
                         previousProximity = beacon.Proximity;
                     }
