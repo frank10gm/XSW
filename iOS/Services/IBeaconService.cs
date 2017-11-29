@@ -63,17 +63,17 @@ namespace StritWalk.iOS
 
         public void StartTracking()
         {
-            if (!UserInterfaceIdiomIsPhone)
-            {
-                //power - the received signal strength indicator (RSSI) value (measured in decibels) of the beacon from one meter away
-                var power = new NSNumber(-59);
-                peripheralData = beaconRegion.GetPeripheralData(power);
-                peripheralMgr.StartAdvertising(peripheralData);
-            }
-            else
-            {
-                StartMultipeerAdvertiser();
-            }
+            //if (!UserInterfaceIdiomIsPhone)
+            //{
+            //    //power - the received signal strength indicator (RSSI) value (measured in decibels) of the beacon from one meter away
+            //    var power = new NSNumber(-59);
+            //    peripheralData = beaconRegion.GetPeripheralData(power);
+            //    peripheralMgr.StartAdvertising(peripheralData);
+            //}
+            //else
+            //{
+            //    StartMultipeerAdvertiser();
+            //}
 
             var monkeyUUID = new NSUuid(uuid);
             beaconRegion = new CLBeaconRegion(monkeyUUID, monkeyId);
@@ -81,7 +81,6 @@ namespace StritWalk.iOS
             beaconRegion.NotifyEntryStateOnDisplay = true;
             beaconRegion.NotifyOnEntry = true;
             beaconRegion.NotifyOnExit = true;
-
 
             if (UserInterfaceIdiomIsPhone)
             {
