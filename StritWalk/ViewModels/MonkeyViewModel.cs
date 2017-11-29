@@ -25,15 +25,19 @@ namespace StritWalk.ViewModels
                 {
                     if (e != "no")
                         Monkeys = "There is a SCR " + e + "\n\n" + Settings.LastBea;
+                    else
+                        Monkeys = "There are no SCRs here\n\n" + "" + Settings.LastBea;
                 };
             }
         }
 
         async Task ScanTask()
         {
+            MessagingCenter.Send(this, "NotImp", "Not Implemented");
+
             await Task.Run(() =>
             {
-                MessagingCenter.Send(this, "NotImp", "Not Implemented");
+                
             });
         }
 

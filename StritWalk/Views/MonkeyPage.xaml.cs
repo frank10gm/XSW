@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using StritWalk.ViewModels;
 using Xamarin.Forms;
+using System.Diagnostics;
 
 namespace StritWalk.Views
 {
@@ -18,8 +19,13 @@ namespace StritWalk.Views
 
             MessagingCenter.Subscribe<MonkeyViewModel, string>(this, "NotImp", (sender, arg) =>
             {
-                DisplayAlert("Alert", "Function not implemented", "OK");
+                Alarm();
             });
+        }
+
+        async void Alarm()
+        {
+            await DisplayAlert("Alert", "Function not implemented", "OK");
         }
     }
 }

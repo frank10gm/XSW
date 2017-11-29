@@ -145,12 +145,12 @@ namespace StritWalk.iOS
                                 break;
                             case CLProximity.Near:
                                 message = "Sei vicino a Birillo!";
-                                status = "near";
+                                status = "nearby";
                                 //View.BackgroundColor = UIColor.Yellow;
                                 break;
                             case CLProximity.Far:
                                 message = "Birillo si trova in quest'area!";
-                                status = "far";
+                                status = "far away";
                                 //View.BackgroundColor = UIColor.Blue;
                                 break;
                             case CLProximity.Unknown:
