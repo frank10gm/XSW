@@ -108,7 +108,7 @@ namespace StritWalk.iOS
                 {
                     if (e.Region.Identifier == monkeyId)
                     {
-                        UILocalNotification notification = new UILocalNotification() { AlertBody = "There's a monkey hiding in this region!" };
+                        UILocalNotification notification = new UILocalNotification() { AlertBody = "There's a SCR hiding in this region!" };
                         UIApplication.SharedApplication.PresentLocalNotificationNow(notification);
                     }
                 };
@@ -118,16 +118,12 @@ namespace StritWalk.iOS
                     string message = "";
                     string status = "no";
 
-
-
                     if (e.Beacons.Length > 0)
                     {
-                        if(DateTime.UtcNow.Date != Settings.LastBea)
+                        if(DateTime.UtcNow > Settings.LastBea.AddHours(1))
                         {
-                            Debug.WriteLine(Settings.LastBea);
-                            Debug.WriteLine(DateTime.UtcNow.Date);
-                            Settings.LastBea = DateTime.UtcNow.Date;
-                            UILocalNotification notification = new UILocalNotification() { AlertBody = "There is a Monkey nearby!!!" };
+                            Settings.LastBea = DateTime.UtcNow;
+                            UILocalNotification notification = new UILocalNotification() { AlertBody = "There is a SCR nearby!!!" };
                             UIApplication.SharedApplication.PresentLocalNotificationNow(notification);
                         }
 
