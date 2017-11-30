@@ -59,6 +59,7 @@ namespace StritWalk.iOS
             UIApplication.SharedApplication.IdleTimerDisabled = true;
             peripheralDelegate = new BTPeripheralDelegate();
             peripheralMgr = new CBPeripheralManager(peripheralDelegate, DispatchQueue.DefaultGlobalQueue);
+            StartTracking();
         }
 
         public void StartTracking()
@@ -88,10 +89,12 @@ namespace StritWalk.iOS
                 //InitPitchAndVolume();
 
                 locationMgr = new CLLocationManager();
-                locationMgr.PausesLocationUpdatesAutomatically = false;
                 locationMgr.RequestAlwaysAuthorization();
+                locationMgr.PausesLocationUpdatesAutomatically = false;
                 locationMgr.AllowsBackgroundLocationUpdates = true;
-                locationMgr.DisallowDeferredLocationUpdates();
+                //locationMgr.DisallowDeferredLocationUpdates();
+                locationMgr.DesiredAccuracy = 1;
+                //locationMgr.StartMonitoringSignificantLocationChanges();
 
                 if (CLLocationManager.LocationServicesEnabled)
                 {
@@ -108,6 +111,8 @@ namespace StritWalk.iOS
                 {
                     UILocalNotification notification = new UILocalNotification() { AlertBody = "You entered this region: " + e.Region.Identifier };
                     UIApplication.SharedApplication.PresentLocalNotificationNow(notification);
+
+                    Debug.WriteLine("region");
 
                     if (e.Region.Identifier == monkeyId)
                     {

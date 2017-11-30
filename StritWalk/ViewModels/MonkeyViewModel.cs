@@ -20,7 +20,7 @@ namespace StritWalk.ViewModels
             if (Xamarin.Forms.Device.iOS == Xamarin.Forms.Device.RuntimePlatform)
             {
                 iBeaconService = DependencyService.Get<IIBeaconService>();
-                iBeaconService.StartTracking();
+                //iBeaconService.StartTracking();
                 iBeaconService.LocationChanged += (sender, e) =>
                 {
                     if (e != "no")
