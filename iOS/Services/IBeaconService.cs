@@ -92,8 +92,8 @@ namespace StritWalk.iOS
                 locationMgr.RequestAlwaysAuthorization();
                 locationMgr.PausesLocationUpdatesAutomatically = false;
                 locationMgr.AllowsBackgroundLocationUpdates = true;
+                locationMgr.DesiredAccuracy = CLLocationDistance.MaxDistance;
                 //locationMgr.DisallowDeferredLocationUpdates();
-                //locationMgr.DesiredAccuracy = 1;
                 //locationMgr.StartMonitoringSignificantLocationChanges();
 
                 if (CLLocationManager.LocationServicesEnabled)
@@ -114,6 +114,9 @@ namespace StritWalk.iOS
 
                     Debug.WriteLine("region");
 
+                    locationMgr.StartRangingBeacons(beaconRegion);
+                    //locationMgr.StartUpdatingLocation();
+
                     if (e.Region.Identifier == monkeyId)
                     {
                         //
@@ -124,6 +127,8 @@ namespace StritWalk.iOS
                 {
                     UILocalNotification notification = new UILocalNotification() { AlertBody = "You left this region: " + e.Region.Identifier };
                     UIApplication.SharedApplication.PresentLocalNotificationNow(notification);
+
+                    locationMgr.StopRangingBeacons(beaconRegion);
 
                     if (e.Region.Identifier == monkeyId)
                     {
@@ -197,7 +202,6 @@ namespace StritWalk.iOS
                 };
 
                 locationMgr.StartMonitoring(beaconRegion);
-                locationMgr.StartRangingBeacons(beaconRegion);
             }
         }
 
