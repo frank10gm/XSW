@@ -27,7 +27,10 @@ namespace StritWalk
             layout = new AbsoluteLayout() { };
             Content = layout;
 
-
+            if (CrossConnectivity.Current.IsConnected && locationTracker == null)
+            {
+                getMap();
+            }
         }
 
         void positionClicked(object sender, EventArgs e)
@@ -48,11 +51,6 @@ namespace StritWalk
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            if (CrossConnectivity.Current.IsConnected && locationTracker == null)
-            {
-                getMap();
-            }
 
             if (start && CrossConnectivity.Current.IsConnected && locationTracker != null)
             {
