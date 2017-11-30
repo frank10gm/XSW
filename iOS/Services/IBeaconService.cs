@@ -93,7 +93,7 @@ namespace StritWalk.iOS
                 locationMgr.PausesLocationUpdatesAutomatically = false;
                 locationMgr.AllowsBackgroundLocationUpdates = true;
                 //locationMgr.DisallowDeferredLocationUpdates();
-                locationMgr.DesiredAccuracy = 1;
+                //locationMgr.DesiredAccuracy = 1;
                 //locationMgr.StartMonitoringSignificantLocationChanges();
 
                 if (CLLocationManager.LocationServicesEnabled)
