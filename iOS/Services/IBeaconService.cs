@@ -91,6 +91,7 @@ namespace StritWalk.iOS
                 locationMgr.PausesLocationUpdatesAutomatically = false;
                 locationMgr.RequestAlwaysAuthorization();
                 locationMgr.AllowsBackgroundLocationUpdates = true;
+                locationMgr.DisallowDeferredLocationUpdates();
 
                 if (CLLocationManager.LocationServicesEnabled)
                 {
@@ -105,7 +106,7 @@ namespace StritWalk.iOS
 
                 locationMgr.RegionEntered += (object sender, CLRegionEventArgs e) =>
                 {
-                    UILocalNotification notification = new UILocalNotification() { AlertBody = "There's a SCR hiding in this region! " + e.Region.Identifier };
+                    UILocalNotification notification = new UILocalNotification() { AlertBody = "You entered this region: " + e.Region.Identifier };
                     UIApplication.SharedApplication.PresentLocalNotificationNow(notification);
 
                     if (e.Region.Identifier == monkeyId)
@@ -114,6 +115,18 @@ namespace StritWalk.iOS
                     }
                 };
 
+                locationMgr.RegionLeft += (object sender, CLRegionEventArgs e) =>
+                {
+                    UILocalNotification notification = new UILocalNotification() { AlertBody = "You left this region: " + e.Region.Identifier };
+                    UIApplication.SharedApplication.PresentLocalNotificationNow(notification);
+
+                    if (e.Region.Identifier == monkeyId)
+                    {
+                        //
+                    }
+                };
+
+
                 locationMgr.DidRangeBeacons += (object sender, CLRegionBeaconsRangedEventArgs e) =>
                 {
                     string message = "";
@@ -121,7 +134,7 @@ namespace StritWalk.iOS
 
                     if (e.Beacons.Length > 0)
                     {
-                        if (DateTime.UtcNow > Settings.LastBea.AddHours(1))
+                        if (DateTime.UtcNow > Settings.LastBea.AddMinutes(10))
                         {
                             Settings.LastBea = DateTime.UtcNow;
                             UILocalNotification notification = new UILocalNotification() { AlertBody = "There is a SCR nearby!!!" };
@@ -141,21 +154,17 @@ namespace StritWalk.iOS
                             case CLProximity.Immediate:
                                 message = "Birillo is here!";
                                 status = "here";
-                                //View.BackgroundColor = UIColor.Green;
                                 break;
                             case CLProximity.Near:
                                 message = "Sei vicino a Birillo!";
                                 status = "nearby";
-                                //View.BackgroundColor = UIColor.Yellow;
                                 break;
                             case CLProximity.Far:
                                 message = "Birillo si trova in quest'area!";
                                 status = "far away";
-                                //View.BackgroundColor = UIColor.Blue;
                                 break;
                             case CLProximity.Unknown:
                                 //message = "I'm not sure how close you are to the monkey";
-                                //View.BackgroundColor = UIColor.FromRGB(239,239,239);
                                 break;
                         }
 
@@ -173,7 +182,6 @@ namespace StritWalk.iOS
                     {
                         inRange = false;
                         status = "no";
-                        //View.BackgroundColor = UIColor.FromRGB(239, 239, 239);
                     }
 
                     EventHandler<string> handler = LocationChanged;
