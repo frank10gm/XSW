@@ -75,12 +75,14 @@ namespace StritWalk.iOS
             locationMgr.RequestAlwaysAuthorization();
             locationMgr.PausesLocationUpdatesAutomatically = false;
             locationMgr.AllowsBackgroundLocationUpdates = true;
-            locationMgr.DesiredAccuracy = CLLocationDistance.MaxDistance;
+            locationMgr.DesiredAccuracy = CLLocation.AccuracyBest;
+            locationMgr.DistanceFilter = CLLocationDistance.FilterNone;
+            locationMgr.ShowsBackgroundLocationIndicator = false;
 
             locationMgr.LocationsUpdated +=
                 (object sender, CLLocationsUpdatedEventArgs args) =>
                 {
-                    CLLocationCoordinate2D coordinate = args.Locations[0].Coordinate;
+                 CLLocationCoordinate2D coordinate = args.Locations[0].Coordinate;
                     EventHandler<GeographicLocation> handler = LocationChanged;
                     if (handler != null)
                     {
@@ -202,6 +204,7 @@ namespace StritWalk.iOS
 
         public void SingleTracking()
         {
+            Debug.WriteLine("Single Tracking");
             locationMgr.RequestLocation();
         }
 

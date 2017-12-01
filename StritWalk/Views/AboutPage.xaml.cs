@@ -46,7 +46,6 @@ namespace StritWalk
             if (start && CrossConnectivity.Current.IsConnected && locationTracker != null)
             {
                 locationTracker.StartTracking();
-                first_starter = true;
                 map.IsShowingUser = true;
             }
         }
@@ -65,9 +64,15 @@ namespace StritWalk
         void OnLocationTracker(object sender, GeographicLocation args)
         {
             Debug.WriteLine("locating...");
+
             position = new Position(args.Latitude, args.Longitude);
             Settings.lat = position.Latitude.ToString().Replace(",", "."); ;
             Settings.lng = position.Longitude.ToString().Replace(",", ".");
+
+            if (!first_starter)
+                map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(2)));
+
+            first_starter = true;
         }
 
         async void getMap()
@@ -126,10 +131,10 @@ namespace StritWalk
             locationTracker.LocationChanged += OnLocationTracker;
             locationTracker.SingleTracking();
 
-            if (!first_starter)
-                locationTracker.StartTracking();
+            //if (!first_starter)
+                //locationTracker.StartTracking();
 
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(2)));
+            //map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(2)));
 
             start = true;
         }
