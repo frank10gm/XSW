@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="StritWalk.Views.MonkeyPage">
 	<ContentPage.Content>
         <StackLayout Padding="10">
-            <Button Text="Start Scan" Command="{Binding StartScanCommand}"/>
+            <Button Text="Start Scan" Command="{Binding StartScanCommand}"/> <Button Text="Stop Scan" Command="{Binding StopScanCommand}"/>
             <Label x:Name="BeaLabel" Text="{Binding Monkeys}" FontSize="12" FontFamily="Akzidenz-Grotesk Pro"></Label>
         </StackLayout>
 	</ContentPage.Content>

@@ -9,19 +9,32 @@ namespace StritWalk.ViewModels
 {
     public class MonkeyViewModel : ObservableObject
     {
-
+        
+        //variables / properties
         IIBeaconService iBeaconService;
 
-        public MonkeyViewModel()
-        {            
+        string monkeys = "There are no SCRs here\n\n" + "" + Settings.LastBea;
+        public string Monkeys
+        {
+            get { return monkeys; }
+            set { monkeys = value; OnPropertyChanged(); }
+        }
 
+        public Command StartScanCommand { get; set; }
+        public Command StopScanCommand { get; set; }
+
+
+        //constructor
+        public MonkeyViewModel()
+        {
             StartScanCommand = new Command(async () => await ScanTask());
+            StopScanCommand = new Command(StopScan);
 
             if (Xamarin.Forms.Device.iOS == Xamarin.Forms.Device.RuntimePlatform)
             {
                 iBeaconService = DependencyService.Get<IIBeaconService>();
-                //iBeaconService.StartTracking();
-                iBeaconService.LocationChanged += (sender, e) =>
+
+                iBeaconService.BeaconRanged += (sender, e) =>
                 {
                     if (e != "no")
                         Monkeys = "There is a SCR " + e + "\n\n" + Settings.LastBea;
@@ -31,31 +44,26 @@ namespace StritWalk.ViewModels
             }
         }
 
+
+        //functions
         async Task ScanTask()
         {
-            MessagingCenter.Send(this, "NotImp", "Not Implemented");
+            //MessagingCenter.Send(this, "NotImp", "Not Implemented");
+
+            if (Xamarin.Forms.Device.iOS == Xamarin.Forms.Device.RuntimePlatform)
+                iBeaconService.StartTrackingBeacons();    
 
             await Task.Run(() =>
             {
-                
+
             });
         }
 
-
-
-        #region PROPERTIES
-
-        string monkeys = "There are no SCRs here\n\n" + "" + Settings.LastBea;
-        public string Monkeys
-        {
-            get { return monkeys; }
-            set { monkeys = value; OnPropertyChanged(); }
+        void StopScan(){
+            if (Xamarin.Forms.Device.iOS == Xamarin.Forms.Device.RuntimePlatform)
+                iBeaconService.PauseTrackingBeacons();
         }
 
-
-        public Command StartScanCommand { get; set; }
-
-        #endregion
 
     }
 }

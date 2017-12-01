@@ -133,8 +133,8 @@ namespace StritWalk
 
         private static void TabbedPage_CurrentPageChanged(object sender, System.EventArgs e)
         {
-            if ((tabbedPage.CurrentPage as NavigationPage).CurrentPage.Title == "Map")
-                ((tabbedPage.CurrentPage as NavigationPage).CurrentPage as AboutPage).Starter();
+            //if ((tabbedPage.CurrentPage as NavigationPage).CurrentPage.Title == "Map")
+                //((tabbedPage.CurrentPage as NavigationPage).CurrentPage as AboutPage).Starter();
         }
 
         public static string Platformer(string ios, string android, string win)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Plugin.Connectivity;
 
 using Xamarin.Forms;
@@ -13,11 +14,11 @@ namespace StritWalk
     public partial class AboutPage : ContentPage
     {
         CustomMap map;
-        ILocationTracker locationTracker;
+        IIBeaconService locationTracker;
         Position position;
         Button button;
-        bool start = false;
-        bool first_starter = false;
+        bool start;
+        bool first_starter;
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
         AbsoluteLayout layout;
 
@@ -35,17 +36,8 @@ namespace StritWalk
 
         void positionClicked(object sender, EventArgs e)
         {
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(2)));
-        }
-
-        public void Starter()
-        {
-            if (!first_starter && locationTracker != null)
-            {
-                locationTracker.StartTracking();
-                map.IsShowingUser = true;
-                first_starter = false;
-            }
+            if (first_starter)
+                map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(2)));
         }
 
         protected override void OnAppearing()
@@ -71,7 +63,9 @@ namespace StritWalk
         }
 
         void OnLocationTracker(object sender, GeographicLocation args)
-        {            
+        {
+            Debug.WriteLine("locating...");
+            first_starter = true;
             position = new Position(args.Latitude, args.Longitude);
             Settings.lat = position.Latitude.ToString().Replace(",", "."); ;
             Settings.lng = position.Longitude.ToString().Replace(",", ".");
@@ -125,9 +119,9 @@ namespace StritWalk
             //layout.Children.Add(map);
 
             if (Device.Android != Device.RuntimePlatform)
-                layout.Children.Add(button);            
+                layout.Children.Add(button);
 
-            locationTracker = DependencyService.Get<ILocationTracker>();
+            locationTracker = DependencyService.Get<IIBeaconService>();
             locationTracker.LocationChanged += OnLocationTracker;
             //locationTracker.StartTracking();
 
