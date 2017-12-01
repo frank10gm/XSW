@@ -202,7 +202,7 @@ namespace StritWalk.iOS
 
         public void SingleTracking()
         {
-
+            locationMgr.RequestLocation();
         }
 
         void Speak(string text)

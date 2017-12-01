@@ -36,8 +36,7 @@ namespace StritWalk
 
         void positionClicked(object sender, EventArgs e)
         {
-            if (first_starter)
-                map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(2)));
+            map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(2)));
         }
 
         protected override void OnAppearing()
@@ -47,6 +46,7 @@ namespace StritWalk
             if (start && CrossConnectivity.Current.IsConnected && locationTracker != null)
             {
                 locationTracker.StartTracking();
+                first_starter = true;
                 map.IsShowingUser = true;
             }
         }
@@ -65,7 +65,6 @@ namespace StritWalk
         void OnLocationTracker(object sender, GeographicLocation args)
         {
             Debug.WriteLine("locating...");
-            first_starter = true;
             position = new Position(args.Latitude, args.Longitude);
             Settings.lat = position.Latitude.ToString().Replace(",", "."); ;
             Settings.lng = position.Longitude.ToString().Replace(",", ".");
@@ -121,11 +120,16 @@ namespace StritWalk
             if (Device.Android != Device.RuntimePlatform)
                 layout.Children.Add(button);
 
+            position = new Position(double.Parse(Settings.lat, System.Globalization.CultureInfo.InvariantCulture), double.Parse(Settings.lng, System.Globalization.CultureInfo.InvariantCulture));
+
             locationTracker = DependencyService.Get<IIBeaconService>();
             locationTracker.LocationChanged += OnLocationTracker;
-            //locationTracker.StartTracking();
+            locationTracker.SingleTracking();
 
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(double.Parse(Settings.lat, System.Globalization.CultureInfo.InvariantCulture), double.Parse(Settings.lng, System.Globalization.CultureInfo.InvariantCulture)), Distance.FromKilometers(2)));
+            if (!first_starter)
+                locationTracker.StartTracking();
+
+            map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(2)));
 
             start = true;
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Plugin.Geolocator.Abstractions;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 
@@ -26,24 +27,24 @@ namespace StritWalk
         const string AuthTokenKey = "authtoken";
         static readonly string AuthTokenDefault = string.Empty;
 
-		const string latKey = "lat";
-		static readonly string latDefault = "0";
+        const string latKey = "lat";
+        static readonly string latDefault = "0";
 
-		const string lngKey = "lng";
-		static readonly string lngDefault = "0";        
- 		#endregion
+        const string lngKey = "lng";
+        static readonly string lngDefault = "0";
+        #endregion
 
-		public static string AuthToken
-		{
-		    get
-		    {
-		        return AppSettings.GetValueOrDefault(AuthTokenKey, AuthTokenDefault);
-		    }
-		    set
-		    {
-		        AppSettings.AddOrUpdateValue(AuthTokenKey, value);
-		    }
-		}
+        public static string AuthToken
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(AuthTokenKey, AuthTokenDefault);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(AuthTokenKey, value);
+            }
+        }
 
         public static string UserDescription
         {
@@ -59,36 +60,36 @@ namespace StritWalk
 
 
         public static bool IsLoggedIn => !string.IsNullOrWhiteSpace(UserId);
-		public static string UserId
-		{
-		    get
-		    {
-		        return AppSettings.GetValueOrDefault(UserIdKey, UserIdDefault);
-		    }
-		    set
-		    {
-		        AppSettings.AddOrUpdateValue(UserIdKey, value);
-		    }
-		}
+        public static string UserId
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(UserIdKey, UserIdDefault);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(UserIdKey, value);
+            }
+        }
 
-		public static string lat
-		{
+        public static string lat
+        {
             get => AppSettings.GetValueOrDefault(nameof(lat), latDefault);
-			set => AppSettings.AddOrUpdateValue(nameof(lat), value);
-		}
+            set => AppSettings.AddOrUpdateValue(nameof(lat), value);
+        }
 
-		public static string lng
-		{
-			get => AppSettings.GetValueOrDefault(nameof(lng), lngDefault);
-			set => AppSettings.AddOrUpdateValue(nameof(lng), value);
-		}
+        public static string lng
+        {
+            get => AppSettings.GetValueOrDefault(nameof(lng), lngDefault);
+            set => AppSettings.AddOrUpdateValue(nameof(lng), value);
+        }
 
         public static bool listEnd
-		{
+        {
             get => AppSettings.GetValueOrDefault(nameof(listEnd), false);
             set => AppSettings.AddOrUpdateValue(nameof(listEnd), value);
-		}
-        
+        }
+
         public static int Num_posts
         {
             get => AppSettings.GetValueOrDefault(nameof(Num_posts), 0);
@@ -118,5 +119,6 @@ namespace StritWalk
             get => AppSettings.GetValueOrDefault(nameof(LastBea), DateTime.UtcNow.Date.AddDays(-5));
             set => AppSettings.AddOrUpdateValue(nameof(LastBea), value);
         }
+
     }
 }
