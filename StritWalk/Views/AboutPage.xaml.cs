@@ -36,7 +36,7 @@ namespace StritWalk
 
         void positionClicked(object sender, EventArgs e)
         {
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(2)));
+            map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(10)));
         }
 
         protected override void OnAppearing()
@@ -70,7 +70,7 @@ namespace StritWalk
             Settings.lng = position.Longitude.ToString().Replace(",", ".");
 
             if (!first_starter)
-                map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(2)));
+                map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(10)));
 
             first_starter = true;
         }
