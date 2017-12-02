@@ -36,12 +36,14 @@ namespace StritWalk
 
         void positionClicked(object sender, EventArgs e)
         {
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(200)));
+            map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(50)));
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
+            Debug.WriteLine("appearing map page");
 
             if (start && CrossConnectivity.Current.IsConnected && locationTracker != null)
             {
@@ -70,7 +72,7 @@ namespace StritWalk
             Settings.lng = position.Longitude.ToString().Replace(",", ".");
 
             if (!first_starter)
-                map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(200)));
+                map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(50)));
 
             first_starter = true;
         }
@@ -132,9 +134,10 @@ namespace StritWalk
             locationTracker.SingleTracking();
 
             //if (!first_starter)
-                //locationTracker.StartTracking();
+            //locationTracker.StartTracking();
 
-            //map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(2)));
+            if (Device.Android != Device.RuntimePlatform)
+                map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(50)));
 
             start = true;
         }
