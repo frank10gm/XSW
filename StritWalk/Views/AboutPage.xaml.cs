@@ -77,6 +77,18 @@ namespace StritWalk
             first_starter = true;
         }
 
+        public void Starter()
+        {
+            if (Device.Android != Device.RuntimePlatform)
+                return;
+            if (!first_starter && locationTracker != null)
+            {
+                locationTracker.StartTracking();
+                map.IsShowingUser = true;
+                first_starter = false;
+            }
+        }
+
         async void getMap()
         {
             var items = await DataStore.GetMapItemsAsync(true);
@@ -136,8 +148,8 @@ namespace StritWalk
             //if (!first_starter)
             //locationTracker.StartTracking();
 
-            if (Device.Android != Device.RuntimePlatform)
-                map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(50)));
+            //if (Device.Android == Device.RuntimePlatform)
+            //    map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(50)));
 
             start = true;
         }
