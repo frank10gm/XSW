@@ -43,7 +43,7 @@ namespace StritWalk.Droid
         {
             Criteria criteria = new Criteria();
             criteria.Accuracy = Accuracy.Coarse;                   
-            locationManager.RequestSingleUpdate(LocationManager.GpsProvider, this, null);
+            locationManager.RequestSingleUpdate(LocationManager.NetworkProvider, this, null);
         }
 
         // Two methods to implement ILocationProvider (the dependency service interface).
