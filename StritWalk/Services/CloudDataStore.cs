@@ -103,6 +103,7 @@ namespace StritWalk
                 var resp = await client.PostAsync($"", httpContent);
 
                 var json = await resp.Content.ReadAsStringAsync();
+                Debug.WriteLine(json);
                 if (json == "[]")
                 {
                     Settings.listEnd = true;
