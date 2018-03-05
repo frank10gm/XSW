@@ -51,7 +51,7 @@ namespace StritWalk.iOS
             }
             catch(Exception ex)
             {
-                //Debug.WriteLine(ex);   
+                Debug.WriteLine(ex);   
             }
 
             return cell;

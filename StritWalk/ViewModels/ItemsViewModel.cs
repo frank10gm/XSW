@@ -84,7 +84,7 @@ namespace StritWalk
             }
             catch (Exception ex)
             {
-                Console.WriteLine("### EX ### " + ex);
+                Debug.WriteLine("### EX ### " + ex);
             }
 
         }
@@ -102,8 +102,19 @@ namespace StritWalk
                 IsLoading = false;
                 if (!string.IsNullOrWhiteSpace(result))
                 {
-                    var newitem = new Item { Id = result, Nuovo = true, Creator = Settings.UserId, Description = newPostDescription, Likes = "0", Comments_count = "0", Distanza = "0", Liked_me = "0",
-                    Comments = new Newtonsoft.Json.Linq.JArray()};
+                    var newitem = new Item
+                    {
+                        Id = result,
+                        Nuovo = true,
+                        Creator = Settings.UserId,
+                        Description = newPostDescription,
+                        Likes = "0",
+                        Comments_count = "0",
+                        Distanza = "0",
+                        Liked_me = "0",
+                        Comments = new Newtonsoft.Json.Linq.JArray(),
+                        Duedate = null
+                    };
                     //Items.Insert(0, newitem);
                     insertItem(newitem);
 
@@ -187,7 +198,7 @@ namespace StritWalk
 
             IsWorking = true;
             Item item = par1 as Item;
-            string action = "addLikePost";            
+            string action = "addLikePost";
             if (item.Liked_me == "#2b98f0")
                 action = "removeLikePost";
             var res = await DataStore.ILikeThis((string)item.Id, action);
@@ -247,7 +258,7 @@ namespace StritWalk
 
         //notifications
         private void getNotifTags(Dictionary<string, object> tags)
-        {            
+        {
             try
             {
                 Console.WriteLine("### how many tags? " + tags.Count);

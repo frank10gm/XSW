@@ -73,7 +73,7 @@ namespace StritWalk
 
                 var commentsLabel = new Label { Margin = new Thickness(15, 10, 10, 10), Text = "", TextColor = Color.Gray, FontSize = 9 };
                 commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
-                commentsLabel.SetBinding(IsVisibleProperty, "VisibleComments");
+                //commentsLabel.SetBinding(IsVisibleProperty, "VisibleComments"); // non visualizzare la barra dei commenti quando non ci sono
                 grid.Children.Add(commentsLabel, 0, 2);
                 Grid.SetColumnSpan(commentsLabel, 2);
                 //var tapGestureRecognizer = new TapGestureRecognizer();
@@ -183,7 +183,7 @@ namespace StritWalk
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("xxx there was a fuckin exception: " + ex);
+                Debug.WriteLine("# EXCEPTION # \n there was a fuckin exception: " + ex);
             }
             finally
             {

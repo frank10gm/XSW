@@ -54,16 +54,20 @@ namespace StritWalk
                         Item.Comments.Insert(0, jitem);
                         jitem = new JObject();
                     }
-                    jitem["user_name"] = items[items.Count() - 1].User_name;
-                    jitem["comment"] = items[items.Count() - 1].Comment;
-                    Item.Comments.Insert(0, jitem);
-                    Item.VisibleComments = true;
-                    Item.ViewComments = "";
+                    if (items.Count() > 0)
+                    {
+                        jitem["user_name"] = items[items.Count() - 1].User_name;
+                        jitem["comment"] = items[items.Count() - 1].Comment;
+                        Item.Comments.Insert(0, jitem);
+                        Item.VisibleComments = true;
+                        Item.ViewComments = "";
+                    }
+
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("xxx " + ex);
+                Debug.WriteLine("# EXCEPTION # \n" + ex);
             }
             IsLoading = false;
         }
@@ -91,6 +95,7 @@ namespace StritWalk
                     Item.Comments.Insert(0, jitem);
                     Item.VisibleComments = true;
                     Item.ViewComments = "";
+                    Debug.WriteLine(Item);
                     //MessagingCenter.Send(this, "NewComment", Item);
 
                     //invio della notifica                    
