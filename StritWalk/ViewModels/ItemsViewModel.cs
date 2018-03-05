@@ -44,7 +44,7 @@ namespace StritWalk
 
         public ItemsViewModel()
         {
-            Title = "Scrambler Town";
+            Title = "Seahorse";
             //Title = "Seahorse";
             Items = new ObservableRangeCollection<Item>();
             //Items = new ObservableCollection<Item>();
