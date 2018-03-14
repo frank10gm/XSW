@@ -220,6 +220,9 @@
     <Reference Include="TK.CustomMap.iOSUnified">
       <HintPath>..\packages\TK.CustomMap.2.0.1\lib\Xamarin.iOS10\TK.CustomMap.iOSUnified.dll</HintPath>
     </Reference>
+    <Reference Include="Plugin.AudioRecorder">
+      <HintPath>..\packages\Plugin.AudioRecorder.0.8.0\lib\xamarinios10\Plugin.AudioRecorder.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">

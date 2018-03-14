@@ -12,17 +12,19 @@
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 	<uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
-  <permission android:name="it.hackweb.stritwalk.permission.C2D_MESSAGE"
-            android:protectionLevel="signature" />
-  <uses-permission android:name="it.hackweb.stritwalk.permission.C2D_MESSAGE" />
+	<permission android:name="it.hackweb.stritwalk.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+	<uses-permission android:name="it.hackweb.stritwalk.permission.C2D_MESSAGE" />
+	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.RECORD_AUDIO" />
 	<application android:label="Seahorse" android:icon="@drawable/profile_generic">
 		<meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyC0VGMk_n9qvoFLQRNaE145415Pc_Di8hk" />
-    <receiver android:name="com.onesignal.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-      <intent-filter>
-        <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-        <category android:name="it.hackweb.stritwalk" />
-      </intent-filter>
-    </receiver>
+		<receiver android:name="com.onesignal.GcmBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+			<intent-filter>
+				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
+				<category android:name="it.hackweb.stritwalk" />
+			</intent-filter>
+		</receiver>
 	</application>
 </manifest>

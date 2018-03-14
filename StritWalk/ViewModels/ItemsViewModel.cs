@@ -5,21 +5,30 @@ using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using Com.OneSignal;
+using Plugin.AudioRecorder;
+using Plugin.MediaManager;
+
 
 namespace StritWalk
 {
     public class ItemsViewModel : BaseViewModel
     {
+        // variables
         public int start;
         string result = string.Empty;
         public ObservableRangeCollection<Item> Items { get; set; }
         //public ObservableCollection<Item> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
         public Command PostCommand { get; }
+        public Command RecCommand { get; }
+        public Command PlayCommand { get; }
         public CustomEditor PostEditor { get; set; }
         public Command ILikeThis { get; }
         public User me;
         public Command ICommentThis { get; }
+        AudioRecorderService recorder;
+
+        // properties
         string newPostDescription = string.Empty;
         public string NewPostDescription
         {
@@ -40,8 +49,11 @@ namespace StritWalk
         }
         bool isNotEnd = false;
         public bool IsNotEnd { get { return isNotEnd; } set { SetProperty(ref isNotEnd, value); } }
+        string recButton = "Rec";
+        public string RecButton { get { return recButton; } set { SetProperty(ref recButton, value); } }
 
 
+        // CONSTRUCTOR
         public ItemsViewModel()
         {
             Title = "Seahorse";
@@ -50,6 +62,8 @@ namespace StritWalk
             //Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             PostCommand = new Command(async (par1) => await PostTask((object)par1));
+            RecCommand = new Command(async (par1) => await RecTask((object)par1));
+            PlayCommand = new Command(async (par1) => await PlayTask((object)par1));
             ILikeThis = new Command(async (par1) => await ILikeThisTask((object)par1));
             ICommentThis = new Command(async (par1) => await ICommentThisTask((object)par1));
             me = new User();
@@ -74,6 +88,14 @@ namespace StritWalk
 
             //start with notifications
             OneSignal.Current.GetTags(getNotifTags);
+
+            //audio record service
+            recorder = new AudioRecorderService
+            {
+                StopRecordingAfterTimeout = false,
+                TotalAudioTimeout = TimeSpan.FromSeconds(60),
+                AudioSilenceTimeout = TimeSpan.FromSeconds(2)
+            };
         }
 
         void insertItem(Item item)
@@ -148,6 +170,56 @@ namespace StritWalk
                 }
                 IsPosting = false;
                 PostEditor.Unfocus();
+            }
+        }
+
+        async Task RecTask(object par1)
+        {
+            //play audio sample code
+            //await CrossMediaManager.Current.Play("http://www.sample-videos.com/audio/mp3/crowd-cheering.mp3");
+
+            try
+            {
+                if (!recorder.IsRecording) //Record button clicked
+                {
+                    recorder.StopRecordingOnSilence = false;
+
+                    //start recording audio
+                    var audioRecordTask = await recorder.StartRecording();
+
+                    await audioRecordTask;
+
+                }
+                else //Stop button clicked
+                {
+                    //stop the recording
+                    await recorder.StopRecording();
+                }
+            }
+            catch (Exception ex)
+            {
+                //blow up the app!
+                throw ex;
+            }
+        }
+
+        async Task PlayTask(object par1)
+        {
+            Debug.WriteLine("play");
+                 
+            try
+            {
+                var filePath = recorder.GetAudioFilePath();
+
+                if (filePath != null)
+                {
+                    await CrossMediaManager.Current.Play(filePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                //blow up the app!
+                throw ex;
             }
         }
 
