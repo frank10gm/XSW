@@ -63,9 +63,9 @@
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string> This app will use your location for maps functionality.</string>
-	<key>CFBundleName</key>
-	<string>Seahorse</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app will use your microphone for recording voice and music you want to share.</string>
+	<key>CFBundleName</key>
+	<string>Teller</string>
 </dict>
 </plist>

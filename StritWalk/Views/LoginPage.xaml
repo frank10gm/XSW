@@ -22,7 +22,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <StackLayout Spacing="30" Grid.ColumnSpan="2">
-                <Label HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" LineBreakMode="WordWrap" FontSize="Large" Text="Seahorse" />
+                <Label HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" LineBreakMode="WordWrap" FontSize="Large" Text="Teller" />
                 <Image HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="95" HeightRequest="95" Source="profile_generic.png" Aspect="AspectFill" x:Name="CircleImageAvatar" />
 
             </StackLayout>

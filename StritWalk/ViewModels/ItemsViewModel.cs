@@ -56,7 +56,7 @@ namespace StritWalk
         // CONSTRUCTOR
         public ItemsViewModel()
         {
-            Title = "Seahorse";
+            Title = "Teller";
             //Title = "Seahorse";
             Items = new ObservableRangeCollection<Item>();
             //Items = new ObservableCollection<Item>();
@@ -183,7 +183,7 @@ namespace StritWalk
                 if (!recorder.IsRecording) //Record button clicked
                 {
                     recorder.StopRecordingOnSilence = false;
-
+                    RecButton = "Stop";
                     //start recording audio
                     var audioRecordTask = await recorder.StartRecording();
 
@@ -194,6 +194,7 @@ namespace StritWalk
                 {
                     //stop the recording
                     await recorder.StopRecording();
+                    RecButton = "Rec";
                 }
             }
             catch (Exception ex)
@@ -204,12 +205,12 @@ namespace StritWalk
         }
 
         async Task PlayTask(object par1)
-        {
-            Debug.WriteLine("play");
+        {            
                  
             try
             {
                 var filePath = recorder.GetAudioFilePath();
+                Debug.WriteLine("play " + filePath);
 
                 if (filePath != null)
                 {
