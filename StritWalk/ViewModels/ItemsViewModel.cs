@@ -28,6 +28,7 @@ namespace StritWalk
         public Command ICommentThis { get; }
         AudioRecorderService recorder;
         IAudioPlayer player;
+        TestService testService;
 
         // properties
         string newPostDescription = string.Empty;
@@ -101,6 +102,10 @@ namespace StritWalk
             //player
             player =  DependencyService.Get<IAudioPlayer>();
             player.FinishedPlaying += Player_FinishedPlaying;
+
+            //test service
+            testService = new TestService();
+            testService.test();
 
         }
 
