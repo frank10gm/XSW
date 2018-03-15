@@ -68,6 +68,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MonkeyViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IIBeaconService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\IAudioPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />

@@ -281,6 +281,7 @@
     <Compile Include="GenericCustomElements\CustomEntryRenderer.cs" />
     <Compile Include="GenericCustomElements\ExpandableEditorRenderer.cs" />
     <Compile Include="Services\IBeaconService.cs" />
+    <Compile Include="AudioPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon.png" />

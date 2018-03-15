@@ -27,6 +27,7 @@ namespace StritWalk
         public User me;
         public Command ICommentThis { get; }
         AudioRecorderService recorder;
+        IAudioPlayer player;
 
         // properties
         string newPostDescription = string.Empty;
@@ -96,6 +97,11 @@ namespace StritWalk
                 TotalAudioTimeout = TimeSpan.FromSeconds(60),
                 AudioSilenceTimeout = TimeSpan.FromSeconds(2)
             };
+
+            //player
+            player =  DependencyService.Get<IAudioPlayer>();
+            player.FinishedPlaying += Player_FinishedPlaying;
+
         }
 
         void insertItem(Item item)
@@ -214,7 +220,9 @@ namespace StritWalk
 
                 if (filePath != null)
                 {
-                    await CrossMediaManager.Current.Play(filePath);
+                    //await CrossMediaManager.Current.Play(filePath);
+
+                    player.Play(filePath);
                 }
             }
             catch (Exception ex)
@@ -362,6 +370,11 @@ namespace StritWalk
             Console.WriteLine("### notification_id: " + userID);
             Settings.Notification_id = userID;
             DataStore.addPushId(userID);
+        }
+
+        void Player_FinishedPlaying(object sender, EventArgs e)
+        {
+            Debug.WriteLine("finished playing");
         }
 
     }
