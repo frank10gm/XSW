@@ -476,8 +476,45 @@ namespace StritWalk
         public async Task<string> UploadAudio(string filePath)
         {
             string result = string.Empty;
-            //
-            return result;
+            return "gino";
+            //variable
+            var url = "api url";
+            var file = "path/to/file.ext";
+
+            try
+            {
+                //read file into upfilebytes array
+                var upfilebytes = File.ReadAllBytes(file);
+
+                //create new HttpClient and MultipartFormDataContent and add our file, and StudentId
+                HttpClient client = new HttpClient();
+                MultipartFormDataContent content = new MultipartFormDataContent();
+                ByteArrayContent baContent = new ByteArrayContent(upfilebytes);
+                StringContent studentIdContent = new StringContent("2123");
+                content.Add(baContent, "File", "filename.ext");
+                content.Add(studentIdContent, "StudentId");
+
+
+                //upload MultipartFormDataContent content async and store response in response var
+                var response =
+                    await client.PostAsync(url, content);
+
+                //read response result as a string async into json var
+                var responsestr = response.Content.ReadAsStringAsync().Result;
+
+                //debug
+                Debug.WriteLine(responsestr);
+
+            }
+            catch (Exception e)
+            {
+                //debug
+                Debug.WriteLine("Exception Caught: " + e.ToString());
+
+            }
         }
+
+
+
     }
 }

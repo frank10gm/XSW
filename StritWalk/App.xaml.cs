@@ -10,7 +10,7 @@ namespace StritWalk
     public partial class App : Application
     {
         public static bool UseMockDataStore = false;
-        public static string BackendUrl = "http://www.hackweb.it/api";
+        public static string BackendUrl = "https://www.hackweb.it/api";
         public static CustomTabbedPage tabbedPage;
         public static IDictionary<string, string> LoginParameters => null;    
         static Robotics.Mobile.Core.Bluetooth.LE.IAdapter Adapter;

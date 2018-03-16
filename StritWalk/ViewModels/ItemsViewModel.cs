@@ -139,6 +139,7 @@ namespace StritWalk
             {
                 //upload del file audio
                 if (isAudioPost) audioName = await TryUploadAudio();
+                Debug.WriteLine(audioName);
 
                 // Post method
                 IsLoading = true;
