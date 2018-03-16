@@ -94,13 +94,19 @@ namespace StritWalk
             //audio record service
             recorder = new AudioRecorderService
             {
-                StopRecordingAfterTimeout = false,
-                TotalAudioTimeout = TimeSpan.FromSeconds(60),
+                StopRecordingAfterTimeout = true,
+                StopRecordingOnSilence = true,
+                TotalAudioTimeout = TimeSpan.FromSeconds(10),
                 AudioSilenceTimeout = TimeSpan.FromSeconds(2)
             };
 
+            recorder.AudioInputReceived += (object sender, string file) =>
+            {
+                RecButton = "Rec";
+            };
+
             //player
-            player =  DependencyService.Get<IAudioPlayer>();
+            player = DependencyService.Get<IAudioPlayer>();
             player.FinishedPlaying += Player_FinishedPlaying;
 
             //test service
@@ -216,8 +222,8 @@ namespace StritWalk
         }
 
         async Task PlayTask(object par1)
-        {            
-                 
+        {
+
             try
             {
                 var filePath = recorder.GetAudioFilePath();

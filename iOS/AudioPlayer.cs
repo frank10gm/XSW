@@ -29,6 +29,11 @@ namespace StritWalk.iOS
             }
 
             string localUrl = pathToAudioFile;
+
+            AVAudioSession.SharedInstance().Init();
+            NSError error;
+            AVAudioSession.SharedInstance().OverrideOutputAudioPort(AVAudioSessionPortOverride.Speaker, out error);
+
             _audioPlayer = AVAudioPlayer.FromUrl(NSUrl.FromFilename(localUrl));
             _audioPlayer.FinishedPlaying += Player_FinishedPlaying;
             _audioPlayer.Play();
