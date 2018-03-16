@@ -348,7 +348,7 @@ namespace StritWalk
             json = o.ToString(Formatting.None);
             var httpContent = new StringContent(json, Encoding.UTF8, contentType);
             var req = await client.PostAsync($"", httpContent);
-            var resp = await req.Content.ReadAsStringAsync();            
+            var resp = await req.Content.ReadAsStringAsync();
             if (resp == "added like.") return 0;
             else if (resp == "removed like.") return 2;
             else return 3;
@@ -442,13 +442,13 @@ namespace StritWalk
         {
             if (!CrossConnectivity.Current.IsConnected) return false;
 
-            var contentType = "application/json";            
+            var contentType = "application/json";
             var json = $"{{ action: 'sendNotifications', data: {data} }}";
             JObject o = JObject.Parse(json);
             json = o.ToString(Formatting.None);
             var httpContent = new StringContent(json, Encoding.UTF8, contentType);
             var req = await client.PostAsync($"", httpContent);
-            var resp = await req.Content.ReadAsStringAsync();            
+            var resp = await req.Content.ReadAsStringAsync();
             //var ao = JObject.Parse(resp);
             //var result = (string)ao["response"];
             return true;
@@ -456,7 +456,7 @@ namespace StritWalk
 
         public async Task<string> postActivity(string data)
         {
-            if (!CrossConnectivity.Current.IsConnected) return "not connected";            
+            if (!CrossConnectivity.Current.IsConnected) return "not connected";
             string result = string.Empty;
             var contentType = "application/json";
             var json = $"{{ action: 'postActivity', data: {data} }}";
@@ -468,7 +468,16 @@ namespace StritWalk
             Console.WriteLine("### response " + resp);
             var ao = JObject.Parse(resp);
             result = (string)ao["new_id"];
-            return result;           
+            return result;
+        }
+
+
+        // upload audio to server
+        public async Task<string> UploadAudio(string filePath)
+        {
+            string result = string.Empty;
+            //
+            return result;
         }
     }
 }

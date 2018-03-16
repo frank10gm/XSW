@@ -24,5 +24,8 @@ namespace StritWalk
         Task<bool> removePushId();
         Task<bool> sendNotifications(string data);
         Task<string> postActivity(string data);
+
+        //upload audio
+        Task<string> UploadAudio(string filePath);
     }
 }

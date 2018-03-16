@@ -29,6 +29,9 @@ namespace StritWalk
         AudioRecorderService recorder;
         IAudioPlayer player;
         TestService testService;
+        string filePath;
+        bool isAudioPost = false;
+        string audioName = String.Empty;
 
         // properties
         string newPostDescription = string.Empty;
@@ -103,6 +106,8 @@ namespace StritWalk
             recorder.AudioInputReceived += (object sender, string file) =>
             {
                 RecButton = "Rec";
+                filePath = file;
+                isAudioPost = true;
             };
 
             //player
@@ -132,6 +137,9 @@ namespace StritWalk
         {
             try
             {
+                //upload del file audio
+                if (isAudioPost) audioName = await TryUploadAudio();
+
                 // Post method
                 IsLoading = true;
                 result = await TryPostAsync();
@@ -226,7 +234,7 @@ namespace StritWalk
 
             try
             {
-                var filePath = recorder.GetAudioFilePath();
+                filePath = recorder.GetAudioFilePath();
                 Debug.WriteLine("play " + filePath);
 
                 if (filePath != null)
@@ -247,6 +255,7 @@ namespace StritWalk
         {
             return await DataStore.Post("", "", "", "", "", newPostDescription);
         }
+
 
         async Task ExecuteLoadItemsCommand()
         {
@@ -386,6 +395,13 @@ namespace StritWalk
         void Player_FinishedPlaying(object sender, EventArgs e)
         {
             Debug.WriteLine("finished playing");
+        }
+
+
+        //upload audio task launch
+        public async Task<string> TryUploadAudio()
+        {
+            return await DataStore.UploadAudio(filePath);
         }
 
     }
