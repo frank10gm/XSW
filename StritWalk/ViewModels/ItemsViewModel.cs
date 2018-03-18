@@ -30,7 +30,6 @@ namespace StritWalk
         IAudioPlayer player;
         TestService testService;
         string filePath;
-        bool isAudioPost = false;
         string audioName = String.Empty;
 
         // properties
@@ -56,6 +55,8 @@ namespace StritWalk
         public bool IsNotEnd { get { return isNotEnd; } set { SetProperty(ref isNotEnd, value); } }
         string recButton = "Rec";
         public string RecButton { get { return recButton; } set { SetProperty(ref recButton, value); } }
+        bool isAudioPost = false;
+        public bool IsAudioPost { get { return isAudioPost; } set { SetProperty(ref isAudioPost, value); } }
 
 
         // CONSTRUCTOR
@@ -107,7 +108,7 @@ namespace StritWalk
             {
                 RecButton = "Rec";
                 filePath = file;
-                isAudioPost = true;
+                IsAudioPost = true;
             };
 
             //player
@@ -137,12 +138,13 @@ namespace StritWalk
         {
             try
             {
-                //upload del file audio
-                if (isAudioPost) audioName = await TryUploadAudio();
-                Debug.WriteLine(audioName);
-
-                // Post method
+                //start loading phase
                 IsLoading = true;
+
+                //upload del file audio
+                //
+                if (isAudioPost) audioName = await TryUploadAudio();
+                // Post method
                 result = await TryPostAsync();
             }
             finally
@@ -150,6 +152,8 @@ namespace StritWalk
                 IsLoading = false;
                 if (!string.IsNullOrWhiteSpace(result))
                 {
+                    IsAudioPost = false;
+                    filePath = "";
                     var newitem = new Item
                     {
                         Id = result,

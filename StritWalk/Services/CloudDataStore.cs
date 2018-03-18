@@ -476,23 +476,22 @@ namespace StritWalk
         public async Task<string> UploadAudio(string filePath)
         {
             string result = string.Empty;
-            return "gino";
+
             //variable
-            var url = "api url";
-            var file = "path/to/file.ext";
+            var url = "https://www.hackweb.it/api/uploadAudio.php";
 
             try
             {
                 //read file into upfilebytes array
-                var upfilebytes = File.ReadAllBytes(file);
+                var upfilebytes = File.ReadAllBytes(filePath);
 
                 //create new HttpClient and MultipartFormDataContent and add our file, and StudentId
                 HttpClient client = new HttpClient();
                 MultipartFormDataContent content = new MultipartFormDataContent();
                 ByteArrayContent baContent = new ByteArrayContent(upfilebytes);
-                StringContent studentIdContent = new StringContent("2123");
-                content.Add(baContent, "File", "filename.ext");
-                content.Add(studentIdContent, "StudentId");
+                //StringContent studentIdContent = new StringContent("2123");
+                content.Add(baContent, "File", "filename.wav");
+                //content.Add(studentIdContent, "StudentId");
 
 
                 //upload MultipartFormDataContent content async and store response in response var
@@ -503,15 +502,19 @@ namespace StritWalk
                 var responsestr = response.Content.ReadAsStringAsync().Result;
 
                 //debug
-                Debug.WriteLine(responsestr);
+                Debug.WriteLine("response : " + responsestr);
+                return responsestr;
 
             }
             catch (Exception e)
             {
                 //debug
                 Debug.WriteLine("Exception Caught: " + e.ToString());
+                return "error";
 
             }
+            //return result;
+
         }
 
 
