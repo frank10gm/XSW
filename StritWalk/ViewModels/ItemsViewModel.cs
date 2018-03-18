@@ -142,7 +142,6 @@ namespace StritWalk
                 IsLoading = true;
 
                 //upload del file audio
-                //
                 if (isAudioPost) audioName = await TryUploadAudio();
                 // Post method
                 result = await TryPostAsync();
