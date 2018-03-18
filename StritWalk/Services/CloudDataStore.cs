@@ -246,7 +246,7 @@ namespace StritWalk
             if ((!string.IsNullOrEmpty(description) || !string.IsNullOrWhiteSpace(description)) && CrossConnectivity.Current.IsConnected)
             {
                 var contentType = "application/json";
-                var json = $"{{ action: 'post', id: '{Settings.AuthToken}', name: '', audio: '', lat: '{Settings.lat}', lng: '{Settings.lng}', description: '{description}' }}";
+                var json = $"{{ action: 'post', id: '{Settings.AuthToken}', name: '', audio: '{audio}', lat: '{Settings.lat}', lng: '{Settings.lng}', description: '{description}' }}";
                 JObject o = JObject.Parse(json);
                 json = o.ToString(Formatting.None);
                 var httpContent = new StringContent(json, Encoding.UTF8, contentType);

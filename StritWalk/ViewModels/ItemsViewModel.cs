@@ -164,7 +164,8 @@ namespace StritWalk
                         Distanza = "0",
                         Liked_me = "0",
                         Comments = new Newtonsoft.Json.Linq.JArray(),
-                        Duedate = null
+                        Duedate = null,
+                        Audio = audioName
                     };
                     //Items.Insert(0, newitem);
                     insertItem(newitem);
@@ -257,7 +258,7 @@ namespace StritWalk
 
         public async Task<string> TryPostAsync()
         {
-            return await DataStore.Post("", "", "", "", "", newPostDescription);
+            return await DataStore.Post("", "", audioName, "", "", newPostDescription);
         }
 
 
