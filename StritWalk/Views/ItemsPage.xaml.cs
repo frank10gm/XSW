@@ -38,6 +38,7 @@ namespace StritWalk
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(10) });
 
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -53,19 +54,28 @@ namespace StritWalk
                 grid.Children.Add(postLabel, 0, 0);
                 Grid.SetColumnSpan(postLabel, 2);
 
+                //play button
+                var playButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
+                playButton.Text = "Play";
+                //playButton.SetBinding(Button.TextProperty, "Play");
+                //playButton.Command = viewModel.ILikeThis;
+                playButton.SetBinding(Button.CommandParameterProperty, ".");
+                grid.Children.Add(playButton, 0, 1);
+                Grid.SetColumnSpan(playButton, 2);
+
                 var likeButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
                 likeButton.SetBinding(Button.TextColorProperty, "Liked_me");
                 likeButton.SetBinding(Button.TextProperty, "Likes");
                 likeButton.Command = viewModel.ILikeThis;
                 likeButton.SetBinding(Button.CommandParameterProperty, ".");
-                grid.Children.Add(likeButton, 0, 1);
+                grid.Children.Add(likeButton, 0, 2);
                 //Grid.SetColumnSpan(likeButton, 2);
 
                 var commentsButton = new Button() { TextColor = Color.Black, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
                 commentsButton.SetBinding(Button.TextProperty, "Comments_count");
                 commentsButton.Command = viewModel.ICommentThis;
                 commentsButton.SetBinding(Button.CommandParameterProperty, ".");
-                grid.Children.Add(commentsButton, 1, 1);
+                grid.Children.Add(commentsButton, 1, 2);
                 //Grid.SetColumnSpan(commentsButton, 2);                
 
                 //var otherButton = new Button { Text = "Actions" };                
@@ -74,7 +84,7 @@ namespace StritWalk
                 var commentsLabel = new Label { Margin = new Thickness(15, 10, 10, 10), Text = "", TextColor = Color.Gray, FontSize = 9 };
                 commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
                 //commentsLabel.SetBinding(IsVisibleProperty, "VisibleComments"); // non visualizzare la barra dei commenti quando non ci sono
-                grid.Children.Add(commentsLabel, 0, 2);
+                grid.Children.Add(commentsLabel, 0, 3);
                 Grid.SetColumnSpan(commentsLabel, 2);
                 //var tapGestureRecognizer = new TapGestureRecognizer();
                 //tapGestureRecognizer.Command = viewModel.ICommentThis;
@@ -82,7 +92,7 @@ namespace StritWalk
                 //commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
 
                 var whiteSeparator = new BoxView { BackgroundColor = Color.White, HeightRequest = 10 };
-                grid.Children.Add(whiteSeparator, 0, 3);
+                grid.Children.Add(whiteSeparator, 0, 4);
                 Grid.SetColumnSpan(whiteSeparator, 2);
 
                 //var tapGestureRecognizer = new TapGestureRecognizer();
