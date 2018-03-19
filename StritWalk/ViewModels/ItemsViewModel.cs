@@ -122,10 +122,12 @@ namespace StritWalk
             testService.test();
 
             //stop external player
+            CrossMediaManager.Current.MediaQueue.Repeat = Plugin.MediaManager.Abstractions.Enums.RepeatType.None; 
             CrossMediaManager.Current.MediaFinished += (sender, e) =>
             {
                 Debug.WriteLine("finished playing external file");
                 CrossMediaManager.Current.Stop();
+                CrossMediaManager.Current.MediaQueue.Clear();
             };
 
         }
@@ -424,8 +426,9 @@ namespace StritWalk
         {
             Item item = par1 as Item;
             //await CrossMediaManager.Current.Stop();
+            CrossMediaManager.Current.MediaQueue.Clear();
+            await CrossMediaManager.Current.Stop();
             await CrossMediaManager.Current.Play("https://www.hackweb.it/api/uploads/audio/"+item.Audio);
-            Debug.WriteLine("play");
         }
     }
 }
