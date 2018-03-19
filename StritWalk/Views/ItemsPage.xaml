@@ -76,7 +76,7 @@
                                 <!--<Button FontAttributes="None" Grid.Row="0" Grid.Column="0" Text="Video" TextColor="#333" HorizontalOptions="Center" VerticalOptions="Center">
                                 </Button>-->
                                 <BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HeightRequest="1" BackgroundColor="#efefef" Margin="0,0,0,0"></BoxView>
-                                <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="0" Text="{Binding RecButton}" TextColor="#ed5249" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding RecCommand}" CommandParameter="{Binding Items}" BackgroundColor="White">
+                                <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="0" Text="{Binding RecButton}" TextColor="#ed5249" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding RecCommand}" CommandParameter="{Binding Items}" BackgroundColor="Transparent" BorderColor="Transparent">
                                 </Button>
                                 <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="2" Text="Post" TextColor="#4484fb" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PostCommand}" CommandParameter="{Binding Items}" IsEnabled="{Binding IsPosting}">
                                 </Button>
