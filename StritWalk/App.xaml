@@ -6,16 +6,16 @@
         <OnPlatform x:TypeArguments="ResourceDictionary">
             <OnPlatform.iOS>
                 <ResourceDictionary>
-                    <Color x:Key="Primary">#2b98f0</Color>
+                    <Color x:Key="Primary">#fe5500</Color> <!-- #2b98f0 -->
                     <Color x:Key="PrimaryDark">#1976D2</Color>
-                    <Color x:Key="Accent">#2b98f0</Color>
+                    <Color x:Key="Accent">#fe5500</Color>
                     <Color x:Key="White">#ffffff</Color>
                     <Color x:Key="LightBackgroundColor">#ffffff</Color>
                     <Color x:Key="Dark">#222222</Color>
                     <Color x:Key="DarkBackgroundColor">#C0C0C0</Color>
                     <Color x:Key="MediumGrayTextColor">#4d4d4d</Color>
                     <Color x:Key="LightTextColor">#999999</Color>
-                    <Color x:Key="Azure">#2b98f0</Color>
+                    <Color x:Key="Azure">#fe5500</Color>
                     <Style TargetType="NavigationPage">
                         <Setter Property="BarBackgroundColor" Value="{StaticResource Azure}" />
                         <Setter Property="BarTextColor" Value="{StaticResource White}" />
@@ -25,16 +25,16 @@
             <OnPlatform.Android>
                 <ResourceDictionary>
                     <!-- google blue 4885ed -->
-                    <Color x:Key="Primary">#2b98f0</Color>
+                    <Color x:Key="Primary">#fe5500</Color>
                     <Color x:Key="PrimaryDark">#1976D2</Color>
-                    <Color x:Key="Accent">#2b98f0</Color>
+                    <Color x:Key="Accent">#fe5500</Color>
                     <Color x:Key="White">#ffffff</Color>
                     <Color x:Key="LightBackgroundColor">#ffffff</Color>
                     <Color x:Key="Dark">#222222</Color>
                     <Color x:Key="DarkBackgroundColor">#C0C0C0</Color>
                     <Color x:Key="MediumGrayTextColor">#4d4d4d</Color>
                     <Color x:Key="LightTextColor">#999999</Color>
-                    <Color x:Key="Azure">#2b98f0</Color>
+                    <Color x:Key="Azure">#fe5500</Color>
                     <Style TargetType="NavigationPage">
                     </Style>
                 </ResourceDictionary>
