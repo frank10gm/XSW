@@ -316,7 +316,7 @@ namespace StritWalk
             IsWorking = true;
             Item item = par1 as Item;
             string action = "addLikePost";
-            if (item.Liked_me == "#2b98f0")
+            if (item.Liked_me == "#007aff")
                 action = "removeLikePost";
             var res = await DataStore.ILikeThis((string)item.Id, action);
             if (res == 2)
