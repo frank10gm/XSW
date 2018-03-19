@@ -18,12 +18,13 @@
                     <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
                 </x:Arguments>
                 <ListView.Header>
-                    <Grid Padding="0,20,0,15" RowSpacing="20" ColumnSpacing="0">
+                    <Grid Padding="0,20,0,15" RowSpacing="0" ColumnSpacing="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="30" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="40" />
+                            <RowDefinition Height="10" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30" />
@@ -32,7 +33,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="30" />
                         </Grid.ColumnDefinitions>
-                        <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3">
+                        <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,20">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
@@ -46,10 +47,12 @@
                         <Label FormattedText="{Binding PostsN}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" />
                         <Label FormattedText="{Binding FriendsN}" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" />
                         <Label FormattedText="{Binding LikesN}" Grid.Row="1" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" />
-                        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5">
+                        <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="0,20,0,0" HeightRequest="10" BackgroundColor="#efefef"></BoxView>
+                        <!-- inizio sezione per postare -->
+                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Margin="0,20,0,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="20" />
@@ -58,11 +61,12 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="20" />
                             </Grid.ColumnDefinitions>
-                            <local:CustomEditor HorizontalOptions="FillAndExpand" Placeholder="Do you wand to post something?" Keyboard="Default" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" BackgroundColor="#f7f7f7" x:Name="PostEditor" HeightRequest="54" Focused="OnFocused"
-                                FontSize="13" Completed="OnCheckTest" Text="{Binding NewPostDescription}" TextColor="{Binding PostPlaceholder}" Margin="0,0,0,0" />
-                            <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Padding="0,5,0,0">
+                            <local:CustomEditor HorizontalOptions="FillAndExpand" Placeholder="Do you wand to post something?" Keyboard="Default" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" BackgroundColor="#ffffff" x:Name="PostEditor" HeightRequest="40" Focused="OnFocused"
+                                FontSize="14" Completed="OnCheckTest" Text="{Binding NewPostDescription}" TextColor="{Binding PostPlaceholder}" Margin="0,0,0,0" />
+                            <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Padding="0,0,0,0" Margin="0,0,0,0">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="1" />
+                                    <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -71,11 +75,12 @@
                                 </Grid.ColumnDefinitions>
                                 <!--<Button FontAttributes="None" Grid.Row="0" Grid.Column="0" Text="Video" TextColor="#333" HorizontalOptions="Center" VerticalOptions="Center">
                                 </Button>-->
-                                <Button FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="{Binding RecButton}" TextColor="#ed5249" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Command="{Binding RecCommand}" CommandParameter="{Binding Items}" >
+                                <BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HeightRequest="1" BackgroundColor="#efefef"></BoxView>
+                                <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="0" Text="{Binding RecButton}" TextColor="#ed5249" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Command="{Binding RecCommand}" CommandParameter="{Binding Items}" >
                                 </Button>
-                                <Button FontAttributes="Bold" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#2b98f0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Command="{Binding PostCommand}" CommandParameter="{Binding Items}" IsEnabled="{Binding IsPosting}">
+                                <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="2" Text="Post" TextColor="#2b98f0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Command="{Binding PostCommand}" CommandParameter="{Binding Items}" IsEnabled="{Binding IsPosting}">
                                 </Button>
-                                <Button FontAttributes="Bold" Grid.Row="0" Grid.Column="1" Text="Play" TextColor="#333" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Command="{Binding PlayCommand}" CommandParameter="{Binding Items}" IsEnabled="{Binding IsAudioPost}">
+                                <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="1" Text="Play" TextColor="#333" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Command="{Binding PlayCommand}" CommandParameter="{Binding Items}" IsEnabled="{Binding IsAudioPost}">
                                 </Button>
                                 <!--<Label FontSize="14.0" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#2b98f0" HorizontalOptions="Center" VerticalOptions="Center" IsEnabled="{Binding IsPosting}">
                                     <Label.GestureRecognizers>
@@ -84,16 +89,17 @@
                                 </Label>-->
                             </Grid>
                         </Grid>
-                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" BackgroundColor="#FFFFFF">
+                        <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" BackgroundColor="#efefef">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="10" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Label Margin="5" FontSize="14.0" Grid.Row="0" Grid.Column="0" Text="My" TextColor="#2b98f0" HorizontalOptions="Center" VerticalOptions="Center">
+                            <BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HeightRequest="10" BackgroundColor="#efefef"></BoxView>
+                            <!--<Label Margin="5" FontSize="14.0" Grid.Row="0" Grid.Column="0" Text="My" TextColor="#2b98f0" HorizontalOptions="Center" VerticalOptions="Center">
                             </Label>
                             <Label Margin="5" FontSize="14.0" Grid.Row="0" Grid.Column="1" Text="Friends" TextColor="#2b98f0" HorizontalOptions="Center" VerticalOptions="Center">
                             </Label>
@@ -101,7 +107,7 @@
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer />
                                 </Label.GestureRecognizers>
-                            </Label>
+                            </Label>-->
                         </Grid>
                     </Grid>
                 </ListView.Header>

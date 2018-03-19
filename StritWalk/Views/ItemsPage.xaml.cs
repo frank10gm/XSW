@@ -91,7 +91,7 @@ namespace StritWalk
                 //tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandParameterProperty, ".");
                 //commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
 
-                var whiteSeparator = new BoxView { BackgroundColor = Color.White, HeightRequest = 10 };
+                var whiteSeparator = new BoxView { BackgroundColor = Color.FromHex("#efefef"), HeightRequest = 10 };
                 grid.Children.Add(whiteSeparator, 0, 4);
                 Grid.SetColumnSpan(whiteSeparator, 2);
 
