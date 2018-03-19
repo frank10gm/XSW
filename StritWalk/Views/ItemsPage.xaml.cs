@@ -55,7 +55,7 @@ namespace StritWalk
                 Grid.SetColumnSpan(postLabel, 2);
 
                 //play button
-                var playButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0), BackgroundColor = Color.FromHex("#4484fb") };
+                var playButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0), TextColor = Color.FromHex("#4484fb") };
                 playButton.Text = "Play";
                 //playButton.SetBinding(Button.TextProperty, "Play");
                 playButton.Command = viewModel.IPlayThis;
