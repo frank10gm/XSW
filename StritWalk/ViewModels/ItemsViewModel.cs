@@ -121,6 +121,13 @@ namespace StritWalk
             testService = new TestService();
             testService.test();
 
+            //stop external player
+            CrossMediaManager.Current.MediaFinished += (sender, e) =>
+            {
+                Debug.WriteLine("finished playing external file");
+                CrossMediaManager.Current.Stop();
+            };
+
         }
 
         void insertItem(Item item)
@@ -416,7 +423,9 @@ namespace StritWalk
         async Task IPlayThisTask(object par1)
         {
             Item item = par1 as Item;
+            //await CrossMediaManager.Current.Stop();
             await CrossMediaManager.Current.Play("https://www.hackweb.it/api/uploads/audio/"+item.Audio);
+            Debug.WriteLine("play");
         }
     }
 }
