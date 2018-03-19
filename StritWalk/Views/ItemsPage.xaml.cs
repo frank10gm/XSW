@@ -49,7 +49,7 @@ namespace StritWalk
                 //grid.Children.Add(userLabel, 0, 0);
                 //Grid.SetColumnSpan(userLabel, 4);
 
-                var postLabel = new Label { Margin = new Thickness(20, 10, 20, 20) };
+                var postLabel = new Label { Margin = new Thickness(20, 10, 20, 10) };
                 postLabel.SetBinding(Label.FormattedTextProperty, "Post");
                 grid.Children.Add(postLabel, 0, 0);
                 Grid.SetColumnSpan(postLabel, 2);
@@ -58,7 +58,7 @@ namespace StritWalk
                 var playButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0) };
                 playButton.Text = "Play";
                 //playButton.SetBinding(Button.TextProperty, "Play");
-                //playButton.Command = viewModel.ILikeThis;
+                playButton.Command = viewModel.IPlayThis;
                 playButton.SetBinding(Button.CommandParameterProperty, ".");
                 grid.Children.Add(playButton, 0, 1);
                 Grid.SetColumnSpan(playButton, 2);

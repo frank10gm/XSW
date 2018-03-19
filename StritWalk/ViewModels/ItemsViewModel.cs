@@ -31,6 +31,7 @@ namespace StritWalk
         TestService testService;
         string filePath;
         string audioName = String.Empty;
+        public Command IPlayThis { get; }
 
         // properties
         string newPostDescription = string.Empty;
@@ -72,6 +73,7 @@ namespace StritWalk
             PlayCommand = new Command(async (par1) => await PlayTask((object)par1));
             ILikeThis = new Command(async (par1) => await ILikeThisTask((object)par1));
             ICommentThis = new Command(async (par1) => await ICommentThisTask((object)par1));
+            IPlayThis = new Command(async (par1) => await IPlayThisTask((object)par1));
             me = new User();
             //Task.Run(() => GetMyUser());
 
@@ -409,5 +411,12 @@ namespace StritWalk
             return await DataStore.UploadAudio(filePath);
         }
 
+
+        //play audio task
+        async Task IPlayThisTask(object par1)
+        {
+            Item item = par1 as Item;
+            await CrossMediaManager.Current.Play("https://www.hackweb.it/api/uploads/audio/"+item.Audio);
+        }
     }
 }
