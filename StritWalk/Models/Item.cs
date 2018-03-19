@@ -230,7 +230,7 @@ namespace StritWalk
             {
                 FormattedString result = new FormattedString();                              
                 Span creator = new Span { Text = Creator + "\n", FontAttributes = FontAttributes.Bold, FontSize = 16.0F, ForegroundColor = Color.FromHex("#293e49") };
-                Span details = new Span { Text = Details + Duedate_post + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#333333") };
+                Span details = new Span { Text = Details + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#333333") };
                 Span brace1 = new Span { Text = "{ ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
                 Span brace2 = new Span { Text = " } ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
                 Span name = new Span { Text = Name, FontAttributes = FontAttributes.Bold, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };
