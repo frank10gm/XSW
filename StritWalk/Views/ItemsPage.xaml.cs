@@ -34,10 +34,14 @@ namespace StritWalk
             {
                 var grid = new Grid();
                 grid.Padding = 0;
+                grid.RowSpacing = 0;
+                grid.ColumnSpacing = 0;
+                grid.Margin = 0;
 
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1) });
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1) });
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(10) });
 
@@ -50,46 +54,53 @@ namespace StritWalk
                 //grid.Children.Add(userLabel, 0, 0);
                 //Grid.SetColumnSpan(userLabel, 4);
 
-                var postLabel = new Label { Margin = new Thickness(20, 10, 20, 10) };
-                postLabel.SetBinding(Label.FormattedTextProperty, "Post");
-                grid.Children.Add(postLabel, 0, 0);
-                Grid.SetColumnSpan(postLabel, 3);
+                var imageProfile = new Image { Source = "cluster.png", Margin = new Thickness(0,20,20,20), WidthRequest = 20, HeightRequest = 20};
+                grid.Children.Add(imageProfile, 0, 0);
 
-                var separatorLine = new BoxView { HeightRequest = 1, BackgroundColor = Color.FromHex("#efefef"), Margin = new Thickness(20,0,20,0) };
+                var postLabel = new Label { Margin = new Thickness(-40, 10, 20, 10) };
+                postLabel.SetBinding(Label.FormattedTextProperty, "Post");
+                grid.Children.Add(postLabel, 1, 0);
+                Grid.SetColumnSpan(postLabel, 2);
+
+                var separatorLine = new BoxView { HeightRequest = 1, BackgroundColor = Color.FromHex("#efefef"), Margin = new Thickness(0, 0, 0, 0) };
                 grid.Children.Add(separatorLine, 0, 1);
                 Grid.SetColumnSpan(separatorLine, 3);
 
                 //play button
-                var playButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(20, 0, 10, 0), TextColor = Color.FromHex("#000000"), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
+                var playButton = new Button() { TextColor = Color.FromHex("#293e49"), FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 20, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
                 playButton.Text = "Play";
                 //playButton.SetBinding(Button.TextProperty, "Play");
                 playButton.Command = viewModel.IPlayThis;
                 playButton.SetBinding(Button.CommandParameterProperty, ".");
-                grid.Children.Add(playButton, 0, 2);
+                grid.Children.Add(playButton, 2, 2);
                 //Grid.SetColumnSpan(playButton, 2);
 
-                var likeButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent  };
+                var likeButton = new Button() { TextColor = Color.Gray, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(20, 0, 10, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
                 likeButton.SetBinding(Button.TextColorProperty, "Liked_me");
                 likeButton.SetBinding(Button.TextProperty, "Likes");
                 likeButton.Command = viewModel.ILikeThis;
                 likeButton.SetBinding(Button.CommandParameterProperty, ".");
-                grid.Children.Add(likeButton, 1, 2);
+                grid.Children.Add(likeButton, 0, 2);
                 //Grid.SetColumnSpan(likeButton, 2);
 
-                var commentsButton = new Button() { TextColor = Color.Black, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 20, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent  };
+                var commentsButton = new Button() { TextColor = Color.Gray, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
                 commentsButton.SetBinding(Button.TextProperty, "Comments_count");
                 commentsButton.Command = viewModel.ICommentThis;
                 commentsButton.SetBinding(Button.CommandParameterProperty, ".");
-                grid.Children.Add(commentsButton, 2, 2);
+                grid.Children.Add(commentsButton, 1, 2);
                 //Grid.SetColumnSpan(commentsButton, 2);                
 
                 //var otherButton = new Button { Text = "Actions" };                
-                //grid.Children.Add(otherButton, 4, 2);                
+                //grid.Children.Add(otherButton, 4, 2);        
 
-                var commentsLabel = new Label { Margin = new Thickness(15, 10, 10, 10), Text = "", TextColor = Color.Gray, FontSize = 9 };
+                var separatorLine2 = new BoxView { HeightRequest = 1, BackgroundColor = Color.FromHex("#efefef"), Margin = new Thickness(20, 0, 20, 0) };
+                grid.Children.Add(separatorLine2, 0, 3);
+                Grid.SetColumnSpan(separatorLine2, 3);
+
+                var commentsLabel = new Label { Margin = new Thickness(20, 10, 20, 10), Text = "", TextColor = Color.Black, FontSize = 13 };
                 commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
                 //commentsLabel.SetBinding(IsVisibleProperty, "VisibleComments"); // non visualizzare la barra dei commenti quando non ci sono
-                grid.Children.Add(commentsLabel, 0, 3);
+                grid.Children.Add(commentsLabel, 0, 4);
                 Grid.SetColumnSpan(commentsLabel, 3);
                 //var tapGestureRecognizer = new TapGestureRecognizer();
                 //tapGestureRecognizer.Command = viewModel.ICommentThis;
@@ -97,7 +108,7 @@ namespace StritWalk
                 //commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
 
                 var whiteSeparator = new BoxView { BackgroundColor = Color.FromHex("#efefef"), HeightRequest = 10 };
-                grid.Children.Add(whiteSeparator, 0, 4);
+                grid.Children.Add(whiteSeparator, 0, 5);
                 Grid.SetColumnSpan(whiteSeparator, 3);
 
                 //var tapGestureRecognizer = new TapGestureRecognizer();
@@ -207,7 +218,7 @@ namespace StritWalk
         }
 
         async void AddItem_Clicked(object sender, EventArgs e)
-        {            
+        {
             await Navigation.PushAsync(new NewItemPage(viewModel.Items));
         }
 
@@ -216,9 +227,9 @@ namespace StritWalk
             base.OnAppearing();
 
             if (viewModel.Items.Count == 0)
-                viewModel.LoadItemsCommand.Execute(null);            
+                viewModel.LoadItemsCommand.Execute(null);
         }
-      
+
 
         void Handle_Tapped(object sender, System.EventArgs e)
         {

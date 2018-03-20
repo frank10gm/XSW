@@ -35,7 +35,8 @@ namespace StritWalk.Droid
                 if (statusBarHeightInfo != null)
                     statusBarHeightInfo.SetValue(this, 0);
                 //Window.SetStatusBarColor(new Android.Graphics.Color(18, 52, 86, 255));
-                Window.SetStatusBarColor(new Android.Graphics.Color(25, 118, 210));
+                //Window.SetStatusBarColor(new Android.Graphics.Color(25, 118, 210));
+                Window.SetStatusBarColor(new Android.Graphics.Color(37, 41, 46));
             }
 
             global::Xamarin.Forms.Forms.Init(this, bundle);

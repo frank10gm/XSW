@@ -36,6 +36,8 @@
                     <Color x:Key="LightTextColor">#999999</Color>
                     <Color x:Key="Azure">#293e49</Color>
                     <Style TargetType="NavigationPage">
+                        <Setter Property="BarBackgroundColor" Value="{StaticResource Azure}" />
+                        <Setter Property="BarTextColor" Value="{StaticResource White}" />
                     </Style>
                 </ResourceDictionary>
             </OnPlatform.Android>

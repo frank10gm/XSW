@@ -230,7 +230,7 @@ namespace StritWalk
             {
                 FormattedString result = new FormattedString();                              
                 Span creator = new Span { Text = Creator + "\n", FontAttributes = FontAttributes.Bold, FontSize = 16.0F, ForegroundColor = Color.FromHex("#293e49") };
-                Span details = new Span { Text = Details + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#333333") };
+                Span details = new Span { Text = Details + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#808080") };
                 Span brace1 = new Span { Text = "{ ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
                 Span brace2 = new Span { Text = " } ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
                 Span name = new Span { Text = Name, FontAttributes = FontAttributes.Bold, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };
@@ -238,7 +238,7 @@ namespace StritWalk
 
                 if (Nuovo == true)
                 {
-                    details = new Span { Text = "here, now" + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#333333") };
+                    details = new Span { Text = "here, now" + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#808080") };
                 }
 
                 result.Spans.Add(creator);
@@ -265,7 +265,7 @@ namespace StritWalk
                 FormattedString result = new FormattedString();
 
                 Span creator = new Span { Text = Creator + "\n", FontAttributes = FontAttributes.Bold, FontSize = 16.0F, ForegroundColor = Color.FromHex("#4484fb") };
-                Span details = new Span { Text = Details + "", FontSize = 10.0F, ForegroundColor = Color.FromHex("#333333") };
+                Span details = new Span { Text = Details + "", FontSize = 10.0F, ForegroundColor = Color.FromHex("#808080") };
                 Span brace1 = new Span { Text = "{ ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
                 Span brace2 = new Span { Text = " } ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
                 Span name = new Span { Text = Name, FontAttributes = FontAttributes.Bold, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };
@@ -273,7 +273,7 @@ namespace StritWalk
 
                 if (Id == "new")
                 {
-                    details = new Span { Text = "here, now" + "", FontSize = 10.0F, ForegroundColor = Color.FromHex("#333333") };
+                    details = new Span { Text = "here, now" + "", FontSize = 10.0F, ForegroundColor = Color.FromHex("#808080") };
                 }
 
                 result.Spans.Add(creator);
@@ -292,7 +292,7 @@ namespace StritWalk
             {
                 string text = "  Likes";
                 if (Int32.Parse(likes) == 1) text = "  Like";
-                return likes + text;
+                return "Like";
             }
             set { SetProperty(ref likes, value); }
         }
@@ -308,7 +308,7 @@ namespace StritWalk
             {
                 string text = "  Comments";
                 if (Int32.Parse(comments_count) == 1) text = " Comment";
-                return comments_count + text;
+                return "Comment";
             }
             set { SetProperty(ref comments_count, value); }
         }
@@ -322,7 +322,7 @@ namespace StritWalk
             {
                 if (Int32.Parse(liked_me) == 1)
                     return "#4484fb";
-                else return "#000000";
+                else return "#808080";
             }
             set { SetProperty(ref liked_me, value); }
         }

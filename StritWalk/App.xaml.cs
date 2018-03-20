@@ -12,7 +12,7 @@ namespace StritWalk
         public static bool UseMockDataStore = false;
         public static string BackendUrl = "https://www.hackweb.it/api";
         public static CustomTabbedPage tabbedPage;
-        public static IDictionary<string, string> LoginParameters => null;    
+        public static IDictionary<string, string> LoginParameters => null;
         static Robotics.Mobile.Core.Bluetooth.LE.IAdapter Adapter;
 
         public App()
@@ -28,7 +28,7 @@ namespace StritWalk
             //OneSignal.Current.SetLogLevel(LOG_LEVEL.DEBUG, LOG_LEVEL.DEBUG);
             OneSignal.Current.StartInit("31828451-4096-4355-8b1f-e54183b4a6c9")
                 .InFocusDisplaying(OSInFocusDisplayOption.Notification)
-                .EndInit();            
+                .EndInit();
         }
 
         private void getNotifTags(Dictionary<string, object> tags)
@@ -74,7 +74,7 @@ namespace StritWalk
             Settings.AuthToken = "";
             Settings.Num_friends = 0;
             Settings.Num_likes = 0;
-            Settings.Num_posts = 0;            
+            Settings.Num_posts = 0;
 
             Current.MainPage = new NavigationPage(new LoginPage())
             {
@@ -121,6 +121,10 @@ namespace StritWalk
                 //tabbedPage.BarBackgroundColor = Color.FromHex("#ffffff");
                 //tabbedPage.BackgroundColor = Color.FromHex("#2b98f0");
                 //tabbedPage.BarTextColor = Color.FromHex("#2b98f0");
+            }
+            else
+            {
+                tabbedPage.BarBackgroundColor = (Color)Current.Resources["Azure"];
             }
 
             Current.MainPage = tabbedPage;
