@@ -305,9 +305,9 @@ namespace StritWalk
         {
             get
             {
-                string text = " Likes";
-                if (Int32.Parse(likes) == 1) text = " Like";
-                return likes + text;
+                string text = " Likes  ";
+                if (Int32.Parse(likes) == 1) text = " Like  ";
+                return likes + text + Comments_count;
             }
             set { SetProperty(ref likes, value); }
         }
