@@ -301,6 +301,16 @@ namespace StritWalk
             get { return likes; }
         }
 
+        public string NumbersOfLikes
+        {
+            get
+            {
+                string text = " Likes";
+                if (Int32.Parse(likes) == 1) text = " Like";
+                return likes + text;
+            }
+        }
+
         string comments_count = string.Empty;
         public string Comments_count
         {
@@ -371,21 +381,21 @@ namespace StritWalk
                     {
                         testo = new Span
                         {
-                            Text = "There is " + comments_count + " comment" + "\n" + comments[0]["user_name"]
-                            + ": " + comments[0]["comment"] + ""
+                            Text = "\nThere is " + comments_count + " comment" + "\n" + comments[0]["user_name"]
+                            + ": " + comments[0]["comment"] + "\n"
                         };
                     }
                     else
                     {
                         testo = new Span
                         {
-                            Text = "There are " + comments_count + " comments" + "\n" + comments[0]["user_name"]
+                            Text = "\nThere are " + comments_count + " comments" + "\n" + comments[0]["user_name"]
                             + ": " + comments[0]["comment"] + "\n"
                         };
                     }
 
                     if (Int32.Parse(comments_count) > 1)
-                        testo.Text += comments[1]["user_name"] + ": " + comments[1]["comment"];
+                        testo.Text += comments[1]["user_name"] + ": " + comments[1]["comment"] + "\n";
 
                     result.Spans.Add(testo);
                     return result;
