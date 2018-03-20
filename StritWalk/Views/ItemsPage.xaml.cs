@@ -55,12 +55,12 @@ namespace StritWalk
                 grid.Children.Add(postLabel, 0, 0);
                 Grid.SetColumnSpan(postLabel, 3);
 
-                var separatorLine = new BoxView { HeightRequest = 1, BackgroundColor = Color.FromHex("#efefef"), Margin = new Thickness(10,0,10,0) };
+                var separatorLine = new BoxView { HeightRequest = 1, BackgroundColor = Color.FromHex("#efefef"), Margin = new Thickness(20,0,20,0) };
                 grid.Children.Add(separatorLine, 0, 1);
                 Grid.SetColumnSpan(separatorLine, 3);
 
                 //play button
-                var playButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), TextColor = Color.FromHex("#000000"), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
+                var playButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(20, 0, 10, 0), TextColor = Color.FromHex("#000000"), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
                 playButton.Text = "Play";
                 //playButton.SetBinding(Button.TextProperty, "Play");
                 playButton.Command = viewModel.IPlayThis;
@@ -68,7 +68,7 @@ namespace StritWalk
                 grid.Children.Add(playButton, 0, 2);
                 //Grid.SetColumnSpan(playButton, 2);
 
-                var likeButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent  };
+                var likeButton = new Button() { FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent  };
                 likeButton.SetBinding(Button.TextColorProperty, "Liked_me");
                 likeButton.SetBinding(Button.TextProperty, "Likes");
                 likeButton.Command = viewModel.ILikeThis;
@@ -76,7 +76,7 @@ namespace StritWalk
                 grid.Children.Add(likeButton, 1, 2);
                 //Grid.SetColumnSpan(likeButton, 2);
 
-                var commentsButton = new Button() { TextColor = Color.Black, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent  };
+                var commentsButton = new Button() { TextColor = Color.Black, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 20, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent  };
                 commentsButton.SetBinding(Button.TextProperty, "Comments_count");
                 commentsButton.Command = viewModel.ICommentThis;
                 commentsButton.SetBinding(Button.CommandParameterProperty, ".");
