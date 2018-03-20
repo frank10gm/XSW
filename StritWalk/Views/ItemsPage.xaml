@@ -78,9 +78,9 @@
                                 <BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HeightRequest="1" BackgroundColor="#efefef" Margin="0,0,0,0"></BoxView>
                                 <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="0" Text="{Binding RecButton}" TextColor="#ed5249" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding RecCommand}" CommandParameter="{Binding Items}" BackgroundColor="Transparent" BorderColor="Transparent">
                                 </Button>
-                                <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="2" Text="Post" TextColor="#4484fb" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PostCommand}" CommandParameter="{Binding Items}" IsEnabled="{Binding IsPosting}">
+                                <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="2" Text="Post" TextColor="#4484fb" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PostCommand}" CommandParameter="{Binding Items}" IsEnabled="{Binding IsPosting}" BackgroundColor="Transparent" BorderColor="Transparent">
                                 </Button>
-                                <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="1" Text="Play" TextColor="#333" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PlayCommand}" CommandParameter="{Binding Items}" IsEnabled="{Binding IsAudioPost}">
+                                <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="1" Text="Play" TextColor="#333" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PlayCommand}" CommandParameter="{Binding Items}" IsEnabled="{Binding IsAudioPost}" BackgroundColor="Transparent" BorderColor="Transparent">
                                 </Button>
                                 <!--<Label FontSize="14.0" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#2b98f0" HorizontalOptions="Center" VerticalOptions="Center" IsEnabled="{Binding IsPosting}">
                                     <Label.GestureRecognizers>
