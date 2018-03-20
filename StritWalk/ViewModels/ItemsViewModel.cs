@@ -323,14 +323,14 @@ namespace StritWalk
             {
                 var num = Int32.Parse(item.LikesNum);
                 num -= 1;
-                item.Likes = num.ToString();
+                item.NumberOfLikes = num.ToString();
                 item.Liked_me = "0";
             }
             else if (res == 0)
             {
                 var num = Int32.Parse(item.LikesNum);
                 num += 1;
-                item.Likes = num.ToString();
+                item.NumberOfLikes = num.ToString();
                 item.Liked_me = "1";
             }
             IsWorking = false;

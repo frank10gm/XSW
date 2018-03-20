@@ -70,7 +70,7 @@ namespace StritWalk
 
                 // numeri like play ecc
                 var numbersLabel = new Label { Margin = new Thickness(20, 10, 20, 10), TextColor = Color.Gray, FontSize = 12 };
-                numbersLabel.SetBinding(Label.TextProperty, "NumbersOfLikes");
+                numbersLabel.SetBinding(Label.TextProperty, "NumberOfLikes");
                 grid.Children.Add(numbersLabel, 0, 2);
                 Grid.SetColumnSpan(numbersLabel, 3);
 
