@@ -226,6 +226,7 @@ namespace StritWalk
                     recorder.StopRecordingOnSilence = false;
                     RecButton = "Stop";
                     //start recording audio
+                    player.SolveErrors();
                     var audioRecordTask = await recorder.StartRecording();
 
                     await audioRecordTask;
@@ -241,7 +242,8 @@ namespace StritWalk
             catch (Exception ex)
             {
                 //blow up the app!
-                throw ex;
+                //throw ex;
+                Debug.WriteLine(ex);
             }
         }
 

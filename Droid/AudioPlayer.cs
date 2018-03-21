@@ -29,6 +29,11 @@ namespace StritWalk.Droid
         {
         }
 
+        public void SolveErrors()
+        {
+            //AVAudioSession.SharedInstance().SetCategory(AVAudioSessionCategory.PlayAndRecord);
+        }
+
 
         public void Play(string pathToAudioFile)
         {

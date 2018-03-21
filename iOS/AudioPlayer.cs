@@ -39,6 +39,11 @@ namespace StritWalk.iOS
             _audioPlayer.Play();
         }
 
+        public void SolveErrors()
+        {
+            AVAudioSession.SharedInstance().SetCategory(AVAudioSessionCategory.PlayAndRecord);
+        }
+
 
         private void Player_FinishedPlaying(object sender, AVStatusEventArgs e)
         {

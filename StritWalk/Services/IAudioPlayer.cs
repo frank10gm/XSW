@@ -12,6 +12,7 @@ namespace StritWalk
         void Play();
         void Play(string pathToAudioFile);
         void Pause();
+        void SolveErrors();
 
 
     }
