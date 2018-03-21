@@ -114,10 +114,10 @@ namespace StritWalk
                 //commentsLabel.SetBinding(IsVisibleProperty, "VisibleComments"); // non visualizzare la barra dei commenti quando non ci sono
                 grid.Children.Add(commentsLabel, 0, 6);
                 Grid.SetColumnSpan(commentsLabel, 3);
-                //var tapGestureRecognizer = new TapGestureRecognizer();
-                //tapGestureRecognizer.Command = viewModel.ICommentThis;
-                //tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandParameterProperty, ".");
-                //commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
+                var tapGestureRecognizer = new TapGestureRecognizer();
+                tapGestureRecognizer.Command = viewModel.ICommentThis;
+                tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandParameterProperty, ".");
+                commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
 
                 var whiteSeparator = new BoxView { BackgroundColor = Color.FromHex("#efefef"), HeightRequest = 10 };
                 grid.Children.Add(whiteSeparator, 0, 7);

@@ -324,16 +324,18 @@ namespace StritWalk
             if (res == 2)
             {
                 var num = Int32.Parse(item.LikesNum);
-                num -= 1;
-                item.NumberOfLikes = num.ToString();
+                num -= 1;                
+                item.Likes = num.ToString();
                 item.Liked_me = "0";
+                item.NumberOfLikes = num.ToString();
             }
             else if (res == 0)
             {
-                var num = Int32.Parse(item.LikesNum);
-                num += 1;
-                item.NumberOfLikes = num.ToString();
+                var num = Int32.Parse(item.LikesNum);                
+                num += 1;                
+                item.Likes = num.ToString();
                 item.Liked_me = "1";
+                item.NumberOfLikes = num.ToString();
             }
             IsWorking = false;
         }

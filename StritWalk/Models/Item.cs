@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Xamarin.Forms;
 using System.Globalization;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace StritWalk
 {
@@ -228,7 +229,7 @@ namespace StritWalk
         {
             get
             {
-                FormattedString result = new FormattedString();                              
+                FormattedString result = new FormattedString();
                 Span creator = new Span { Text = Creator + "\n", FontAttributes = FontAttributes.Bold, FontSize = 16.0F, ForegroundColor = Color.FromHex("#293e49") };
                 Span details = new Span { Text = Details + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#808080") };
                 Span brace1 = new Span { Text = "{ ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
@@ -296,20 +297,30 @@ namespace StritWalk
             }
             set { SetProperty(ref likes, value); }
         }
+
         public string LikesNum
         {
             get { return likes; }
         }
 
+        [JsonIgnore]
+        string numberOfLikes = string.Empty;
         public string NumberOfLikes
         {
             get
-            {
+            {                
+                if (numberOfLikes == likes) likes = numberOfLikes;
+                string playText = " Plays  ";
                 string text = " Likes  ";
+                string commentText = " Comments";
                 if (Int32.Parse(likes) == 1) text = " Like  ";
-                return likes + text + Comments_count;
+                if (Int32.Parse(comments_count) == 1) commentText = " Comment";           
+                return likes + text + comments_count + commentText;
             }
-            set { SetProperty(ref likes, value); }
+            set
+            {                
+                SetProperty(ref numberOfLikes, value);
+            }
         }
 
         string comments_count = string.Empty;
