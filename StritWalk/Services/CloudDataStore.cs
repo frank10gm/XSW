@@ -42,7 +42,7 @@ namespace StritWalk
                         {
                             if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
                             {
-                                Console.WriteLine("### Need location");
+                                //Console.WriteLine("### Need location");
                             }
 
                             var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
@@ -61,18 +61,18 @@ namespace StritWalk
 
                                 if (position != null)
                                 {
-                                    Console.WriteLine("### got cached");
+                                    //Console.WriteLine("### got cached");
                                 }
 
                                 if (!locator.IsGeolocationAvailable || !locator.IsGeolocationEnabled)
                                 {
-                                    Console.WriteLine("### geolocator not available");
+                                    //Console.WriteLine("### geolocator not available");
                                 }
                                 position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(2000));
                             }
                             catch (Exception ex)
                             {
-                                Console.WriteLine("### Unable to get location: " + ex);
+                                //Console.WriteLine("### Unable to get location: " + ex);
                             }
                             finally
                             {
@@ -85,7 +85,7 @@ namespace StritWalk
                         }
                         else if (status != PermissionStatus.Unknown)
                         {
-                            Console.WriteLine("### Location Denied");
+                            //Console.WriteLine("### Location Denied");
                         }
                     }
                     catch (Exception ex)
@@ -103,7 +103,7 @@ namespace StritWalk
                 var resp = await client.PostAsync($"", httpContent);
 
                 var json = await resp.Content.ReadAsStringAsync();
-                Debug.WriteLine(json);
+                //Debug.WriteLine(json);
                 if (json == "[]")
                 {
                     Settings.listEnd = true;
@@ -137,7 +137,7 @@ namespace StritWalk
                 }
                 catch
                 {
-                    Console.WriteLine("@@@ internet connection problem");
+                    //Console.WriteLine("@@@ internet connection problem");
                 }
 
                 //var resp = await client.PostAsync($"", httpContent);
@@ -414,7 +414,7 @@ namespace StritWalk
             var httpContent = new StringContent(json, Encoding.UTF8, contentType);
             var req = await client.PostAsync($"", httpContent);
             var resp = await req.Content.ReadAsStringAsync();
-            Console.WriteLine("### response " + resp);
+            //Console.WriteLine("### response " + resp);
             var ao = JObject.Parse(resp);
             var result = (string)ao["response"];
             return true;
@@ -432,7 +432,7 @@ namespace StritWalk
             var httpContent = new StringContent(json, Encoding.UTF8, contentType);
             var req = await client.PostAsync($"", httpContent);
             var resp = await req.Content.ReadAsStringAsync();
-            Console.WriteLine("### response " + resp);
+            //Console.WriteLine("### response " + resp);
             var ao = JObject.Parse(resp);
             var result = (string)ao["response"];
             return true;
@@ -465,7 +465,7 @@ namespace StritWalk
             var httpContent = new StringContent(json, Encoding.UTF8, contentType);
             var req = await client.PostAsync($"", httpContent);
             var resp = await req.Content.ReadAsStringAsync();
-            Console.WriteLine("### response " + resp);
+            //Console.WriteLine("### response " + resp);
             var ao = JObject.Parse(resp);
             result = (string)ao["new_id"];
             return result;

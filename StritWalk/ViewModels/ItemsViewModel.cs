@@ -382,10 +382,10 @@ namespace StritWalk
         {
             try
             {
-                Console.WriteLine("### how many tags? " + tags.Count);
+                //Console.WriteLine("### how many tags? " + tags.Count);
                 if (tags == null || tags.Count == 0)
                 {
-                    Console.WriteLine("### no tags");
+                    //Console.WriteLine("### no tags");
                     OneSignal.Current.SetSubscription(true);
                     OneSignal.Current.SendTags(new Dictionary<string, string>()
                     {
@@ -400,14 +400,14 @@ namespace StritWalk
             }
             catch (Exception ex)
             {
-                Console.WriteLine("### exception " + ex);
+                //Console.WriteLine("### exception " + ex);
             }
         }
 
         private void getNotifId(string userID, string pushToken)
         {
             //salvare notification id nel server
-            Console.WriteLine("### notification_id: " + userID);
+            //Console.WriteLine("### notification_id: " + userID);
             Settings.Notification_id = userID;
             DataStore.addPushId(userID);
         }

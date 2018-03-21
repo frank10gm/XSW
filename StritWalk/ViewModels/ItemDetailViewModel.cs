@@ -60,6 +60,7 @@ namespace StritWalk
                         jitem["comment"] = items[items.Count() - 1].Comment;
                         Item.Comments.Insert(0, jitem);
                         Item.VisibleComments = true;
+                        Item.NumberOfLikes = "3";
                         if (Device.RuntimePlatform == Device.Android) Item.ViewComments = ""; //disabilitato in modo che su ios la pagina precedente non si aggiorni
                     }
 
@@ -94,8 +95,8 @@ namespace StritWalk
                         Item.Comments = new JArray();
                     Item.Comments.Insert(0, jitem);
                     Item.VisibleComments = true;
-                    if (Device.RuntimePlatform == Device.Android) Item.ViewComments = ""; //disabilitato in modo che su ios la pagina precedente non si aggiorni
-                    Debug.WriteLine(Item);
+                    Item.NumberOfLikes = "3";
+                    if (Device.RuntimePlatform == Device.Android) Item.ViewComments = ""; //disabilitato in modo che su ios la pagina precedente non si aggiorni                    
                     //MessagingCenter.Send(this, "NewComment", Item);
 
                     //invio della notifica                    

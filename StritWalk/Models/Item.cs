@@ -60,7 +60,7 @@ namespace StritWalk
             {
                 if (duedate == null || duedate == "0000-00-00 00:00:00")
                     return DateTime.Now;
-                Console.WriteLine("### conversione " + duedate);
+                //Console.WriteLine("### conversione " + duedate);
                 //DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
                 //dtDateTime = dtDateTime.AddSeconds(Convert.ToDouble(duedate)).ToLocalTime();                
                 DateTime dtDateTime = DateTime.Parse(duedate);
@@ -310,12 +310,13 @@ namespace StritWalk
             get
             {                
                 if (numberOfLikes == likes) likes = numberOfLikes;
+                numberOfLikes = "";                
                 string playText = " Plays  ";
                 string text = " Likes  ";
                 string commentText = " Comments";
                 if (Int32.Parse(likes) == 1) text = " Like  ";
                 if (Int32.Parse(comments_count) == 1) commentText = " Comment";           
-                return likes + text + comments_count + commentText;
+                return likes + text + comments_count + commentText + numberOfLikes;
             }
             set
             {                
@@ -389,22 +390,28 @@ namespace StritWalk
 
                     Span testo;
 
-                    if (Int32.Parse(comments_count) == 1)
+                    //if (Int32.Parse(comments_count) == 1)
+                    //{
+                    //    testo = new Span
+                    //    {
+                    //        Text = "\nComments:" + "\n" + comments[0]["user_name"]
+                    //        + ": " + comments[0]["comment"] + "\n"
+                    //    };
+                    //}
+                    //else
+                    //{
+                    //    testo = new Span
+                    //    {
+                    //        Text = "\nThere are " + comments_count + " comments" + "\n" + comments[0]["user_name"]
+                    //        + ": " + comments[0]["comment"] + "\n"
+                    //    };
+                    //}
+
+                    testo = new Span
                     {
-                        testo = new Span
-                        {
-                            Text = "\nThere is " + comments_count + " comment" + "\n" + comments[0]["user_name"]
+                        Text = "\nComments:" + "\n" + comments[0]["user_name"]
                             + ": " + comments[0]["comment"] + "\n"
-                        };
-                    }
-                    else
-                    {
-                        testo = new Span
-                        {
-                            Text = "\nThere are " + comments_count + " comments" + "\n" + comments[0]["user_name"]
-                            + ": " + comments[0]["comment"] + "\n"
-                        };
-                    }
+                    };
 
                     if (Int32.Parse(comments_count) > 1)
                         testo.Text += comments[1]["user_name"] + ": " + comments[1]["comment"] + "\n";
