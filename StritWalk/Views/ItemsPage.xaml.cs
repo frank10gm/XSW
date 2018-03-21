@@ -109,7 +109,7 @@ namespace StritWalk
                 grid.Children.Add(separatorLine2, 0, 5);
                 Grid.SetColumnSpan(separatorLine2, 3);
 
-                var commentsLabel = new Label { Margin = new Thickness(20, 0, 20, 0), Text = "", TextColor = Color.Black, FontSize = 13 };
+                var commentsLabel = new Label { Margin = new Thickness(20, 0, 20, 0), Text = "", TextColor = Color.Gray, FontSize = 13 };
                 commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
                 //commentsLabel.SetBinding(IsVisibleProperty, "VisibleComments"); // non visualizzare la barra dei commenti quando non ci sono
                 grid.Children.Add(commentsLabel, 0, 6);
