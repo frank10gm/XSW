@@ -39,20 +39,20 @@ namespace StritWalk.iOS
 
             cell.SelectionStyle = UITableViewCellSelectionStyle.None;
 
-            try
-            {
-                UILabel comments = cell.Subviews[0].Subviews[0].Subviews[3].Subviews[0] as UILabel;
-                comments.UserInteractionEnabled = true;
-                UITapGestureRecognizer tapgesture = new UITapGestureRecognizer(() =>
-                {
-                    xcell.InvokeTap();
-                });
-                comments.AddGestureRecognizer(tapgesture);
-            }
-            catch(Exception ex)
-            {
-                Debug.WriteLine(ex);   
-            }
+            //try
+            //{
+            //    UILabel comments = cell.Subviews[0].Subviews[0].Subviews[3].Subviews[0] as UILabel;
+            //    comments.UserInteractionEnabled = true;
+            //    UITapGestureRecognizer tapgesture = new UITapGestureRecognizer(() =>
+            //    {
+            //        xcell.InvokeTap();
+            //    });
+            //    comments.AddGestureRecognizer(tapgesture);
+            //}
+            //catch(Exception ex)
+            //{
+            //    Debug.WriteLine(ex);   
+            //}
 
             return cell;
         }

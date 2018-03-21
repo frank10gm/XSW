@@ -32,16 +32,16 @@ namespace StritWalk.Droid
 			try
 			{                
                 //click on comments to open them
-                var child1 = cellview.GetChildAt(0) as ViewGroup;
-                var comments = child1.GetChildAt(3) as LabelRenderer;
-                comments.Control.Clickable = true;
-                comments.Control.Click += (sender, e) => {
-                    xcell.InvokeTap();
-                };			
+                //var child1 = cellview.GetChildAt(0) as ViewGroup;
+                //var comments = child1.GetChildAt(3) as LabelRenderer;
+                //comments.Control.Clickable = true;
+                //comments.Control.Click += (sender, e) => {
+                //    xcell.InvokeTap();
+                //};			
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine(ex);
+				//Debug.WriteLine(ex);
 			}
 
 			return cell;
