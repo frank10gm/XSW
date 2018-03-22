@@ -151,5 +151,10 @@ namespace StritWalk
         {
             Adapter = adapter;
         }
+
+        protected override void OnResume()
+        {
+            MessagingCenter.Send(this, "OnResume", "with success");
+        }
     }
 }

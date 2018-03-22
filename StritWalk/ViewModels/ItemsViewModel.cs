@@ -89,6 +89,12 @@ namespace StritWalk
                 IsNotEnd = arg;
             });
 
+            MessagingCenter.Subscribe<App, string>(this, "OnResume", (sender, arg) =>
+            {
+                LoadItemsCommand.Execute(null);
+                //Console.WriteLine("@@@@ resume called : " + arg.ToString());
+            });
+
             //MessagingCenter.Subscribe<ItemDetailViewModel, bool>(this, "NotEnd", (sender, arg) =>
             //{
             //    IsNotEnd = arg;
@@ -274,7 +280,7 @@ namespace StritWalk
             return await DataStore.Post("", "", audioName, "", "", newPostDescription);
         }
 
-
+        //ricarica la pagina
         async Task ExecuteLoadItemsCommand()
         {
             if (IsBusy)
@@ -310,6 +316,7 @@ namespace StritWalk
             }
         }
 
+        //mettere o togliere un like
         async Task ILikeThisTask(object par1)
         {
             if (IsWorking)
@@ -335,16 +342,12 @@ namespace StritWalk
                 num += 1;                
                 item.Likes = num.ToString();
                 item.Liked_me = "1";
-                item.NumberOfLikes = num.ToString();
-                //inviare la notifica per il like
-                string text = "liked your post";
-                Console.WriteLine("@@@@@ send like notification");
-                //var data = $"{{ user_id: '{Settings.AuthToken}', notification_text: '{text}', post_id: '{item.Id}', user_name: '{Settings.UserId}', creator: '{item.Creator}', creator_id: '{item.Creator_id}', type: 'like' }}";
-                //await DataStore.sendNotifications(data);
+                item.NumberOfLikes = num.ToString();                
             }
             IsWorking = false;
         }
 
+        //ottieni il mio utente
         async Task GetMyUser()
         {
             me = await DataStore.GetMyUser(me);
@@ -382,7 +385,7 @@ namespace StritWalk
             //await Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new ItemDetailPage(new ItemDetailViewModel(par1))));
         }
 
-        //notifications
+        //notifications setup OBSOLETE
         private void getNotifTags(Dictionary<string, object> tags)
         {
             Console.WriteLine("@@@@@@ start tag check function.");
@@ -411,6 +414,7 @@ namespace StritWalk
             }
         }
 
+        //OBSOLETE
         private void getNotifId(string userID, string pushToken)
         {
             //salvare notification id nel server
@@ -419,6 +423,7 @@ namespace StritWalk
             DataStore.addPushId(userID);
         }
 
+        //finito di riprodurre musica
         void Player_FinishedPlaying(object sender, EventArgs e)
         {
             Debug.WriteLine("finished playing");
