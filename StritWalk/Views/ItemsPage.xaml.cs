@@ -129,13 +129,27 @@ namespace StritWalk
                 //};
                 //grid.GestureRecognizers.Add(tapGestureRecognizer);
 
+
+                //absolute layout
+                var layout = new AbsoluteLayout();
+
+                var absPostLabel = new Label();
+                AbsoluteLayout.SetLayoutBounds(postLabel, new Rectangle(0, 0, 1, 1));
+                AbsoluteLayout.SetLayoutFlags(postLabel, AbsoluteLayoutFlags.All);
+                layout.Children.Add(postLabel);
+
                 CustomViewCell cell = new CustomViewCell();
 
-                cell.View = grid;
                 //cell.Tapges += (sender, e) =>
                 //{
                 //    viewModel.ICommentThis.Execute(sender);
                 //};
+
+
+                //scelta della vista
+                //cell.View = grid;
+                cell.View = layout;
+
 
                 return cell;
             });
