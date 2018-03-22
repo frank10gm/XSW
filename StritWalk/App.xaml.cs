@@ -77,8 +77,8 @@ namespace StritWalk
                 Children = {
                     new NavigationPage(new ItemsPage())
                     {
-                        Icon = Platformer("tab_about.png", null, null),
-                        Title = Platformer(null, "Home", "Home")
+                        Icon = Platformer("tab_feed.png", null, null),
+                        Title = Platformer(null, "Feed", "Feed")
                         //Title = "home"
                     },
                     new NavigationPage(new AboutPage())
@@ -87,16 +87,16 @@ namespace StritWalk
                         Title = Platformer(null, "Map", "Map")
                         //Title = "map"
                     },
-                    new NavigationPage(new MonkeyPage())
-                    {
-                        Icon = Platformer("tab_feed.png", null, null),
-                        Title = Platformer(null, "Monkeys", "Monkeys")
-                        //Title = "map"
-                    },
+                    //new NavigationPage(new MonkeyPage())
+                    //{
+                    //    Icon = Platformer("tab_feed.png", null, null),
+                    //    Title = Platformer(null, "Monkeys", "Monkeys")
+                    //    //Title = "map"
+                    //},
                     new NavigationPage(new MenuPage(Adapter))
                     {
                         Icon = Platformer("slideout.png", null, null),
-                        Title = Platformer(null, "Menu", "Menu")
+                        Title = Platformer(null, "Profile", "Profile")
                         //Title = "map"
                     }
                 }

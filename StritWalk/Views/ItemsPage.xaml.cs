@@ -132,10 +132,10 @@ namespace StritWalk
                 CustomViewCell cell = new CustomViewCell();
 
                 cell.View = grid;
-                cell.Tapges += (sender, e) =>
-                {
-                    viewModel.ICommentThis.Execute(sender);
-                };
+                //cell.Tapges += (sender, e) =>
+                //{
+                //    viewModel.ICommentThis.Execute(sender);
+                //};
 
                 return cell;
             });

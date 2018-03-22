@@ -57,7 +57,7 @@ namespace StritWalk.iOS
 
         public IBeaconService()
         {
-            UIApplication.SharedApplication.IdleTimerDisabled = true;
+            //UIApplication.SharedApplication.IdleTimerDisabled = true;
             peripheralDelegate = new BTPeripheralDelegate();
             peripheralMgr = new CBPeripheralManager(peripheralDelegate, DispatchQueue.DefaultGlobalQueue);
             Initializing();
