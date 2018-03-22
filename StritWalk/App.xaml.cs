@@ -4,6 +4,7 @@ using StritWalk.Views;
 using Xamarin.Forms;
 using Com.OneSignal;
 using Com.OneSignal.Abstractions;
+using System.Diagnostics;
 
 namespace StritWalk
 {
@@ -18,6 +19,7 @@ namespace StritWalk
         public App()
         {
             InitializeComponent();
+            Console.WriteLine("@@@@@@@ start app.");
 
             if (UseMockDataStore)
                 DependencyService.Register<MockDataStore>();
@@ -30,23 +32,7 @@ namespace StritWalk
                 .InFocusDisplaying(OSInFocusDisplayOption.Notification)
                 .EndInit();
         }
-
-        private void getNotifTags(Dictionary<string, object> tags)
-        {
-            try
-            {
-                foreach (var tag in tags)
-                {
-                    Console.WriteLine("### " + tag.Key + ":" + tag.Value);
-                }
-            }
-            catch (Exception ex)
-            {
-
-            }
-
-        }
-
+    
         public static void SetMainPage()
         {
             if (!Settings.IsLoggedIn)

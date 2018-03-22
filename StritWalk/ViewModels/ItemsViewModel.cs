@@ -94,8 +94,8 @@ namespace StritWalk
             //    IsNotEnd = arg;
             //});
 
-            //start with notifications
-            OneSignal.Current.GetTags(getNotifTags);
+            //start with notifications            
+            //OneSignal.Current.GetTags(getNotifTags);
 
             //audio record service
             recorder = new AudioRecorderService
@@ -336,6 +336,9 @@ namespace StritWalk
                 item.Likes = num.ToString();
                 item.Liked_me = "1";
                 item.NumberOfLikes = num.ToString();
+                //inviare la notifica per il like
+                //var data = $"{{ user_id: '{Settings.AuthToken}', notification_text: '{text}', post_id: '{Item.Id}', user_name: '{Settings.UserId}', creator: '{Item.Creator}', creator_id: '{Item.Creator_id}' }}";
+                //await DataStore.sendNotifications(data);
             }
             IsWorking = false;
         }
@@ -380,11 +383,13 @@ namespace StritWalk
         //notifications
         private void getNotifTags(Dictionary<string, object> tags)
         {
+            Console.WriteLine("@@@@@@ start tag check function.");
             try
             {
                 //Console.WriteLine("### how many tags? " + tags.Count);
                 if (tags == null || tags.Count == 0)
                 {
+                    Console.WriteLine("@@@@@@ no tags");
                     //Console.WriteLine("### no tags");
                     OneSignal.Current.SetSubscription(true);
                     OneSignal.Current.SendTags(new Dictionary<string, string>()
@@ -396,11 +401,11 @@ namespace StritWalk
                     return;
                 }
                 foreach (var tag in tags)
-                    Console.WriteLine("### tags : " + tag.Key + ":" + tag.Value);
+                    Console.WriteLine("@@@@@@@@@@@ tags : " + tag.Key + ":" + tag.Value);
             }
             catch (Exception ex)
             {
-                //Console.WriteLine("### exception " + ex);
+                Console.WriteLine("@@@@@@@@@@@ onesignal exception " + ex);
             }
         }
 

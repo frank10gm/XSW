@@ -4,6 +4,8 @@ using System.Threading;
 using System;
 
 using Xamarin.Forms;
+using Com.OneSignal;
+using System.Collections.Generic;
 
 namespace StritWalk
 {
@@ -25,9 +27,11 @@ namespace StritWalk
 
 
         public LoginViewModel()
-        {
+        {            
+
             SignInCommand = new Command(async () =>
-            {
+            {                                
+                //sign in if all ok
                 if (!IsBusy && !FormIsNotReady && !doing)
                     await SignIn();
             });
@@ -36,9 +40,11 @@ namespace StritWalk
 
 
         async Task SignIn()
-        {
+        {            
+
             try
-            {
+            {                
+
                 IsBusy = true;
                 FormIsNotReady = true;
                 doing = true;
@@ -68,11 +74,13 @@ namespace StritWalk
                 doing = false;
 
                 if (Settings.IsLoggedIn)
+                {
+                    //unregister device for push notifications
+                    OneSignal.Current.IdsAvailable(getNotifStatus);
                     App.GoToMainPage();
+                }                    
             }
-        }
-
-
+        }    
 
         public async Task<bool> TryLoginAsync()
         {
@@ -80,6 +88,35 @@ namespace StritWalk
             //Settings.AuthToken = "123";
             //Settings.UserId = "Frankie";
             return await DataStore.Login(Username, Password);
+        }
+
+        //controlla se registrato per le notifiche
+        private void getNotifStatus(string userID, string pushToken)
+        {
+            Settings.Notification_id = userID;
+            OneSignal.Current.GetTags(getNotifTags);                   
+        }
+
+        private void getNotifTags(Dictionary<string, object> tags)
+        {
+            Console.WriteLine("@@@@@@ start tag check function.");
+            try
+            {                
+                OneSignal.Current.SetSubscription(true);
+                OneSignal.Current.SendTags(new Dictionary<string, string>()
+                    {
+                        {"UserId", Settings.AuthToken }, //purtroppo il nome della variabile è rimasto quello da inizio sviluppo... :( 
+                        {"UserName", Settings.UserId }
+                    });
+                DataStore.addPushId(Settings.Notification_id);
+                return;
+                //foreach (var tag in tags)
+                //    Console.WriteLine("@@@@@@@@@@@ tags : " + tag.Key + ":" + tag.Value);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("@@@@@@@@@@@ onesignal exception " + ex);
+            }
         }
 
     }

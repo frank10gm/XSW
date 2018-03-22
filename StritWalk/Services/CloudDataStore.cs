@@ -414,7 +414,7 @@ namespace StritWalk
             var httpContent = new StringContent(json, Encoding.UTF8, contentType);
             var req = await client.PostAsync($"", httpContent);
             var resp = await req.Content.ReadAsStringAsync();
-            //Console.WriteLine("### response " + resp);
+            Console.WriteLine("@@@@@@@@@@@@@@@@@@@@ response add push id " + resp);
             var ao = JObject.Parse(resp);
             var result = (string)ao["response"];
             return true;
@@ -432,7 +432,7 @@ namespace StritWalk
             var httpContent = new StringContent(json, Encoding.UTF8, contentType);
             var req = await client.PostAsync($"", httpContent);
             var resp = await req.Content.ReadAsStringAsync();
-            //Console.WriteLine("### response " + resp);
+            Console.WriteLine("@@@@@@@@@@@@@@@@@@@@ response " + resp);
             var ao = JObject.Parse(resp);
             var result = (string)ao["response"];
             return true;

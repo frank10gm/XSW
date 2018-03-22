@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>StritWalk.Droid</RootNamespace>
     <AssemblyName>StritWalk.Droid</AssemblyName>
-    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
