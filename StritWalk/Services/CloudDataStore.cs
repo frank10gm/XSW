@@ -449,6 +449,7 @@ namespace StritWalk
             var httpContent = new StringContent(json, Encoding.UTF8, contentType);
             var req = await client.PostAsync($"", httpContent);
             var resp = await req.Content.ReadAsStringAsync();
+            Console.WriteLine("@@@@ ask for notification response : " + resp);
             //var ao = JObject.Parse(resp);
             //var result = (string)ao["response"];
             return true;

@@ -41,12 +41,12 @@
                 </Button.BackgroundColor>
             </Button>
             <StackLayout Grid.Row="4" Grid.ColumnSpan="2" VerticalOptions="Center" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                <ActivityIndicator IsRunning="{Binding IsBusy}" HorizontalOptions="EndAndExpand" VerticalOptions="Center">
+                <ActivityIndicator IsRunning="{Binding IsBusy}" HorizontalOptions="Start" VerticalOptions="Center">
                     <ActivityIndicator.Color>
                         <OnPlatform x:TypeArguments="Color" Android="{StaticResource Accent}" />
                     </ActivityIndicator.Color>
                 </ActivityIndicator>
-                <Label Text="{Binding Message}" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+                <Label Text="{Binding Message}" VerticalOptions="Center" HorizontalOptions="Start" />
             </StackLayout>
         </Grid>
     </ScrollView>

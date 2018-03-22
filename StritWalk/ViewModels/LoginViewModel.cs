@@ -31,7 +31,7 @@ namespace StritWalk
 
             SignInCommand = new Command(async () =>
             {                                
-                //sign in if all ok
+                //sign in if all checks are ok
                 if (!IsBusy && !FormIsNotReady && !doing)
                     await SignIn();
             });
@@ -41,10 +41,8 @@ namespace StritWalk
 
         async Task SignIn()
         {            
-
             try
-            {                
-
+            {                              
                 IsBusy = true;
                 FormIsNotReady = true;
                 doing = true;
@@ -61,12 +59,14 @@ namespace StritWalk
                 if (!result)
                 {
                     string mex = "Wrong username or password...";
-                    for (var i = 0; i < mex.Length; i++)
-                    {
-                        Message += mex[i];
-                        await Task.Delay(50);
-                    }
-                    await Task.Delay(500);
+                    //scrivere il messaggio come macchina tipografica.. non elegante
+                    //for (var i = 0; i < mex.Length; i++)
+                    //{
+                    //    Message += mex[i];
+                    //    await Task.Delay(50);
+                    //}
+                    Message = mex;
+                    await Task.Delay(2000);
                     Message = string.Empty;
                 }
                 
@@ -75,7 +75,7 @@ namespace StritWalk
 
                 if (Settings.IsLoggedIn)
                 {
-                    //unregister device for push notifications
+                    //register this device for push notifications
                     OneSignal.Current.IdsAvailable(getNotifStatus);
                     App.GoToMainPage();
                 }                    
@@ -98,8 +98,7 @@ namespace StritWalk
         }
 
         private void getNotifTags(Dictionary<string, object> tags)
-        {
-            Console.WriteLine("@@@@@@ start tag check function.");
+        {            
             try
             {                
                 OneSignal.Current.SetSubscription(true);
@@ -110,6 +109,7 @@ namespace StritWalk
                     });
                 DataStore.addPushId(Settings.Notification_id);
                 return;
+
                 //foreach (var tag in tags)
                 //    Console.WriteLine("@@@@@@@@@@@ tags : " + tag.Key + ":" + tag.Value);
             }

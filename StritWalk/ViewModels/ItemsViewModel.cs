@@ -337,7 +337,9 @@ namespace StritWalk
                 item.Liked_me = "1";
                 item.NumberOfLikes = num.ToString();
                 //inviare la notifica per il like
-                //var data = $"{{ user_id: '{Settings.AuthToken}', notification_text: '{text}', post_id: '{Item.Id}', user_name: '{Settings.UserId}', creator: '{Item.Creator}', creator_id: '{Item.Creator_id}' }}";
+                string text = "liked your post";
+                Console.WriteLine("@@@@@ send like notification");
+                //var data = $"{{ user_id: '{Settings.AuthToken}', notification_text: '{text}', post_id: '{item.Id}', user_name: '{Settings.UserId}', creator: '{item.Creator}', creator_id: '{item.Creator_id}', type: 'like' }}";
                 //await DataStore.sendNotifications(data);
             }
             IsWorking = false;
