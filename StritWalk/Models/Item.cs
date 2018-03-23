@@ -232,9 +232,9 @@ namespace StritWalk
                 FormattedString result = new FormattedString();
                 Span creator = new Span { Text = Creator + "\n", FontAttributes = FontAttributes.Bold, FontSize = 16.0F, ForegroundColor = Color.FromHex("#293e49") };
                 Span details = new Span { Text = Details + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#808080") };
-                Span brace1 = new Span { Text = "{ ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
-                Span brace2 = new Span { Text = " } ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
-                Span name = new Span { Text = Name, FontAttributes = FontAttributes.Bold, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };
+                //Span brace1 = new Span { Text = "{ ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
+                //Span brace2 = new Span { Text = " } ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
+                //Span name = new Span { Text = Name, FontAttributes = FontAttributes.Bold, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };
                 Span description = new Span { Text = Description, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };
 
                 if (Nuovo == true)
@@ -244,18 +244,17 @@ namespace StritWalk
 
                 result.Spans.Add(creator);
                 result.Spans.Add(details);
-                if (!string.IsNullOrEmpty(Name) || !string.IsNullOrWhiteSpace(Name))
-                {
-                    result.Spans.Add(brace1);
-                    result.Spans.Add(name);
-                    result.Spans.Add(brace2);
-                }
+                //if (!string.IsNullOrEmpty(Name) || !string.IsNullOrWhiteSpace(Name))
+                //{
+                //    result.Spans.Add(brace1);
+                //    result.Spans.Add(name);
+                //    result.Spans.Add(brace2);
+                //}
                 result.Spans.Add(description);
 
                 return result;
 
-            }
-            set { }
+            }            
         }
 
         public FormattedString Username
@@ -308,8 +307,7 @@ namespace StritWalk
         public string NumberOfLikes
         {
             get
-            {                
-                if (numberOfLikes == likes) likes = numberOfLikes;
+            {                                
                 numberOfLikes = "";                
                 string playText = " Plays  ";
                 string text = " Likes  ";
