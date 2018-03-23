@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Threading;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Plugin.MediaManager;
-//using System.Windows.Input;
-using Plugin.Geolocator.Abstractions;
-using Plugin.Geolocator;
 using System.Diagnostics;
-using Com.OneSignal;
+
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace StritWalk
@@ -32,119 +26,251 @@ namespace StritWalk
 
             var dataTemplate = new DataTemplate(() =>
             {
-                var grid = new Grid();
-                grid.Padding = 0;
-                grid.RowSpacing = 0;
-                grid.ColumnSpacing = 0;
-                grid.Margin = 0;
-
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(10) });
-
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-
-                //var userLabel = new Label { Margin = new Thickness(20, 10, 10, 5) };
-                //userLabel.SetBinding(Label.FormattedTextProperty, "Username");
-                //grid.Children.Add(userLabel, 0, 0);
-                //Grid.SetColumnSpan(userLabel, 4);
-
-                //var imageProfile = new Image { Source = "cluster.png", Aspect = as };
-                //grid.Children.Add(imageProfile, 0, 0);
 
                 var postLabel = new Label { Margin = new Thickness(20, 10, 20, 10) };
                 postLabel.SetBinding(Label.FormattedTextProperty, "Post");
-                grid.Children.Add(postLabel, 0, 0);
-                Grid.SetColumnSpan(postLabel, 3);
-
                 var separatorLine = new BoxView { HeightRequest = 1, BackgroundColor = Color.FromHex("#efefef"), Margin = new Thickness(0, 0, 0, 0) };
-                grid.Children.Add(separatorLine, 0, 1);
-                Grid.SetColumnSpan(separatorLine, 3);
-
-                // numeri like play ecc
                 var numbersLabel = new Label { Margin = new Thickness(20, 10, 20, 10), TextColor = Color.Gray, FontSize = 12 };
                 numbersLabel.SetBinding(Label.TextProperty, "NumberOfLikes");
-                grid.Children.Add(numbersLabel, 0, 2);
-                Grid.SetColumnSpan(numbersLabel, 3);
-
                 var separatorLine3 = new BoxView { HeightRequest = 1, BackgroundColor = Color.FromHex("#efefef"), Margin = new Thickness(20, 0, 20, 0) };
-                grid.Children.Add(separatorLine3, 0, 3);
-                Grid.SetColumnSpan(separatorLine3, 3);
-
-                //play button
-                var playButton = new Button() { TextColor = Color.FromHex("#293e49"), FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 20, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
+                var playButton = new Button() { TextColor = Color.FromHex("#293e49"), FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
                 playButton.Text = "Play";
-                //playButton.SetBinding(Button.TextProperty, "Play");
                 playButton.Command = viewModel.IPlayThis;
                 playButton.SetBinding(Button.CommandParameterProperty, ".");
-                grid.Children.Add(playButton, 2, 4);
-                //Grid.SetColumnSpan(playButton, 2);
-
-                var likeButton = new Button() { TextColor = Color.Gray, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(20, 0, 10, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
+                var likeButton = new Button() { TextColor = Color.Gray, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
                 likeButton.SetBinding(Button.TextColorProperty, "Liked_me");
                 likeButton.SetBinding(Button.TextProperty, "Likes");
                 likeButton.Command = viewModel.ILikeThis;
                 likeButton.SetBinding(Button.CommandParameterProperty, ".");
-                grid.Children.Add(likeButton, 0, 4);
-                //Grid.SetColumnSpan(likeButton, 2);
-
-                var commentsButton = new Button() { TextColor = Color.Gray, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(10, 0, 10, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
+                var commentsButton = new Button() { TextColor = Color.Gray, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
                 commentsButton.SetBinding(Button.TextProperty, "Comments_count");
                 commentsButton.Command = viewModel.ICommentThis;
                 commentsButton.SetBinding(Button.CommandParameterProperty, ".");
-                grid.Children.Add(commentsButton, 1, 4);
-                //Grid.SetColumnSpan(commentsButton, 2);                
-
-                //var otherButton = new Button { Text = "Actions" };                
-                //grid.Children.Add(otherButton, 4, 2);        
-
                 var separatorLine2 = new BoxView { HeightRequest = 1, BackgroundColor = Color.FromHex("#efefef"), Margin = new Thickness(0, 0, 0, 0) };
-                grid.Children.Add(separatorLine2, 0, 5);
-                Grid.SetColumnSpan(separatorLine2, 3);
-
                 var commentsLabel = new Label { Margin = new Thickness(20, 0, 20, 0), Text = "", TextColor = Color.Gray, FontSize = 13 };
                 commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
-                //commentsLabel.SetBinding(IsVisibleProperty, "VisibleComments"); // non visualizzare la barra dei commenti quando non ci sono
-                grid.Children.Add(commentsLabel, 0, 6);
-                Grid.SetColumnSpan(commentsLabel, 3);
                 var tapGestureRecognizer = new TapGestureRecognizer();
                 tapGestureRecognizer.Command = viewModel.ICommentThis;
                 tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandParameterProperty, ".");
                 commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
-
                 var whiteSeparator = new BoxView { BackgroundColor = Color.FromHex("#efefef"), HeightRequest = 10 };
-                grid.Children.Add(whiteSeparator, 0, 7);
-                Grid.SetColumnSpan(whiteSeparator, 3);
-
-                //var tapGestureRecognizer = new TapGestureRecognizer();
-                //tapGestureRecognizer.Tapped += (s, e) => {
-
-                //};
-                //grid.GestureRecognizers.Add(tapGestureRecognizer);
 
 
-                //absolute layout
-                var layout = new AbsoluteLayout();
+                //relative layout
+                var layout = new RelativeLayout();
 
-                var absPostLabel = new Label();
-                AbsoluteLayout.SetLayoutBounds(postLabel, new Rectangle(0, 0, 1, 1));
-                AbsoluteLayout.SetLayoutFlags(postLabel, AbsoluteLayoutFlags.All);
-                layout.Children.Add(postLabel);
+                layout.Children.Add(postLabel,
+                    Constraint.Constant(0),
+                    Constraint.Constant(0),
+                    Constraint.RelativeToParent((parent) =>
+                    {
+                        return parent.Width;
+                    }),
+                    null);
 
-                CustomViewCell cell = new CustomViewCell();
+                layout.Children.Add(separatorLine,
+                    Constraint.Constant(0),
+                    Constraint.RelativeToView(postLabel, (Parent, sibling) =>
+                    {
+                        return sibling.Y + sibling.Height + 10;
+                    }),
+                    Constraint.RelativeToParent((parent) =>
+                    {
+                        return parent.Width;
+                    }),
+                    Constraint.Constant(1));
+
+                layout.Children.Add(numbersLabel,
+                    Constraint.Constant(0),
+                    Constraint.RelativeToView(separatorLine, (Parent, sibling) =>
+                    {
+                        return sibling.Y + 1;
+                    }),
+                    Constraint.RelativeToParent((parent) =>
+                    {
+                        return parent.Width;
+                    }),
+                    Constraint.Constant(48));
+
+                layout.Children.Add(separatorLine3,
+                    Constraint.Constant(0),
+                    Constraint.RelativeToView(numbersLabel, (Parent, sibling) =>
+                    {
+                        return sibling.Y + sibling.Height;
+                    }),
+                    Constraint.RelativeToParent((parent) =>
+                    {
+                        return parent.Width;
+                    }),
+                    Constraint.Constant(1));
+
+                layout.Children.Add(playButton,
+                    Constraint.Constant(0),
+                    Constraint.RelativeToView(separatorLine3, (Parent, sibling) =>
+                    {
+                        return sibling.Y - 5;
+                    }),
+                    Constraint.RelativeToParent((parent) =>
+                    {
+                        return parent.Width / 3;
+                    }),
+                    Constraint.Constant(48));
+
+                layout.Children.Add(likeButton,
+                    Constraint.RelativeToParent((parent) =>
+                    {
+                        return parent.Width / 3;
+                    }),
+                    Constraint.RelativeToView(separatorLine3, (Parent, sibling) =>
+                    {
+                        return sibling.Y - 5;
+                    }),
+                    Constraint.RelativeToParent((parent) =>
+                    {
+                        return parent.Width / 3;
+                    }),
+                    Constraint.Constant(48));
+
+                layout.Children.Add(commentsButton,
+                    Constraint.RelativeToParent((parent) =>
+                    {
+                        return (parent.Width / 3) * 2;
+                    }),
+                    Constraint.RelativeToView(separatorLine3, (Parent, sibling) =>
+                    {
+                        return sibling.Y - 5;
+                    }),
+                    Constraint.RelativeToParent((parent) =>
+                    {
+                        return (parent.Width / 3);
+                    }),
+                    Constraint.Constant(48));
+
+                layout.Children.Add(separatorLine2,
+                    Constraint.Constant(0),
+                    Constraint.RelativeToView(playButton, (Parent, sibling) =>
+                    {
+                        return sibling.Y + sibling.Height - 5;
+                    }),
+                    Constraint.RelativeToParent((parent) =>
+                    {
+                        return parent.Width;
+                    }),
+                    Constraint.Constant(1));
+
+                layout.Children.Add(commentsLabel,
+                    Constraint.Constant(0),
+                    Constraint.RelativeToView(separatorLine2, (Parent, sibling) =>
+                    {
+                        return sibling.Y + 1;
+                    }),
+                    Constraint.RelativeToParent((parent) =>
+                    {
+                        return parent.Width;
+                    }),
+                    null);
+
+                layout.Children.Add(whiteSeparator,
+                    Constraint.Constant(0),
+                    Constraint.RelativeToView(commentsLabel, (Parent, sibling) =>
+                    {
+                        return sibling.Y + sibling.Height;
+                    }),
+                    Constraint.RelativeToParent((parent) =>
+                    {
+                        return parent.Width;
+                    }),
+                    Constraint.Constant(10));
+
+
+                //var grid = new Grid();
+                //grid.Padding = 0;
+                //grid.RowSpacing = 0;
+                //grid.ColumnSpacing = 0;
+                //grid.Margin = 0;
+
+                //grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                //grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1) });
+                //grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                //grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1) });
+                //grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                //grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1) });
+                //grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                //grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(10) });
+
+                //grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                //grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                //grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+                ////var userLabel = new Label { Margin = new Thickness(20, 10, 10, 5) };
+                ////userLabel.SetBinding(Label.FormattedTextProperty, "Username");
+                ////grid.Children.Add(userLabel, 0, 0);
+                ////Grid.SetColumnSpan(userLabel, 4);
+
+                ////var imageProfile = new Image { Source = "cluster.png", Aspect = as };
+                ////grid.Children.Add(imageProfile, 0, 0);
+
+
+                //grid.Children.Add(postLabel, 0, 0);
+                //Grid.SetColumnSpan(postLabel, 3);
+
+                //grid.Children.Add(separatorLine, 0, 1);
+                //Grid.SetColumnSpan(separatorLine, 3);
+
+                //grid.Children.Add(numbersLabel, 0, 2);
+                //Grid.SetColumnSpan(numbersLabel, 3);
+
+                //grid.Children.Add(separatorLine3, 0, 3);
+                //Grid.SetColumnSpan(separatorLine3, 3);                
+
+                //grid.Children.Add(playButton, 2, 4);                       
+
+                //grid.Children.Add(likeButton, 0, 4);                
+
+                //grid.Children.Add(commentsButton, 1, 4);                
+
+                ////var otherButton = new Button { Text = "Actions" };
+                ////grid.Children.Add(otherButton, 4, 2);
+
+                //grid.Children.Add(separatorLine2, 0, 5);
+                //Grid.SetColumnSpan(separatorLine2, 3);
+
+                ////commentsLabel.SetBinding(IsVisibleProperty, "VisibleComments"); // non visualizzare la barra dei commenti quando non ci sono
+                //grid.Children.Add(commentsLabel, 0, 6);
+                //Grid.SetColumnSpan(commentsLabel, 3);
+
+                //grid.Children.Add(whiteSeparator, 0, 7);
+                //Grid.SetColumnSpan(whiteSeparator, 3);
+
+                ////var tapGestureRecognizer = new TapGestureRecognizer();
+                ////tapGestureRecognizer.Tapped += (s, e) => {
+                ////};
+                ////grid.GestureRecognizers.Add(tapGestureRecognizer);
+
+
+                ////absolute layout
+                //var abslayout = new AbsoluteLayout() { MinimumHeightRequest = 100 };
+
+                //AbsoluteLayout.SetLayoutBounds(postLabel, new Rectangle(0f, 0f, 1, AbsoluteLayout.AutoSize));
+                //AbsoluteLayout.SetLayoutFlags(postLabel, AbsoluteLayoutFlags.WidthProportional);
+                //abslayout.Children.Add(postLabel);
+
+                //AbsoluteLayout.SetLayoutBounds(separatorLine, new Rectangle(0f, 1, 1, 1));
+                //AbsoluteLayout.SetLayoutFlags(separatorLine, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.YProportional);
+                //abslayout.Children.Add(separatorLine);
+
+                //AbsoluteLayout.SetLayoutBounds(numbersLabel, new Rectangle(0f, 1, 1, 100));
+                //AbsoluteLayout.SetLayoutFlags(numbersLabel, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.YProportional);
+                //abslayout.Children.Add(numbersLabel);
+
 
                 //cell.Tapges += (sender, e) =>
                 //{
                 //    viewModel.ICommentThis.Execute(sender);
                 //};
 
+
+                CustomViewCell cell = new CustomViewCell();
 
                 //scelta della vista
                 //cell.View = grid;

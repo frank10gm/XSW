@@ -44,6 +44,7 @@ Global
 		{04596B47-B897-4497-99BB-4BDD419F0A43}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{04596B47-B897-4497-99BB-4BDD419F0A43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04596B47-B897-4497-99BB-4BDD419F0A43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04596B47-B897-4497-99BB-4BDD419F0A43}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{04596B47-B897-4497-99BB-4BDD419F0A43}.Release|iPhone.ActiveCfg = Release|Any CPU
 		{04596B47-B897-4497-99BB-4BDD419F0A43}.Release|iPhone.Build.0 = Release|Any CPU
 		{04596B47-B897-4497-99BB-4BDD419F0A43}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
@@ -51,6 +52,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {38489F43-7504-4284-8B19-D8FA808266C2}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0

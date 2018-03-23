@@ -306,34 +306,26 @@ namespace StritWalk
         public async Task<User> GetMyUser(User me)
         {
             if (!CrossConnectivity.Current.IsConnected) return me;
-
-            var contentType = "application/json";
-            var json = $"{{ action: 'getMyUser', user: {Settings.AuthToken} }}";
-            JObject o = JObject.Parse(json);
-            json = o.ToString(Formatting.None);
-            var httpContent = new StringContent(json, Encoding.UTF8, contentType);
-            var req = await client.PostAsync($"", httpContent);
-            var resp = await req.Content.ReadAsStringAsync();
+            
             try
             {
+                var contentType = "application/json";
+                var json = $"{{ action: 'getMyUser', user: {Settings.AuthToken} }}";
+                JObject o = JObject.Parse(json);
+                json = o.ToString(Formatting.None);
+                var httpContent = new StringContent(json, Encoding.UTF8, contentType);
+                var req = await client.PostAsync($"", httpContent);
+                var resp = await req.Content.ReadAsStringAsync();
                 var ao = JObject.Parse(resp);
                 Settings.Num_posts = (int)ao["num_posts"];
                 Settings.Num_likes = (int)ao["num_likes"];
                 Settings.Num_friends = (int)ao["num_friends"];
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-
-            try
-            {
                 me = await Task.Run(() => JsonConvert.DeserializeObject<User>(resp));
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
-            }
+                Console.WriteLine("@@@@@@ Exception : " + ex);
+            }           
 
             return me;
         }

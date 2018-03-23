@@ -1,4 +1,5 @@
 ﻿using System;
+using Android.Content;
 using StritWalk;
 using StritWalk.Droid;
 using Xamarin.Forms;
@@ -10,6 +11,10 @@ namespace StritWalk.Droid
 {
     public class CustomListViewRenderer : ListViewRenderer
     {
+        public CustomListViewRenderer(Context context) : base(context)
+        {
+        }
+
         protected override void OnElementChanged(ElementChangedEventArgs<ListView> e)
         {
             base.OnElementChanged(e);
