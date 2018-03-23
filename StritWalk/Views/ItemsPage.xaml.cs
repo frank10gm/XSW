@@ -42,7 +42,7 @@ namespace StritWalk
                 //likeButton.SetBinding(Button.TextProperty, "Likes");
                 likeButton.Command = viewModel.ILikeThis;
                 likeButton.SetBinding(Button.CommandParameterProperty, ".");
-                var commentsButton = new Button() { Text = "Comment",  FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
+                var commentsButton = new Button() { Text = "Comment", TextColor = Color.Gray, FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
                 //commentsButton.SetBinding(Button.TextProperty, "Comments_count");
                 commentsButton.Command = viewModel.ICommentThis;
                 commentsButton.SetBinding(Button.CommandParameterProperty, ".");
