@@ -27,10 +27,10 @@ namespace StritWalk
             var dataTemplate = new DataTemplate(() =>
             {
 
-                var postLabel = new Label { Margin = new Thickness(20, 10, 20, 10)};
+                var postLabel = new Label { Margin = new Thickness(20, 0, 20, 0)};
                 postLabel.SetBinding(Label.FormattedTextProperty, "Post");
                 var separatorLine = new BoxView { HeightRequest = 1, BackgroundColor = Color.FromHex("#efefef"), Margin = new Thickness(0, 0, 0, 0) };
-                var numbersLabel = new Label { Margin = new Thickness(20, 10, 20, 10), TextColor = Color.Gray, FontSize = 12 };
+                var numbersLabel = new Label { Margin = new Thickness(20, 0, 20, 0), TextColor = Color.Gray, FontSize = 12 };
                 numbersLabel.SetBinding(Label.TextProperty, "NumberOfLikes");
                 var separatorLine3 = new BoxView { HeightRequest = 1, BackgroundColor = Color.FromHex("#efefef"), Margin = new Thickness(20, 0, 20, 0) };
                 var playButton = new Button() { TextColor = Color.FromHex("#293e49"), FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
@@ -53,7 +53,7 @@ namespace StritWalk
                 tapGestureRecognizer.Command = viewModel.ICommentThis;
                 tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandParameterProperty, ".");
                 commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
-                var whiteSeparator = new BoxView { BackgroundColor = Color.FromHex("#efefef"), HeightRequest = 10 };
+                var whiteSeparator = new BoxView { BackgroundColor = Color.FromHex("#efefef"), HeightRequest = 10, Margin = new Thickness(0, 0, 0, 0) };
 
 
                 //relative layout
@@ -61,7 +61,7 @@ namespace StritWalk
 
                 layout.Children.Add(postLabel,
                     Constraint.Constant(0),
-                    Constraint.Constant(0),
+                    Constraint.Constant(10),
                     Constraint.RelativeToParent((parent) =>
                     {
                         return parent.Width;
@@ -84,13 +84,13 @@ namespace StritWalk
                     Constraint.Constant(0),
                     Constraint.RelativeToView(separatorLine, (Parent, sibling) =>
                     {
-                        return sibling.Y + 1;
+                        return sibling.Y + 11;
                     }),
                     Constraint.RelativeToParent((parent) =>
                     {
                         return parent.Width;
                     }),
-                    Constraint.Constant(48));
+                    Constraint.Constant(28));
 
                 layout.Children.Add(separatorLine3,
                     Constraint.Constant(0),
