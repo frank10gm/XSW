@@ -27,7 +27,7 @@ namespace StritWalk
             var dataTemplate = new DataTemplate(() =>
             {
 
-                var postLabel = new Label { Margin = new Thickness(20, 10, 20, 10) };
+                var postLabel = new Label { Margin = new Thickness(20, 0, 20, 10) };
                 postLabel.SetBinding(Label.FormattedTextProperty, "Post");
                 var separatorLine = new BoxView { HeightRequest = 1, BackgroundColor = Color.FromHex("#efefef"), Margin = new Thickness(0, 0, 0, 0) };
                 var numbersLabel = new Label { Margin = new Thickness(20, 10, 20, 10), TextColor = Color.Gray, FontSize = 12 };
@@ -168,7 +168,7 @@ namespace StritWalk
                     {
                         return parent.Width;
                     }),
-                    null);
+                    Constraint.Constant(80));
 
                 layout.Children.Add(whiteSeparator,
                     Constraint.Constant(0),

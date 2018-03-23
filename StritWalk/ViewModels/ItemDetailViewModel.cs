@@ -61,7 +61,7 @@ namespace StritWalk
                         Item.Comments.Insert(0, jitem);
                         Item.VisibleComments = true;
                         Item.NumberOfLikes = "3";
-                        if (Device.RuntimePlatform == Device.Android) Item.ViewComments = ""; //disabilitato in modo che su ios la pagina precedente non si aggiorni
+                        //if (Device.RuntimePlatform == Device.Android) Item.ViewComments = ""; //disabilitato in modo che su ios la pagina precedente non si aggiorni
                     }
 
                 }
@@ -96,7 +96,7 @@ namespace StritWalk
                     Item.Comments.Insert(0, jitem);
                     Item.VisibleComments = true;
                     Item.NumberOfLikes = "3";
-                    if (Device.RuntimePlatform == Device.Android) Item.ViewComments = ""; //disabilitato in modo che su ios la pagina precedente non si aggiorni                    
+                    //if (Device.RuntimePlatform == Device.Android) Item.ViewComments = ""; //disabilitato in modo che su ios la pagina precedente non si aggiorni                    
                     //MessagingCenter.Send(this, "NewComment", Item);
 
                     //invio della notifica                    
