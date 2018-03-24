@@ -11,7 +11,12 @@ namespace StritWalk.Droid
     {
         CustomEditor element;
 
-		protected override void OnElementChanged(ElementChangedEventArgs<Editor> ev)
+        public CustomEditorRenderer(CustomEditor element)
+        {
+            this.element = element;
+        }
+
+        protected override void OnElementChanged(ElementChangedEventArgs<Editor> ev)
 		{
 			base.OnElementChanged(ev);
 
