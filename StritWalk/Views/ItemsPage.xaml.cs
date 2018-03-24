@@ -330,7 +330,8 @@ namespace StritWalk
 
         private async void OnItemTapped(object sender, ItemTappedEventArgs args)
         {
-            await Navigation.PushAsync(new NewItemPage(viewModel.Items));
+            Item item = args.Item as Item;            
+            await Navigation.PushAsync(new PostPage(viewModel.Items, item));
             ItemsListView.SelectedItem = null;
         }
 
