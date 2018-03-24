@@ -73,8 +73,7 @@ namespace StritWalk.iOS
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             //var cell = this.GetCellForPath(indexPath);            
-
-            Console.WriteLine("@@@@ strategy : " + list.CachingStrategy); 
+            
             return source.GetCell(tableView, indexPath);
 
             //new cell func
