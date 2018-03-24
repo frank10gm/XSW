@@ -31,7 +31,7 @@ namespace StritWalk.iOS
         public CustomListViewSource(CustomListView view, UITableViewSource dataSource, PropertyInfo prop)
         {
             //tableItems = view.ItemsSource as ObservableRangeCollection<Item>;
-            tableItems = view.ItemsSource as IList<Item>;
+            tableItems = view.ItemsSource as IList<Item>;            
             list = view;
             source = dataSource;
             specialProperty = prop;
@@ -68,13 +68,24 @@ namespace StritWalk.iOS
 
         }
 
-        #endregion
-
+        #endregion        
 
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             //var cell = this.GetCellForPath(indexPath);
-            return source.GetCell(tableView, indexPath);
+
+            //return source.GetCell(tableView, indexPath);
+
+            //new cell func
+            UITableViewCell cell = tableView.DequeueReusableCell(cellIdentifier);
+            if (cell == null)
+            {                
+                cell = new UITableViewCell(UITableViewCellStyle.Default, cellIdentifier);                
+            }
+
+            return cell;
+
+
         }
 
         public override void WillDisplay(UITableView tableView, UITableViewCell cell, NSIndexPath indexPath)
