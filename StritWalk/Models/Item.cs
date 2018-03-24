@@ -421,5 +421,19 @@ namespace StritWalk
             set { SetProperty(ref viewComments, value); }
         }
 
+        //audio disabled
+        [JsonIgnore]
+        bool audioExist = false;
+        public bool AudioExist
+        {
+            get
+            {
+                if (audio != "") return true;
+                return false;
+            }
+            set { SetProperty(ref audioExist, value); }
+        }
+
+        //class end
     }
 }

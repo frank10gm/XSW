@@ -35,6 +35,7 @@ namespace StritWalk
                 var separatorLine3 = new BoxView { HeightRequest = 1, BackgroundColor = Color.FromHex("#efefef"), Margin = new Thickness(20, 0, 20, 0) };
                 var playButton = new Button() { TextColor = Color.FromHex("#293e49"), FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
                 playButton.Text = "Play";
+                playButton.SetBinding(IsEnabledProperty, "AudioExist");
                 playButton.Command = viewModel.IPlayThis;
                 playButton.SetBinding(Button.CommandParameterProperty, ".");
                 var likeButton = new Button() { Text = "Like", FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
@@ -240,12 +241,7 @@ namespace StritWalk
                 //Grid.SetColumnSpan(commentsLabel, 3);
 
                 //grid.Children.Add(whiteSeparator, 0, 7);
-                //Grid.SetColumnSpan(whiteSeparator, 3);
-
-                ////var tapGestureRecognizer = new TapGestureRecognizer();
-                ////tapGestureRecognizer.Tapped += (s, e) => {
-                ////};
-                ////grid.GestureRecognizers.Add(tapGestureRecognizer);
+                //Grid.SetColumnSpan(whiteSeparator, 3);                
 
 
                 ////absolute layout
@@ -270,7 +266,14 @@ namespace StritWalk
                 //};
 
 
+                ////var tapGestureRecognizer = new TapGestureRecognizer();
+                ////tapGestureRecognizer.Tapped += (s, e) => {
+                ////};
+                ////grid.GestureRecognizers.Add(tapGestureRecognizer);
+
                 CustomViewCell cell = new CustomViewCell();
+
+
 
                 //scelta della vista
                 //cell.View = grid;
@@ -294,12 +297,13 @@ namespace StritWalk
             //await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
 
             //await CrossMediaManager.Current.Play("http://www.hackweb.it/api/uploads/music/" + item.Audio);             
+            
 
             ItemsListView.SelectedItem = null;
         }
 
         private void OnCellTapped(object sender, EventArgs args)
-        {
+        {            
             ItemsListView.SelectedItem = null;
         }
 
@@ -324,8 +328,9 @@ namespace StritWalk
             }
         }
 
-        private void OnItemTapped(object sender, ItemTappedEventArgs args)
+        private async void OnItemTapped(object sender, ItemTappedEventArgs args)
         {
+            await Navigation.PushAsync(new NewItemPage(viewModel.Items));
             ItemsListView.SelectedItem = null;
         }
 
