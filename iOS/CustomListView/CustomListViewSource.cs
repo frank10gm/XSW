@@ -18,7 +18,7 @@ namespace StritWalk.iOS
         private readonly UITableViewSource source;
         private readonly Dictionary<int, double> cachedHeights = new Dictionary<int, double>();
         PropertyInfo specialProperty;
-        AppDelegate ad;
+        AppDelegate ad;        
 
         //public IList<Item> ItemsSource
         //{
@@ -32,8 +32,8 @@ namespace StritWalk.iOS
         {
             //tableItems = view.ItemsSource as ObservableRangeCollection<Item>;
             tableItems = view.ItemsSource as IList<Item>;            
-            list = view;
-            source = dataSource;
+            list = view;                       
+            source = dataSource;            
             specialProperty = prop;
             ad = (AppDelegate)UIApplication.SharedApplication.Delegate;
         }
@@ -72,20 +72,19 @@ namespace StritWalk.iOS
 
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
-            //var cell = this.GetCellForPath(indexPath);
+            //var cell = this.GetCellForPath(indexPath);            
 
-            //return source.GetCell(tableView, indexPath);
+            Console.WriteLine("@@@@ strategy : " + list.CachingStrategy); 
+            return source.GetCell(tableView, indexPath);
 
             //new cell func
-            UITableViewCell cell = tableView.DequeueReusableCell(cellIdentifier);
-            if (cell == null)
-            {                
-                cell = new UITableViewCell(UITableViewCellStyle.Default, cellIdentifier);                
-            }
+            //UITableViewCell cell = tableView.DequeueReusableCell(cellIdentifier);
+            //if (cell == null)
+            //{                
+            //    cell = new UITableViewCell();                
+            //}
 
-            return cell;
-
-
+            //return cell;        
         }
 
         public override void WillDisplay(UITableView tableView, UITableViewCell cell, NSIndexPath indexPath)
