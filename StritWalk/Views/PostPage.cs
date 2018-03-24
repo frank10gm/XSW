@@ -9,6 +9,7 @@ namespace StritWalk
         //variabili e prop
         PostPageVM viewModel;
         ProgressBar progress;
+        Label bytesLabel;
 
         public PostPage(ObservableRangeCollection<Item> Items, Item Item)
         {
@@ -19,7 +20,9 @@ namespace StritWalk
 
             //visual elements
             var mainLabel = new Label { FormattedText = Item.Post };
-            progress = new ProgressBar { Progress = 0 };            
+            progress = new ProgressBar { Progress = 0 };
+            bytesLabel = new Label { };
+
 
             bool checkAudio = CheckAudio(Item.Audio);
 
@@ -35,11 +38,13 @@ namespace StritWalk
                 }),
                 null);
 
-            layout.Children.Add(progress,
+            if (Item.AudioExist)
+            {
+                layout.Children.Add(progress,
                 Constraint.Constant(20),
                 Constraint.RelativeToView(mainLabel, (Parent, sibling) =>
                 {
-                    return sibling.Y + sibling.Height + 10;
+                    return sibling.Y + sibling.Height + 40;
                 }),
                 Constraint.RelativeToParent((parent) =>
                 {
@@ -47,21 +52,38 @@ namespace StritWalk
                 }),
                 Constraint.Constant(10));
 
+                layout.Children.Add(bytesLabel,
+                Constraint.Constant(40),
+                Constraint.RelativeToView(progress, (Parent, sibling) =>
+                {
+                    return sibling.Y + sibling.Height + 20;
+                }),
+                Constraint.RelativeToParent((parent) =>
+                {
+                    return parent.Width - 40;
+                }),
+                Constraint.Constant(20));
+            }
+
+
             Content = layout;
         }
 
         bool CheckAudio(string audio)
-        {            
+        {
             if (audio == "") return false;
             Console.WriteLine("@@@@ checking audio : " + audio);
 
             var client = new WebClient();
-            
-            client.DownloadProgressChanged += (object sender, DownloadProgressChangedEventArgs e) => {
-                Console.WriteLine("@@@@ perc " + e.ProgressPercentage);
-                progress.ProgressTo(e.ProgressPercentage / 100, 0, Easing.Linear);
+
+            client.DownloadProgressChanged += async (object sender, DownloadProgressChangedEventArgs e) =>
+            {
+                double val = Convert.ToDouble(e.ProgressPercentage) / 100;
+                Console.WriteLine("@@@@ perc " + val);
+                bytesLabel.Text = (e.BytesReceived / 1024f) / 1024f + " / " + (e.TotalBytesToReceive / 1024f) / 1024f + " MB.";
+                await progress.ProgressTo(val, 250, Easing.Linear);
             };
-            client.DownloadFileCompleted += (sender, e) => Console.WriteLine("@@@@ file download Finished");  
+            client.DownloadFileCompleted += (sender, e) => Console.WriteLine("@@@@ file download Finished");
             client.DownloadDataAsync(new Uri("https://www.hackweb.it/api/uploads/audio/" + audio), "audioFile.wav");
 
             return true;

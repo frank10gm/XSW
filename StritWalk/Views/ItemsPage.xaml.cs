@@ -346,8 +346,8 @@ namespace StritWalk
         void OnReachBottom(object sender, ItemVisibilityEventArgs args)
         {
 
-            if (PostEditor.IsFocused && viewModel.IsPosting)
-                PostEditor.Unfocus();
+            //if (PostEditor.IsFocused && viewModel.IsPosting)
+            //    PostEditor.Unfocus();
 
             if (viewModel.Items[viewModel.Items.Count - 1] == args.Item && !Settings.listEnd)
             {

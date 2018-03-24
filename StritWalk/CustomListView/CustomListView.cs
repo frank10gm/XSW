@@ -10,7 +10,7 @@ namespace StritWalk
 
         public CustomListView(ListViewCachingStrategy strategy) : base(strategy)
         {
-            Console.WriteLine("@@@@ strategy " + strategy.ToString());
+            //Console.WriteLine("@@@@ strategy " + strategy.ToString());
         }
 
         public static readonly BindableProperty KeyboardOnProperty =
