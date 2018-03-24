@@ -49,10 +49,10 @@ namespace StritWalk
                 var separatorLine2 = new BoxView { HeightRequest = 1, BackgroundColor = Color.FromHex("#efefef"), Margin = new Thickness(0, 0, 0, 0) };
                 var commentsLabel = new Label { Margin = new Thickness(20, 0, 20, 0), Text = "", TextColor = Color.Gray, FontSize = 13 };
                 commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
-                var tapGestureRecognizer = new TapGestureRecognizer();
-                tapGestureRecognizer.Command = viewModel.ICommentThis;
-                tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandParameterProperty, ".");
-                commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
+                //var tapGestureRecognizer = new TapGestureRecognizer();
+                //tapGestureRecognizer.Command = viewModel.ICommentThis;
+                //tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandParameterProperty, ".");
+                //commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
                 var whiteSeparator = new BoxView { BackgroundColor = Color.FromHex("#efefef"), HeightRequest = 10, Margin = new Thickness(0, 0, 0, 0) };
 
 
