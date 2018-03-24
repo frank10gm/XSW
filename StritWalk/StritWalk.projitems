@@ -70,6 +70,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\IIBeaconService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IAudioPlayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\TestService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\PostPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
