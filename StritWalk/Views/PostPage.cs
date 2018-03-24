@@ -50,7 +50,7 @@ namespace StritWalk
             Content = layout;
         }
 
-        private bool CheckAudio(string audio)
+        bool CheckAudio(string audio)
         {            
             if (audio == "") return false;
             Console.WriteLine("@@@@ checking audio : " + audio);
@@ -61,8 +61,9 @@ namespace StritWalk
                 Console.WriteLine("@@@@ perc " + e.ProgressPercentage);
                 progress.ProgressTo(e.ProgressPercentage / 100, 0, Easing.Linear);
             };
-            client.DownloadFileCompleted += (sender, e) => Console.WriteLine("@@@@ file download Finished");            
-            client.DownloadFileAsync(new Uri("https://www.hackweb.it/api/uploads/audio/" + audio), "audioFile.wav");
+            client.DownloadFileCompleted += (sender, e) => Console.WriteLine("@@@@ file download Finished");  
+            client.DownloadDataAsync(new Uri("https://www.hackweb.it/api/uploads/audio/" + audio), "audioFile.wav");
+
             return true;
         }
     }

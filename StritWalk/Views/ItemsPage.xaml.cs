@@ -285,6 +285,12 @@ namespace StritWalk
             });
 
             ItemsListView.ItemTemplate = dataTemplate;
+            ItemsListView.ItemSelectedCustomEvent += async (object o, SelectedItemChangedEventArgs e) =>
+            {
+                Item item = e.SelectedItem as Item;
+                await Navigation.PushAsync(new PostPage(viewModel.Items, item));
+                ItemsListView.SelectedItem = null;
+            };
 
         }
 
@@ -297,13 +303,12 @@ namespace StritWalk
             //await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
 
             //await CrossMediaManager.Current.Play("http://www.hackweb.it/api/uploads/music/" + item.Audio);             
-            
 
             ItemsListView.SelectedItem = null;
         }
 
         private void OnCellTapped(object sender, EventArgs args)
-        {            
+        {
             ItemsListView.SelectedItem = null;
         }
 
@@ -330,10 +335,13 @@ namespace StritWalk
 
         private async void OnItemTapped(object sender, ItemTappedEventArgs args)
         {
+            Console.WriteLine("@@@@@ itemtapped");
             Item item = args.Item as Item;            
             await Navigation.PushAsync(new PostPage(viewModel.Items, item));
             ItemsListView.SelectedItem = null;
         }
+
+
 
         void OnReachBottom(object sender, ItemVisibilityEventArgs args)
         {

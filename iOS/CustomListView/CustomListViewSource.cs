@@ -32,8 +32,8 @@ namespace StritWalk.iOS
         {
             //tableItems = view.ItemsSource as ObservableRangeCollection<Item>;
             tableItems = view.ItemsSource as IList<Item>;            
-            list = view;                       
-            source = dataSource;            
+            list = view;
+            source = dataSource;  
             specialProperty = prop;
             ad = (AppDelegate)UIApplication.SharedApplication.Delegate;
         }
@@ -56,11 +56,17 @@ namespace StritWalk.iOS
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
             //var cellForPath = GetCellForPath(indexPath);
-            //listView.NotifyItemSelected(tableItems[indexPath.Row]);
-            tableView.DeselectRow(indexPath, true);
 
-            UITapGestureRecognizer gesture = new UITapGestureRecognizer(() => { UIApplication.SharedApplication.KeyWindow.EndEditing(true); });
-            tableView.AddGestureRecognizer(gesture);
+            tableView.DeselectRow(indexPath, true);
+            UIApplication.SharedApplication.KeyWindow.EndEditing(true);
+            list.ItemSelectedCustom(tableItems[indexPath.Row]);
+
+            //UITapGestureRecognizer gesture = new UITapGestureRecognizer(() => { 
+            //    UIApplication.SharedApplication.KeyWindow.EndEditing(true); 
+            //});
+            //tableView.AddGestureRecognizer(gesture);
+
+            //base.RowSelected(tableView, indexPath);
         }
 
         public override void RowDeselected(UITableView tableView, NSIndexPath indexPath)
