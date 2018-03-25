@@ -180,6 +180,7 @@ namespace StritWalk
             var f = 0.0f;
             var max = 0.0f;
             var batch = (int)Math.Max(40, numSamples / 4000);
+            Console.WriteLine("@@@@@ batch : " + batch);
             byte[] buffer = new byte[batch];
             var yScale = mid; //100            
             int read;
