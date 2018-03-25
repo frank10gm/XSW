@@ -178,7 +178,14 @@ namespace StritWalk
             var h = info.Height;
             var mid = h / 2;
             var batch = numSamples / w;
-            Console.WriteLine("@@@@@ batch : " + batch);
+            short[] buffer = new short[batch];
+            Console.WriteLine("@@@@ buffer length : " + buffer.Length);
+            for (int n2 = 0; n2 < sound.Length; n2+=2)
+            {
+                buffer[n2] = BitConverter.ToInt16(sound, n2);
+            }
+
+            Console.WriteLine("@@@@ buffer length : " + buffer.Length);
 
             int i = 1;
             int j = h - Convert.ToInt32(sound[0]);
