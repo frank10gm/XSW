@@ -148,6 +148,7 @@ namespace StritWalk
             };
 
             BinaryReader reader = new BinaryReader(stream);
+            BinaryReader reader2 = new BinaryReader(stream);
             int chunkID = reader.ReadInt32();
             int fileSize = reader.ReadInt32();
             int riffType = reader.ReadInt32();
@@ -186,7 +187,7 @@ namespace StritWalk
             int read;
             var xPos = 0;
             
-            while ((read = reader.Read(buffer, 0, batch)) == batch)
+            while ((read = reader2.Read(buffer, 0, batch)) == batch)
             {
                 Console.WriteLine("@@@@@ read buffer : " + read);
                 for (int n = 0; n < read; n++)
