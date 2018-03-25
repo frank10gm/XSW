@@ -83,8 +83,12 @@ namespace StritWalk
                 bytesLabel.Text = (e.BytesReceived / 1024f) / 1024f + " / " + (e.TotalBytesToReceive / 1024f) / 1024f + " MB.";
                 await progress.ProgressTo(val, 250, Easing.Linear);
             };
-            client.DownloadFileCompleted += (sender, e) => Console.WriteLine("@@@@ file download Finished");
-            client.DownloadDataAsync(new Uri("https://www.hackweb.it/api/uploads/audio/" + audio), "audioFile.wav");
+            client.DownloadDataCompleted += (object sender, DownloadDataCompletedEventArgs e) =>
+            {
+                Console.WriteLine("@@@@ file download Finished");
+                byte[] raw = e.Result;
+            };
+            client.DownloadDataAsync(new Uri("https://www.hackweb.it/api/uploads/audio/" + audio));
 
             return true;
         }
