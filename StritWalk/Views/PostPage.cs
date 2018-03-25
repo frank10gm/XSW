@@ -23,12 +23,12 @@ namespace StritWalk
             //viewmodel
             BindingContext = viewModel = new PostPageVM();
             viewModel.Navigation = Navigation;
-    
+
             //visual elements
             var mainLabel = new Label { FormattedText = Item.Post };
             progress = new ProgressBar { Progress = 0 };
             bytesLabel = new Label { };
-            canvasView = new SKCanvasView();            
+            canvasView = new SKCanvasView();
             canvasView.HeightRequest = 200;
             canvasView.PaintSurface += OnCanvasViewPaintSurface;
 
@@ -94,36 +94,36 @@ namespace StritWalk
             if (audio == "") return false;
             Console.WriteLine("@@@@ checking audio : " + audio);
 
-            var client = new WebClient();                      
+            var client = new WebClient();
 
             client.DownloadProgressChanged += async (object sender, DownloadProgressChangedEventArgs e) =>
             {
-                double val = Convert.ToDouble(e.ProgressPercentage) / 100;                
+                double val = Convert.ToDouble(e.ProgressPercentage) / 100;
                 bytesLabel.Text = (e.BytesReceived / 1024f) / 1024f + " / " + (e.TotalBytesToReceive / 1024f) / 1024f + " MB.";
                 await progress.ProgressTo(val, 250, Easing.Linear);
             };
 
             client.DownloadDataCompleted += (object sender, DownloadDataCompletedEventArgs e) =>
-            {                
-                wav = e.Result;                
+            {
+                wav = e.Result;
                 stream = new MemoryStream(wav);
                 canvasView.InvalidateSurface();
             };
 
             client.DownloadDataAsync(new Uri("https://www.hackweb.it/api/uploads/audio/" + audio));
-            
+
             return true;
         }
 
         void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs args)
         {
-           
+
             SKImageInfo info = args.Info;
             SKSurface surface = args.Surface;
             SKCanvas canvas = surface.Canvas;
-            canvas.Clear(SKColors.Gray);
+            canvas.Clear();
 
-            if(stream == null)
+            if (stream == null)
             {
                 SKPaint paint2 = new SKPaint
                 {
@@ -144,11 +144,10 @@ namespace StritWalk
             {
                 Style = SKPaintStyle.Stroke,
                 Color = Color.Red.ToSKColor(),
-                StrokeWidth = 2
+                StrokeWidth = 1
             };
 
             BinaryReader reader = new BinaryReader(stream);
-            BinaryReader reader2 = new BinaryReader(stream);
             int chunkID = reader.ReadInt32();
             int fileSize = reader.ReadInt32();
             int riffType = reader.ReadInt32();
@@ -178,53 +177,29 @@ namespace StritWalk
             var w = info.Width;
             var h = info.Height;
             var mid = h / 2;
-            var f = 0.0f;
-            var max = 0.0f;
-            var batch = (int)Math.Max(40, numSamples / 4000);
+            var batch = numSamples / w;
             Console.WriteLine("@@@@@ batch : " + batch);
-            byte[] buffer = new byte[batch];
-            var yScale = mid; //100            
-            int read;
-            var xPos = 0;
-            
-            while ((read = reader2.Read(buffer, 0, batch)) == batch)
-            {
-                Console.WriteLine("@@@@@ read buffer : " + read);
-                for (int n = 0; n < read; n++)
-                {
-                    max = Math.Max(Math.Abs(buffer[n]), max);
-                }
-                //var line = new Line();
-                //line.X1 = xPos;
-                //line.X2 = xPos;
-                //line.Y1 = mid + (max * yScale);
-                //line.Y2 = mid - (max * yScale);
-                //line.StrokeThickness = 1;
-                //line.Stroke = Brushes.DarkGray;
-                //canvas.Children.Add(line);
-                //max = 0;
-                //xPos++;
-            }
 
             int i = 1;
-            int j = h - Convert.ToInt32(sound[0]);            
+            int j = h - Convert.ToInt32(sound[0]);
 
             canvas.DrawLine(0, h, i, j, paint);
             SKPoint prev = new SKPoint(i, j);
             i++;
             SKPoint next = new SKPoint();
 
-            Console.WriteLine("@@@@ bits: " + bitDepth + "; sample rate: " + sampleRate + "; numsamples: " + numSamples + ";");            
+            Console.WriteLine("@@@@ bits: " + bitDepth + "; sound length: " + sound.Length + "; numsamples: " + numSamples + ";");
 
-            foreach (byte temp in sound)
+            for (int n = 0; n < numSamples; n += batch)
             {
-                j = h - Convert.ToInt32(temp);
+                //foreach (byte temp in sound)            
+                j = h - Convert.ToInt32(sound[n]);
                 next.X = i++;
                 next.Y = j;
                 //gra.DrawLine(a, prev, next);
                 canvas.DrawLine(prev, next, paint);
-                prev = next;                
-            }                              
+                prev = next;
+            }
 
         }
     }
