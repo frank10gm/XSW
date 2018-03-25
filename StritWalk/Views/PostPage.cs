@@ -16,6 +16,7 @@ namespace StritWalk
         Label bytesLabel;
         SKCanvasView canvasView;
         Stream stream;
+        byte[] wav;
 
         public PostPage(ObservableRangeCollection<Item> Items, Item Item)
         {
@@ -104,7 +105,7 @@ namespace StritWalk
 
             client.DownloadDataCompleted += (object sender, DownloadDataCompletedEventArgs e) =>
             {                
-                byte[] wav = e.Result;                
+                wav = e.Result;                
                 stream = new MemoryStream(wav);
                 canvasView.InvalidateSurface();
             };
@@ -170,18 +171,48 @@ namespace StritWalk
             int dataID = reader.ReadInt32();
             int dataSize = reader.ReadInt32();
             byte[] sound = reader.ReadBytes(dataSize);
+            int numSamples = wav.Length / (channels * bitDepth / 8);
 
             //visualize waveform
             var w = info.Width;
             var h = info.Height;
+            var mid = h / 2;
+            var f = 0.0f;
+            var max = 0.0f;
+            var batch = (int)Math.Max(40, numSamples / 4000);
+            byte[] buffer = new byte[batch];
+            var yScale = mid; //100            
+            int read;
+            var xPos = 0;
+            
+            while ((read = reader.Read(buffer, 0, batch)) == batch)
+            {
+                Console.WriteLine("@@@@@ read buffer : " + read);
+                for (int n = 0; n < read; n++)
+                {
+                    max = Math.Max(Math.Abs(buffer[n]), max);
+                }
+                //var line = new Line();
+                //line.X1 = xPos;
+                //line.X2 = xPos;
+                //line.Y1 = mid + (max * yScale);
+                //line.Y2 = mid - (max * yScale);
+                //line.StrokeThickness = 1;
+                //line.Stroke = Brushes.DarkGray;
+                //canvas.Children.Add(line);
+                //max = 0;
+                //xPos++;
+            }
+
             int i = 1;
-            int j = h - Convert.ToInt32(sound[0]);
-            canvas.DrawLine(0, h/2, i, j, paint);
+            int j = h - Convert.ToInt32(sound[0]);            
+
+            canvas.DrawLine(0, h, i, j, paint);
             SKPoint prev = new SKPoint(i, j);
             i++;
             SKPoint next = new SKPoint();
 
-            Console.WriteLine("@@@@ sound length: " + sound.Length + "; canvas w: " + info.Height);            
+            Console.WriteLine("@@@@ bits: " + bitDepth + "; sample rate: " + sampleRate + "; numsamples: " + numSamples + ";");            
 
             foreach (byte temp in sound)
             {
