@@ -125,25 +125,25 @@ namespace StritWalk
 
             if (stream == null)
             {
-                SKPaint paint2 = new SKPaint
-                {
-                    Style = SKPaintStyle.Stroke,
-                    Color = Color.Red.ToSKColor(),
-                    StrokeWidth = 25
-                };
+                //SKPaint paint2 = new SKPaint
+                //{
+                //    Style = SKPaintStyle.Stroke,
+                //    Color = Color.Red.ToSKColor(),
+                //    StrokeWidth = 25
+                //};
 
-                canvas.DrawCircle(info.Width / 2, info.Height / 2, 100, paint2);
+                //canvas.DrawCircle(info.Width / 2, info.Height / 2, 100, paint2);
 
-                paint2.Style = SKPaintStyle.Fill;
-                paint2.Color = SKColors.Blue;
-                canvas.DrawCircle(args.Info.Width / 2, args.Info.Height / 2, 100, paint2);
+                //paint2.Style = SKPaintStyle.Fill;
+                //paint2.Color = SKColors.Blue;
+                //canvas.DrawCircle(args.Info.Width / 2, args.Info.Height / 2, 100, paint2);
                 return;
             }
 
             SKPaint paint = new SKPaint
             {
                 Style = SKPaintStyle.Stroke,
-                Color = Color.Red.ToSKColor(),
+                Color = Color.FromHex("#4484fb").ToSKColor(),
                 StrokeWidth = 1
             };
 
