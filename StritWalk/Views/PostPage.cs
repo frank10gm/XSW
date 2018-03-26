@@ -171,36 +171,38 @@ namespace StritWalk
             int dataID = reader.ReadInt32();
             int dataSize = reader.ReadInt32();
             byte[] sound = reader.ReadBytes(dataSize);
-            int numSamples = wav.Length / (channels * bitDepth / 8);
+            int numSamples = sound.Length / (channels * bitDepth / 8);
+
+            Console.WriteLine("@@@@ bits: " + bitDepth + "; sound length: " + sound.Length + "; h: " + info.Height + ";");
 
             //visualize waveform
             var w = info.Width;
             var h = info.Height;
             var mid = h / 2;
             var batch = numSamples / w;
-            short[] buffer = new short[batch];
-            Console.WriteLine("@@@@ buffer length : " + buffer.Length);
-            for (int n2 = 0; n2 < sound.Length; n2+=2)
+            var max = 32760;
+            short[] buffer = new short[numSamples];
+
+            for (int i2 = 0; i2 < numSamples; i2++)
             {
-                buffer[n2] = BitConverter.ToInt16(sound, n2);
+                buffer[i2] = BitConverter.ToInt16(sound, i2 * 2);
             }
 
-            Console.WriteLine("@@@@ buffer length : " + buffer.Length);
-
             int i = 1;
-            int j = h - Convert.ToInt32(sound[0]);
+            int j = mid + ((buffer[0] * mid) / max);
 
-            canvas.DrawLine(0, h, i, j, paint);
+            //int j = h - Convert.ToInt32(sound[0]);
+
+            canvas.DrawLine(0, mid, i, j, paint);
             SKPoint prev = new SKPoint(i, j);
-            i++;
             SKPoint next = new SKPoint();
+            i++;
 
-            Console.WriteLine("@@@@ bits: " + bitDepth + "; sound length: " + sound.Length + "; numsamples: " + numSamples + ";");
-
-            for (int n = 0; n < numSamples; n += batch)
+            for (int n = 0; n < numSamples; n += batch) // n < batch; n++;
             {
+                Console.WriteLine("@@@@ batch: " + n);
                 //foreach (byte temp in sound)            
-                j = h - Convert.ToInt32(sound[n]);
+                j = mid + ((buffer[n] * mid) / max);
                 next.X = i++;
                 next.Y = j;
                 //gra.DrawLine(a, prev, next);
