@@ -375,13 +375,13 @@ namespace StritWalk
         }
 
         [JsonIgnore]
-        bool visibleComments = false;
-        public bool VisibleComments
+        int visibleComments = 0;
+        public int VisibleComments
         {
             get
             {
-                if (Int32.Parse(comments_count) > 0) return true;
-                return false;
+                if (Int32.Parse(comments_count) > 0) return 60;
+                return 0;
             }
             set { SetProperty(ref visibleComments, value); }
         }

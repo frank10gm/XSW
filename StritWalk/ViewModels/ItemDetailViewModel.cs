@@ -59,7 +59,7 @@ namespace StritWalk
                         jitem["user_name"] = items[items.Count() - 1].User_name;
                         jitem["comment"] = items[items.Count() - 1].Comment;
                         Item.Comments.Insert(0, jitem);
-                        Item.VisibleComments = true;
+                        Item.VisibleComments = 60;
                         Item.NumberOfLikes = "3";
                         //if (Device.RuntimePlatform == Device.Android) Item.ViewComments = ""; //disabilitato in modo che su ios la pagina precedente non si aggiorni
                     }
@@ -94,7 +94,7 @@ namespace StritWalk
                     if (Item.Comments == null)
                         Item.Comments = new JArray();
                     Item.Comments.Insert(0, jitem);
-                    Item.VisibleComments = true;
+                    Item.VisibleComments = 60;
                     Item.NumberOfLikes = "3";
                     //if (Device.RuntimePlatform == Device.Android) Item.ViewComments = ""; //disabilitato in modo che su ios la pagina precedente non si aggiorni                    
                     //MessagingCenter.Send(this, "NewComment", Item);
