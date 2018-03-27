@@ -46,7 +46,7 @@ namespace StritWalk
             get { return endText; }
             set { SetProperty(ref endText, value); }
         }
-        Color postPlaceholder = Color.FromHex("#888888");
+        Color postPlaceholder = (Color)Application.Current.Resources["Testo3"];
         public Color PostPlaceholder
         {
             get { return postPlaceholder; }
@@ -146,7 +146,7 @@ namespace StritWalk
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("### EX ### " + ex);
+                Debug.WriteLine(" EX " + ex);
             }
 
         }
@@ -194,8 +194,8 @@ namespace StritWalk
                     {
                         Spans =
                         {
-                            new Span { Text = "Posts" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
-                            new Span { Text = me.Num_posts.ToString(), FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
+                            new Span { Text = "Posts" + "\n", FontSize=11.0F, ForegroundColor=(Color)Application.Current.Resources["Testo1"]},
+                            new Span { Text = me.Num_posts.ToString(), FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=(Color)Application.Current.Resources["Testo2"] }
                         }
                     };
 
@@ -401,11 +401,10 @@ namespace StritWalk
             
             try
             {
-                //Console.WriteLine("### how many tags? " + tags.Count);
+                
                 if (tags == null || tags.Count == 0)
                 {
-                    Console.WriteLine("@@@@@@ no tags");
-                    //Console.WriteLine("### no tags");
+
                     OneSignal.Current.SetSubscription(true);
                     OneSignal.Current.SendTags(new Dictionary<string, string>()
                     {
@@ -428,7 +427,7 @@ namespace StritWalk
         private void getNotifId(string userID, string pushToken)
         {
             //salvare notification id nel server
-            //Console.WriteLine("### notification_id: " + userID);
+
             Settings.Notification_id = userID;
             DataStore.addPushId(userID);
         }

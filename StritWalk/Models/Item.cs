@@ -231,7 +231,7 @@ namespace StritWalk
             {
                 FormattedString result = new FormattedString();
                 Span creator = new Span { Text = Creator + "\n", FontAttributes = FontAttributes.Bold, FontSize = 16.0F, ForegroundColor = (Color)Application.Current.Resources["Testo2"] };
-                Span details = new Span { Text = Details + "\n\n", FontSize = 10.0F, ForegroundColor = (Color)Application.Current.Resources["Testo1"] };
+                Span details = new Span { Text = Details + "\n\n", FontSize = 10.0F, ForegroundColor = (Color)Application.Current.Resources["Testo3"] };
                 //Span brace1 = new Span { Text = "{ ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
                 //Span brace2 = new Span { Text = " } ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
                 //Span name = new Span { Text = Name, FontAttributes = FontAttributes.Bold, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };
@@ -239,7 +239,7 @@ namespace StritWalk
 
                 if (Nuovo == true)
                 {
-                    details = new Span { Text = "here, now" + "\n\n", FontSize = 10.0F, ForegroundColor = (Color)Application.Current.Resources["Testo1"] };
+                    details = new Span { Text = "here, now" + "\n\n", FontSize = 10.0F, ForegroundColor = (Color)Application.Current.Resources["Testo3"] };
                 }
 
                 result.Spans.Add(creator);
@@ -353,9 +353,9 @@ namespace StritWalk
                 if(liked_me_color == Color.Transparent){
                     if (Int32.Parse(liked_me) == 1)
                     {
-                        return (Color)Application.Current.Resources["App1"];
+                        return (Color)Application.Current.Resources["App2"];
                     }
-                    return (Color)Application.Current.Resources["Testo1"];
+                    return (Color)Application.Current.Resources["Testo4"];
                 }else{
                     return liked_me_color;
                 }

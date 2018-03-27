@@ -77,7 +77,7 @@ namespace StritWalk.iOS
             if(string.IsNullOrEmpty(Control.Text) || string.IsNullOrWhiteSpace(Control.Text) || Control.Text == element.Placeholder)
             {
                 Control.Text = element.Placeholder;
-                Control.TextColor = UIColor.FromRGB(39, 39, 39);
+                Control.TextColor = UIColor.FromRGB(136,136,136);
             }
 		}
 
@@ -114,7 +114,7 @@ namespace StritWalk.iOS
         {
 			if (Control.Text == element.Placeholder)
 			{
-                Control.TextColor = UIColor.FromRGB(39, 39, 39);
+                Control.TextColor = UIColor.FromRGB(136,136,136);
 				element.Ready = false;
 			}
 			else
