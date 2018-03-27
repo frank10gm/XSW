@@ -230,16 +230,16 @@ namespace StritWalk
             get
             {
                 FormattedString result = new FormattedString();
-                Span creator = new Span { Text = Creator + "\n", FontAttributes = FontAttributes.Bold, FontSize = 16.0F, ForegroundColor = Color.FromHex("#293e49") };
-                Span details = new Span { Text = Details + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#808080") };
+                Span creator = new Span { Text = Creator + "\n", FontAttributes = FontAttributes.Bold, FontSize = 16.0F, ForegroundColor = (Color)Application.Current.Resources["Testo2"] };
+                Span details = new Span { Text = Details + "\n\n", FontSize = 10.0F, ForegroundColor = (Color)Application.Current.Resources["Testo1"] };
                 //Span brace1 = new Span { Text = "{ ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
                 //Span brace2 = new Span { Text = " } ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
                 //Span name = new Span { Text = Name, FontAttributes = FontAttributes.Bold, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };
-                Span description = new Span { Text = Description, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };
+                Span description = new Span { Text = Description, FontSize = 14.0F, ForegroundColor = (Color)Application.Current.Resources["Testo2"] };
 
                 if (Nuovo == true)
                 {
-                    details = new Span { Text = "here, now" + "\n\n", FontSize = 10.0F, ForegroundColor = Color.FromHex("#808080") };
+                    details = new Span { Text = "here, now" + "\n\n", FontSize = 10.0F, ForegroundColor = (Color)Application.Current.Resources["Testo1"] };
                 }
 
                 result.Spans.Add(creator);
@@ -254,7 +254,7 @@ namespace StritWalk
 
                 return result;
 
-            }            
+            }
         }
 
         public FormattedString Username
@@ -265,7 +265,7 @@ namespace StritWalk
                 FormattedString result = new FormattedString();
 
                 Span creator = new Span { Text = Creator + "\n", FontAttributes = FontAttributes.Bold, FontSize = 16.0F, ForegroundColor = Color.FromHex("#4484fb") };
-                Span details = new Span { Text = Details + "", FontSize = 10.0F, ForegroundColor = Color.FromHex("#808080") };
+                Span details = new Span { Text = Details + "", FontSize = 10.0F, ForegroundColor = (Color)Application.Current.Resources["Testo2"] };
                 Span brace1 = new Span { Text = "{ ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
                 Span brace2 = new Span { Text = " } ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
                 Span name = new Span { Text = Name, FontAttributes = FontAttributes.Bold, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };
@@ -307,17 +307,16 @@ namespace StritWalk
         public string NumberOfLikes
         {
             get
-            {                                
-                numberOfLikes = "";                
-                string playText = " Plays  ";
+            {
+                numberOfLikes = "";
                 string text = " Likes  ";
                 string commentText = " Comments";
                 if (Int32.Parse(likes) == 1) text = " Like  ";
-                if (Int32.Parse(comments_count) == 1) commentText = " Comment";           
+                if (Int32.Parse(comments_count) == 1) commentText = " Comment";
                 return likes + text + comments_count + commentText + numberOfLikes;
             }
             set
-            {                
+            {
                 SetProperty(ref numberOfLikes, value);
             }
         }
@@ -327,7 +326,6 @@ namespace StritWalk
         {
             get
             {
-                string text = "  Comments";
                 if (Int32.Parse(comments_count) == 1) text = " Comment";
                 return "Comment";
             }
@@ -342,10 +340,23 @@ namespace StritWalk
             get
             {
                 if (Int32.Parse(liked_me) == 1)
-                    return "#4484fb";
-                else return "#808080";
+                    return "1";
+                else return "0";
             }
             set { SetProperty(ref liked_me, value); }
+        }
+
+        Color liked_me_color = (Color)Application.Current.Resources["Testo1"];
+        public Color Liked_me_color
+        {
+            get
+            {
+                liked_me_color = (Color)Application.Current.Resources["Testo1"];
+                if (Int32.Parse(liked_me) == 1)
+                    return (Color)Application.Current.Resources["App1"];
+                else return (Color)Application.Current.Resources["Testo1"];
+            }
+            set { SetProperty(ref liked_me_color, value); }
         }
 
         JArray comments = null;
@@ -407,8 +418,8 @@ namespace StritWalk
 
                     testo = new Span
                     {
-                        Text = "\nComments:" + "\n" + comments[0]["user_name"]
-                            + ": " + comments[0]["comment"] + "\n"
+                        Text = "\nComments:" + "\n" 
+                            + comments[0]["user_name"] + ": " + comments[0]["comment"] + "\n"
                     };
 
                     if (Int32.Parse(comments_count) > 1)

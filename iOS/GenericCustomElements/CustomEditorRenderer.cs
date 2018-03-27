@@ -40,7 +40,7 @@ namespace StritWalk.iOS
             Control.Changed += OnChanged;
             Control.Started += OnFocused;
             Control.Text = element.Placeholder;
-            Control.TextColor = UIColor.Gray;
+            Control.TextColor = UIColor.FromRGB(136,136,136);
             element.TextChanged += Element_TextChanged;
 
 		}
@@ -77,7 +77,7 @@ namespace StritWalk.iOS
             if(string.IsNullOrEmpty(Control.Text) || string.IsNullOrWhiteSpace(Control.Text) || Control.Text == element.Placeholder)
             {
                 Control.Text = element.Placeholder;
-                Control.TextColor = UIColor.Gray;
+                Control.TextColor = UIColor.FromRGB(39, 39, 39);
             }
 		}
 
@@ -93,7 +93,7 @@ namespace StritWalk.iOS
             {
                 Control.Text = "";
             }
-            Control.TextColor = UIColor.Black;
+            Control.TextColor = UIColor.FromRGB(255, 255, 255);
 		}
 
 		protected override void Dispose(bool disposing)
@@ -114,7 +114,7 @@ namespace StritWalk.iOS
         {
 			if (Control.Text == element.Placeholder)
 			{
-				Control.TextColor = UIColor.Gray;
+                Control.TextColor = UIColor.FromRGB(39, 39, 39);
 				element.Ready = false;
 			}
 			else

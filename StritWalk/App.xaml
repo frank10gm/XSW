@@ -6,35 +6,44 @@
         <OnPlatform x:TypeArguments="ResourceDictionary">
             <OnPlatform.iOS>
                 <ResourceDictionary>
-                    <Color x:Key="Primary">#4484fb</Color> <!-- #2b98f0 -->
-                    <Color x:Key="PrimaryDark">#1976D2</Color>
-                    <Color x:Key="Accent">#4484fb</Color>
+                    <Color x:Key="Primary">#00ff00</Color> <!-- #2b98f0 #4484fb -->
+                    <Color x:Key="PrimaryDark">#000000</Color> <!-- #1976D2 -->
+                    <Color x:Key="Accent">#00ff00</Color>
                     <Color x:Key="White">#ffffff</Color>
-                    <Color x:Key="LightBackgroundColor">#ffffff</Color>
+                    <Color x:Key="LightBackgroundColor">#111111</Color>
                     <Color x:Key="Dark">#222222</Color>
                     <Color x:Key="DarkBackgroundColor">#C0C0C0</Color>
                     <Color x:Key="MediumGrayTextColor">#4d4d4d</Color>
                     <Color x:Key="LightTextColor">#999999</Color>
-                    <Color x:Key="Azure">#293e49</Color>
+                    <Color x:Key="Azure">#333333</Color>
+
+                    <Color x:Key="Sfondo1">#111111</Color>
+                    <Color x:Key="Sfondo2">#272727</Color>
+                    <Color x:Key="Sfondo3">#1a1a1a</Color>
+                    <Color x:Key="Sfondo4">#000000</Color>
+                    <Color x:Key="Testo1">#efefef</Color>
+                    <Color x:Key="Testo2">#ffffff</Color>
+                    <Color x:Key="App1">#00ff00</Color>
+                    <Color x:Key="App2">#4484fb</Color>
                     <Style TargetType="NavigationPage">
-                        <Setter Property="BarBackgroundColor" Value="{StaticResource Azure}" />
-                        <Setter Property="BarTextColor" Value="{StaticResource White}" />
+                        <Setter Property="BarBackgroundColor" Value="{StaticResource Sfondo3}" />
+                        <Setter Property="BarTextColor" Value="{StaticResource Testo2}" />
                     </Style>
                 </ResourceDictionary>
             </OnPlatform.iOS>
             <OnPlatform.Android>
                 <ResourceDictionary>
                     <!-- google blue 4885ed -->
-                    <Color x:Key="Primary">#4484fb</Color>
+                    <Color x:Key="Primary">#00ff00</Color>
                     <Color x:Key="PrimaryDark">#1976D2</Color>
-                    <Color x:Key="Accent">#4484fb</Color>
+                    <Color x:Key="Accent">#00ff00</Color>
                     <Color x:Key="White">#ffffff</Color>
-                    <Color x:Key="LightBackgroundColor">#ffffff</Color>
+                    <Color x:Key="LightBackgroundColor">#111111</Color>
                     <Color x:Key="Dark">#222222</Color>
                     <Color x:Key="DarkBackgroundColor">#C0C0C0</Color>
                     <Color x:Key="MediumGrayTextColor">#4d4d4d</Color>
                     <Color x:Key="LightTextColor">#999999</Color>
-                    <Color x:Key="Azure">#293e49</Color>
+                    <Color x:Key="Azure">#1b1b1b</Color>
                     <Style TargetType="NavigationPage">
                         <Setter Property="BarBackgroundColor" Value="{StaticResource Azure}" />
                         <Setter Property="BarTextColor" Value="{StaticResource White}" />

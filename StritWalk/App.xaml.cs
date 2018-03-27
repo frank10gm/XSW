@@ -39,8 +39,8 @@ namespace StritWalk
             {
                 Current.MainPage = new NavigationPage(new LoginPage())
                 {
-                    BarBackgroundColor = (Color)Current.Resources["Primary"],
-                    BarTextColor = Color.White
+                    BarBackgroundColor = (Color)Current.Resources["Sfondo2"],
+                    BarTextColor = (Color)Current.Resources["Testo2"]
                 };
             }
             else
@@ -64,8 +64,8 @@ namespace StritWalk
 
             Current.MainPage = new NavigationPage(new LoginPage())
             {
-                BarBackgroundColor = (Color)Current.Resources["Primary"],
-                BarTextColor = Color.White
+                BarBackgroundColor = (Color)Current.Resources["Sfondo2"],
+                BarTextColor = (Color)Current.Resources["Testo2"]
             };
         }
 
@@ -104,13 +104,12 @@ namespace StritWalk
 
             if (Device.iOS == Device.RuntimePlatform)
             {
-                //tabbedPage.BarBackgroundColor = Color.FromHex("#ffffff");
-                //tabbedPage.BackgroundColor = Color.FromHex("#2b98f0");
-                //tabbedPage.BarTextColor = Color.FromHex("#2b98f0");
+                tabbedPage.BarBackgroundColor = (Color)Current.Resources["Sfondo4"];
+                tabbedPage.BarTextColor = (Color)Current.Resources["Testo2"];
             }
             else
             {
-                tabbedPage.BarBackgroundColor = (Color)Current.Resources["Azure"];
+                tabbedPage.BarBackgroundColor = (Color)Current.Resources["Sfondo3"];
             }
 
             Current.MainPage = tabbedPage;

@@ -46,7 +46,7 @@ namespace StritWalk
             get { return endText; }
             set { SetProperty(ref endText, value); }
         }
-        Color postPlaceholder = Color.Black;
+        Color postPlaceholder = Color.FromHex("#888888");
         public Color PostPlaceholder
         {
             get { return postPlaceholder; }
@@ -63,7 +63,7 @@ namespace StritWalk
         // CONSTRUCTOR
         public ItemsViewModel()
         {
-            Title = "Teller";
+            Title = "Seahorse";
             //Title = "Seahorse";
             Items = new ObservableRangeCollection<Item>();
             //Items = new ObservableCollection<Item>();
@@ -128,7 +128,7 @@ namespace StritWalk
             testService.test();
 
             //stop external player
-            CrossMediaManager.Current.MediaQueue.Repeat = Plugin.MediaManager.Abstractions.Enums.RepeatType.None; 
+            CrossMediaManager.Current.MediaQueue.Repeat = Plugin.MediaManager.Abstractions.Enums.RepeatType.None;
             CrossMediaManager.Current.MediaFinished += (sender, e) =>
             {
                 Debug.WriteLine("finished playing external file");
@@ -180,6 +180,7 @@ namespace StritWalk
                         Comments_count = "0",
                         Distanza = "0",
                         Liked_me = "0",
+                        Liked_me_color = (Color)Application.Current.Resources["Testo1"],
                         Comments = new Newtonsoft.Json.Linq.JArray(),
                         Duedate = null,
                         Audio = audioName
@@ -325,24 +326,31 @@ namespace StritWalk
             IsWorking = true;
             Item item = par1 as Item;
             string action = "addLikePost";
-            if (item.Liked_me == "#4484fb")
-                action = "removeLikePost";
-            var res = await DataStore.ILikeThis((string)item.Id, action);
-            if (res == 2)
-            {
+            if (item.Liked_me_color == (Color)Application.Current.Resources["App1"]){
+                action = "removeLikePost";   
                 var num = Int32.Parse(item.LikesNum);
-                num -= 1;                
+                num -= 1;
                 item.Likes = num.ToString();
                 item.Liked_me = "0";
                 item.NumberOfLikes = num.ToString();
+            }else{
+                var num = Int32.Parse(item.LikesNum);
+                num += 1;
+                item.Likes = num.ToString();
+                item.Liked_me = "1";
+                item.NumberOfLikes = num.ToString();
+            }
+
+            item.Liked_me_color = (Color)Application.Current.Resources["Testo1"];
+
+            var res = await DataStore.ILikeThis((string)item.Id, action);
+            if (res == 2)
+            {
+                
             }
             else if (res == 0)
             {
-                var num = Int32.Parse(item.LikesNum);                
-                num += 1;                
-                item.Likes = num.ToString();
-                item.Liked_me = "1";
-                item.NumberOfLikes = num.ToString();                
+                
             }
             IsWorking = false;
         }
@@ -355,24 +363,24 @@ namespace StritWalk
             {
                 Spans =
                     {
-                        new Span { Text = "Posts" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
-                        new Span { Text = me.Num_posts.ToString(), FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
+                    new Span { Text = "Posts" + "\n", FontSize=11.0F, ForegroundColor=(Color)Application.Current.Resources["Testo1"]},
+                    new Span { Text = me.Num_posts.ToString(), FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=(Color)Application.Current.Resources["Testo2"] }
                     }
             };
             LikesN = new FormattedString
             {
                 Spans =
                     {
-                        new Span { Text = "Liked" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
-                        new Span { Text = me.Num_likes.ToString(), FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
+                    new Span { Text = "Liked" + "\n", FontSize=11.0F, ForegroundColor=(Color)Application.Current.Resources["Testo1"]},
+                    new Span { Text = me.Num_likes.ToString(), FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=(Color)Application.Current.Resources["Testo2"] }
                     }
             };
             FriendsN = new FormattedString
             {
                 Spans =
                     {
-                        new Span { Text = "Followers" + "\n", FontSize=11.0F, ForegroundColor=Color.FromHex("#000000")},
-                        new Span { Text = me.Num_friends.ToString(), FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=Color.FromHex("#000000") }
+                    new Span { Text = "Followers" + "\n", FontSize=11.0F, ForegroundColor=(Color)Application.Current.Resources["Testo1"]},
+                    new Span { Text = me.Num_friends.ToString(), FontSize=11.0F, FontAttributes=FontAttributes.Bold, ForegroundColor=(Color)Application.Current.Resources["Testo2"] }
                     }
             };
         }
@@ -444,7 +452,7 @@ namespace StritWalk
             //await CrossMediaManager.Current.Stop();
             CrossMediaManager.Current.MediaQueue.Clear();
             await CrossMediaManager.Current.Stop();
-            await CrossMediaManager.Current.Play("https://www.hackweb.it/api/uploads/audio/"+item.Audio);
+            await CrossMediaManager.Current.Play("https://www.hackweb.it/api/uploads/audio/" + item.Audio);
         }
     }
 }

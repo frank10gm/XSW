@@ -18,7 +18,7 @@
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.RECORD_AUDIO" />
-	<application android:icon="@drawable/profile_generic" android:label="Teller">
+	<application android:icon="@drawable/profile_generic" android:label="Seahorse">
 		<meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyC0VGMk_n9qvoFLQRNaE145415Pc_Di8hk" />
 		<receiver android:name="com.onesignal.GcmBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
 			<intent-filter>

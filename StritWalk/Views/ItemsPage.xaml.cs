@@ -27,19 +27,19 @@ namespace StritWalk
             var dataTemplate = new DataTemplate(() =>
             {
 
-                var postLabel = new Label { Margin = new Thickness(20, 0, 20, 0)};
+                var postLabel = new Label { Margin = new Thickness(20, 0, 20, 0) };
                 postLabel.SetBinding(Label.FormattedTextProperty, "Post");
-                var separatorLine = new BoxView { HeightRequest = 1, BackgroundColor = Color.FromHex("#efefef"), Margin = new Thickness(0, 0, 0, 0) };
-                var numbersLabel = new Label { Margin = new Thickness(20, 0, 20, 0), TextColor = Color.Gray, FontSize = 12 };
+                var separatorLine = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(0, 0, 0, 0) };
+                var numbersLabel = new Label { Margin = new Thickness(20, 0, 20, 0), TextColor = (Color)Application.Current.Resources["Testo1"], FontSize = 12 };
                 numbersLabel.SetBinding(Label.TextProperty, "NumberOfLikes");
-                var separatorLine3 = new BoxView { HeightRequest = 1, BackgroundColor = Color.FromHex("#efefef"), Margin = new Thickness(20, 0, 20, 0) };
-                var playButton = new Button() { TextColor = Color.FromHex("#293e49"), FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
+                var separatorLine3 = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(20, 0, 20, 0) };
+                var playButton = new Button() { TextColor = (Color)Application.Current.Resources["App1"], FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
                 playButton.Text = "Play";
                 playButton.SetBinding(IsEnabledProperty, "AudioExist");
                 playButton.Command = viewModel.IPlayThis;
                 playButton.SetBinding(Button.CommandParameterProperty, ".");
                 var likeButton = new Button() { Text = "Like", FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
-                likeButton.SetBinding(Button.TextColorProperty, "Liked_me");
+                likeButton.SetBinding(Button.TextColorProperty, "Liked_me_color");
                 //likeButton.SetBinding(Button.TextProperty, "Likes");
                 likeButton.Command = viewModel.ILikeThis;
                 likeButton.SetBinding(Button.CommandParameterProperty, ".");
@@ -47,14 +47,14 @@ namespace StritWalk
                 //commentsButton.SetBinding(Button.TextProperty, "Comments_count");
                 commentsButton.Command = viewModel.ICommentThis;
                 commentsButton.SetBinding(Button.CommandParameterProperty, ".");
-                var separatorLine2 = new BoxView { HeightRequest = 1, BackgroundColor = Color.FromHex("#efefef"), Margin = new Thickness(0, 0, 0, 0) };
-                var commentsLabel = new Label { Margin = new Thickness(20, 0, 20, 0), Text = "", TextColor = Color.Gray, FontSize = 13 };
+                var separatorLine2 = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(0, 0, 0, 0) };
+                var commentsLabel = new Label { Margin = new Thickness(20, 0, 20, 0), Text = "", TextColor = (Color)Application.Current.Resources["Testo1"], FontSize = 13 };
                 commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
                 //var tapGestureRecognizer = new TapGestureRecognizer();
                 //tapGestureRecognizer.Command = viewModel.ICommentThis;
                 //tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandParameterProperty, ".");
                 //commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
-                var whiteSeparator = new BoxView { BackgroundColor = Color.FromHex("#efefef"), HeightRequest = 10, Margin = new Thickness(0, 0, 0, 0) };
+                var whiteSeparator = new BoxView { BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], HeightRequest = 10, Margin = new Thickness(0, 0, 0, 0) };
 
 
                 //relative layout
@@ -66,8 +66,8 @@ namespace StritWalk
                     Constraint.RelativeToParent((parent) =>
                     {
                         return parent.Width;
-                    }),
-                    null);
+                    }), 
+                    Constraint.Constant(60));
 
                 layout.Children.Add(separatorLine,
                     Constraint.Constant(0),
@@ -169,7 +169,7 @@ namespace StritWalk
                     {
                         return parent.Width;
                     }),
-                    null);
+                    Constraint.Constant(60));
 
                 layout.Children.Add(whiteSeparator,
                     Constraint.Constant(0),
@@ -336,7 +336,7 @@ namespace StritWalk
         private async void OnItemTapped(object sender, ItemTappedEventArgs args)
         {
             Console.WriteLine("@@@@@ itemtapped");
-            Item item = args.Item as Item;            
+            Item item = args.Item as Item;
             await Navigation.PushAsync(new PostPage(viewModel.Items, item));
             ItemsListView.SelectedItem = null;
         }
