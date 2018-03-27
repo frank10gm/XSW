@@ -333,7 +333,7 @@ namespace StritWalk
                 item.Likes = num.ToString();
                 item.Liked_me = "0";
                 item.NumberOfLikes = num.ToString();
-                item.Liked_me_color = (Color)Application.Current.Resources["Testo1"];
+                item.Liked_me_color = (Color)Application.Current.Resources["Testo4"];
             }else{
                 var num = Int32.Parse(item.LikesNum);
                 num += 1;
