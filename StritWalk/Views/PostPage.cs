@@ -85,7 +85,7 @@ namespace StritWalk
                 Constraint.Constant(200));
             }
 
-            layout.BackgroundColor = (Color)Application.Current.Resources["Sfondo4"];
+            layout.BackgroundColor = (Color)Application.Current.Resources["Sfondo1"];
 
             Content = layout;
         }
