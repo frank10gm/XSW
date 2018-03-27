@@ -87,6 +87,7 @@ namespace StritWalk
 
 
             Content = layout;
+            Content.BackgroundColor = (Color)Application.Current.Resources["Sfondo1"];
         }
 
         bool CheckAudio(string audio)

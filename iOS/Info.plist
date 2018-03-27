@@ -66,6 +66,6 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app will use your microphone for recording voice and music you want to share.</string>
 	<key>CFBundleName</key>
-	<string>Teller</string>
+	<string>Seahorse</string>
 </dict>
 </plist>
