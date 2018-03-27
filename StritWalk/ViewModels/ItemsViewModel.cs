@@ -333,17 +333,18 @@ namespace StritWalk
                 item.Likes = num.ToString();
                 item.Liked_me = "0";
                 item.NumberOfLikes = num.ToString();
+                item.Liked_me_color = (Color)Application.Current.Resources["Testo1"];
             }else{
                 var num = Int32.Parse(item.LikesNum);
                 num += 1;
                 item.Likes = num.ToString();
                 item.Liked_me = "1";
                 item.NumberOfLikes = num.ToString();
+                item.Liked_me_color = (Color)Application.Current.Resources["App1"];
             }
 
-            item.Liked_me_color = (Color)Application.Current.Resources["Testo1"];
-
             var res = await DataStore.ILikeThis((string)item.Id, action);
+
             if (res == 2)
             {
                 

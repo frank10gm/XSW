@@ -346,15 +346,21 @@ namespace StritWalk
             set { SetProperty(ref liked_me, value); }
         }
 
-        Color liked_me_color = (Color)Application.Current.Resources["Testo1"];
+        Color liked_me_color = Color.Transparent;
         public Color Liked_me_color
         {
             get
             {
-                liked_me_color = (Color)Application.Current.Resources["Testo1"];
-                if (Int32.Parse(liked_me) == 1)
-                    return (Color)Application.Current.Resources["App1"];
-                else return (Color)Application.Current.Resources["Testo1"];
+                if(liked_me_color == Color.Transparent){
+                    if (Int32.Parse(liked_me) == 1)
+                    {
+                        return (Color)Application.Current.Resources["App1"];
+                    }
+                    return (Color)Application.Current.Resources["Testo1"];
+                }else{
+                    return liked_me_color;
+                }
+
             }
             set { SetProperty(ref liked_me_color, value); }
         }
