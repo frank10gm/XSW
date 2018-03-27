@@ -422,13 +422,13 @@ namespace StritWalk
                     Constraint.Constant(0),
                     Constraint.RelativeToView(separatorLine2, (Parent, sibling) =>
                     {
-                        return sibling.Y + 1;
+                        return sibling.Y + 5;
                     }),
                     Constraint.RelativeToParent((parent) =>
                     {
                         return parent.Width;
                     }),
-                    Constraint.Constant(60));
+                    Constraint.Constant(55));
 
                 layout.Children.Add(whiteSeparator,
                     Constraint.Constant(0),
