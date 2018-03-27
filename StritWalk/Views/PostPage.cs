@@ -85,7 +85,7 @@ namespace StritWalk
                 Constraint.Constant(200));
             }
 
-            layout.BackgroundColor = (Color)Application.Current.Resources["Sfondo1"];
+            layout.BackgroundColor = (Color)Application.Current.Resources["Sfondo4"];
 
             Content = layout;
         }
@@ -100,6 +100,7 @@ namespace StritWalk
             client.DownloadProgressChanged += async (object sender, DownloadProgressChangedEventArgs e) =>
             {
                 double val = Convert.ToDouble(e.ProgressPercentage) / 100;
+                bytesLabel.TextColor = (Color)Application.Current.Resources["Testo3"];
                 bytesLabel.Text = (e.BytesReceived / 1024f) / 1024f + " / " + (e.TotalBytesToReceive / 1024f) / 1024f + " MB.";
                 await progress.ProgressTo(val, 250, Easing.Linear);
             };
