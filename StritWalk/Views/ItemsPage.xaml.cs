@@ -48,8 +48,9 @@ namespace StritWalk
                 commentsButton.Command = viewModel.ICommentThis;
                 commentsButton.SetBinding(Button.CommandParameterProperty, ".");
                 var separatorLine2 = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(0, 0, 0, 0) };
-                var commentsLabel = new Label { Margin = new Thickness(20, 0, 20, 0), Text = "", TextColor = (Color)Application.Current.Resources["Testo4"], FontSize = 13 };
+                var commentsLabel = new Label { Margin = new Thickness(20, 0, 20, 0), Text = "", TextColor = (Color)Application.Current.Resources["Testo3"], FontSize = 13 };
                 commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
+                //commentsLabel.SetBinding(IsVisibleProperty, "VisibleComments"); // non visualizzare la barra dei commenti quando non ci sono
                 //var tapGestureRecognizer = new TapGestureRecognizer();
                 //tapGestureRecognizer.Command = viewModel.ICommentThis;
                 //tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandParameterProperty, ".");
@@ -62,7 +63,7 @@ namespace StritWalk
 
                 layout.Children.Add(postLabel,
                     Constraint.Constant(0),
-                    Constraint.Constant(10),
+                    Constraint.Constant(20),
                     Constraint.RelativeToParent((parent) =>
                     {
                         return parent.Width;
@@ -97,7 +98,7 @@ namespace StritWalk
                     Constraint.Constant(0),
                     Constraint.RelativeToView(numbersLabel, (Parent, sibling) =>
                     {
-                        return sibling.Y + sibling.Height;
+                        return sibling.Y + sibling.Height - 5;
                     }),
                     Constraint.RelativeToParent((parent) =>
                     {

@@ -47,9 +47,9 @@ namespace StritWalk
             get
             {
                 FormattedString result = new FormattedString();
-                Span user = new Span { Text = user_name + " ", FontAttributes = FontAttributes.Bold, FontSize = 12.0F, ForegroundColor = Color.FromHex("#293e49") }; //2b98f0 blue
-                Span text = new Span { Text = comment + "\n", FontSize = 12.0F, ForegroundColor = Color.FromHex("#000000") };
-                Span details = new Span { Text = added + "ago", FontSize = 8.0F, ForegroundColor = Color.FromHex("#333333") };
+                Span user = new Span { Text = user_name + " ", FontAttributes = FontAttributes.Bold, FontSize = 12.0F, ForegroundColor = (Color)Application.Current.Resources["App2"] }; //2b98f0 blue
+                Span text = new Span { Text = comment + "\n", FontSize = 12.0F, ForegroundColor = (Color)Application.Current.Resources["Testo2"] };
+                Span details = new Span { Text = added + "ago", FontSize = 8.0F, ForegroundColor = (Color)Application.Current.Resources["Testo3"] };
                 if (newcomment)
                     details.Text = "now";
                 //return user_name + ": " + comment + " (" + added + " ago)";

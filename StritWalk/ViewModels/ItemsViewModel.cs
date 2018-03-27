@@ -180,7 +180,7 @@ namespace StritWalk
                         Comments_count = "0",
                         Distanza = "0",
                         Liked_me = "0",
-                        Liked_me_color = (Color)Application.Current.Resources["Testo1"],
+                        Liked_me_color = (Color)Application.Current.Resources["Testo4"],
                         Comments = new Newtonsoft.Json.Linq.JArray(),
                         Duedate = null,
                         Audio = audioName
