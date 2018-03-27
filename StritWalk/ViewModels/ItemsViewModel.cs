@@ -326,7 +326,7 @@ namespace StritWalk
             IsWorking = true;
             Item item = par1 as Item;
             string action = "addLikePost";
-            if (item.Liked_me_color == (Color)Application.Current.Resources["App1"]){
+            if (item.Liked_me == "1"){
                 action = "removeLikePost";   
                 var num = Int32.Parse(item.LikesNum);
                 num -= 1;
@@ -340,7 +340,7 @@ namespace StritWalk
                 item.Likes = num.ToString();
                 item.Liked_me = "1";
                 item.NumberOfLikes = num.ToString();
-                item.Liked_me_color = (Color)Application.Current.Resources["App1"];
+                item.Liked_me_color = (Color)Application.Current.Resources["App2"];
             }
 
             var res = await DataStore.ILikeThis((string)item.Id, action);
@@ -353,6 +353,7 @@ namespace StritWalk
             {
                 
             }
+
             IsWorking = false;
         }
 
@@ -395,9 +396,9 @@ namespace StritWalk
         }
 
         //notifications setup OBSOLETE
-        private void getNotifTags(Dictionary<string, object> tags)
+        void getNotifTags(Dictionary<string, object> tags)
         {
-            Console.WriteLine("@@@@@@ start tag check function.");
+            
             try
             {
                 //Console.WriteLine("### how many tags? " + tags.Count);

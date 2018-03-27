@@ -282,7 +282,7 @@ namespace StritWalk
                 return result;
 
             }
-            set { }
+
         }
 
         string likes = string.Empty;
@@ -290,7 +290,6 @@ namespace StritWalk
         {
             get
             {
-                string text = "  Likes";
                 if (Int32.Parse(likes) == 1) text = "  Like";
                 return "Like";
             }
@@ -424,12 +423,13 @@ namespace StritWalk
 
                     testo = new Span
                     {
-                        Text = "\nComments:" + "\n" 
+                        Text = "Comments:" + "\n" 
                             + comments[0]["user_name"] + ": " + comments[0]["comment"] + "\n"
                     };
 
                     if (Int32.Parse(comments_count) > 1)
                         testo.Text += comments[1]["user_name"] + ": " + comments[1]["comment"] + "\n";
+                    else testo.Text += "\n";
 
                     result.Spans.Add(testo);
                     return result;
