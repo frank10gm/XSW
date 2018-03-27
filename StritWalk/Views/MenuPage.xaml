@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="StritWalk.MenuPage">
     <ContentPage.Content>
         <StackLayout>
-            <ScrollView VerticalOptions="FillAndExpand">
+            <ScrollView VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource Sfondo1}">
                 <Grid Padding="20,40,20,20" ColumnSpacing="10" RowSpacing="20">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
