@@ -14,6 +14,7 @@ using Android.Media;
 using StritWalk;
 
 using Xamarin.Forms;
+using System.IO;
 
 [assembly: Dependency(typeof(StritWalk.Droid.AudioPlayer))]
 
@@ -24,6 +25,9 @@ namespace StritWalk.Droid
         private MediaPlayer _mediaPlayer;
 
         public event EventHandler FinishedPlaying;
+        public event EventHandler FinishedRecording;
+        string _audioFilePath;
+        MediaRecorder _recorder;
 
         public AudioPlayer()
         {
@@ -78,6 +82,29 @@ namespace StritWalk.Droid
         public void Play()
         {
             _mediaPlayer?.Start();
+        }
+
+        public void InitRecord()
+        {
+            string fileName = string.Format("myfile{0}.m4a", DateTime.Now.ToString("yyyyMMddHHmmss"));
+            _audioFilePath = Path.Combine(Path.GetTempPath(), fileName);
+            _recorder.SetAudioChannels(1);
+            _recorder.SetAudioSource(AudioSource.Mic);
+            _recorder.SetOutputFormat(OutputFormat.Mpeg4);
+            _recorder.SetAudioEncoder(AudioEncoder.Aac);
+            _recorder.SetOutputFile(_audioFilePath);
+            _recorder.SetAudioSamplingRate(44000);
+            _recorder.Prepare();
+        }
+
+        public string StartRecording(double seconds = 10)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopRecording()
+        {
+            throw new NotImplementedException();
         }
     }
 }
