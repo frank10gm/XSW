@@ -32,6 +32,7 @@ namespace StritWalk
         string filePath;
         string audioName = String.Empty;
         public Command IPlayThis { get; }
+        string audioFilePath = string.Empty;
 
         // properties
         string newPostDescription = string.Empty;
@@ -103,25 +104,28 @@ namespace StritWalk
             //start with notifications            
             //OneSignal.Current.GetTags(getNotifTags);
 
+            //dev10n
             //audio record service
-            recorder = new AudioRecorderService
-            {
-                StopRecordingAfterTimeout = true,
-                StopRecordingOnSilence = true,
-                TotalAudioTimeout = TimeSpan.FromSeconds(10),
-                AudioSilenceTimeout = TimeSpan.FromSeconds(2)
-            };
+            //recorder = new AudioRecorderService
+            //{
+            //    StopRecordingAfterTimeout = true,
+            //    StopRecordingOnSilence = true,
+            //    TotalAudioTimeout = TimeSpan.FromSeconds(10),
+            //    AudioSilenceTimeout = TimeSpan.FromSeconds(2)
+            //};
 
-            recorder.AudioInputReceived += (object sender, string file) =>
-            {
-                RecButton = "Rec";
-                filePath = file;
-                IsAudioPost = true;
-            };
+            //recorder.AudioInputReceived += (object sender, string file) =>
+            //{
+            //    RecButton = "Rec";
+            //    filePath = file;
+            //    IsAudioPost = true;
+            //};
 
             //player
             player = DependencyService.Get<IAudioPlayer>();
             player.FinishedPlaying += Player_FinishedPlaying;
+            player.InitRecord();
+            player.FinishedRecording += Player_FinishedRecording;
 
             //test service
             testService = new TestService();
@@ -228,23 +232,35 @@ namespace StritWalk
 
             try
             {
-                if (!recorder.IsRecording) //Record button clicked
+                if (RecButton == "Rec")
                 {
-                    recorder.StopRecordingOnSilence = false;
                     RecButton = "Stop";
-                    //start recording audio
-                    player.SolveErrors();
-                    var audioRecordTask = await recorder.StartRecording();
-
-                    await audioRecordTask;
-
+                    audioFilePath = player.StartRecording();
                 }
-                else //Stop button clicked
+                else
                 {
-                    //stop the recording
-                    await recorder.StopRecording();
-                    RecButton = "Rec";
+                    recButton = "Rec";
+                    player.StopRecording();
                 }
+                //if (!recorder.IsRecording) //Record button clicked
+                //{
+                //    recorder.StopRecordingOnSilence = false;
+                //    RecButton = "Stop";
+                //    //start recording audio
+                //    player.SolveErrors();
+                //    var audioRecordTask = await recorder.StartRecording();
+
+                //    await audioRecordTask;
+
+                //}
+                //else //Stop button clicked
+                //{
+                //    //stop the recording
+                //    await recorder.StopRecording();
+                //    RecButton = "Rec";
+                //}
+
+
             }
             catch (Exception ex)
             {
@@ -259,14 +275,14 @@ namespace StritWalk
 
             try
             {
-                filePath = recorder.GetAudioFilePath();
-                Debug.WriteLine("play " + filePath);
+                //filePath = recorder.GetAudioFilePath();
+                Console.WriteLine("@@@@@ play " + audioFilePath);
 
-                if (filePath != null)
+                if (audioFilePath != null)
                 {
                     //await CrossMediaManager.Current.Play(filePath);
 
-                    player.Play(filePath);
+                    player.Play(audioFilePath);
                 }
             }
             catch (Exception ex)
@@ -326,15 +342,18 @@ namespace StritWalk
             IsWorking = true;
             Item item = par1 as Item;
             string action = "addLikePost";
-            if (item.Liked_me == "1"){
-                action = "removeLikePost";   
+            if (item.Liked_me == "1")
+            {
+                action = "removeLikePost";
                 var num = Int32.Parse(item.LikesNum);
                 num -= 1;
                 item.Likes = num.ToString();
                 item.Liked_me = "0";
                 item.NumberOfLikes = num.ToString();
                 item.Liked_me_color = (Color)Application.Current.Resources["Testo4"];
-            }else{
+            }
+            else
+            {
                 var num = Int32.Parse(item.LikesNum);
                 num += 1;
                 item.Likes = num.ToString();
@@ -347,11 +366,11 @@ namespace StritWalk
 
             if (res == 2)
             {
-                
+
             }
             else if (res == 0)
             {
-                
+
             }
 
             IsWorking = false;
@@ -398,10 +417,10 @@ namespace StritWalk
         //notifications setup OBSOLETE
         void getNotifTags(Dictionary<string, object> tags)
         {
-            
+
             try
             {
-                
+
                 if (tags == null || tags.Count == 0)
                 {
 
@@ -454,6 +473,12 @@ namespace StritWalk
             CrossMediaManager.Current.MediaQueue.Clear();
             await CrossMediaManager.Current.Stop();
             await CrossMediaManager.Current.Play("https://www.hackweb.it/api/uploads/audio/" + item.Audio);
+        }
+
+        void Player_FinishedRecording(object sender, EventArgs e)
+        {
+            Console.WriteLine("@@@@@ play " + audioFilePath);
+            RecButton = "Rec";
         }
     }
 }

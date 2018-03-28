@@ -3,6 +3,7 @@ using System;
 using Foundation;
 using AVFoundation;
 using Xamarin.Forms;
+using System.IO;
 
 [assembly: Dependency(typeof(StritWalk.iOS.AudioPlayer))]
 
@@ -11,13 +12,14 @@ namespace StritWalk.iOS
     public partial class AudioPlayer : IAudioPlayer
     {
         private AVAudioPlayer _audioPlayer = null;
-
         public event EventHandler FinishedPlaying;
+        AVAudioRecorder recorder;
+        public event EventHandler FinishedRecording;
+        string audioFilePath;
 
         public AudioPlayer()
         {
         }
-
 
         public void Play(string pathToAudioFile)
         {
@@ -58,6 +60,51 @@ namespace StritWalk.iOS
         public void Play()
         {
             _audioPlayer?.Play();
+        }
+
+        public void InitRecord()
+        {
+            NSError error;
+            var audioSession = AVAudioSession.SharedInstance();
+            var err = audioSession.SetCategory(AVAudioSessionCategory.PlayAndRecord);
+            if(err != null){
+                return;
+            }
+            err = audioSession.SetActive(true);
+            if(err != null){
+                return;
+            }
+
+            //recording
+            string fileName = string.Format("myfile{0}.m4a", DateTime.Now.ToString("yyyyMMddHHmmss"));
+            audioFilePath = Path.Combine(Path.GetTempPath(), fileName);
+
+            var url = NSUrl.FromFilename(audioFilePath);
+            var settings = new AudioSettings
+            {
+                SampleRate = 44100.0f,
+                Format = AudioToolbox.AudioFormatType.MPEG4AAC,
+                NumberChannels = 1,
+                AudioQuality = AVAudioQuality.High
+            };
+
+            recorder = AVAudioRecorder.Create(url, settings, out error);
+            recorder.PrepareToRecord();
+            recorder.FinishedRecording += Recorder_FinishedRecording;
+        }
+
+        public string StartRecording(double time){
+            recorder.RecordFor(time);
+            return audioFilePath;
+        }
+
+        public void StopRecording(){
+            recorder.Stop();
+        }
+
+        private void Recorder_FinishedRecording(object sender, AVStatusEventArgs e)
+        {
+            FinishedRecording?.Invoke(this, EventArgs.Empty);
         }
     }
 }
