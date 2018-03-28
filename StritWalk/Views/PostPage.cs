@@ -141,6 +141,7 @@ namespace StritWalk
                 //canvas.DrawCircle(args.Info.Width / 2, args.Info.Height / 2, 100, paint2);
                 return;
             }
+            return;
 
             SKPaint paint = new SKPaint
             {

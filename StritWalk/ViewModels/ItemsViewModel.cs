@@ -173,7 +173,7 @@ namespace StritWalk
                 if (!string.IsNullOrWhiteSpace(result))
                 {
                     IsAudioPost = false;
-                    filePath = "";
+                    audioFilePath = "";
                     var newitem = new Item
                     {
                         Id = result,
@@ -239,7 +239,7 @@ namespace StritWalk
                 }
                 else
                 {
-                    recButton = "Rec";
+                    RecButton = "Rec";
                     player.StopRecording();
                 }
                 //if (!recorder.IsRecording) //Record button clicked
@@ -272,7 +272,7 @@ namespace StritWalk
 
         async Task PlayTask(object par1)
         {
-
+            Console.WriteLine("@@@@@ play task " + audioFilePath);
             try
             {
                 //filePath = recorder.GetAudioFilePath();
@@ -461,7 +461,7 @@ namespace StritWalk
         //upload audio task launch
         public async Task<string> TryUploadAudio()
         {
-            return await DataStore.UploadAudio(filePath);
+            return await DataStore.UploadAudio(audioFilePath);
         }
 
 
@@ -477,8 +477,9 @@ namespace StritWalk
 
         void Player_FinishedRecording(object sender, EventArgs e)
         {
-            Console.WriteLine("@@@@@ play " + audioFilePath);
+            Console.WriteLine("@@@@@ finishedRecording " + audioFilePath);
             RecButton = "Rec";
+            IsAudioPost = true;
         }
     }
 }

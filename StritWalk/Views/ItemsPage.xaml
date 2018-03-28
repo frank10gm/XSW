@@ -80,7 +80,7 @@
                                 </Button>
                                 <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="2" Text="Post" TextColor="#00ff00" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PostCommand}" CommandParameter="{Binding Items}" IsEnabled="{Binding IsPosting}" BackgroundColor="Transparent" BorderColor="Transparent">
                                 </Button>
-                                <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="1" Text="Play" TextColor="#333" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PlayCommand}" CommandParameter="{Binding Items}" IsEnabled="{Binding IsAudioPost}" BackgroundColor="Transparent" BorderColor="Transparent">
+                                <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="1" Text="Play" TextColor="{StaticResource Testo4}" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PlayCommand}" CommandParameter="{Binding Items}" IsEnabled="{Binding IsAudioPost}" BackgroundColor="Transparent" BorderColor="Transparent">
                                 </Button>
                                 <!--<Label FontSize="14.0" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#2b98f0" HorizontalOptions="Center" VerticalOptions="Center" IsEnabled="{Binding IsPosting}">
                                     <Label.GestureRecognizers>
