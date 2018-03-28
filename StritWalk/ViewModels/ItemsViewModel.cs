@@ -63,7 +63,7 @@ namespace StritWalk
         // CONSTRUCTOR
         public ItemsViewModel()
         {
-            Title = "Seahorse";
+            Title = "StritWalk";
             //Title = "Seahorse";
             Items = new ObservableRangeCollection<Item>();
             //Items = new ObservableCollection<Item>();

@@ -14,7 +14,7 @@ using Android.Util;
 
 namespace StritWalk.Droid
 {
-    [Activity(Label = "Seahorse", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, 
+    [Activity(Label = "StritWalk", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, 
         ScreenOrientation = ScreenOrientation.Portrait)]
     //WindowSoftInputMode = SoftInput.AdjustResize
     public class MainActivity : FormsAppCompatActivity

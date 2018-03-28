@@ -18,7 +18,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <StackLayout Spacing="5" Grid.ColumnSpan="2">
-                    <Label HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" LineBreakMode="WordWrap" FontSize="Large" Text="Seahorse" Margin="0,0,0,25" />
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" LineBreakMode="WordWrap" FontSize="Large" Text="Sign Up" Margin="0,0,0,25" />
                     <Image HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="95" HeightRequest="95" Source="profile_generic.png" Aspect="AspectFill" x:Name="CircleImageAvatar" Margin="0,0,0,20" />
                     <vm:CustomEntry x:Name="UserMailField" Placeholder="E-Mail" ReturnKeyType="Next" HeightRequest="50" Text="{Binding Email}">
                     </vm:CustomEntry>
