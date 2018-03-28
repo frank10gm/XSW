@@ -372,8 +372,8 @@
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="CustomPages\MonkeyPageRenderer.cs" />
     <Compile Include="Services\IBeaconService.cs" />
-    <Compile Include="AudioPlayer.cs" />
     <Compile Include="Services\TestService.cs" />
+    <Compile Include="Services\AudioPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
