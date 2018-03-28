@@ -23,9 +23,10 @@ namespace StritWalk
             viewModel.Navigation = Navigation;
             viewModel.PostEditor = PostEditor;
             LoadMoreCommand = new Command(async () => await LoadMoreItems(null));
+            var w = Application.Current.MainPage.Width;
 
             var firstTemplate = new DataTemplate(() =>
-            {
+            {                           
 
                 var postLabel = new Label { Margin = new Thickness(20, 0, 20, 0) };
                 postLabel.SetBinding(Label.FormattedTextProperty, "Post");
@@ -56,8 +57,7 @@ namespace StritWalk
                 //tapGestureRecognizer.Command = viewModel.ICommentThis;
                 //tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandParameterProperty, ".");
                 //commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
-                var whiteSeparator = new BoxView { BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], HeightRequest = 10, Margin = new Thickness(0, 0, 0, 0) };
-
+                var whiteSeparator = new BoxView { BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], HeightRequest = 10, Margin = new Thickness(0, 0, 0, 0) };                
                 
 
                 //relative layout
@@ -66,100 +66,49 @@ namespace StritWalk
                 layout.Children.Add(postLabel,
                     Constraint.Constant(0),
                     Constraint.Constant(10),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width;
-                    }), 
+                    Constraint.Constant(w), 
                     Constraint.Constant(60));
 
                 layout.Children.Add(separatorLine,
                     Constraint.Constant(0),
-                    Constraint.RelativeToView(postLabel, (Parent, sibling) =>
-                    {
-                        return sibling.Y + sibling.Height + 10;
-                    }),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width;
-                    }),
+                    Constraint.Constant(80),
+                    Constraint.Constant(w),
                     Constraint.Constant(1));
 
                 layout.Children.Add(numbersLabel,
                     Constraint.Constant(0),
-                    Constraint.RelativeToView(separatorLine, (Parent, sibling) =>
-                    {
-                        return sibling.Y + 11;
-                    }),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width;
-                    }),
+                    Constraint.Constant(91),
+                    Constraint.Constant(w),
                     Constraint.Constant(28));
 
                 layout.Children.Add(separatorLine3,
                     Constraint.Constant(0),
-                    Constraint.RelativeToView(numbersLabel, (Parent, sibling) =>
-                    {
-                        return sibling.Y + sibling.Height - 5;
-                    }),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width;
-                    }),
+                    Constraint.Constant(114),
+                    Constraint.Constant(w),
                     Constraint.Constant(1));
 
                 layout.Children.Add(playButton,
                     Constraint.Constant(0),
-                    Constraint.RelativeToView(separatorLine3, (Parent, sibling) =>
-                    {
-                        return sibling.Y - 5;
-                    }),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width / 3;
-                    }),
+                    Constraint.Constant(109),
+                    Constraint.Constant(w/3),
                     Constraint.Constant(48));
 
                 layout.Children.Add(likeButton,
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width / 3;
-                    }),
-                    Constraint.RelativeToView(separatorLine3, (Parent, sibling) =>
-                    {
-                        return sibling.Y - 5;
-                    }),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width / 3;
-                    }),
+                    Constraint.Constant(w/3),
+                    Constraint.Constant(109),
+                    Constraint.Constant(w/3),
                     Constraint.Constant(48));
 
                 layout.Children.Add(commentsButton,
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return (parent.Width / 3) * 2;
-                    }),
-                    Constraint.RelativeToView(separatorLine3, (Parent, sibling) =>
-                    {
-                        return sibling.Y - 5;
-                    }),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return (parent.Width / 3);
-                    }),
+                    Constraint.Constant((w/3)*2),
+                    Constraint.Constant(109),
+                    Constraint.Constant(w/3),
                     Constraint.Constant(48));
 
                 layout.Children.Add(separatorLine2,
                     Constraint.Constant(0),
-                    Constraint.RelativeToView(playButton, (Parent, sibling) =>
-                    {
-                        return sibling.Y + sibling.Height - 5;
-                    }),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width;
-                    }),
+                    Constraint.Constant(152),
+                    Constraint.Constant(w),
                     Constraint.Constant(1));
 
                 //layout.Children.Add(commentsLabel,
@@ -176,14 +125,8 @@ namespace StritWalk
 
                 layout.Children.Add(whiteSeparator,
                     Constraint.Constant(0),
-                    Constraint.RelativeToView(separatorLine2, (Parent, sibling) =>
-                    {
-                        return sibling.Y;
-                    }),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width;
-                    }),
+                    Constraint.Constant(152),
+                    Constraint.Constant(w),
                     Constraint.Constant(10));
 
 
@@ -288,7 +231,7 @@ namespace StritWalk
             });
 
             var secondTemplate = new DataTemplate(() =>
-            {
+            {                
 
                 var postLabel = new Label { Margin = new Thickness(20, 0, 20, 0) };
                 postLabel.SetBinding(Label.FormattedTextProperty, "Post");
@@ -322,124 +265,61 @@ namespace StritWalk
                 layout.Children.Add(postLabel,
                     Constraint.Constant(0),
                     Constraint.Constant(10),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width;
-                    }),
+                    Constraint.Constant(w),
                     Constraint.Constant(60));
 
                 layout.Children.Add(separatorLine,
                     Constraint.Constant(0),
-                    Constraint.RelativeToView(postLabel, (Parent, sibling) =>
-                    {
-                        return sibling.Y + sibling.Height + 10;
-                    }),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width;
-                    }),
+                    Constraint.Constant(80),
+                    Constraint.Constant(w),
                     Constraint.Constant(1));
 
                 layout.Children.Add(numbersLabel,
                     Constraint.Constant(0),
-                    Constraint.RelativeToView(separatorLine, (Parent, sibling) =>
-                    {
-                        return sibling.Y + 11;
-                    }),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width;
-                    }),
+                    Constraint.Constant(91),
+                    Constraint.Constant(w),
                     Constraint.Constant(28));
 
                 layout.Children.Add(separatorLine3,
                     Constraint.Constant(0),
-                    Constraint.RelativeToView(numbersLabel, (Parent, sibling) =>
-                    {
-                        return sibling.Y + sibling.Height - 5;
-                    }),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width;
-                    }),
+                    Constraint.Constant(114),
+                    Constraint.Constant(w),
                     Constraint.Constant(1));
 
                 layout.Children.Add(playButton,
                     Constraint.Constant(0),
-                    Constraint.RelativeToView(separatorLine3, (Parent, sibling) =>
-                    {
-                        return sibling.Y - 5;
-                    }),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width / 3;
-                    }),
+                    Constraint.Constant(109),
+                    Constraint.Constant(w/3),
                     Constraint.Constant(48));
 
                 layout.Children.Add(likeButton,
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width / 3;
-                    }),
-                    Constraint.RelativeToView(separatorLine3, (Parent, sibling) =>
-                    {
-                        return sibling.Y - 5;
-                    }),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width / 3;
-                    }),
+                    Constraint.Constant(w/3),
+                    Constraint.Constant(109),
+                    Constraint.Constant(w/3),
                     Constraint.Constant(48));
 
                 layout.Children.Add(commentsButton,
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return (parent.Width / 3) * 2;
-                    }),
-                    Constraint.RelativeToView(separatorLine3, (Parent, sibling) =>
-                    {
-                        return sibling.Y - 5;
-                    }),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return (parent.Width / 3);
-                    }),
+                    Constraint.Constant((w/3)*2),
+                    Constraint.Constant(109),
+                    Constraint.Constant(w/3),
                     Constraint.Constant(48));
 
                 layout.Children.Add(separatorLine2,
                     Constraint.Constant(0),
-                    Constraint.RelativeToView(playButton, (Parent, sibling) =>
-                    {
-                        return sibling.Y + sibling.Height - 5;
-                    }),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width;
-                    }),
+                    Constraint.Constant(152),
+                    Constraint.Constant(w),
                     Constraint.Constant(1));
 
                 layout.Children.Add(commentsLabel,
                     Constraint.Constant(0),
-                    Constraint.RelativeToView(separatorLine2, (Parent, sibling) =>
-                    {
-                        return sibling.Y + 5;
-                    }),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width;
-                    }),
+                    Constraint.Constant(157),
+                    Constraint.Constant(w),
                     Constraint.Constant(55));
 
                 layout.Children.Add(whiteSeparator,
                     Constraint.Constant(0),
-                    Constraint.RelativeToView(commentsLabel, (Parent, sibling) =>
-                    {
-                        return sibling.Y + sibling.Height;
-                    }),
-                    Constraint.RelativeToParent((parent) =>
-                    {
-                        return parent.Width;
-                    }),
+                    Constraint.Constant(212),
+                    Constraint.Constant(w),
                     Constraint.Constant(10));
                 
                 CustomViewCell cell = new CustomViewCell();

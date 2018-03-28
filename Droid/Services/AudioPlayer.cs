@@ -88,6 +88,7 @@ namespace StritWalk.Droid
         {
             string fileName = string.Format("myfile{0}.m4a", DateTime.Now.ToString("yyyyMMddHHmmss"));
             _audioFilePath = Path.Combine(Path.GetTempPath(), fileName);
+            _recorder = new MediaRecorder();
             _recorder.SetAudioChannels(1);
             _recorder.SetAudioSource(AudioSource.Mic);
             _recorder.SetOutputFormat(OutputFormat.Mpeg4);
