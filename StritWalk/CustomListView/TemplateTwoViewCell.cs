@@ -15,11 +15,11 @@ namespace StritWalk
             var separatorLine3 = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(20, 0, 20, 0) };
             var playButton = new Button() { TextColor = (Color)Application.Current.Resources["App1"], FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
             playButton.Text = "Play";
-            //playButton.SetBinding(IsEnabledProperty, "AudioExist");
+            playButton.SetBinding(IsEnabledProperty, "AudioExist");
             //playButton.Command = viewModel.IPlayThis;
             //playButton.SetBinding(Button.CommandParameterProperty, ".");
             var likeButton = new Button() { Text = "Like", FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
-            //likeButton.SetBinding(Button.TextColorProperty, "Liked_me_color");
+            likeButton.SetBinding(Button.TextColorProperty, "Liked_me_color");
             //likeButton.Command = viewModel.ILikeThis;
             //likeButton.SetBinding(Button.CommandParameterProperty, ".");
             var commentsButton = new Button() { Text = "Comment", TextColor = (Color)Application.Current.Resources["Testo4"], FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };

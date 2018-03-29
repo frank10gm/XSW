@@ -71,8 +71,6 @@ namespace StritWalk
                 layout.Children.Add(whiteSeparator);
 
                 CustomViewCell cell = new CustomViewCell();
-
-                //scelta della vista
                 cell.View = layout;
 
                 return cell;

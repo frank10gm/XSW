@@ -89,7 +89,7 @@ namespace StritWalk.iOS
             //    cell = new UITableViewCell();                
             //}
 
-            //return cell;        
+            //return cell;
         }
 
         public override void WillDisplay(UITableView tableView, UITableViewCell cell, NSIndexPath indexPath)
