@@ -15,7 +15,7 @@
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom" ItemsSource="{Binding Items}" RowHeight="-1" >
                 <!--ItemTemplate="{Binding ItemTemplate}"-->
                 <x:Arguments>
-                    <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
+                    <ListViewCachingStrategy>RecycleElementAndDataTemplate</ListViewCachingStrategy>
                 </x:Arguments>
                 <ListView.Header>
                     <Grid Padding="0,20,0,0" RowSpacing="0" ColumnSpacing="0" Margin="0,0,0,0">
