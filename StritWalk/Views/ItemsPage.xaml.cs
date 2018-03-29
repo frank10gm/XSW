@@ -23,11 +23,10 @@ namespace StritWalk
             viewModel.Navigation = Navigation;
             viewModel.PostEditor = PostEditor;
             LoadMoreCommand = new Command(async () => await LoadMoreItems(null));
-            var w = Application.Current.MainPage.Width;
 
             var firstTemplate = new DataTemplate(() =>
-            {                           
-
+            {
+                var w = Content.Width;
                 var postLabel = new Label { Margin = new Thickness(20, 0, 20, 0) };
                 postLabel.SetBinding(Label.FormattedTextProperty, "Post");
                 var separatorLine = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(0, 0, 0, 0) };
@@ -65,9 +64,9 @@ namespace StritWalk
                 AbsoluteLayout.SetLayoutBounds(separatorLine, new Rectangle(0, 80, w, 1));
                 AbsoluteLayout.SetLayoutBounds(numbersLabel, new Rectangle(0, 91, w, 28));
                 AbsoluteLayout.SetLayoutBounds(separatorLine3, new Rectangle(0, 114, w, 1));
-                AbsoluteLayout.SetLayoutBounds(playButton, new Rectangle(0, 109, w/3, 48));
-                AbsoluteLayout.SetLayoutBounds(likeButton, new Rectangle(w/3, 109, w/3, 48));
-                AbsoluteLayout.SetLayoutBounds(commentsButton, new Rectangle((w/3)*2, 109, w/3, 48));
+                AbsoluteLayout.SetLayoutBounds(playButton, new Rectangle(0, 109, w / 3, 48));
+                AbsoluteLayout.SetLayoutBounds(likeButton, new Rectangle(w / 3, 109, w / 3, 48));
+                AbsoluteLayout.SetLayoutBounds(commentsButton, new Rectangle((w / 3) * 2, 109, w / 3, 48));
                 AbsoluteLayout.SetLayoutBounds(separatorLine2, new Rectangle(0, 152, w, 1));
                 AbsoluteLayout.SetLayoutBounds(whiteSeparator, new Rectangle(0, 152, w, 10));
 
@@ -149,8 +148,8 @@ namespace StritWalk
             });
 
             var secondTemplate = new DataTemplate(() =>
-            {                
-
+            {
+                var w = Content.Width;
                 var postLabel = new Label { Margin = new Thickness(20, 0, 20, 0) };
                 postLabel.SetBinding(Label.FormattedTextProperty, "Post");
                 var separatorLine = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(0, 0, 0, 0) };
@@ -172,7 +171,7 @@ namespace StritWalk
                 commentsButton.Command = viewModel.ICommentThis;
                 commentsButton.SetBinding(Button.CommandParameterProperty, ".");
                 var separatorLine2 = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(0, 0, 0, 0) };
-                var commentsLabel = new Label { Margin = new Thickness(20, 0, 20, 0), Text = "", TextColor = (Color)Application.Current.Resources["Testo3"], FontSize = 13};
+                var commentsLabel = new Label { Margin = new Thickness(20, 0, 20, 0), Text = "", TextColor = (Color)Application.Current.Resources["Testo3"], FontSize = 13 };
                 commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
                 var whiteSeparator = new BoxView { BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], HeightRequest = 10, Margin = new Thickness(0, 0, 0, 0) };
 
@@ -189,77 +188,15 @@ namespace StritWalk
                 AbsoluteLayout.SetLayoutBounds(commentsLabel, new Rectangle(0, 157, w, 55));
                 AbsoluteLayout.SetLayoutBounds(whiteSeparator, new Rectangle(0, 212, w, 10));
 
-                ////relative layout
-                //var layout = new RelativeLayout();
-
-                //layout.Children.Add(postLabel,
-                //    Constraint.Constant(0),
-                //    Constraint.Constant(10),
-                //    Constraint.Constant(w),
-                //    Constraint.Constant(60));
-
-                //layout.Children.Add(separatorLine,
-                //    Constraint.Constant(0),
-                //    Constraint.Constant(80),
-                //    Constraint.Constant(w),
-                //    Constraint.Constant(1));
-
-                //layout.Children.Add(numbersLabel,
-                //    Constraint.Constant(0),
-                //    Constraint.Constant(91),
-                //    Constraint.Constant(w),
-                //    Constraint.Constant(28));
-
-                //layout.Children.Add(separatorLine3,
-                //    Constraint.Constant(0),
-                //    Constraint.Constant(114),
-                //    Constraint.Constant(w),
-                //    Constraint.Constant(1));
-
-                //layout.Children.Add(playButton,
-                //    Constraint.Constant(0),
-                //    Constraint.Constant(109),
-                //    Constraint.Constant(w/3),
-                //    Constraint.Constant(48));
-
-                //layout.Children.Add(likeButton,
-                //    Constraint.Constant(w/3),
-                //    Constraint.Constant(109),
-                //    Constraint.Constant(w/3),
-                //    Constraint.Constant(48));
-
-                //layout.Children.Add(commentsButton,
-                //    Constraint.Constant((w/3)*2),
-                //    Constraint.Constant(109),
-                //    Constraint.Constant(w/3),
-                //    Constraint.Constant(48));
-
-                //layout.Children.Add(separatorLine2,
-                //    Constraint.Constant(0),
-                //    Constraint.Constant(152),
-                //    Constraint.Constant(w),
-                //    Constraint.Constant(1));
-
-                //layout.Children.Add(commentsLabel,
-                //    Constraint.Constant(0),
-                //    Constraint.Constant(157),
-                //    Constraint.Constant(w),
-                //    Constraint.Constant(55));
-
-                //layout.Children.Add(whiteSeparator,
-                    //Constraint.Constant(0),
-                    //Constraint.Constant(212),
-                    //Constraint.Constant(w),
-                    //Constraint.Constant(10));
-                
                 CustomViewCell cell = new CustomViewCell();
-                cell.View = layout;                
+                cell.View = layout;
                 return cell;
             });
 
-            ItemsListView.ItemTemplate = new CustomDataTemplateSelector {
-                FirstTemplate = firstTemplate,
-                SecondTemplate = secondTemplate
+            ItemsListView.ItemTemplate = new CustomDataTemplateSelector
+            {
+                FirstTemplate = new DataTemplate(typeof(TemplateOneViewCell)),
+                SecondTemplate = new DataTemplate(typeof(TemplateTwoViewCell))
             };
 
             ItemsListView.ItemSelectedCustomEvent += async (object o, SelectedItemChangedEventArgs e) =>

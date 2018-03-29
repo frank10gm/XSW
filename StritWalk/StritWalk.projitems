@@ -73,6 +73,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\IAudioPlayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\TestService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\PostPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CustomListView\TemplateOneViewCell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CustomListView\TemplateTwoViewCell.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
