@@ -336,6 +336,7 @@ namespace StritWalk
         //mettere o togliere un like
         async Task ILikeThisTask(object par1)
         {
+            Console.WriteLine("@@@@@ I LIKE THIS TASK");
             if (IsWorking)
                 return;
 

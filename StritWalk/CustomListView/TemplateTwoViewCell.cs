@@ -6,6 +6,8 @@ namespace StritWalk
     {
         public TemplateTwoViewCell()
         {
+            ItemsViewModel viewModel = new ItemsViewModel();
+
             var w = Application.Current.MainPage.Width;
             var postLabel = new Label { Margin = new Thickness(20, 0, 20, 0) };
             postLabel.SetBinding(Label.FormattedTextProperty, "Post");

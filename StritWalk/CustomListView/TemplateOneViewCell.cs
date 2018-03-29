@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace StritWalk
@@ -7,6 +8,8 @@ namespace StritWalk
     {
         public TemplateOneViewCell()
         {
+            ItemsViewModel viewModel = new ItemsViewModel();
+
             var w = Application.Current.MainPage.Width;
             var postLabel = new Label { Margin = new Thickness(20, 0, 20, 0) };
             postLabel.SetBinding(Label.FormattedTextProperty, "Post");

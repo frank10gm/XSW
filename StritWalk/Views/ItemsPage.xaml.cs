@@ -10,7 +10,7 @@ namespace StritWalk
 {
     public partial class ItemsPage : ContentPage
     {
-        ItemsViewModel viewModel;
+        public ItemsViewModel viewModel;
         //IList<Item> items;
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
         public Command LoadMoreCommand { get; }
