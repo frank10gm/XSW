@@ -9,6 +9,7 @@ namespace StritWalk
         public TemplateOneViewCell()
         {
             ItemsViewModel viewModel = new ItemsViewModel();
+            viewModel.Navigation = App.AppNav;            
 
             var w = Application.Current.MainPage.Width;
             var postLabel = new Label { Margin = new Thickness(20, 0, 20, 0) };
@@ -18,17 +19,17 @@ namespace StritWalk
             numbersLabel.SetBinding(Label.TextProperty, "NumberOfLikes");
             var separatorLine3 = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(20, 0, 20, 0) };
             var playButton = new Button() { TextColor = (Color)Application.Current.Resources["App1"], FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
-            playButton.Text = "Play";
+            playButton.Text = "Play";            
             playButton.SetBinding(IsEnabledProperty, "AudioExist");
-            //playButton.Command = viewModel.IPlayThis;
-            //playButton.SetBinding(Button.CommandParameterProperty, ".");
-            var likeButton = new Button() { Text = "Like", FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
+            playButton.Command = viewModel.IPlayThis;
+            playButton.SetBinding(Button.CommandParameterProperty, ".");
+            var likeButton = new Button() { Text = "Like", FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };            
             likeButton.SetBinding(Button.TextColorProperty, "Liked_me_color");
-            //likeButton.Command = viewModel.ILikeThis;
-            //likeButton.SetBinding(Button.CommandParameterProperty, ".");
+            likeButton.Command = viewModel.ILikeThis;
+            likeButton.SetBinding(Button.CommandParameterProperty, ".");
             var commentsButton = new Button() { Text = "Comment", TextColor = (Color)Application.Current.Resources["Testo4"], FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
-            //commentsButton.Command = viewModel.ICommentThis;
-            //commentsButton.SetBinding(Button.CommandParameterProperty, ".");
+            commentsButton.Command = viewModel.ICommentThis;
+            commentsButton.SetBinding(Button.CommandParameterProperty, ".");
             var separatorLine2 = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(0, 0, 0, 0) };
             var commentsLabel = new Label { Margin = new Thickness(20, 0, 20, 0), Text = "", TextColor = (Color)Application.Current.Resources["Testo3"], FontSize = 13 };
             commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");

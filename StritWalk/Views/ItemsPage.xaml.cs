@@ -23,6 +23,7 @@ namespace StritWalk
             viewModel.Navigation = Navigation;
             viewModel.PostEditor = PostEditor;
             LoadMoreCommand = new Command(async () => await LoadMoreItems(null));
+            //App.AppNav = Navigation;
 
             var firstTemplate = new DataTemplate(() =>
             {
@@ -35,7 +36,7 @@ namespace StritWalk
                 var separatorLine3 = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(20, 0, 20, 0) };
                 var playButton = new Button() { TextColor = (Color)Application.Current.Resources["App1"], FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
                 playButton.Text = "Play";
-                playButton.SetBinding(IsEnabledProperty, "AudioExist");
+                //playButton.SetBinding(IsEnabledProperty, "AudioExist");
                 playButton.Command = viewModel.IPlayThis;
                 playButton.SetBinding(Button.CommandParameterProperty, ".");
                 var likeButton = new Button() { Text = "Like", FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };

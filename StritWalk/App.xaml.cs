@@ -15,6 +15,10 @@ namespace StritWalk
         public static CustomTabbedPage tabbedPage;
         public static IDictionary<string, string> LoginParameters => null;
         static Robotics.Mobile.Core.Bluetooth.LE.IAdapter Adapter;
+        public static INavigation AppNav
+        {
+            get; set;
+        }
 
         public App()
         {

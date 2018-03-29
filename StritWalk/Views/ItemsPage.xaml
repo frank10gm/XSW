@@ -23,7 +23,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="30" />
+                            <RowDefinition Height="10" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="10" />
                         </Grid.RowDefinitions>
@@ -79,9 +79,11 @@
                                 <BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HeightRequest="1" BackgroundColor="{StaticResource Sfondo2}" Margin="0,0,0,0"></BoxView>
                                 <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="0" Text="{Binding RecButton}" TextColor="#ed5249" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding RecCommand}" CommandParameter="{Binding Items}" BackgroundColor="Transparent" BorderColor="Transparent">
                                 </Button>
-                                <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="2" Text="Post" TextColor="#00ff00" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PostCommand}" CommandParameter="{Binding Items}" IsEnabled="{Binding IsPosting}" BackgroundColor="Transparent" BorderColor="Transparent">
+                                <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="2" Text="Post" TextColor="#00ff00" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PostCommand}" CommandParameter="{Binding Items}" BackgroundColor="Transparent" BorderColor="Transparent">
+                                    <!--IsEnabled="{Binding IsPosting}"-->
                                 </Button>
-                                <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="1" Text="Play" TextColor="{StaticResource Testo4}" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PlayCommand}" CommandParameter="{Binding Items}" IsEnabled="{Binding IsAudioPost}" BackgroundColor="Transparent" BorderColor="Transparent">
+                                <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="1" Text="Play" TextColor="{StaticResource Testo4}" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PlayCommand}" CommandParameter="{Binding Items}" BackgroundColor="Transparent" BorderColor="Transparent">
+                                    <!--IsEnabled="{Binding IsAudioPost}"-->
                                 </Button>
                                 <!--<Label FontSize="14.0" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#2b98f0" HorizontalOptions="Center" VerticalOptions="Center" IsEnabled="{Binding IsPosting}">
                                     <Label.GestureRecognizers>
