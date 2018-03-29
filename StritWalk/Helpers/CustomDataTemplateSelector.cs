@@ -20,7 +20,7 @@ namespace StritWalk
 
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
-            return ((Item)item).VisibleComments > 0 ? this.templateOne : this.templateTwo;
+            return ((Item)item).VisibleComments > 0 ? FirstTemplate : SecondTemplate;
         }
     }
 }

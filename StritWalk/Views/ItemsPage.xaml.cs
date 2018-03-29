@@ -40,22 +40,12 @@ namespace StritWalk
                 playButton.SetBinding(Button.CommandParameterProperty, ".");
                 var likeButton = new Button() { Text = "Like", FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
                 likeButton.SetBinding(Button.TextColorProperty, "Liked_me_color");
-                //likeButton.SetBinding(Button.TextProperty, "Likes");
                 likeButton.Command = viewModel.ILikeThis;
                 likeButton.SetBinding(Button.CommandParameterProperty, ".");
                 var commentsButton = new Button() { Text = "Comment", TextColor = (Color)Application.Current.Resources["Testo4"], FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
-                //commentsButton.SetBinding(Button.TextProperty, "Comments_count");
                 commentsButton.Command = viewModel.ICommentThis;
                 commentsButton.SetBinding(Button.CommandParameterProperty, ".");
                 var separatorLine2 = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(0, 0, 0, 0) };
-                //var commentsLabel = new Label { Margin = new Thickness(20, 0, 20, 0), Text = "", TextColor = (Color)Application.Current.Resources["Testo3"], FontSize = 13, HeightRequest = 60 };
-                //commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
-                //commentsLabel.SetBinding(RotationXProperty, "VisibleComments"); // non visualizzare la barra dei commenti quando non ci sono
-                //commentsLabel.SetBinding(IsVisibleProperty, "VisibleComments"); // non visualizzare la barra dei commenti quando non ci sono
-                //var tapGestureRecognizer = new TapGestureRecognizer();
-                //tapGestureRecognizer.Command = viewModel.ICommentThis;
-                //tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandParameterProperty, ".");
-                //commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
                 var whiteSeparator = new BoxView { BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], HeightRequest = 10, Margin = new Thickness(0, 0, 0, 0) };
 
                 //absolute layout
@@ -70,74 +60,15 @@ namespace StritWalk
                 AbsoluteLayout.SetLayoutBounds(separatorLine2, new Rectangle(0, 152, w, 1));
                 AbsoluteLayout.SetLayoutBounds(whiteSeparator, new Rectangle(0, 152, w, 10));
 
-                ////relative layout
-                //var layout = new RelativeLayout();
-
-                //layout.Children.Add(postLabel,
-                //    Constraint.Constant(0),
-                //    Constraint.Constant(10),
-                //    Constraint.Constant(w), 
-                //    Constraint.Constant(60));
-
-                //layout.Children.Add(separatorLine,
-                //    Constraint.Constant(0),
-                //    Constraint.Constant(80),
-                //    Constraint.Constant(w),
-                //    Constraint.Constant(1));
-
-                //layout.Children.Add(numbersLabel,
-                //    Constraint.Constant(0),
-                //    Constraint.Constant(91),
-                //    Constraint.Constant(w),
-                //    Constraint.Constant(28));
-
-                //layout.Children.Add(separatorLine3,
-                //    Constraint.Constant(0),
-                //    Constraint.Constant(114),
-                //    Constraint.Constant(w),
-                //    Constraint.Constant(1));
-
-                //layout.Children.Add(playButton,
-                //    Constraint.Constant(0),
-                //    Constraint.Constant(109),
-                //    Constraint.Constant(w/3),
-                //    Constraint.Constant(48));
-
-                //layout.Children.Add(likeButton,
-                //    Constraint.Constant(w/3),
-                //    Constraint.Constant(109),
-                //    Constraint.Constant(w/3),
-                //    Constraint.Constant(48));
-
-                //layout.Children.Add(commentsButton,
-                //    Constraint.Constant((w/3)*2),
-                //    Constraint.Constant(109),
-                //    Constraint.Constant(w/3),
-                //    Constraint.Constant(48));
-
-                //layout.Children.Add(separatorLine2,
-                //    Constraint.Constant(0),
-                //    Constraint.Constant(152),
-                //    Constraint.Constant(w),
-                //    Constraint.Constant(1));
-
-                ////layout.Children.Add(commentsLabel,
-                ////    Constraint.Constant(0),
-                ////    Constraint.RelativeToView(separatorLine2, (Parent, sibling) =>
-                ////    {
-                ////        return sibling.Y + 1;
-                ////    }),
-                ////    Constraint.RelativeToParent((parent) =>
-                ////    {
-                ////        return parent.Width;                        
-                ////    }),
-                ////    Constraint.Constant(60));
-
-                //layout.Children.Add(whiteSeparator,
-                //Constraint.Constant(0),
-                //Constraint.Constant(152),
-                //Constraint.Constant(w),
-                //Constraint.Constant(10));         
+                layout.Children.Add(postLabel);
+                layout.Children.Add(separatorLine);
+                layout.Children.Add(numbersLabel);
+                layout.Children.Add(separatorLine3);
+                layout.Children.Add(playButton);
+                layout.Children.Add(likeButton);
+                layout.Children.Add(commentsButton);
+                layout.Children.Add(separatorLine2);
+                layout.Children.Add(whiteSeparator);
 
                 CustomViewCell cell = new CustomViewCell();
 
@@ -163,11 +94,9 @@ namespace StritWalk
                 playButton.SetBinding(Button.CommandParameterProperty, ".");
                 var likeButton = new Button() { Text = "Like", FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
                 likeButton.SetBinding(Button.TextColorProperty, "Liked_me_color");
-                //likeButton.SetBinding(Button.TextProperty, "Likes");
                 likeButton.Command = viewModel.ILikeThis;
                 likeButton.SetBinding(Button.CommandParameterProperty, ".");
                 var commentsButton = new Button() { Text = "Comment", TextColor = (Color)Application.Current.Resources["Testo4"], FontSize = 12, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0), BackgroundColor = Color.Transparent, BorderColor = Color.Transparent };
-                //commentsButton.SetBinding(Button.TextProperty, "Comments_count");
                 commentsButton.Command = viewModel.ICommentThis;
                 commentsButton.SetBinding(Button.CommandParameterProperty, ".");
                 var separatorLine2 = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(0, 0, 0, 0) };
@@ -188,6 +117,17 @@ namespace StritWalk
                 AbsoluteLayout.SetLayoutBounds(commentsLabel, new Rectangle(0, 157, w, 55));
                 AbsoluteLayout.SetLayoutBounds(whiteSeparator, new Rectangle(0, 212, w, 10));
 
+                layout.Children.Add(postLabel);
+                layout.Children.Add(separatorLine);
+                layout.Children.Add(numbersLabel);
+                layout.Children.Add(separatorLine3);
+                layout.Children.Add(playButton);
+                layout.Children.Add(likeButton);
+                layout.Children.Add(commentsButton);
+                layout.Children.Add(separatorLine2);
+                layout.Children.Add(commentsLabel);
+                layout.Children.Add(whiteSeparator);
+
                 CustomViewCell cell = new CustomViewCell();
                 cell.View = layout;
                 return cell;
@@ -195,8 +135,10 @@ namespace StritWalk
 
             ItemsListView.ItemTemplate = new CustomDataTemplateSelector
             {
-                FirstTemplate = new DataTemplate(typeof(TemplateOneViewCell)),
-                SecondTemplate = new DataTemplate(typeof(TemplateTwoViewCell))
+                //FirstTemplate = new DataTemplate(typeof(TemplateOneViewCell)),
+                //SecondTemplate = new DataTemplate(typeof(TemplateTwoViewCell))
+                FirstTemplate = firstTemplate,
+                SecondTemplate = secondTemplate
             };
 
             ItemsListView.ItemSelectedCustomEvent += async (object o, SelectedItemChangedEventArgs e) =>

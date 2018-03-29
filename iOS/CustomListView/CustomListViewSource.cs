@@ -18,7 +18,7 @@ namespace StritWalk.iOS
         private readonly UITableViewSource source;
         private readonly Dictionary<int, double> cachedHeights = new Dictionary<int, double>();
         PropertyInfo specialProperty;
-        AppDelegate ad;        
+        AppDelegate ad;
 
         //public IList<Item> ItemsSource
         //{
@@ -31,9 +31,9 @@ namespace StritWalk.iOS
         public CustomListViewSource(CustomListView view, UITableViewSource dataSource, PropertyInfo prop)
         {
             //tableItems = view.ItemsSource as ObservableRangeCollection<Item>;
-            tableItems = view.ItemsSource as IList<Item>;            
+            tableItems = view.ItemsSource as IList<Item>;
             list = view;
-            source = dataSource;  
+            source = dataSource;
             specialProperty = prop;
             ad = (AppDelegate)UIApplication.SharedApplication.Delegate;
         }
@@ -79,7 +79,7 @@ namespace StritWalk.iOS
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             //var cell = this.GetCellForPath(indexPath);            
-            
+
             return source.GetCell(tableView, indexPath);
 
             //new cell func
@@ -100,10 +100,8 @@ namespace StritWalk.iOS
 
         public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
         {
-            return UITableView.AutomaticDimension;
-
             //var cellForPath = this.GetCellForPath(indexPath);
-
+            //Console.WriteLine("@@@@ cellpath h " + cellForPath.Height);
             //if (this.list.RowHeight == -1 && cellForPath.Height == -1.0 && cellForPath is CustomViewCell)
             //{
 
@@ -124,6 +122,7 @@ namespace StritWalk.iOS
             //    return 44;
 
             //return (nfloat)renderHeight;
+            return UITableView.AutomaticDimension;
         }
 
         public override nfloat EstimatedHeight(UITableView tableView, NSIndexPath indexPath)
