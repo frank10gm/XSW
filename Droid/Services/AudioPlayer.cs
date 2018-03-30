@@ -15,6 +15,7 @@ using StritWalk;
 
 using Xamarin.Forms;
 using System.IO;
+using System.Threading.Tasks;
 
 [assembly: Dependency(typeof(StritWalk.Droid.AudioPlayer))]
 
@@ -102,11 +103,13 @@ namespace StritWalk.Droid
         public string StartRecording(double seconds = 10)
         {
             _recorder.Start();
+            RecordTimeout(seconds);
             return _audioFilePath;
         }
 
         public void StopRecording()
         {
+            FinishedRecording?.Invoke(this, EventArgs.Empty);
             _recorder.Stop();
             _recorder.Reset();
         }
@@ -115,5 +118,14 @@ namespace StritWalk.Droid
         {
             FinishedRecording?.Invoke(this, EventArgs.Empty);
         }
+
+        private async void RecordTimeout(double seconds)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(seconds));
+            _recorder.Stop();
+            _recorder.Reset();
+            FinishedRecording?.Invoke(this, EventArgs.Empty);
+        }
+
     }
 }

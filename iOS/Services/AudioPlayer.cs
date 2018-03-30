@@ -93,7 +93,7 @@ namespace StritWalk.iOS
             recorder.FinishedRecording += Recorder_FinishedRecording;
         }
 
-        public string StartRecording(double time){
+        public string StartRecordingAsync(double time){
             recorder.RecordFor(time);
             return audioFilePath;
         }
