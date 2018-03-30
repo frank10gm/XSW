@@ -96,16 +96,24 @@ namespace StritWalk.Droid
             _recorder.SetOutputFile(_audioFilePath);
             _recorder.SetAudioSamplingRate(44000);
             _recorder.Prepare();
+            _recorder.Info += Recorder_FinishedRecording;
         }
 
         public string StartRecording(double seconds = 10)
         {
-            throw new NotImplementedException();
+            _recorder.Start();
+            return _audioFilePath;
         }
 
         public void StopRecording()
         {
-            throw new NotImplementedException();
+            _recorder.Stop();
+            _recorder.Reset();
+        }
+
+        private void Recorder_FinishedRecording(object sender, MediaRecorder.InfoEventArgs e)
+        {
+            FinishedRecording?.Invoke(this, EventArgs.Empty);
         }
     }
 }
