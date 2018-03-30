@@ -272,7 +272,9 @@ namespace StritWalk
 
         async Task PlayTask(object par1)
         {
-            Console.WriteLine("@@@@@ play task " + audioFilePath);
+            if (!IsAudioPost){
+                return;
+            }
             try
             {
                 //filePath = recorder.GetAudioFilePath();
@@ -481,6 +483,7 @@ namespace StritWalk
             Console.WriteLine("@@@@@ finishedRecording " + audioFilePath);
             RecButton = "Rec";
             IsAudioPost = true;
+
         }
     }
 }
