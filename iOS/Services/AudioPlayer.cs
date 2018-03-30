@@ -124,7 +124,23 @@ namespace StritWalk.iOS
             var file = new AVAudioFile(fileUrl, out err);
             var formatIn = file.ProcessingFormat;
             Console.WriteLine("@@@@ file format : " + formatIn);
-            //var converter = new AVAudioConverter(new AVAudioFormat())
+            var engine = new AVAudioEngine();
+            var mixer = new AVAudioMixerNode();
+            var player = new AVAudioPlayerNode();
+            var input = engine.InputNode;
+            mixer.Volume = 0;
+            engine.AttachNode(mixer);
+            engine.AttachNode(player);
+            engine.Connect(player, mixer, formatIn);
+            engine.Connect(input, mixer, input.GetBusOutputFormat(0));
+            engine.Connect(mixer, engine.MainMixerNode, formatIn);
+            var converter = new AVAudioConverter(formatIn, formatOut);
+            var sampleRateConversionRatio = 1;
+            mixer.InstallTapOnBus(0, 32000,formatIn,new AVAudioNodeTapBlock((AVAudioPcmBuffer buffer, AVAudioTime when) => {
+                var capacity = new UInt32();
+                capacity = ((float)buffer.FrameCapacity) / sampleRateConversionRatio);
+
+            }));
         }
     }
 }
