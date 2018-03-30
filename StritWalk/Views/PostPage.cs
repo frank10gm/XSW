@@ -25,6 +25,9 @@ namespace StritWalk
             BindingContext = viewModel = new PostPageVM();
             viewModel.Navigation = Navigation;
 
+            //audio manager
+            _audioManager = DependencyService.Get<IAudioPlayer>();
+
             //visual elements
             var mainLabel = new Label { FormattedText = Item.Post };
             progress = new ProgressBar { Progress = 0 };
