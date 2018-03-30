@@ -93,8 +93,8 @@ namespace StritWalk
             MessagingCenter.Subscribe<App, string>(this, "OnResume", (sender, arg) =>
             {
                 LoadItemsCommand.Execute(null);
-                //Console.WriteLine("@@@@ resume called : " + arg.ToString());
             });
+
 
             //MessagingCenter.Subscribe<ItemDetailViewModel, bool>(this, "NotEnd", (sender, arg) =>
             //{
@@ -483,7 +483,6 @@ namespace StritWalk
             Console.WriteLine("@@@@@ finishedRecording " + audioFilePath);
             RecButton = "Rec";
             IsAudioPost = true;
-
         }
     }
 }

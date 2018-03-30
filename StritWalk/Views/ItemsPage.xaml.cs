@@ -23,7 +23,12 @@ namespace StritWalk
             viewModel.Navigation = Navigation;
             viewModel.PostEditor = PostEditor;
             LoadMoreCommand = new Command(async () => await LoadMoreItems(null));
-            //App.AppNav = Navigation;
+            App.AppNav = Navigation;
+            MessagingCenter.Subscribe<ItemsViewModel, bool>(this, "IsAudioPost", (obj, arg) =>
+            {
+                if (arg) PlayPostButton.TextColor = (Color)Application.Current.Resources["Testo4"];
+                else PlayPostButton.TextColor = (Color)Application.Current.Resources["Testo5"];
+            });
 
             var firstTemplate = new DataTemplate(() =>
             {

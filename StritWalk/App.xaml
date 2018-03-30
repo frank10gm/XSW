@@ -25,8 +25,10 @@
                     <Color x:Key="Testo2">#ffffff</Color>
                     <Color x:Key="Testo3">#888888</Color>
                     <Color x:Key="Testo4">#808080</Color>
+                    <Color x:Key="Testo5">#333333</Color>
                     <Color x:Key="App1">#00ff00</Color>
                     <Color x:Key="App2">#4484fb</Color>
+                    <Color x:Key="App3">#ed5249</Color>
                     
                     <Style TargetType="NavigationPage">
                         <Setter Property="BarBackgroundColor" Value="{StaticResource Sfondo3}" />
@@ -56,8 +58,10 @@
                     <Color x:Key="Testo2">#ffffff</Color>
                     <Color x:Key="Testo3">#888888</Color>
                     <Color x:Key="Testo4">#808080</Color>
+                    <Color x:Key="Testo5">#333333</Color>
                     <Color x:Key="App1">#00ff00</Color>
                     <Color x:Key="App2">#4484fb</Color>
+                    <Color x:Key="App3">#ed5249</Color>
                     
                     <Style TargetType="NavigationPage">
                         <Setter Property="BarBackgroundColor" Value="{StaticResource Sfondo3}" />
