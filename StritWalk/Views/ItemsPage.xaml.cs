@@ -24,10 +24,16 @@ namespace StritWalk
             viewModel.PostEditor = PostEditor;
             LoadMoreCommand = new Command(async () => await LoadMoreItems(null));
             App.AppNav = Navigation;
+
             MessagingCenter.Subscribe<ItemsViewModel, bool>(this, "IsAudioPost", (obj, arg) =>
             {
                 if (arg) PlayPostButton.TextColor = (Color)Application.Current.Resources["Testo4"];
                 else PlayPostButton.TextColor = (Color)Application.Current.Resources["Testo5"];
+            });
+            MessagingCenter.Subscribe<ItemsViewModel, bool>(this, "IsPosting", (obj, arg) =>
+            {
+                if (arg) PostButton.TextColor = (Color)Application.Current.Resources["Testo4"];
+                else PostButton.TextColor = (Color)Application.Current.Resources["App3"];
             });
 
             var firstTemplate = new DataTemplate(() =>
@@ -181,6 +187,7 @@ namespace StritWalk
 
             await Task.Delay(250);
             viewModel.IsPosting = true;
+            PostButton.TextColor = (Color)Application.Current.Resources["App3"];
         }
 
         private void OnCheckTest(object sender, EventArgs args)
@@ -190,6 +197,7 @@ namespace StritWalk
                 string text = "Do you want to post something?";
                 PostEditor.Placeholder = text;
                 viewModel.IsPosting = false;
+                PostButton.TextColor = (Color)Application.Current.Resources["Testo5"];
             }
         }
 

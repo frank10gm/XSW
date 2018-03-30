@@ -10,7 +10,7 @@
         <ToolbarItem Text="New" Clicked="AddItem_Clicked" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <AbsoluteLayout>
+        <AbsoluteLayout>           
             <local:CustomListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" SeparatorVisibility="None" BackgroundColor="{StaticResource Sfondo1}" x:Name="ItemsListView" VerticalOptions="FillAndExpand" HasUnevenRows="true" RefreshCommand="{Binding LoadItemsCommand}" IsPullToRefreshEnabled="true"
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}" ItemTapped="OnItemTapped" ItemSelected="OnItemSelected" ItemAppearing="OnReachBottom" ItemsSource="{Binding Items}" RowHeight="-1" >
                 <!--ItemTemplate="{Binding ItemTemplate}"-->
@@ -79,9 +79,9 @@
                                 <BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HeightRequest="1" BackgroundColor="{StaticResource Sfondo2}" Margin="0,0,0,0"></BoxView>
                                 <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="0" Text="{Binding RecButton}" TextColor="{StaticResource App3}" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding RecCommand}" CommandParameter="{Binding Items}" BackgroundColor="Transparent" BorderColor="Transparent">
                                 </Button>
-                                <Button x:Name="PostButton" FontAttributes="Bold" Grid.Row="1" Grid.Column="2" Text="Post" TextColor="{StaticResource Testo5}" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PostCommand}" CommandParameter="{Binding Items}" IsEnabled="{Binding IsPosting}" BackgroundColor="Transparent" BorderColor="Transparent">
+                                <Button x:Name="PostButton" FontAttributes="Bold" Grid.Row="1" Grid.Column="2" Text="Post" TextColor="{StaticResource Testo5}" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PostCommand}" CommandParameter="{Binding Items}" BackgroundColor="Transparent" BorderColor="Transparent">
                                 </Button>
-                                <Button x:Name="PlayPostButton" FontAttributes="Bold" Grid.Row="1" Grid.Column="1" Text="Play" TextColor="{StaticResource Testo5}" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PlayCommand}" CommandParameter="{Binding Items}" IsEnabled="{Binding IsAudioPost}" BackgroundColor="Transparent" BorderColor="Transparent">
+                                <Button x:Name="PlayPostButton" FontAttributes="Bold" Grid.Row="1" Grid.Column="1" Text="Play" TextColor="{StaticResource Testo5}" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PlayCommand}" CommandParameter="{Binding Items}" BackgroundColor="Transparent" BorderColor="Transparent">
                                 </Button>
                                 <!--<Label FontSize="14.0" Grid.Row="0" Grid.Column="2" Text="Post" TextColor="#2b98f0" HorizontalOptions="Center" VerticalOptions="Center" IsEnabled="{Binding IsPosting}">
                                     <Label.GestureRecognizers>

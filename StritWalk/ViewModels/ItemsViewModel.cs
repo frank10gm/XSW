@@ -173,6 +173,8 @@ namespace StritWalk
                 if (!string.IsNullOrWhiteSpace(result))
                 {
                     IsAudioPost = false;
+                    MessagingCenter.Send(this, "IsAudioPost", IsAudioPost);
+
                     audioFilePath = "";
                     var newitem = new Item
                     {
@@ -221,6 +223,7 @@ namespace StritWalk
                     PostEditor.Placeholder = text;
                 }
                 IsPosting = false;
+                MessagingCenter.Send(this, "IsPosting", IsPosting);
                 PostEditor.Unfocus();
             }
         }
@@ -483,6 +486,7 @@ namespace StritWalk
             Console.WriteLine("@@@@@ finishedRecording " + audioFilePath);
             RecButton = "Rec";
             IsAudioPost = true;
+            MessagingCenter.Send(this, "IsAudioPost", IsAudioPost);
         }
     }
 }
