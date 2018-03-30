@@ -33,7 +33,7 @@ namespace StritWalk
             MessagingCenter.Subscribe<ItemsViewModel, bool>(this, "IsPosting", (obj, arg) =>
             {
                 if (arg) PostButton.TextColor = (Color)Application.Current.Resources["Testo4"];
-                else PostButton.TextColor = (Color)Application.Current.Resources["App3"];
+                else PostButton.TextColor = (Color)Application.Current.Resources["App1"];
             });
 
             var firstTemplate = new DataTemplate(() =>
@@ -187,7 +187,7 @@ namespace StritWalk
 
             await Task.Delay(250);
             viewModel.IsPosting = true;
-            PostButton.TextColor = (Color)Application.Current.Resources["App3"];
+            PostButton.TextColor = (Color)Application.Current.Resources["App1"];
         }
 
         private void OnCheckTest(object sender, EventArgs args)
