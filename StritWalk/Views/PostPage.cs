@@ -17,6 +17,7 @@ namespace StritWalk
         SKCanvasView canvasView;
         Stream stream;
         byte[] wav;
+        IAudioPlayer _audioManager;
 
         public PostPage(ObservableRangeCollection<Item> Items, Item Item)
         {
@@ -141,6 +142,10 @@ namespace StritWalk
                 //canvas.DrawCircle(args.Info.Width / 2, args.Info.Height / 2, 100, paint2);
                 return;
             }
+
+            //conversion of aac to wav
+            _audioManager.AudioDecoder(wav);
+
             return;
 
             SKPaint paint = new SKPaint

@@ -67,11 +67,13 @@ namespace StritWalk.iOS
             NSError error;
             var audioSession = AVAudioSession.SharedInstance();
             var err = audioSession.SetCategory(AVAudioSessionCategory.PlayAndRecord);
-            if(err != null){
+            if (err != null)
+            {
                 return;
             }
             err = audioSession.SetActive(true);
-            if(err != null){
+            if (err != null)
+            {
                 return;
             }
 
@@ -93,18 +95,36 @@ namespace StritWalk.iOS
             recorder.FinishedRecording += Recorder_FinishedRecording;
         }
 
-        public string StartRecordingAsync(double time){
+        public string StartRecordingAsync(double time)
+        {
             recorder.RecordFor(time);
             return audioFilePath;
         }
 
-        public void StopRecording(){
+        public void StopRecording()
+        {
             recorder.Stop();
         }
 
         private void Recorder_FinishedRecording(object sender, AVStatusEventArgs e)
         {
             FinishedRecording?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void AudioDecoder(byte[] source)
+        {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            var err = new NSError();
+            var formatOut = new AVAudioFormat(AVAudioCommonFormat.PCMInt16, 16000, 1, true);
+            var filePath = Path.Combine(Path.GetTempPath(), "toConvert.m4a");
+            File.WriteAllBytes(filePath, source);
+            var fileUrl = new NSUrl(filePath);
+            var file = new AVAudioFile(fileUrl, out err);
+            var formatIn = file.ProcessingFormat;
+            Console.WriteLine("@@@@ file format : " + formatIn);
+            //var converter = new AVAudioConverter(new AVAudioFormat())
         }
     }
 }

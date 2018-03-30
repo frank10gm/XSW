@@ -17,5 +17,6 @@ namespace StritWalk
         void InitRecord();
         string StartRecording(double seconds = 10);
         void StopRecording();
+        void AudioDecoder(byte[] source);
     }
 }
