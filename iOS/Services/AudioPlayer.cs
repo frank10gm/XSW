@@ -4,6 +4,7 @@ using Foundation;
 using AVFoundation;
 using Xamarin.Forms;
 using System.IO;
+using System.Runtime.InteropServices;
 
 [assembly: Dependency(typeof(StritWalk.iOS.AudioPlayer))]
 
@@ -111,7 +112,7 @@ namespace StritWalk.iOS
             FinishedRecording?.Invoke(this, EventArgs.Empty);
         }
 
-        public void AudioDecoder(byte[] source)
+        public byte[] AudioDecoder2(byte[] source)
         {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));
@@ -136,11 +137,39 @@ namespace StritWalk.iOS
             engine.Connect(mixer, engine.MainMixerNode, formatIn);
             var converter = new AVAudioConverter(formatIn, formatOut);
             var sampleRateConversionRatio = 1;
-            mixer.InstallTapOnBus(0, 32000,formatIn,new AVAudioNodeTapBlock((AVAudioPcmBuffer buffer, AVAudioTime when) => {
+            byte[] finalData = new byte[32000];
+            mixer.InstallTapOnBus(0, 32000, formatIn, new AVAudioNodeTapBlock((AVAudioPcmBuffer buffer, AVAudioTime when) =>
+            {
                 var capacity = new UInt32();
-                capacity = ((float)buffer.FrameCapacity) / sampleRateConversionRatio);
+                capacity = (uint)(((float)buffer.FrameCapacity) / sampleRateConversionRatio);
 
+                AVAudioConverterInputHandler inputHandler;
+                inputHandler = (uint inNumberOfPackets, out AVAudioConverterInputStatus outStatus) =>
+                {
+                    outStatus = AVAudioConverterInputStatus.HaveData;
+                    return buffer;
+                };
+                var error = new NSError();
+                var status = converter.ConvertToBuffer(buffer, out error, inputHandler);
+                var myData = buffer.Int16ChannelData;
+                //Marshal.Copy(buffer, finalData, 0, 32000);
             }));
+            return finalData;
+        }
+
+        public byte[] AudioDecoder(byte[] source)
+        {
+            //throw new NotImplementedException();
+            var filePath = Path.Combine(Path.GetTempPath(), "toConvert.m4a");
+            File.WriteAllBytes(filePath, source);
+            var fileUrl = new NSUrl(filePath);
+            var err = new NSError();
+            var file = new AVAudioFile(fileUrl, out err);
+            var pcmBuffer = new AVAudioPcmBuffer(new AVAudioFormat(AVAudioCommonFormat.PCMInt16, 16000, 1, false), (uint)source.Length);
+            file.ReadIntoBuffer(pcmBuffer, out err);
+            file.WriteFromBuffer(pcmBuffer, out err);
+            byte[] data = File.ReadAllBytes(filePath);
+            return source;
         }
     }
 }

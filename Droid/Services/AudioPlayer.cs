@@ -127,9 +127,9 @@ namespace StritWalk.Droid
             FinishedRecording?.Invoke(this, EventArgs.Empty);
         }
 
-        public void AudioDecoder(byte[] source)
+        public byte[] AudioDecoder(byte[] source)
         {
-            throw new NotImplementedException();
+            return source;
         }
     }
 }
