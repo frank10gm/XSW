@@ -147,8 +147,8 @@ namespace StritWalk
             }
 
             //conversion of aac to wav
-            wav = _audioManager.AudioDecoder(wav);
-
+            //wav = _audioManager.AudioDecoder(wav);
+            //stream = new MemoryStream(wav);
 
             SKPaint paint = new SKPaint
             {
@@ -181,9 +181,15 @@ namespace StritWalk
             int dataID = reader.ReadInt32();
             int dataSize = reader.ReadInt32();
             byte[] sound = reader.ReadBytes(dataSize);
+
+            sound = _audioManager.AudioDecoder(wav);
+            channels = 1;
+            sampleRate = 44100;
+            bitDepth = 16;
+
             int numSamples = sound.Length / (channels * bitDepth / 8);
 
-            Console.WriteLine("@@@@ bits: " + bitDepth + "; sound length: " + sound.Length + "; sample rate: " + sampleRate + ";");
+            Console.WriteLine("@@@@ channels: " + channels + "; sound length: " + sound.Length + "; sample rate: " + sampleRate + ";");
 
             //visualize waveform
             var w = info.Width;

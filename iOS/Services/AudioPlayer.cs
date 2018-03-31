@@ -5,6 +5,9 @@ using AVFoundation;
 using Xamarin.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
+using CoreMedia;
+using AudioToolbox;
+using static CoreFoundation.DispatchSource;
 
 [assembly: Dependency(typeof(StritWalk.iOS.AudioPlayer))]
 
@@ -137,7 +140,7 @@ namespace StritWalk.iOS
             engine.Connect(mixer, engine.MainMixerNode, formatIn);
             var converter = new AVAudioConverter(formatIn, formatOut);
             var sampleRateConversionRatio = 1;
-            byte[] finalData = new byte[32000];
+            var finalData2 = new byte[32000];
             mixer.InstallTapOnBus(0, 32000, formatIn, new AVAudioNodeTapBlock((AVAudioPcmBuffer buffer, AVAudioTime when) =>
             {
                 var capacity = new UInt32();
@@ -151,9 +154,13 @@ namespace StritWalk.iOS
                 };
                 var error = new NSError();
                 var status = converter.ConvertToBuffer(buffer, out error, inputHandler);
-                var myData = buffer.Int16ChannelData;
-                //Marshal.Copy(buffer, finalData, 0, 32000);
+                //var myData = buffer.Int16ChannelData;
+                //Marshal.Copy(buffer, finalData2, 0, 32000);
+                File.WriteAllText(filePath, "");
+                file.WriteFromBuffer(buffer, out error);
             }));
+
+            byte[] finalData = File.ReadAllBytes(filePath);
             return finalData;
         }
 
@@ -165,11 +172,13 @@ namespace StritWalk.iOS
             var fileUrl = new NSUrl(filePath);
             var err = new NSError();
             var file = new AVAudioFile(fileUrl, out err);
-            var pcmBuffer = new AVAudioPcmBuffer(new AVAudioFormat(AVAudioCommonFormat.PCMInt16, 16000, 1, false), (uint)source.Length);
+            var format = file.ProcessingFormat;
+            //var pcmBuffer = new AVAudioPcmBuffer(new AVAudioFormat(AVAudioCommonFormat.PCMInt16, 16000, 1, false), (uint)file.Length);
+            var pcmBuffer = new AVAudioPcmBuffer(format, (uint)file.Length);
             file.ReadIntoBuffer(pcmBuffer, out err);
             file.WriteFromBuffer(pcmBuffer, out err);
             byte[] data = File.ReadAllBytes(filePath);
-            return source;
+            return data;
         }
     }
 }
