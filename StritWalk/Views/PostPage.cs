@@ -147,8 +147,8 @@ namespace StritWalk
             }
 
             //conversion of aac to wav
-            //wav = _audioManager.AudioDecoder(wav);
-            //stream = new MemoryStream(wav);
+            wav = _audioManager.AudioDecoder(wav);
+            stream = new MemoryStream(wav);
 
             SKPaint paint = new SKPaint
             {
@@ -182,10 +182,10 @@ namespace StritWalk
             int dataSize = reader.ReadInt32();
             byte[] sound = reader.ReadBytes(dataSize);
 
-            sound = _audioManager.AudioDecoder(wav);
-            channels = 1;
-            sampleRate = 44100;
-            bitDepth = 16;
+            //sound = _audioManager.AudioDecoder(wav);
+            //channels = 1;
+            //sampleRate = 44100;
+            //bitDepth = 16;
 
             int numSamples = sound.Length / (channels * bitDepth / 8);
 
@@ -216,7 +216,7 @@ namespace StritWalk
 
             for (int n = 0; n < numSamples; n += batch) // n < batch; n++;
             {
-                Console.WriteLine("@@@@ batch: " + n);
+                //Console.WriteLine("@@@@ batch: " + n);
                 //foreach (byte temp in sound)            
                 j = mid + ((buffer[n] * mid) / max);
                 next.X = i++;
