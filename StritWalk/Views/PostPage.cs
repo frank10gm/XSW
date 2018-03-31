@@ -111,6 +111,7 @@ namespace StritWalk
 
             client.DownloadDataCompleted += (object sender, DownloadDataCompletedEventArgs e) =>
             {
+                Console.WriteLine("@@@ download complete");
                 wav = e.Result;
                 stream = new MemoryStream(wav);
                 canvasView.InvalidateSurface();
@@ -147,8 +148,10 @@ namespace StritWalk
             }
 
             //conversion of aac to wav
-            wav = _audioManager.AudioDecoder(wav);
-            stream = new MemoryStream(wav);
+            //var wav2 = _audioManager.AudioDecoder(wav);
+            //var stream2 = new MemoryStream(wav2);
+
+            Console.WriteLine("@@@ design");
 
             SKPaint paint = new SKPaint
             {
@@ -180,16 +183,16 @@ namespace StritWalk
             //sound data
             int dataID = reader.ReadInt32();
             int dataSize = reader.ReadInt32();
-            byte[] sound = reader.ReadBytes(dataSize);
+            //byte[] sound = reader.ReadBytes(dataSize);
 
-            //sound = _audioManager.AudioDecoder(wav);
-            //channels = 1;
-            //sampleRate = 44100;
-            //bitDepth = 16;
+            byte[] sound = _audioManager.AudioDecoder(wav);
+            channels = 1;
+            sampleRate = 44100;
+            bitDepth = 16;
 
             int numSamples = sound.Length / (channels * bitDepth / 8);
 
-            Console.WriteLine("@@@@ channels: " + channels + "; sound length: " + sound.Length + "; sample rate: " + sampleRate + ";");
+            Console.WriteLine("@@@@ numsamples: " + numSamples + "; channels: " + channels + "; sound length: " + sound.Length + "; sample rate: " + sampleRate + "; bitdepth: " + bitDepth);
 
             //visualize waveform
             var w = info.Width;
@@ -205,7 +208,7 @@ namespace StritWalk
             }
 
             int i = 1;
-            int j = mid + ((buffer[0] * mid) / max);
+            int j = mid + ((buffer[0+batch] * mid) / max);
 
             //int j = h - Convert.ToInt32(sound[0]);
 
@@ -214,7 +217,7 @@ namespace StritWalk
             SKPoint next = new SKPoint();
             i++;
 
-            for (int n = 0; n < numSamples; n += batch) // n < batch; n++;
+            for (int n = 0 + batch; n < numSamples; n += batch) // n < batch; n++;
             {
                 //Console.WriteLine("@@@@ batch: " + n);
                 //foreach (byte temp in sound)            
