@@ -67,6 +67,7 @@ namespace StritWalk.iOS
 
         public void Play(string pathToAudioFile)
         {
+            AVAudioSession.SharedInstance().SetCategory(AVAudioSessionCategory.PlayAndRecord);
             // Check if _audioPlayer is currently playing
             if (_audioPlayer != null)
             {
@@ -113,6 +114,7 @@ namespace StritWalk.iOS
             var err = audioSession.SetCategory(AVAudioSessionCategory.PlayAndRecord);
             if (err != null)
             {
+                Console.WriteLine("@@@@ not initialized play and record: ");
                 return;
             }
             err = audioSession.SetActive(true);
