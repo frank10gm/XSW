@@ -157,6 +157,7 @@ namespace StritWalk
 
         async Task PostTask(object par1)
         {
+            if (!IsPosting) return;
             try
             {
                 //start loading phase
