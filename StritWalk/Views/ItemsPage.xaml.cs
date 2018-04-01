@@ -32,7 +32,7 @@ namespace StritWalk
             });
             MessagingCenter.Subscribe<ItemsViewModel, bool>(this, "IsPosting", (obj, arg) =>
             {
-                if (arg) PostButton.TextColor = (Color)Application.Current.Resources["Testo4"];
+                if (!arg) PostButton.TextColor = (Color)Application.Current.Resources["Testo5"];
                 else PostButton.TextColor = (Color)Application.Current.Resources["App1"];
             });
 
