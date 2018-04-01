@@ -275,25 +275,26 @@ namespace StritWalk
 
         async Task PlayTask(object par1)
         {
-            if (!IsAudioPost){
+            if (!IsAudioPost)
+            {
                 return;
             }
             try
             {
                 //filePath = recorder.GetAudioFilePath();
-                Console.WriteLine("@@@@@ play " + audioFilePath);
+                //Console.WriteLine("@@@@@ play " + audioFilePath);
 
                 if (audioFilePath != null)
                 {
                     //await CrossMediaManager.Current.Play(filePath);
-
                     player.Play(audioFilePath);
                 }
             }
             catch (Exception ex)
             {
                 //blow up the app!
-                throw ex;
+                //throw ex;
+                Console.WriteLine("@@@ exception : " + ex);
             }
         }
 

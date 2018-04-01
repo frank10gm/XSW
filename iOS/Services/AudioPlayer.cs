@@ -67,7 +67,20 @@ namespace StritWalk.iOS
 
         public void Play(string pathToAudioFile)
         {
-            AVAudioSession.SharedInstance().SetCategory(AVAudioSessionCategory.PlayAndRecord);
+            var audioSession = AVAudioSession.SharedInstance();
+            audioSession.Init();
+            var err = audioSession.SetCategory(AVAudioSessionCategory.PlayAndRecord);
+            if (err != null)
+            {
+                Console.WriteLine("@@@@ not initialized play and record ");
+                return;
+            }
+            err = audioSession.SetActive(true);
+            if (err != null)
+            {
+                Console.WriteLine("@@@@ not initialized play and record ");
+                return;
+            }
             // Check if _audioPlayer is currently playing
             if (_audioPlayer != null)
             {
@@ -77,10 +90,7 @@ namespace StritWalk.iOS
 
             string localUrl = pathToAudioFile;
 
-            AVAudioSession.SharedInstance().Init();
-            NSError error;
-            AVAudioSession.SharedInstance().OverrideOutputAudioPort(AVAudioSessionPortOverride.Speaker, out error);
-
+            audioSession.OverrideOutputAudioPort(AVAudioSessionPortOverride.Speaker, out NSError error);
             _audioPlayer = AVAudioPlayer.FromUrl(NSUrl.FromFilename(localUrl));
             _audioPlayer.FinishedPlaying += Player_FinishedPlaying;
             _audioPlayer.Play();
@@ -109,18 +119,24 @@ namespace StritWalk.iOS
 
         public void InitRecord()
         {
+            
+        }
+
+        public string StartRecording(double time)
+        {
             NSError error;
             var audioSession = AVAudioSession.SharedInstance();
             var err = audioSession.SetCategory(AVAudioSessionCategory.PlayAndRecord);
             if (err != null)
             {
-                Console.WriteLine("@@@@ not initialized play and record: ");
-                return;
+                Console.WriteLine("@@@@ not initialized play and record ");
+                return "error";
             }
             err = audioSession.SetActive(true);
             if (err != null)
             {
-                return;
+                Console.WriteLine("@@@@ not initialized play and record ");
+                return "error";
             }
 
             //recording
@@ -136,13 +152,15 @@ namespace StritWalk.iOS
                 AudioQuality = AVAudioQuality.High
             };
 
-            recorder = AVAudioRecorder.Create(url, settings, out error);
-            recorder.PrepareToRecord();
-            recorder.FinishedRecording += Recorder_FinishedRecording;
-        }
+            if (recorder != null)
+            {
+                recorder.FinishedRecording -= Recorder_FinishedRecording;
+                //recorder.Dispose();
+            }
 
-        public string StartRecording(double time)
-        {
+            recorder = AVAudioRecorder.Create(url, settings, out error);
+            recorder.FinishedRecording += Recorder_FinishedRecording;
+            recorder.PrepareToRecord();
             recorder.RecordFor(time);
             return audioFilePath;
         }
