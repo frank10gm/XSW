@@ -30,6 +30,12 @@ namespace StritWalk.Droid
         string _audioFilePath;
         bool _isRecording;
         MediaRecorder _recorder;
+        //low level
+        readonly int bufferSize;
+        ChannelIn channels = ChannelIn.Mono;
+        Android.Media.Encoding audioFormat = Android.Media.Encoding.Ac3;
+        AudioRecord audioRecord;
+        MediaMuxer mediaMuxer;
 
         public AudioPlayer()
         {
@@ -100,8 +106,8 @@ namespace StritWalk.Droid
                 _recorder = new MediaRecorder();
                 _recorder.SetAudioChannels(1);
                 _recorder.SetAudioSource(AudioSource.Mic);
-                _recorder.SetOutputFormat(OutputFormat.Mpeg4);
-                _recorder.SetAudioEncoder(AudioEncoder.Default);
+                _recorder.SetOutputFormat(OutputFormat.ThreeGpp);
+                _recorder.SetAudioEncoder(AudioEncoder.AmrNb);
                 _recorder.SetOutputFile(_audioFilePath);
                 _recorder.SetAudioSamplingRate(44000);
                 _recorder.Info += Recorder_FinishedRecording;
@@ -147,6 +153,11 @@ namespace StritWalk.Droid
         public byte[] AudioDecoder(byte[] source)
         {
             return source;
+        }
+
+        void Muxer()
+        {
+            
         }
     }
 }
