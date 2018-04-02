@@ -26,10 +26,10 @@ namespace StritWalk
         public Command ILikeThis { get; }
         public User me;
         public Command ICommentThis { get; }
-        AudioRecorderService recorder;
+        //AudioRecorderService recorder;
         IAudioPlayer player;
         TestService testService;
-        string filePath;
+        //string filePath;
         string audioName = String.Empty;
         public Command IPlayThis { get; }
         string audioFilePath = string.Empty;
@@ -70,8 +70,8 @@ namespace StritWalk
             //Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             PostCommand = new Command(async (par1) => await PostTask((object)par1));
-            RecCommand = new Command(async (par1) => await RecTask((object)par1));
-            PlayCommand = new Command(async (par1) => await PlayTask((object)par1));
+            RecCommand = new Command((par1) => RecTask((object)par1));
+            PlayCommand = new Command((par1) => PlayTask((object)par1));
             ILikeThis = new Command(async (par1) => await ILikeThisTask((object)par1));
             ICommentThis = new Command(async (par1) => await ICommentThisTask((object)par1));
             IPlayThis = new Command(async (par1) => await IPlayThisTask((object)par1));
@@ -229,7 +229,7 @@ namespace StritWalk
             }
         }
 
-        async Task RecTask(object par1)
+        void RecTask(object par1)
         {
             //play audio sample code
             //await CrossMediaManager.Current.Play("http://www.sample-videos.com/audio/mp3/crowd-cheering.mp3");
@@ -274,7 +274,7 @@ namespace StritWalk
             }
         }
 
-        async Task PlayTask(object par1)
+        void PlayTask(object par1)
         {
             if (!IsAudioPost)
             {
@@ -284,7 +284,6 @@ namespace StritWalk
             {
                 //filePath = recorder.GetAudioFilePath();
                 //Console.WriteLine("@@@@@ play " + audioFilePath);
-
                 if (audioFilePath != null)
                 {
                     //await CrossMediaManager.Current.Play(filePath);

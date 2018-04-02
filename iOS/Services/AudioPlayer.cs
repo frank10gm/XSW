@@ -164,23 +164,19 @@ namespace StritWalk.iOS
             recorder.PrepareToRecord();
             recorder.MeteringEnabled = true;
             recorder.RecordFor(time);
-            Console.WriteLine("before start task");
             Task task = Task.Run(() =>
             {
-                Console.WriteLine("start task");
                 audioMetering();
             });
-            task.Start();
             return audioFilePath;
         }
 
         private void audioMetering()
         {
-            Console.WriteLine(recorder.Recording);
             while (recorder.Recording)
             {
                 recorder.UpdateMeters();
-                Console.WriteLine(string.Format("@@@ peak: {0} - average: {1}", recorder.PeakPower(0), recorder.AveragePower(0)));
+                //Console.WriteLine(string.Format("@@@ peak: {0} - average: {1}", recorder.PeakPower(0), recorder.AveragePower(0)));
             }
 
         }
