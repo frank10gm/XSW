@@ -87,31 +87,39 @@ namespace StritWalk.Droid
 
         public void InitRecord()
         {
-            string fileName = string.Format("myfile{0}.m4a", DateTime.Now.ToString("yyyyMMddHHmmss"));
-            _audioFilePath = Path.Combine(Path.GetTempPath(), fileName);
-            _recorder = new MediaRecorder();
-            _recorder.SetAudioChannels(1);
-            _recorder.SetAudioSource(AudioSource.Mic);
-            _recorder.SetOutputFormat(OutputFormat.Mpeg4);
-            _recorder.SetAudioEncoder(AudioEncoder.Aac);
-            _recorder.SetOutputFile(_audioFilePath);
-            _recorder.SetAudioSamplingRate(44000);
-            _recorder.Prepare();
-            _recorder.Info += Recorder_FinishedRecording;
+            //                     
         }
 
         public string StartRecording(double seconds = 10)
-        {
+        {                    
+            if (_recorder == null)
+            {
+                string fileName = string.Format("myfile{0}.m4a", DateTime.Now.ToString("yyyyMMddHHmmss"));
+                _audioFilePath = Path.Combine(Path.GetTempPath(), fileName);
+                _recorder = new MediaRecorder();
+                _recorder.SetAudioChannels(1);
+                _recorder.SetAudioSource(AudioSource.Mic);
+                _recorder.SetOutputFormat(OutputFormat.Mpeg4);
+                _recorder.SetAudioEncoder(AudioEncoder.Default);
+                _recorder.SetOutputFile(_audioFilePath);
+                _recorder.SetAudioSamplingRate(44000);
+                _recorder.Info += Recorder_FinishedRecording;
+            }
+
+            _recorder.Prepare();            
             _recorder.Start();
             RecordTimeout(seconds);
             return _audioFilePath;
         }
 
         public void StopRecording()
-        {
-            FinishedRecording?.Invoke(this, EventArgs.Empty);
+        {            
             _recorder.Stop();
             _recorder.Reset();
+            _recorder.Release();
+            _recorder.Info -= Recorder_FinishedRecording;
+            _recorder = null;
+            FinishedRecording?.Invoke(this, EventArgs.Empty);
         }
 
         private void Recorder_FinishedRecording(object sender, MediaRecorder.InfoEventArgs e)
@@ -124,6 +132,9 @@ namespace StritWalk.Droid
             await Task.Delay(TimeSpan.FromSeconds(seconds));
             _recorder.Stop();
             _recorder.Reset();
+            _recorder.Release();
+            _recorder.Info -= Recorder_FinishedRecording;
+            _recorder = null;
             FinishedRecording?.Invoke(this, EventArgs.Empty);
         }
 
