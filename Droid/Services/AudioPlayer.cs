@@ -101,7 +101,7 @@ namespace StritWalk.Droid
                 _recorder.SetAudioChannels(1);
                 _recorder.SetAudioSource(AudioSource.Mic);
                 _recorder.SetOutputFormat(OutputFormat.Mpeg4);
-                _recorder.SetAudioEncoder(AudioEncoder.Default);
+                _recorder.SetAudioEncoder(AudioEncoder.Aac);
                 _recorder.SetOutputFile(_audioFilePath);
                 _recorder.SetAudioSamplingRate(44000);
                 _recorder.Info += Recorder_FinishedRecording;
