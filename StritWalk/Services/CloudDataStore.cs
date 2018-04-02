@@ -485,7 +485,7 @@ namespace StritWalk
                 //StringContent studentIdContent = new StringContent("2123");
                 if (Device.iOS == Device.RuntimePlatform)
                     content.Add(baContent, "File", "filename.m4a");
-                else content.Add(baContent, "File", "filename.3gp");
+                else content.Add(baContent, "File", "filename.m4a");
                 //content.Add(studentIdContent, "StudentId");
 
 

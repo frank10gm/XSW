@@ -102,15 +102,16 @@ namespace StritWalk.Droid
         {
             if (_recorder == null)
             {
-                string fileName = string.Format("myfile{0}.3gp", DateTime.Now.ToString("yyyyMMddHHmmss"));
+                string fileName = string.Format("myfile{0}.m4a", DateTime.Now.ToString("yyyyMMddHHmmss"));
                 _audioFilePath = Path.Combine(Path.GetTempPath(), fileName);
                 _recorder = new MediaRecorder();
                 _recorder.SetAudioChannels(1);
                 _recorder.SetAudioSource(AudioSource.Mic);
-                _recorder.SetOutputFormat(OutputFormat.ThreeGpp);
-                _recorder.SetAudioEncoder(AudioEncoder.AmrNb);
+                _recorder.SetOutputFormat(OutputFormat.Mpeg4);
+                _recorder.SetAudioEncoder(AudioEncoder.HeAac);
+                _recorder.SetAudioEncodingBitRate(48000);
+                _recorder.SetAudioSamplingRate(44100);
                 _recorder.SetOutputFile(_audioFilePath);
-                _recorder.SetAudioSamplingRate(44000);
                 _recorder.Info += Recorder_FinishedRecording;
             }
 
