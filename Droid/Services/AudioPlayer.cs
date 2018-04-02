@@ -24,10 +24,11 @@ namespace StritWalk.Droid
     public partial class AudioPlayer : IAudioPlayer
     {
         private MediaPlayer _mediaPlayer;
-
+        Task _recordTask;
         public event EventHandler FinishedPlaying;
         public event EventHandler FinishedRecording;
         string _audioFilePath;
+        bool _isRecording;
         MediaRecorder _recorder;
 
         public AudioPlayer()
@@ -36,7 +37,7 @@ namespace StritWalk.Droid
 
         public void SolveErrors()
         {
-            
+
         }
 
 
@@ -91,7 +92,7 @@ namespace StritWalk.Droid
         }
 
         public string StartRecording(double seconds = 10)
-        {                    
+        {
             if (_recorder == null)
             {
                 string fileName = string.Format("myfile{0}.m4a", DateTime.Now.ToString("yyyyMMddHHmmss"));
@@ -106,14 +107,17 @@ namespace StritWalk.Droid
                 _recorder.Info += Recorder_FinishedRecording;
             }
 
-            _recorder.Prepare();            
+            _recorder.Prepare();
             _recorder.Start();
-            RecordTimeout(seconds);
+            //RecordTimeout(seconds);
+            _isRecording = true;
+            _recordTask = Task.Run(() => RecordTimeout(seconds));
             return _audioFilePath;
         }
 
         public void StopRecording()
-        {            
+        {
+            _isRecording = false;
             _recorder.Stop();
             _recorder.Reset();
             _recorder.Release();
@@ -124,12 +128,14 @@ namespace StritWalk.Droid
 
         private void Recorder_FinishedRecording(object sender, MediaRecorder.InfoEventArgs e)
         {
+            Console.WriteLine("@@@ changed status _recorder: " + e.ToString());
             FinishedRecording?.Invoke(this, EventArgs.Empty);
         }
 
         private async void RecordTimeout(double seconds)
         {
             await Task.Delay(TimeSpan.FromSeconds(seconds));
+            if (!_isRecording) return;
             _recorder.Stop();
             _recorder.Reset();
             _recorder.Release();
