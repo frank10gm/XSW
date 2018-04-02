@@ -36,7 +36,7 @@ namespace StritWalk.Droid
 
         public void SolveErrors()
         {
-            //AVAudioSession.SharedInstance().SetCategory(AVAudioSessionCategory.PlayAndRecord);
+            
         }
 
 
