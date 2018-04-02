@@ -483,7 +483,9 @@ namespace StritWalk
                 MultipartFormDataContent content = new MultipartFormDataContent();
                 ByteArrayContent baContent = new ByteArrayContent(upfilebytes);
                 //StringContent studentIdContent = new StringContent("2123");
-                content.Add(baContent, "File", "filename.m4a");
+                if (Device.iOS == Device.RuntimePlatform)
+                    content.Add(baContent, "File", "filename.m4a");
+                else content.Add(baContent, "File", "filename.3gp");
                 //content.Add(studentIdContent, "StudentId");
 
 

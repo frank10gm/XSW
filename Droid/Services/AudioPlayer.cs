@@ -32,12 +32,8 @@ namespace StritWalk.Droid
         bool _isRecording;
         MediaRecorder _recorder;
         //low level
-        readonly int bufferSize;
-        ChannelIn channels = ChannelIn.Mono;
-        Android.Media.Encoding audioFormat = Android.Media.Encoding.Ac3;
-        MediaCodec mediaCodec;
+        int bufferSize;
         AudioRecord audioRecord;
-        MediaMuxer mediaMuxer;
         bool endRecording = false;
         byte[] audioBuffer = null;
         public Action<bool> RecordingStateChanged;
@@ -102,11 +98,11 @@ namespace StritWalk.Droid
             //                     
         }
 
-        public string StartRecording2(double seconds = 10)
+        public string StartRecording(double seconds = 10)
         {
             if (_recorder == null)
             {
-                string fileName = string.Format("myfile{0}.m4a", DateTime.Now.ToString("yyyyMMddHHmmss"));
+                string fileName = string.Format("myfile{0}.3gp", DateTime.Now.ToString("yyyyMMddHHmmss"));
                 _audioFilePath = Path.Combine(Path.GetTempPath(), fileName);
                 _recorder = new MediaRecorder();
                 _recorder.SetAudioChannels(1);
@@ -126,7 +122,7 @@ namespace StritWalk.Droid
             return _audioFilePath;
         }
 
-        public void StopRecording2()
+        public void StopRecording()
         {
             _isRecording = false;
             _recorder.Stop();
@@ -206,12 +202,13 @@ namespace StritWalk.Droid
 
             RaiseRecordingStateChangedEvent();
 
-            audioBuffer = new Byte[100000];
+            bufferSize = AudioRecord.GetMinBufferSize(44100, ChannelIn.Mono, Android.Media.Encoding.Pcm16bit);
+            audioBuffer = new Byte[bufferSize];
             audioRecord = new AudioRecord(
                 // Hardware source of recording.
                 AudioSource.Mic,
                 // Frequency
-                11025,
+                44100,
                 // Mono or stereo
                 ChannelIn.Mono,
                 // Audio encoding
@@ -226,14 +223,14 @@ namespace StritWalk.Droid
             await ReadAudioAsync();
         }
 
-        public void StopRecording()
+        public void StopRecording2()
         {
             endRecording = true;
             FinishedRecording?.Invoke(this, EventArgs.Empty);
             Thread.Sleep(500); // Give it time to drop out.
         }
 
-        public string StartRecording(double seconds = 10)
+        public string StartRecording2(double seconds = 10)
         {
             string fileName = string.Format("myfile{0}.mp4", DateTime.Now.ToString("yyyyMMddHHmmss"));
             _audioFilePath = Path.Combine(Path.GetTempPath(), fileName);
