@@ -16,6 +16,7 @@ using StritWalk;
 using Xamarin.Forms;
 using System.IO;
 using System.Threading.Tasks;
+using System.Threading;
 
 [assembly: Dependency(typeof(StritWalk.Droid.AudioPlayer))]
 
@@ -34,8 +35,12 @@ namespace StritWalk.Droid
         readonly int bufferSize;
         ChannelIn channels = ChannelIn.Mono;
         Android.Media.Encoding audioFormat = Android.Media.Encoding.Ac3;
+        MediaCodec mediaCodec;
         AudioRecord audioRecord;
         MediaMuxer mediaMuxer;
+        bool endRecording = false;
+        byte[] audioBuffer = null;
+        public Action<bool> RecordingStateChanged;
 
         public AudioPlayer()
         {
@@ -97,7 +102,7 @@ namespace StritWalk.Droid
             //                     
         }
 
-        public string StartRecording(double seconds = 10)
+        public string StartRecording2(double seconds = 10)
         {
             if (_recorder == null)
             {
@@ -121,7 +126,7 @@ namespace StritWalk.Droid
             return _audioFilePath;
         }
 
-        public void StopRecording()
+        public void StopRecording2()
         {
             _isRecording = false;
             _recorder.Stop();
@@ -155,9 +160,85 @@ namespace StritWalk.Droid
             return source;
         }
 
-        void Muxer()
+        async Task ReadAudioAsync()
         {
-            
+            using (var fileStream = new FileStream(_audioFilePath, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
+            {
+                while (true)
+                {
+                    Console.WriteLine("@@@ is recording");
+                    if (endRecording)
+                    {
+                        endRecording = false;
+                        break;
+                    }
+                    try
+                    {
+                        // Keep reading the buffer while there is audio input.
+                        int numBytes = await audioRecord.ReadAsync(audioBuffer, 0, audioBuffer.Length);
+                        await fileStream.WriteAsync(audioBuffer, 0, numBytes);
+                        // Do something with the audio input.
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.Out.WriteLine("@@@ ex: " + ex.Message);
+                        break;
+                    }
+                }
+                fileStream.Close();
+            }
+            audioRecord.Stop();
+            audioRecord.Release();
+            _isRecording = false;
+            RaiseRecordingStateChangedEvent();
+        }
+
+        private void RaiseRecordingStateChangedEvent()
+        {
+            if (RecordingStateChanged != null)
+                RecordingStateChanged(_isRecording);
+        }
+
+        protected async Task StartRecorderAsync()
+        {
+            endRecording = false;
+            _isRecording = true;
+
+            RaiseRecordingStateChangedEvent();
+
+            audioBuffer = new Byte[100000];
+            audioRecord = new AudioRecord(
+                // Hardware source of recording.
+                AudioSource.Mic,
+                // Frequency
+                11025,
+                // Mono or stereo
+                ChannelIn.Mono,
+                // Audio encoding
+                Android.Media.Encoding.Pcm16bit,
+                // Length of the audio clip.
+                audioBuffer.Length
+            );
+
+            audioRecord.StartRecording();
+
+            // Off line this so that we do not block the UI thread.
+            await ReadAudioAsync();
+        }
+
+        public void StopRecording()
+        {
+            endRecording = true;
+            FinishedRecording?.Invoke(this, EventArgs.Empty);
+            Thread.Sleep(500); // Give it time to drop out.
+        }
+
+        public string StartRecording(double seconds = 10)
+        {
+            string fileName = string.Format("myfile{0}.mp4", DateTime.Now.ToString("yyyyMMddHHmmss"));
+            _audioFilePath = Path.Combine(Path.GetTempPath(), fileName);
+            Task task = Task.Run( async () => { await StartRecorderAsync(); });
+            return _audioFilePath;
         }
     }
 }

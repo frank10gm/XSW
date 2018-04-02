@@ -141,7 +141,7 @@ namespace StritWalk.iOS
             }
 
             //recording
-            string fileName = string.Format("myfile{0}.m4a", DateTime.Now.ToString("yyyyMMddHHmmss"));
+            string fileName = string.Format("myfile{0}.mp4", DateTime.Now.ToString("yyyyMMddHHmmss"));
             audioFilePath = Path.Combine(Path.GetTempPath(), fileName);
 
             var url = NSUrl.FromFilename(audioFilePath);
@@ -419,7 +419,7 @@ namespace StritWalk.iOS
             srcFormat = converter.CurrentInputStreamDescription;
             dstFormat = converter.CurrentOutputStreamDescription;
 
-            if (dstFormat.Format == AudioFormatType.MPEG4AAC)
+            if (dstFormat.Format == AudioFormatType.MPEG4AAC) //MPEG4AAC
             {
                 uint outputBitRate = 192000; // 192k
 
