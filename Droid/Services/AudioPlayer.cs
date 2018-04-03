@@ -234,13 +234,32 @@ namespace StritWalk.Droid
             return _audioFilePath;
         }
 
-        protected async Task StartDecodeAsync()
+        protected void StartDecodeAsync(byte[] source)
         {
-            
+            string inputFileName = string.Format("toConvert{0}.m4a", "");
+            var inputFilePath = Path.Combine(Path.GetTempPath(), inputFileName);
+            File.WriteAllBytes(inputFilePath, source);
+
+            string outputFileName = string.Format("converted{0}.wav", "");
+            var outputFilePath = Path.Combine(Path.GetTempPath(), outputFileName);
+            File.WriteAllBytes(outputFilePath, source);
+
+            MediaFormat format = null;
+            MediaExtractor extractor = new MediaExtractor();
+            extractor.SetDataSource(inputFilePath);
+            format = extractor.GetTrackFormat(0);
+            int inputFileSize = (int)new FileInfo(inputFilePath).Length;
+            var inputFileChannels = format.GetInteger(MediaFormat.KeyChannelCount);
+            var inputFileSampleRate = format.GetInteger(MediaFormat.KeySampleRate);
+            int expectedNumSamples = (int)((format.GetLong(MediaFormat.KeyDuration) / 1000000.0f) * inputFileSampleRate + 0.5f);
+            MediaCodec codec = MediaCodec.CreateDecoderByType("wav");
+
+            Console.WriteLine("@@@ Format: " + inputFileChannels);
         }
 
         public byte[] AudioDecoder(byte[] source)
         {
+            Task task = Task.Run(() => { StartDecodeAsync(source); });
             return source;
         }
 
