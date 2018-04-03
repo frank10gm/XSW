@@ -377,6 +377,8 @@ namespace StritWalk.iOS
             sampleRate = 44100.0;
 
             //start conversion
+            var audioSession = AVAudioSession.SharedInstance();
+            audioSession.Init();
             AudioSession.Category = AudioSessionCategory.AudioProcessing;
             AudioFile sourceFile = AudioFile.Open(sourceURL, AudioFilePermission.Read);
             var srcFormat = (AudioStreamBasicDescription)sourceFile.DataFormat;
