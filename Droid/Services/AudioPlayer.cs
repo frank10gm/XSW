@@ -152,11 +152,6 @@ namespace StritWalk.Droid
             FinishedRecording?.Invoke(this, EventArgs.Empty);
         }
 
-        public byte[] AudioDecoder(byte[] source)
-        {
-            return source;
-        }
-
         async Task ReadAudioAsync()
         {
             using (var fileStream = new FileStream(_audioFilePath, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
@@ -235,8 +230,19 @@ namespace StritWalk.Droid
         {
             string fileName = string.Format("myfile{0}.mp4", DateTime.Now.ToString("yyyyMMddHHmmss"));
             _audioFilePath = Path.Combine(Path.GetTempPath(), fileName);
-            Task task = Task.Run( async () => { await StartRecorderAsync(); });
+            Task task = Task.Run(async () => { await StartRecorderAsync(); });
             return _audioFilePath;
         }
+
+        protected async Task StartDecodeAsync()
+        {
+            
+        }
+
+        public byte[] AudioDecoder(byte[] source)
+        {
+            return source;
+        }
+
     }
 }

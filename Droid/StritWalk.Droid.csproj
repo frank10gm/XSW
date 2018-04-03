@@ -258,6 +258,9 @@
     <Reference Include="OneSignal.Android.Binding">
       <HintPath>..\packages\Com.OneSignal.3.1.1\lib\MonoAndroid10\OneSignal.Android.Binding.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.MP4Transcoder">
+      <HintPath>..\packages\Xamarin.Android.MP4Transcoder.1.0.9\lib\Xamarin.MP4Transcoder.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
