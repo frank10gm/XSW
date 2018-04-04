@@ -241,6 +241,7 @@ namespace StritWalk
             }
             else
             {
+                await Task.Delay(1500);
                 sound = await _audioManager.AudioDecoder3(wav);
             }
 
