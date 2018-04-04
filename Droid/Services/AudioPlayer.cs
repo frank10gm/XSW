@@ -18,6 +18,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
 using Java.Nio;
+using Java.Lang;
 
 [assembly: Dependency(typeof(StritWalk.Droid.AudioPlayer))]
 
@@ -38,9 +39,10 @@ namespace StritWalk.Droid
         bool endRecording = false;
         byte[] audioBuffer = null;
         public Action<bool> RecordingStateChanged;
+        byte[] decodedAudio;
 
         // Member variables representing frame data        
-        private String mFileType;
+        private string mFileType;
         private int mFileSize;
         private int mAvgBitRate;  // Average bit rate in kbps.
         private int mSampleRate;
@@ -53,6 +55,10 @@ namespace StritWalk.Droid
         // {s1c1, s1c2, ..., s1cM, s2c1, ..., s2cM, ..., sNc1, ..., sNcM}
         // where sicj is the ith sample of the jth channel (a sample is a signed short)
         // M is the number of channels (e.g. 2 for stereo) and N is the number of samples per channel.
+        private int mNumFrames;
+        private int[] mFrameGains;
+        private int[] mFrameLens;
+        private int[] mFrameOffsets;
 
 
         public AudioPlayer()
@@ -188,7 +194,7 @@ namespace StritWalk.Droid
                         await fileStream.WriteAsync(audioBuffer, 0, numBytes);
                         // Do something with the audio input.
                     }
-                    catch (Exception ex)
+                    catch (System.Exception ex)
                     {
                         Console.Out.WriteLine("@@@ ex: " + ex.Message);
                         break;
@@ -216,7 +222,7 @@ namespace StritWalk.Droid
             RaiseRecordingStateChangedEvent();
 
             bufferSize = AudioRecord.GetMinBufferSize(44100, ChannelIn.Mono, Android.Media.Encoding.Pcm16bit);
-            audioBuffer = new Byte[bufferSize];
+            audioBuffer = new System.Byte[bufferSize];
             audioRecord = new AudioRecord(
                 // Hardware source of recording.
                 AudioSource.Mic,
@@ -240,7 +246,7 @@ namespace StritWalk.Droid
         {
             endRecording = true;
             FinishedRecording?.Invoke(this, EventArgs.Empty);
-            Thread.Sleep(500); // Give it time to drop out.
+            System.Threading.Thread.Sleep(500); // Give it time to drop out.
         }
 
         public string StartRecording2(double seconds = 10)
@@ -251,8 +257,13 @@ namespace StritWalk.Droid
             return _audioFilePath;
         }
 
-        protected void StartDecodeAsync(byte[] source)
-        {            
+        public int getSamplesPerFrame()
+        {
+            return 1024;  // just a fixed value here...
+        }
+
+        protected byte[] StartDecodeAsync(byte[] source)
+        {
 
             //input and output files
             string inputFileName = string.Format("toConvert{0}.m4a", "");
@@ -268,17 +279,21 @@ namespace StritWalk.Droid
             MediaExtractor extractor = new MediaExtractor();
             extractor.SetDataSource(inputFilePath);
             format = extractor.GetTrackFormat(0);
+            extractor.SelectTrack(0);
             int inputFileSize = (int)new FileInfo(inputFilePath).Length;
             var inputFileChannels = format.GetInteger(MediaFormat.KeyChannelCount);
             var inputFileSampleRate = format.GetInteger(MediaFormat.KeySampleRate);
             int expectedNumSamples = (int)((format.GetLong(MediaFormat.KeyDuration) / 1000000.0f) * inputFileSampleRate + 0.5f);
+            mChannels = inputFileChannels;
+            mSampleRate = inputFileSampleRate;
+            mFileSize = inputFileSize;            
 
             //setting the codec
             MediaCodec codec = MediaCodec.CreateDecoderByType(format.GetString(MediaFormat.KeyMime));
             codec.Configure(format, null, null, 0);
             codec.Start();
 
-            int decodedSampleSize = 0;
+            int decodedSamplesSize = 0;
             byte[] decodedSamples = null;
             ByteBuffer[] inputBuffers = codec.GetInputBuffers();
             ByteBuffer[] outputBuffers = codec.GetOutputBuffers();
@@ -293,16 +308,16 @@ namespace StritWalk.Droid
             // estimate of the total size needed to store all the samples in order to resize the buffer
             // only once.
             mDecodedBytes = ByteBuffer.Allocate(1048576);
-            Boolean firstSampleData = true;
+            bool firstSampleData = true;
 
             //conversion
             while (true)
             {
                 // read data from file and feed it to the decoder input buffers.
-                int inputBufferIndex = codec.DequeueInputBuffer(100);
+                int inputBufferIndex = codec.DequeueInputBuffer(100);                
                 if (!done_reading && inputBufferIndex >= 0)
                 {
-                    sample_size = extractor.ReadSampleData(inputBuffers[inputBufferIndex], 0);
+                    sample_size = extractor.ReadSampleData(inputBuffers[inputBufferIndex], 0);                    
                     if (firstSampleData && format.GetString(MediaFormat.KeyMime).Equals("audio/mp4a-latm") && sample_size == 2)
                     {
                         // For some reasons on some devices (e.g. the Samsung S3) you should not
@@ -318,7 +333,7 @@ namespace StritWalk.Droid
                     {
                         //all samples have been read
                         codec.QueueInputBuffer(inputBufferIndex, 0, 0, -1, MediaCodecBufferFlags.EndOfStream);
-                        done_reading = true;
+                        done_reading = true;                        
                     }
                     else
                     {
@@ -326,19 +341,183 @@ namespace StritWalk.Droid
                         codec.QueueInputBuffer(inputBufferIndex, 0, sample_size, presentation_time, 0);
                         extractor.Advance();
                         tot_size_read += sample_size;
-                        
+
                     }
+
+                    firstSampleData = false;
+                }
+
+                // Get decoded stream from the decoder output buffers.
+                int outputBufferIndex = codec.DequeueOutputBuffer(info, 100);                
+
+                if (outputBufferIndex >= 0 && info.Size > 0)
+                {
+                    if (decodedSamplesSize < info.Size)
+                    {
+                        decodedSamplesSize = info.Size;
+                        decodedSamples = new byte[decodedSamplesSize];
+                    }
+
+                    outputBuffers[outputBufferIndex].Get(decodedSamples, 0, info.Size);
+                    outputBuffers[outputBufferIndex].Clear();
+                    // Check if buffer is big enough. Resize it if it's too small.
+                    if (mDecodedBytes.Remaining() < info.Size)
+                    {
+                        // Getting a rough estimate of the total size, allocate 20% more, and
+                        // make sure to allocate at least 5MB more than the initial size.
+                        int position = mDecodedBytes.Position();
+                        int newSize = (int)((position * (1.0 * mFileSize / tot_size_read)) * 1.2);
+                        if (newSize - position < info.Size + 5 * (1 << 20))
+                        {
+                            newSize = position + info.Size + 5 * (1 << 20);
+                        }
+                        ByteBuffer newDecodedBytes = null;
+                        // Try to allocate memory. If we are OOM, try to run the garbage collector.
+                        int retry = 10;
+                        while (retry > 0)
+                        {
+                            try
+                            {
+                                newDecodedBytes = ByteBuffer.Allocate(newSize);
+                                break;
+                            }
+                            catch (OutOfMemoryError oome)
+                            {
+                                // setting android:largeHeap="true" in <application> seem to help not
+                                // reaching this section.
+                                retry--;
+                            }
+                        }
+                        if (retry == 0)
+                        {
+                            // Failed to allocate memory... Stop reading more data and finalize the
+                            // instance with the data decoded so far.
+                            break;
+                        }
+                        //ByteBuffer newDecodedBytes = ByteBuffer.allocate(newSize);
+                        mDecodedBytes.Rewind();
+                        newDecodedBytes.Put(mDecodedBytes);
+                        mDecodedBytes = newDecodedBytes;
+                        mDecodedBytes.Position(position);
+                    }
+                    mDecodedBytes.Put(decodedSamples, 0, info.Size);
+                    codec.ReleaseOutputBuffer(outputBufferIndex, false);
+                }
+                else if (outputBufferIndex == (int)MediaCodec.InfoOutputBuffersChanged)
+                {
+                    outputBuffers = codec.GetOutputBuffers();
+                }
+                else if (outputBufferIndex == (int)MediaCodec.InfoOutputFormatChanged)
+                {
+                    // Subsequent data will conform to new format.
+                    // We could check that codec.getOutputFormat(), which is the new output format,
+                    // is what we expect.
+                }
+
+                if ((info.Flags & MediaCodec.BufferFlagEndOfStream) != 0 || (mDecodedBytes.Position() / (2 * mChannels)) >= expectedNumSamples)
+                {
+                    // We got all the decoded data from the decoder. Stop here.
+                    // Theoretically dequeueOutputBuffer(info, ...) should have set info.flags to
+                    // MediaCodec.BUFFER_FLAG_END_OF_STREAM. However some phones (e.g. Samsung S3)
+                    // won't do that for some files (e.g. with mono AAC files), in which case subsequent
+                    // calls to dequeueOutputBuffer may result in the application crashing, without
+                    // even an exception being thrown... Hence the second check.
+                    // (for mono AAC files, the S3 will actually double each sample, as if the stream
+                    // was stereo. The resulting stream is half what it's supposed to be and with a much
+                    // lower pitch.)
+                    break;
                 }
             }
+            
 
+            //finished cycle
+            mNumSamples = mDecodedBytes.Position() / (mChannels * 2);  // One sample = 2 bytes.            
+            mDecodedBytes.Rewind();
+            mDecodedBytes.Order(ByteOrder.LittleEndian);
+            mDecodedSamples = mDecodedBytes.AsShortBuffer();
+            mAvgBitRate = (int)((mFileSize * 8) * ((float)mSampleRate / mNumSamples) / 1000);
 
-            Console.WriteLine("@@@ Format: " + inputFileChannels);
+            extractor.Release();
+            extractor = null;
+            codec.Stop();
+            codec.Release();
+            codec = null;
+
+            // Temporary hack to make it work with the old version.
+            mNumFrames = mNumSamples / getSamplesPerFrame();
+            if (mNumSamples % getSamplesPerFrame() != 0)
+            {
+                mNumFrames++;
+            }
+            mFrameGains = new int[mNumFrames];
+            mFrameLens = new int[mNumFrames];
+            mFrameOffsets = new int[mNumFrames];
+            int j;
+            int gain, value;
+            int frameLens = (int)((1000 * mAvgBitRate / 8) *
+                    ((float)getSamplesPerFrame() / mSampleRate));
+            for (int i = 0; i < mNumFrames; i++)
+            {
+                gain = -1;
+                for (j = 0; j < getSamplesPerFrame(); j++)
+                {
+                    value = 0;
+                    for (int k = 0; k < mChannels; k++)
+                    {
+                        if (mDecodedSamples.Remaining() > 0)
+                        {
+                            value += System.Math.Abs(mDecodedSamples.Get());                            
+                        }
+                    }
+                    value /= mChannels;
+                    if (gain < value)
+                    {
+                        gain = value;
+                    }
+                }
+                mFrameGains[i] = (int)System.Math.Sqrt(gain);  // here gain = sqrt(max value of 1st channel)...
+                mFrameLens[i] = frameLens;  // totally not accurate...
+                mFrameOffsets[i] = (int)(i * (1000 * mAvgBitRate / 8) *  //  = i * frameLens
+                        ((float)getSamplesPerFrame() / mSampleRate));
+            }
+            mDecodedSamples.Rewind();
+            // DumpSamples();  // Uncomment this line to dump the samples in a TSV file.
+            //return mDecodedSamples.ToArray<byte>();
+
+            // Start dumping the samples.
+            Java.IO.BufferedWriter writer = null;
+            byte[] result = new byte[mFileSize];
+            
+
+            float presentationTime = 0;
+            mDecodedSamples.Rewind();            
+            try
+            {
+                //writer = new Java.IO.BufferedWriter(new FileWriter(outFile));
+                for (int sampleIndex = 0; sampleIndex < mNumSamples; sampleIndex++)
+                {
+                    presentationTime = (float)(sampleIndex) / mSampleRate;                    
+                    for (int channelIndex = 0; channelIndex < mChannels; channelIndex++)
+                    {
+                        //row += "\t" + mDecodedSamples.get();                       
+                        //result[sampleIndex] = (byte)mDecodedSamples.Get();                        
+                    }                    
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("@@@@ error : " + e);
+            }
+            
+            mDecodedSamples.Rewind();
+            return decodedSamples;
         }
 
         public byte[] AudioDecoder(byte[] source)
         {
-            Task task = Task.Run(() => { StartDecodeAsync(source); });
-            return source;
+            //Task task = Task.Run(() => { StartDecodeAsync(source); });
+            byte[] result = StartDecodeAsync(source);
+            return result;
         }
 
     }
