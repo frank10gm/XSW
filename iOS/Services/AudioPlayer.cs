@@ -624,8 +624,9 @@ namespace StritWalk.iOS
             return data;
         }
 
-
-
-
+        public async Task<byte[]> AudioDecoder3(byte[] source)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Net;
 using Xamarin.Forms;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
+using System.Threading.Tasks;
 
 namespace StritWalk
 {
@@ -17,6 +18,7 @@ namespace StritWalk
         SKCanvasView canvasView;
         Stream stream;
         byte[] wav;
+        byte[] sound;
         IAudioPlayer _audioManager;
 
         public PostPage(ObservableRangeCollection<Item> Items, Item Item)
@@ -114,7 +116,8 @@ namespace StritWalk
                 Console.WriteLine("@@@ download complete");
                 wav = e.Result;
                 stream = new MemoryStream(wav);
-                canvasView.InvalidateSurface();
+                //canvasView.InvalidateSurface();
+                LoadWave();             
             };
 
             client.DownloadDataAsync(new Uri("https://www.hackweb.it/api/uploads/audio/" + audio));
@@ -183,16 +186,16 @@ namespace StritWalk
             //sound data
             int dataID = reader.ReadInt32();
             int dataSize = reader.ReadInt32();
-            //byte[] sound = reader.ReadBytes(dataSize);
+            //byte[] sound = reader.ReadBytes(dataSize);            
+           
 
-            byte[] sound = _audioManager.AudioDecoder(wav);
             channels = 1;
             sampleRate = 44100;
             bitDepth = 16;
 
             int numSamples = sound.Length / (channels * bitDepth / 8);
 
-            Console.WriteLine("@@@@ numsamples: " + numSamples + "; channels: " + channels + "; sound length: " + sound.Length + "; sample rate: " + sampleRate + "; bitdepth: " + bitDepth);
+            Console.WriteLine("@@@@ numsamples: " + numSamples + "; channels: " + channels + "; sample rate: " + sampleRate + "; bitdepth: " + bitDepth);
 
             //visualize waveform
             var w = info.Width;
@@ -228,7 +231,20 @@ namespace StritWalk
                 canvas.DrawLine(prev, next, paint);
                 prev = next;
             }
+        }
 
+        async Task LoadWave()
+        {
+            if (Device.iOS == Device.RuntimePlatform)
+            {
+                sound = _audioManager.AudioDecoder(wav);
+            }
+            else
+            {
+                sound = await _audioManager.AudioDecoder3(wav);
+            }
+
+            canvasView.InvalidateSurface();
         }
     }
 }

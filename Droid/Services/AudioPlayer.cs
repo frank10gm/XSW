@@ -262,7 +262,7 @@ namespace StritWalk.Droid
             return 1024;  // just a fixed value here...
         }
 
-        protected byte[] StartDecodeAsync(byte[] source)
+        protected async Task<byte[]> StartDecodeAsync(byte[] source)
         {
 
             //input and output files
@@ -307,7 +307,7 @@ namespace StritWalk.Droid
             // For longer streams, the buffer size will be increased later on, calculating a rough
             // estimate of the total size needed to store all the samples in order to resize the buffer
             // only once.
-            mDecodedBytes = ByteBuffer.Allocate(1048576);
+            mDecodedBytes = ByteBuffer.Allocate(1 << 20);
             bool firstSampleData = true;
 
             //conversion
@@ -340,8 +340,7 @@ namespace StritWalk.Droid
                         presentation_time = extractor.SampleTime;
                         codec.QueueInputBuffer(inputBufferIndex, 0, sample_size, presentation_time, 0);
                         extractor.Advance();
-                        tot_size_read += sample_size;
-
+                        tot_size_read += sample_size;                   
                     }
 
                     firstSampleData = false;
@@ -429,9 +428,10 @@ namespace StritWalk.Droid
                 }
             }
             
-
             //finished cycle
-            mNumSamples = mDecodedBytes.Position() / (mChannels * 2);  // One sample = 2 bytes.            
+            mNumSamples = mDecodedBytes.Position() / (mChannels * 2);  // One sample = 2 bytes.  
+            Console.WriteLine("@@@ mNumSamples: " + mNumSamples);
+            int numBytes = mDecodedBytes.Position();
             mDecodedBytes.Rewind();
             mDecodedBytes.Order(ByteOrder.LittleEndian);
             mDecodedSamples = mDecodedBytes.AsShortBuffer();
@@ -443,82 +443,68 @@ namespace StritWalk.Droid
             codec.Release();
             codec = null;
 
-            // Temporary hack to make it work with the old version.
-            mNumFrames = mNumSamples / getSamplesPerFrame();
-            if (mNumSamples % getSamplesPerFrame() != 0)
-            {
-                mNumFrames++;
-            }
-            mFrameGains = new int[mNumFrames];
-            mFrameLens = new int[mNumFrames];
-            mFrameOffsets = new int[mNumFrames];
-            int j;
-            int gain, value;
-            int frameLens = (int)((1000 * mAvgBitRate / 8) *
-                    ((float)getSamplesPerFrame() / mSampleRate));
-            for (int i = 0; i < mNumFrames; i++)
-            {
-                gain = -1;
-                for (j = 0; j < getSamplesPerFrame(); j++)
-                {
-                    value = 0;
-                    for (int k = 0; k < mChannels; k++)
-                    {
-                        if (mDecodedSamples.Remaining() > 0)
-                        {
-                            value += System.Math.Abs(mDecodedSamples.Get());                            
-                        }
-                    }
-                    value /= mChannels;
-                    if (gain < value)
-                    {
-                        gain = value;
-                    }
-                }
-                mFrameGains[i] = (int)System.Math.Sqrt(gain);  // here gain = sqrt(max value of 1st channel)...
-                mFrameLens[i] = frameLens;  // totally not accurate...
-                mFrameOffsets[i] = (int)(i * (1000 * mAvgBitRate / 8) *  //  = i * frameLens
-                        ((float)getSamplesPerFrame() / mSampleRate));
-            }
-            mDecodedSamples.Rewind();
-            // DumpSamples();  // Uncomment this line to dump the samples in a TSV file.
-            //return mDecodedSamples.ToArray<byte>();
-
-            // Start dumping the samples.
-            Java.IO.BufferedWriter writer = null;
-            byte[] result = new byte[mFileSize];
+            mDecodedBytes.Rewind();        
+            byte[] result = new byte[numBytes];
             
+            //for(int sampleIndex = 0; sampleIndex < (numBytes); sampleIndex++)
+            //{
+                
+            //}
 
-            float presentationTime = 0;
-            mDecodedSamples.Rewind();            
-            try
-            {
-                //writer = new Java.IO.BufferedWriter(new FileWriter(outFile));
-                for (int sampleIndex = 0; sampleIndex < mNumSamples; sampleIndex++)
-                {
-                    presentationTime = (float)(sampleIndex) / mSampleRate;                    
-                    for (int channelIndex = 0; channelIndex < mChannels; channelIndex++)
-                    {
-                        //row += "\t" + mDecodedSamples.get();                       
-                        //result[sampleIndex] = (byte)mDecodedSamples.Get();                        
-                    }                    
-                }
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine("@@@@ error : " + e);
-            }
-            
-            mDecodedSamples.Rewind();
-            return decodedSamples;
-        }
+            mDecodedBytes.Get(result);
 
-        public byte[] AudioDecoder(byte[] source)
-        {
-            //Task task = Task.Run(() => { StartDecodeAsync(source); });
-            byte[] result = StartDecodeAsync(source);
+            //// Temporary hack to make it work with the old version.
+            //mNumFrames = mNumSamples / getSamplesPerFrame();
+            //if (mNumSamples % getSamplesPerFrame() != 0)
+            //{
+            //    mNumFrames++;
+            //}
+            //mFrameGains = new int[mNumFrames];
+            //mFrameLens = new int[mNumFrames];
+            //mFrameOffsets = new int[mNumFrames];
+            //int j;
+            //int gain, value;
+            //int frameLens = (int)((1000 * mAvgBitRate / 8) *
+            //        ((float)getSamplesPerFrame() / mSampleRate));
+            //for (int i = 0; i < mNumFrames; i++)
+            //{
+            //    gain = -1;
+            //    for (j = 0; j < getSamplesPerFrame(); j++)
+            //    {
+            //        value = 0;
+            //        for (int k = 0; k < mChannels; k++)
+            //        {
+            //            if (mDecodedSamples.Remaining() > 0)
+            //            {
+            //                value += System.Math.Abs(mDecodedSamples.Get());                            
+            //            }
+            //        }
+            //        value /= mChannels;
+            //        if (gain < value)
+            //        {
+            //            gain = value;
+            //        }
+            //    }
+            //    mFrameGains[i] = (int)System.Math.Sqrt(gain);  // here gain = sqrt(max value of 1st channel)...
+            //    mFrameLens[i] = frameLens;  // totally not accurate...
+            //    mFrameOffsets[i] = (int)(i * (1000 * mAvgBitRate / 8) *  //  = i * frameLens
+            //            ((float)getSamplesPerFrame() / mSampleRate));
+            //}
+            //mDecodedSamples.Rewind();
+
             return result;
         }
 
+        public async Task<byte[]> AudioDecoder3(byte[] source)
+        {
+            //Task task = Task.Run(() => { StartDecodeAsync(source); });
+            byte[] result = await StartDecodeAsync(source);
+            return result;
+        }
+
+        public byte[] AudioDecoder(byte[] source)
+        {            
+            return source;
+        }
     }
 }
