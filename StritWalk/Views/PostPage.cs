@@ -111,13 +111,13 @@ namespace StritWalk
                 await progress.ProgressTo(val, 250, Easing.Linear);
             };
 
-            client.DownloadDataCompleted += (object sender, DownloadDataCompletedEventArgs e) =>
+            client.DownloadDataCompleted += async (object sender, DownloadDataCompletedEventArgs e) =>
             {
                 Console.WriteLine("@@@ download complete");
                 wav = e.Result;
                 stream = new MemoryStream(wav);
                 //canvasView.InvalidateSurface();
-                LoadWave();             
+                await LoadWave().ConfigureAwait(false);             
             };
 
             client.DownloadDataAsync(new Uri("https://www.hackweb.it/api/uploads/audio/" + audio));
