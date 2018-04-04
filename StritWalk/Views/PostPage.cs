@@ -35,7 +35,7 @@ namespace StritWalk
             progress = new ProgressBar { Progress = 0 };
             bytesLabel = new Label { };
             canvasView = new SKCanvasView();
-            canvasView.HeightRequest = 200;
+            canvasView.HeightRequest = 100;
             canvasView.PaintSurface += OnCanvasViewPaintSurface;
 
             bool checkAudio = CheckAudio(Item.Audio);
@@ -88,7 +88,7 @@ namespace StritWalk
                 {
                     return parent.Width - 40;
                 }),
-                Constraint.Constant(200));
+                Constraint.Constant(100));
             }
 
             layout.BackgroundColor = (Color)Application.Current.Resources["Sfondo1"];
@@ -117,7 +117,8 @@ namespace StritWalk
                 wav = e.Result;
                 stream = new MemoryStream(wav);
                 //canvasView.InvalidateSurface();
-                await LoadWave().ConfigureAwait(false);             
+                await LoadWave().ConfigureAwait(false);
+                //await EternalMessage().ConfigureAwait(false);
             };
 
             client.DownloadDataAsync(new Uri("https://www.hackweb.it/api/uploads/audio/" + audio));
@@ -246,6 +247,16 @@ namespace StritWalk
             }
 
             canvasView.InvalidateSurface();
+        }
+
+        async Task EternalMessage()
+        {
+            Console.WriteLine("@@@ eternal message");
+            while (true)
+            {
+                await Task.Delay(1000);
+                Console.WriteLine("@@@ pinga durissima");
+            }
         }
     }
 }
