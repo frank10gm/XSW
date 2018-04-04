@@ -17,6 +17,7 @@ using Xamarin.Forms;
 using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
+using Java.Nio;
 
 [assembly: Dependency(typeof(StritWalk.Droid.AudioPlayer))]
 
@@ -37,6 +38,22 @@ namespace StritWalk.Droid
         bool endRecording = false;
         byte[] audioBuffer = null;
         public Action<bool> RecordingStateChanged;
+
+        // Member variables representing frame data        
+        private String mFileType;
+        private int mFileSize;
+        private int mAvgBitRate;  // Average bit rate in kbps.
+        private int mSampleRate;
+        private int mChannels;
+        private int mNumSamples;  // total number of samples per channel in audio file
+        private ByteBuffer mDecodedBytes;  // Raw audio data
+        private ShortBuffer mDecodedSamples;
+        // shared buffer with mDecodedBytes.
+        // mDecodedSamples has the following format:
+        // {s1c1, s1c2, ..., s1cM, s2c1, ..., s2cM, ..., sNc1, ..., sNcM}
+        // where sicj is the ith sample of the jth channel (a sample is a signed short)
+        // M is the number of channels (e.g. 2 for stereo) and N is the number of samples per channel.
+
 
         public AudioPlayer()
         {
@@ -235,7 +252,9 @@ namespace StritWalk.Droid
         }
 
         protected void StartDecodeAsync(byte[] source)
-        {
+        {            
+
+            //input and output files
             string inputFileName = string.Format("toConvert{0}.m4a", "");
             var inputFilePath = Path.Combine(Path.GetTempPath(), inputFileName);
             File.WriteAllBytes(inputFilePath, source);
@@ -244,6 +263,7 @@ namespace StritWalk.Droid
             var outputFilePath = Path.Combine(Path.GetTempPath(), outputFileName);
             File.WriteAllBytes(outputFilePath, source);
 
+            //getting data from input file
             MediaFormat format = null;
             MediaExtractor extractor = new MediaExtractor();
             extractor.SetDataSource(inputFilePath);
@@ -252,7 +272,65 @@ namespace StritWalk.Droid
             var inputFileChannels = format.GetInteger(MediaFormat.KeyChannelCount);
             var inputFileSampleRate = format.GetInteger(MediaFormat.KeySampleRate);
             int expectedNumSamples = (int)((format.GetLong(MediaFormat.KeyDuration) / 1000000.0f) * inputFileSampleRate + 0.5f);
-            MediaCodec codec = MediaCodec.CreateDecoderByType("wav");
+
+            //setting the codec
+            MediaCodec codec = MediaCodec.CreateDecoderByType(format.GetString(MediaFormat.KeyMime));
+            codec.Configure(format, null, null, 0);
+            codec.Start();
+
+            int decodedSampleSize = 0;
+            byte[] decodedSamples = null;
+            ByteBuffer[] inputBuffers = codec.GetInputBuffers();
+            ByteBuffer[] outputBuffers = codec.GetOutputBuffers();
+            int sample_size;
+            MediaCodec.BufferInfo info = new MediaCodec.BufferInfo();
+            long presentation_time;
+            int tot_size_read = 0;
+            bool done_reading = false;
+
+            // Set the size of the decoded samples buffer to 1MB (~6sec of a stereo stream at 44.1kHz).
+            // For longer streams, the buffer size will be increased later on, calculating a rough
+            // estimate of the total size needed to store all the samples in order to resize the buffer
+            // only once.
+            mDecodedBytes = ByteBuffer.Allocate(1048576);
+            Boolean firstSampleData = true;
+
+            //conversion
+            while (true)
+            {
+                // read data from file and feed it to the decoder input buffers.
+                int inputBufferIndex = codec.DequeueInputBuffer(100);
+                if (!done_reading && inputBufferIndex >= 0)
+                {
+                    sample_size = extractor.ReadSampleData(inputBuffers[inputBufferIndex], 0);
+                    if (firstSampleData && format.GetString(MediaFormat.KeyMime).Equals("audio/mp4a-latm") && sample_size == 2)
+                    {
+                        // For some reasons on some devices (e.g. the Samsung S3) you should not
+                        // provide the first two bytes of an AAC stream, otherwise the MediaCodec will
+                        // crash. These two bytes do not contain music data but basic info on the
+                        // stream (e.g. channel configuration and sampling frequency), and skipping them
+                        // seems OK with other devices (MediaCodec has already been configured and
+                        // already knows these parameters).
+                        extractor.Advance();
+                        tot_size_read += sample_size;
+                    }
+                    else if (sample_size < 0)
+                    {
+                        //all samples have been read
+                        codec.QueueInputBuffer(inputBufferIndex, 0, 0, -1, MediaCodecBufferFlags.EndOfStream);
+                        done_reading = true;
+                    }
+                    else
+                    {
+                        presentation_time = extractor.SampleTime;
+                        codec.QueueInputBuffer(inputBufferIndex, 0, sample_size, presentation_time, 0);
+                        extractor.Advance();
+                        tot_size_read += sample_size;
+                        
+                    }
+                }
+            }
+
 
             Console.WriteLine("@@@ Format: " + inputFileChannels);
         }
