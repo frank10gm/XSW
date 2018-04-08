@@ -235,8 +235,9 @@ namespace StritWalk
                 //Span brace1 = new Span { Text = "{ ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
                 //Span brace2 = new Span { Text = " } ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
                 //Span name = new Span { Text = Name, FontAttributes = FontAttributes.Bold, FontSize = 14.0F, ForegroundColor = Color.FromHex("#000000") };
+                string raw_description = Description;
                 Span description = new Span { Text = Description, FontSize = 14.0F, ForegroundColor = (Color)Application.Current.Resources["Testo2"] };
-
+                
                 if (Nuovo == true)
                 {
                     details = new Span { Text = "here, now" + "\n\n", FontSize = 10.0F, ForegroundColor = (Color)Application.Current.Resources["Testo3"] };

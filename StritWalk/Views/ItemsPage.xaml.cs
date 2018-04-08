@@ -39,7 +39,7 @@ namespace StritWalk
             var firstTemplate = new DataTemplate(() =>
             {
                 var w = Content.Width;
-                var postLabel = new Label { Margin = new Thickness(20, 0, 20, 0) };
+                var postLabel = new Label { Margin = new Thickness(20, 0, 20, 0) };                
                 postLabel.SetBinding(Label.FormattedTextProperty, "Post");
                 var separatorLine = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(0, 0, 0, 0) };
                 var numbersLabel = new Label { Margin = new Thickness(20, 0, 20, 0), TextColor = (Color)Application.Current.Resources["Testo3"], FontSize = 12 };
@@ -91,7 +91,7 @@ namespace StritWalk
             var secondTemplate = new DataTemplate(() =>
             {
                 var w = Content.Width;
-                var postLabel = new Label { Margin = new Thickness(20, 0, 20, 0) };
+                var postLabel = new ClickableLabel { Margin = new Thickness(20, 0, 20, 0) };
                 postLabel.SetBinding(Label.FormattedTextProperty, "Post");
                 var separatorLine = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(0, 0, 0, 0) };
                 var numbersLabel = new Label { Margin = new Thickness(20, 0, 20, 0), TextColor = (Color)Application.Current.Resources["Testo3"], FontSize = 12 };
@@ -112,6 +112,13 @@ namespace StritWalk
                 var separatorLine2 = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(0, 0, 0, 0) };
                 var commentsLabel = new Label { Margin = new Thickness(20, 0, 20, 0), Text = "", TextColor = (Color)Application.Current.Resources["Testo3"], FontSize = 13 };
                 commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
+                //var tapGestureRecognizer = new TapGestureRecognizer();
+                //tapGestureRecognizer.Tapped += (s, e) => {
+                //    Console.WriteLine(string.Format("obj: {0}, e: {1}", s.ToString(), e.ToString()));
+                //}; 
+                //tapGestureRecognizer.Command = viewModel.ICommentThis;
+                //tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandParameterProperty, ".");
+                //commentsLabel.GestureRecognizers.Add(tapGestureRecognizer);
                 var whiteSeparator = new BoxView { BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], HeightRequest = 10, Margin = new Thickness(0, 0, 0, 0) };
 
                 //absolute layout
@@ -158,6 +165,11 @@ namespace StritWalk
                 ItemsListView.SelectedItem = null;
             };
 
+        }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void OnItemSelected(object sender, SelectedItemChangedEventArgs args)

@@ -346,6 +346,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="GenericCustomElements\ClickableLabelRenderer.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="CustomMaps\CustomMapRenderer.cs" />
     <Compile Include="CustomMaps\CustomMKAnnotationView.cs" />

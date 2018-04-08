@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using Com.OneSignal;
 using Plugin.AudioRecorder;
 using Plugin.MediaManager;
-
+using System.Windows.Input;
 
 namespace StritWalk
 {
@@ -25,7 +25,7 @@ namespace StritWalk
         public CustomEditor PostEditor { get; set; }
         public Command ILikeThis { get; }
         public User me;
-        public Command ICommentThis { get; }
+        public ICommand ICommentThis;
         //AudioRecorderService recorder;
         IAudioPlayer player;
         TestService testService;
