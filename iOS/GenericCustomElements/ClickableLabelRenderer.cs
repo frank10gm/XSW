@@ -28,6 +28,21 @@ namespace StritWalk.iOS
 
             label = Element as ClickableLabel;
 
+            //ridurre testo
+            var testoBase = Control.Text;
+            string temp;
+            var s = testoBase.IndexOf("#");            
+            if (s != -1)
+            {
+                temp = testoBase.Substring(s);
+                var f = temp.IndexOf(" ");
+                if (f != -1)
+                    temp = temp.Substring(0, f);
+                else
+                    temp = temp.Substring(0, temp.Length);
+                Console.WriteLine("@@@@ temp: " + temp);
+            }
+
             UITapGestureRecognizer tapgesture = new UITapGestureRecognizer(TextTap);
             Control.UserInteractionEnabled = true;
             Control.AddGestureRecognizer(tapgesture);
@@ -64,7 +79,7 @@ namespace StritWalk.iOS
             };
             var range = new NSRange
             {
-                Location = testo.ToString().IndexOf("rankie"),
+                Location = Control.Text.IndexOf("rankie"),
                 Length = "rankie".Length
             };
 
@@ -80,14 +95,16 @@ namespace StritWalk.iOS
                 //verifica se ho cliccato un hashtag o altro
                 for (int i = 0; i < 10; i++)
                 {
-                    string chkText = "aestro";
+                    string chkText = "Piscia";
                     range = new NSRange
                     {
-                        Location = testo.ToString().IndexOf(chkText),
+                        Location = Control.Text.IndexOf(chkText),
                         Length = chkText.Length
                     };
                     glyphRange = layoutMgr.GlyphRangeForCharacterRange(range);
                     glyphRect = (layoutMgr.BoundingRectForGlyphRange(glyphRange, textContainer));
+                    Console.WriteLine(string.Format("@@@@ click : {0}", Control.Text.Length));
+
                     if (glyphRect.Contains(touchPoint))
                     {
                         Console.WriteLine(string.Format("@@@@ click : {0}", "tag"));

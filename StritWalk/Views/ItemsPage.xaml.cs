@@ -39,7 +39,7 @@ namespace StritWalk
             var firstTemplate = new DataTemplate(() =>
             {
                 var w = Content.Width;
-                var postLabel = new Label { Margin = new Thickness(20, 0, 20, 0) };                
+                var postLabel = new ClickableLabel { Margin = new Thickness(20, 0, 20, 0) };                
                 postLabel.SetBinding(Label.FormattedTextProperty, "Post");
                 var separatorLine = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(0, 0, 0, 0) };
                 var numbersLabel = new Label { Margin = new Thickness(20, 0, 20, 0), TextColor = (Color)Application.Current.Resources["Testo3"], FontSize = 12 };
