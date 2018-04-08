@@ -29,19 +29,26 @@ namespace StritWalk.iOS
             label = Element as ClickableLabel;
 
             //ridurre testo
-            var testoBase = Control.Text;
-            string temp;
-            var s = testoBase.IndexOf("#");            
+            var testoBase = Control.Text;            
+            string temp = testoBase;
+            string hash;
+            string ch = "#";            
+            int count = testoBase.Length - testoBase.Replace(ch, "").Length;
+            int s;
+            int f;
+
+            s = testoBase.IndexOf("#");
             if (s != -1)
             {
                 temp = testoBase.Substring(s);
-                var f = temp.IndexOf(" ");
+                f = temp.IndexOf(" ");
                 if (f != -1)
                     temp = temp.Substring(0, f);
                 else
-                    temp = temp.Substring(0, temp.Length);
-                Console.WriteLine("@@@@ temp: " + temp);
+                    hash = temp.Substring(0, temp.Length);                
             }
+
+            Console.WriteLine("@@@@ count: " + count);
 
             UITapGestureRecognizer tapgesture = new UITapGestureRecognizer(TextTap);
             Control.UserInteractionEnabled = true;
