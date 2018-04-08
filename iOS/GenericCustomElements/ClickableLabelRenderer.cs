@@ -35,7 +35,7 @@ namespace StritWalk.iOS
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            base.OnElementPropertyChanged(sender, e);           
+            base.OnElementPropertyChanged(sender, e);
         }
 
         bool ShouldInteractWithUrl(UITextView arg1, NSUrl arg2, NSRange arg3)
@@ -45,7 +45,57 @@ namespace StritWalk.iOS
 
         void TextTap(UITapGestureRecognizer tap)
         {
-            Console.WriteLine(string.Format("@@@@ text : {0}", tap.LocationInView(Control).Y));
+            var testo = Control.AttributedText;
+            var touchPoint = tap.LocationOfTouch(0, Control);
+
+            var textStorage = new NSTextStorage();
+            var layoutMgr = new NSLayoutManager();
+            var textContainer = new NSTextContainer(Control.Frame.Size);
+
+            textStorage.SetString(Control.AttributedText);
+            layoutMgr.AddTextContainer(textContainer);
+            textStorage.AddLayoutManager(layoutMgr);
+            textContainer.LineFragmentPadding = 0;
+
+            var startRange = new NSRange
+            {
+                Location = 0,
+                Length = 10
+            };
+            var range = new NSRange
+            {
+                Location = testo.ToString().IndexOf("rankie"),
+                Length = "rankie".Length
+            };
+
+            var glyphRange = layoutMgr.GlyphRangeForCharacterRange(startRange);
+            CGRect glyphRect = (layoutMgr.BoundingRectForGlyphRange(glyphRange, textContainer));
+
+            if (glyphRect.Contains(touchPoint))
+            {
+                Console.WriteLine(string.Format("@@@@ click : {0}", "profilo utente"));
+            }
+            else
+            {
+                //verifica se ho cliccato un hashtag o altro
+                for (int i = 0; i < 10; i++)
+                {
+                    range = new NSRange
+                    {
+                        Location = testo.ToString().IndexOf("maestro"),
+                        Length = "rankie".Length
+                    };
+                    glyphRange = layoutMgr.GlyphRangeForCharacterRange(range);
+                    glyphRect = (layoutMgr.BoundingRectForGlyphRange(glyphRange, textContainer));
+                    if (glyphRect.Contains(touchPoint))
+                    {
+                        Console.WriteLine(string.Format("@@@@ click : {0}", "tag"));
+                        break;
+                    }
+                }
+            }
+
+
         }
 
 

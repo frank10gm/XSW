@@ -283,6 +283,7 @@
   <ItemGroup>
     <Compile Include="CustomMaps\CustomClusterAdapter.cs" />
     <Compile Include="CustomMaps\Toolkit.cs" />
+    <Compile Include="GenericCustomElements\ClickableLabelRenderer.cs" />
     <Compile Include="GenericCustomElements\FlatButtonRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
