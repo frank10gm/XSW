@@ -60,7 +60,7 @@ namespace StritWalk.iOS
             var startRange = new NSRange
             {
                 Location = 0,
-                Length = 10
+                Length = 5
             };
             var range = new NSRange
             {
@@ -80,10 +80,11 @@ namespace StritWalk.iOS
                 //verifica se ho cliccato un hashtag o altro
                 for (int i = 0; i < 10; i++)
                 {
+                    string chkText = "aestro";
                     range = new NSRange
                     {
-                        Location = testo.ToString().IndexOf("maestro"),
-                        Length = "rankie".Length
+                        Location = testo.ToString().IndexOf(chkText),
+                        Length = chkText.Length
                     };
                     glyphRange = layoutMgr.GlyphRangeForCharacterRange(range);
                     glyphRect = (layoutMgr.BoundingRectForGlyphRange(glyphRange, textContainer));
