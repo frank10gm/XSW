@@ -121,7 +121,8 @@ namespace StritWalk
                 var commentsLabel = new CommentsLabel { Margin = new Thickness(20, 0, 20, 0), Text = "", TextColor = (Color)Application.Current.Resources["Testo3"], FontSize = 13 };
                 commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
                 commentsLabel.SetBinding(CommentsLabel.ItemProperty, ".");
-                postLabel.Clicked += (sender, e) => {
+                commentsLabel.Clicked += (sender, e) => {
+                    Console.WriteLine("@@@@ clickedc");
                     viewModel.ICommentThis.Execute(e.PItem);
                 };
                 //var tapGestureRecognizer = new TapGestureRecognizer();
