@@ -39,7 +39,11 @@ namespace StritWalk
             var firstTemplate = new DataTemplate(() =>
             {
                 var w = Content.Width;
-                var postLabel = new ClickableLabel { Margin = new Thickness(20, 0, 20, 0) };                
+                var postLabel = new ClickableLabel { Margin = new Thickness(20, 0, 20, 0) }; 
+                postLabel.Clicked += async (sender, e) => {
+                    await Navigation.PushAsync(new PostPage(viewModel.Items, e.PItem));
+                };
+                postLabel.SetBinding(ClickableLabel.ItemProperty, ".");
                 postLabel.SetBinding(Label.FormattedTextProperty, "Post");
                 var separatorLine = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(0, 0, 0, 0) };
                 var numbersLabel = new Label { Margin = new Thickness(20, 0, 20, 0), TextColor = (Color)Application.Current.Resources["Testo3"], FontSize = 12 };
@@ -92,6 +96,10 @@ namespace StritWalk
             {
                 var w = Content.Width;
                 var postLabel = new ClickableLabel { Margin = new Thickness(20, 0, 20, 0) };
+                postLabel.Clicked += async (sender, e) => {
+                    await Navigation.PushAsync(new PostPage(viewModel.Items, e.PItem));
+                };
+                postLabel.SetBinding(ClickableLabel.ItemProperty, ".");
                 postLabel.SetBinding(Label.FormattedTextProperty, "Post");
                 var separatorLine = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(0, 0, 0, 0) };
                 var numbersLabel = new Label { Margin = new Thickness(20, 0, 20, 0), TextColor = (Color)Application.Current.Resources["Testo3"], FontSize = 12 };
@@ -110,8 +118,12 @@ namespace StritWalk
                 commentsButton.Command = viewModel.ICommentThis;
                 commentsButton.SetBinding(Button.CommandParameterProperty, ".");
                 var separatorLine2 = new BoxView { HeightRequest = 1, BackgroundColor = (Color)Application.Current.Resources["Sfondo2"], Margin = new Thickness(0, 0, 0, 0) };
-                var commentsLabel = new Label { Margin = new Thickness(20, 0, 20, 0), Text = "", TextColor = (Color)Application.Current.Resources["Testo3"], FontSize = 13 };
+                var commentsLabel = new CommentsLabel { Margin = new Thickness(20, 0, 20, 0), Text = "", TextColor = (Color)Application.Current.Resources["Testo3"], FontSize = 13 };
                 commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
+                commentsLabel.SetBinding(CommentsLabel.ItemProperty, ".");
+                postLabel.Clicked += (sender, e) => {
+                    viewModel.ICommentThis.Execute(e.PItem);
+                };
                 //var tapGestureRecognizer = new TapGestureRecognizer();
                 //tapGestureRecognizer.Tapped += (s, e) => {
                 //    Console.WriteLine(string.Format("obj: {0}, e: {1}", s.ToString(), e.ToString()));

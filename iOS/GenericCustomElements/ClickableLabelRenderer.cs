@@ -26,7 +26,7 @@ namespace StritWalk.iOS
         {
             base.OnElementChanged(e);
 
-            label = Element as ClickableLabel;
+            label = e.NewElement as ClickableLabel;
 
             //ridurre testo
             var testoBase = Control.Text;            
@@ -37,11 +37,11 @@ namespace StritWalk.iOS
             int s;
             int f;
 
-            s = testoBase.IndexOf("#");
+            s = testoBase.IndexOf("#", StringComparison.CurrentCulture);
             if (s != -1)
             {
                 temp = testoBase.Substring(s);
-                f = temp.IndexOf(" ");
+                f = temp.IndexOf(" ", StringComparison.CurrentCulture);
                 if (f != -1)
                     temp = temp.Substring(0, f);
                 else
@@ -86,7 +86,7 @@ namespace StritWalk.iOS
             };
             var range = new NSRange
             {
-                Location = Control.Text.IndexOf("rankie"),
+                Location = Control.Text.IndexOf("rankie", StringComparison.CurrentCulture),
                 Length = "rankie".Length
             };
 
@@ -100,27 +100,30 @@ namespace StritWalk.iOS
             else
             {
                 //verifica se ho cliccato un hashtag o altro
+                bool tag = false;
                 for (int i = 0; i < 10; i++)
                 {
                     string chkText = "Piscia";
                     range = new NSRange
                     {
-                        Location = Control.Text.IndexOf(chkText),
+                        Location = Control.Text.IndexOf(chkText, StringComparison.CurrentCulture),
                         Length = chkText.Length
                     };
                     glyphRange = layoutMgr.GlyphRangeForCharacterRange(range);
                     glyphRect = (layoutMgr.BoundingRectForGlyphRange(glyphRange, textContainer));
-                    Console.WriteLine(string.Format("@@@@ click : {0}", Control.Text.Length));
+                    //Console.WriteLine(string.Format("@@@@ click : {0}", Control.Text.Length));
 
                     if (glyphRect.Contains(touchPoint))
                     {
                         Console.WriteLine(string.Format("@@@@ click : {0}", "tag"));
+                        tag = true;
                         break;
                     }
                 }
+                if(!tag){
+                    label?.InvokeClicked(label.ItemSelected);
+                }
             }
-
-
         }
 
 

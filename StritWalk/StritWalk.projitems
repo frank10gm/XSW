@@ -76,6 +76,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\PostPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CustomListView\TemplateOneViewCell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CustomListView\TemplateTwoViewCell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GenericCustomElements\CommentsLabel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />

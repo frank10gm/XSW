@@ -375,6 +375,7 @@
     <Compile Include="Services\IBeaconService.cs" />
     <Compile Include="Services\TestService.cs" />
     <Compile Include="Services\AudioPlayer.cs" />
+    <Compile Include="GenericCustomElements\CommentsLabelRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
