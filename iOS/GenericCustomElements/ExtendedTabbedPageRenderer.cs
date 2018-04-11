@@ -6,6 +6,7 @@ using Xamarin.Forms.Platform.iOS;
 using UIKit;
 using StritWalk;
 using StritWalk.iOS;
+using System.Threading.Tasks;
 
 [assembly: ExportRenderer(typeof(CustomTabbedPage), typeof(ExtendedTabbedPageRenderer))]
 
@@ -42,18 +43,21 @@ namespace StritWalk.iOS
             //View.Subviews[0].AddGestureRecognizer(gesture);
             //View.AddGestureRecognizer(gesture);
 
-			this.Tabbed.PropertyChanging += (sender, eventArgs) => {                
+			this.Tabbed.PropertyChanging += async (sender, eventArgs) => {                
 				if (eventArgs.PropertyName == "TabBarHidden")
 				{
                     bool tabBarHidden = !custom.TabBarHidden;
 					TabBar.Hidden = tabBarHidden;
-					//Console.WriteLine(View.Frame.Width + " " + View.Frame.Height);
+
+                    //Console.WriteLine("@@@ hidden? " + tabBarHidden);
+                    //await Task.Delay(1000);
+                    //Console.WriteLine("@@@ hidden? " + tabBarHidden);
 
                     // The solution to the space left behind the invisible tab bar
-                    if (TabBar.Hidden)
-                        View.Subviews[1].Frame = new CoreGraphics.CGRect(View.Subviews[1].Frame.X, View.Subviews[1].Frame.Y, View.Subviews[1].Frame.Width, 0);
-                    else
-                        View.Subviews[1].Frame = baseFrame;
+                    //if (TabBar.Hidden)
+                    //    View.Subviews[1].Frame = new CoreGraphics.CGRect(View.Subviews[1].Frame.X, View.Subviews[1].Frame.Y, View.Subviews[1].Frame.Width, 0);
+                    //else
+                        //View.Subviews[1].Frame = baseFrame;
                     
 				}
 			};
