@@ -122,7 +122,6 @@ namespace StritWalk
                 commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
                 commentsLabel.SetBinding(CommentsLabel.ItemProperty, ".");
                 commentsLabel.Clicked += (sender, e) => {
-                    Console.WriteLine("@@@@ clickedc");
                     viewModel.ICommentThis.Execute(e.PItem);
                 };
                 //var tapGestureRecognizer = new TapGestureRecognizer();

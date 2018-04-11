@@ -25,7 +25,6 @@ namespace StritWalk
             set { SetProperty(ref quantity, value); }
         }
 
-
         public ItemDetailViewModel(object item = null)
         {
             Item = item as Item;
