@@ -418,7 +418,7 @@ namespace StritWalk
             CustomTabbedPage page = Application.Current.MainPage as CustomTabbedPage;
             page.TabBarHidden = true;
             var newPage = new ItemDetailPage(new ItemDetailViewModel(par1));
-            NavigationPage.SetHasNavigationBar(newPage, false);
+            //NavigationPage.SetHasNavigationBar(newPage, false);
             //await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(par1)));
             await Navigation.PushAsync(newPage);
             //await Navigation.PushModalAsync(new NavigationPage(new ItemDetailPage(new ItemDetailViewModel(par1))));
