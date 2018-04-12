@@ -59,7 +59,10 @@ namespace StritWalk.iOS
 
             tableView.DeselectRow(indexPath, true);
             UIApplication.SharedApplication.KeyWindow.EndEditing(true);
-            list.ItemSelectedCustom(tableItems[indexPath.Row]);
+            if (tableItems != null)
+            {
+                list.ItemSelectedCustom(tableItems[indexPath.Row]);
+            }
 
             //UITapGestureRecognizer gesture = new UITapGestureRecognizer(() => { 
             //    UIApplication.SharedApplication.KeyWindow.EndEditing(true); 
