@@ -75,11 +75,13 @@ namespace StritWalk
 
         public static void GoToMainPage()
         {
+            var itemsPage = new ItemsPage();
+            NavigationPage.SetHasNavigationBar(itemsPage, true);
 
             tabbedPage = new CustomTabbedPage
             {
                 Children = {
-                    new NavigationPage(new ItemsPage())
+                    new NavigationPage(itemsPage)
                     {
                         Icon = Platformer("tab_feed.png", null, null),
                         Title = Platformer(null, "Feed", "Feed")
@@ -116,7 +118,10 @@ namespace StritWalk
                 tabbedPage.BarBackgroundColor = (Color)Current.Resources["Sfondo3"];
             }
 
-            Current.MainPage = tabbedPage;
+            NavigationPage.SetHasNavigationBar(tabbedPage, false);
+
+            Current.MainPage = new NavigationPage(tabbedPage);
+            AppNav = tabbedPage.Navigation;
 
             tabbedPage.CurrentPageChanged += TabbedPage_CurrentPageChanged;
 

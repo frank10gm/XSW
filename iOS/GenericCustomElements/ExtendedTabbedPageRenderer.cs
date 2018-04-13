@@ -21,6 +21,7 @@ namespace StritWalk.iOS
 		{
             base.OnElementChanged(e);
             baseFrame = View.Subviews[1].Frame;
+
             //View.Subviews[1].Frame = new CoreGraphics.CGRect(View.Subviews[1].Frame.X, View.Subviews[1].Frame.Y, View.Subviews[1].Frame.Width, 49);
 
             // Set Text Font for unselected tab states
@@ -53,7 +54,7 @@ namespace StritWalk.iOS
                     //await Task.Delay(1000);
                     //Console.WriteLine("@@@ hidden? " + tabBarHidden);
 
-                    // The solution to the space left behind the invisible tab bar
+                    // //The solution to the space left behind the invisible tab bar
                     //if (TabBar.Hidden)
                     //    View.Subviews[1].Frame = new CoreGraphics.CGRect(View.Subviews[1].Frame.X, View.Subviews[1].Frame.Y, View.Subviews[1].Frame.Width, 0);
                     //else

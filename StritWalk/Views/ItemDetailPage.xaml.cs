@@ -61,12 +61,12 @@ namespace StritWalk
 
         public void WillSparisci()
         {
-            page.TabBarHidden = false;
+            //page.TabBarHidden = false;
         }
 
         public void WillAppari()
         {
-            page.TabBarHidden = true;
+            //page.TabBarHidden = true;
         }
 
         void OnReachBottom(object sender, ItemVisibilityEventArgs args)

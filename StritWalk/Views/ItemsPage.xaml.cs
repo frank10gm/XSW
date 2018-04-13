@@ -20,10 +20,10 @@ namespace StritWalk
             InitializeComponent();
 
             BindingContext = viewModel = new ItemsViewModel();
-            viewModel.Navigation = Navigation;
+            viewModel.Navigation = App.AppNav; //Navigation
             viewModel.PostEditor = PostEditor;
             LoadMoreCommand = new Command(async () => await LoadMoreItems(null));
-            App.AppNav = Navigation;
+            //App.AppNav = Navigation;
 
             MessagingCenter.Subscribe<ItemsViewModel, bool>(this, "IsAudioPost", (obj, arg) =>
             {
