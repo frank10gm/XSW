@@ -420,7 +420,8 @@ namespace StritWalk
             var newPage = new ItemDetailPage(new ItemDetailViewModel(par1));
             //NavigationPage.SetHasNavigationBar(newPage, false);
             //await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(par1)));
-            await Navigation.PushAsync(newPage);
+            //await Navigation.PushAsync(newPage);
+            await App.AppNav.PushAsync(newPage);
 
             //await Navigation.PushModalAsync(new NavigationPage(new ItemDetailPage(new ItemDetailViewModel(par1))));
             //await Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new ItemDetailPage(new ItemDetailViewModel(par1))));
