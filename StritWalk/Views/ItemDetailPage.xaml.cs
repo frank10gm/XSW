@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace StritWalk
@@ -42,6 +43,7 @@ namespace StritWalk
         {
             base.OnAppearing();
 
+
             //caricamento dei commenti
             await viewModel.LoadComments();
             if(viewModel.CommentsItems.Count > 0)
@@ -55,17 +57,23 @@ namespace StritWalk
         }
 
         protected override void OnDisappearing()
-        {
+        {            
             base.OnDisappearing();
         }
 
         public void WillSparisci()
         {
+            Console.WriteLine("@@@@ disappearing ");
+            this.UpdateChildrenLayout();
             //page.TabBarHidden = false;
         }
 
-        public void WillAppari()
+        public async void WillAppari()
         {
+            Console.WriteLine("@@@@ appearing ");
+            await Task.Delay(2000);
+            this.ForceLayout();
+            this.UpdateChildrenLayout();
             //page.TabBarHidden = true;
         }
 
