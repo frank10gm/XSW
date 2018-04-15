@@ -35,30 +35,33 @@ namespace StritWalk.iOS
             //TabBar.BarTintColor = UIColor.FromRGB(255, 255, 255);
             TabBar.TintColor = UIColor.FromRGB(43, 152, 240);
 
+
 			if (e.NewElement == null) return;
 
             var custom = e.NewElement as CustomTabbedPage;
+
+            //base.HidesBottomBarWhenPushed = true;
 
             //controllo della tastiera
             //UITapGestureRecognizer gesture = new UITapGestureRecognizer(KeyDismiss);
             //View.Subviews[0].AddGestureRecognizer(gesture);
             //View.AddGestureRecognizer(gesture);
 
-			this.Tabbed.PropertyChanging += async (sender, eventArgs) => {                
+			this.Tabbed.PropertyChanging += (sender, eventArgs) => {                
 				if (eventArgs.PropertyName == "TabBarHidden")
 				{
                     bool tabBarHidden = !custom.TabBarHidden;
-					TabBar.Hidden = tabBarHidden;
+                    TabBar.Hidden = tabBarHidden;
 
                     //Console.WriteLine("@@@ hidden? " + tabBarHidden);
                     //await Task.Delay(1000);
                     //Console.WriteLine("@@@ hidden? " + tabBarHidden);
 
-                    // //The solution to the space left behind the invisible tab bar
-                    //if (TabBar.Hidden)
-                    //    View.Subviews[1].Frame = new CoreGraphics.CGRect(View.Subviews[1].Frame.X, View.Subviews[1].Frame.Y, View.Subviews[1].Frame.Width, 0);
-                    //else
-                        //View.Subviews[1].Frame = baseFrame;
+                    //The solution to the space left behind the invisible tab bar
+                    if (TabBar.Hidden)
+                        View.Subviews[1].Frame = new CoreGraphics.CGRect(View.Subviews[1].Frame.X, View.Subviews[1].Frame.Y, View.Subviews[1].Frame.Width, 0);
+                    else
+                        View.Subviews[1].Frame = baseFrame;
                     
 				}
 			};

@@ -58,30 +58,29 @@ namespace StritWalk
 
             await Task.Delay(1000);
             bounds = CommentEditor.Bounds;
-            Console.WriteLine("@@@@ first appearing: " + CommentEditor.Bounds.Y);
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
+            Console.WriteLine("@@@@ disappearing ");
         }
 
         public void WillSparisci()
         {
-            Console.WriteLine("@@@@ disappearing ");
             //UpdateChildrenLayout();
             //ForceLayout();
-            //page.TabBarHidden = false;
+            page.TabBarHidden = false;
         }
 
         public void WillAppari()
         {
-            Console.WriteLine("@@@@ appearing: " + CommentEditor.Bounds.Y);
             //ForceLayout();
             //UpdateChildrenLayout();
             //CommentEditor.Focus();
-            //page.TabBarHidden = true;
-            CommentEditor.Layout(bounds);
+            page.TabBarHidden = true;
+            //if(!bounds.IsEmpty)
+                //CommentEditor.Layout(bounds);    
         }
 
         void OnReachBottom(object sender, ItemVisibilityEventArgs args)

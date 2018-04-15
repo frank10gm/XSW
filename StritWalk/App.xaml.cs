@@ -36,7 +36,7 @@ namespace StritWalk
                 .InFocusDisplaying(OSInFocusDisplayOption.Notification)
                 .EndInit();
         }
-    
+
         public static void SetMainPage()
         {
             if (!Settings.IsLoggedIn)
@@ -76,7 +76,8 @@ namespace StritWalk
         public static void GoToMainPage()
         {
             var itemsPage = new ItemsPage();
-            NavigationPage.SetHasNavigationBar(itemsPage, true);
+
+            //NavigationPage.SetHasNavigationBar(itemsPage, false);
 
             tabbedPage = new CustomTabbedPage
             {
@@ -118,10 +119,10 @@ namespace StritWalk
                 tabbedPage.BarBackgroundColor = (Color)Current.Resources["Sfondo3"];
             }
 
-            NavigationPage.SetHasNavigationBar(tabbedPage, false);
-
-            Current.MainPage = new NavigationPage(tabbedPage);
-            AppNav = tabbedPage.Navigation;
+            //NavigationPage.SetHasNavigationBar(tabbedPage, false);
+            //Current.MainPage = new NavigationPage(tabbedPage);
+            //AppNav = tabbedPage.Navigation;
+            Current.MainPage = tabbedPage;
 
             tabbedPage.CurrentPageChanged += TabbedPage_CurrentPageChanged;
 
@@ -132,7 +133,7 @@ namespace StritWalk
         private static void TabbedPage_CurrentPageChanged(object sender, System.EventArgs e)
         {
             if ((tabbedPage.CurrentPage as NavigationPage).CurrentPage.Title == "Map")
-                ((tabbedPage.CurrentPage as NavigationPage).CurrentPage as AboutPage).Starter();
+            ((tabbedPage.CurrentPage as NavigationPage).CurrentPage as AboutPage).Starter();
         }
 
         public static string Platformer(string ios, string android, string win)

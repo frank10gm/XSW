@@ -20,7 +20,7 @@ namespace StritWalk
             InitializeComponent();
 
             BindingContext = viewModel = new ItemsViewModel();
-            viewModel.Navigation = App.AppNav; //Navigation
+            viewModel.Navigation = Navigation; //Navigation
             viewModel.PostEditor = PostEditor;
             LoadMoreCommand = new Command(async () => await LoadMoreItems(null));
             //App.AppNav = Navigation;
@@ -42,6 +42,7 @@ namespace StritWalk
                 var postLabel = new ClickableLabel { Margin = new Thickness(20, 0, 20, 0) }; 
                 postLabel.Clicked += async (sender, e) => {
                     await Navigation.PushAsync(new PostPage(viewModel.Items, e.PItem));
+                    //await App.AppNav.PushAsync(new PostPage(viewModel.Items, e.PItem));
                 };
                 postLabel.SetBinding(ClickableLabel.ItemProperty, ".");
                 postLabel.SetBinding(Label.FormattedTextProperty, "Post");
