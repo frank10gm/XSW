@@ -40,12 +40,6 @@ namespace StritWalk.iOS
 
             var custom = e.NewElement as CustomTabbedPage;
 
-            //view setting
-            //TabBar.Hidden = true;
-            //View.Subviews[0].Frame = new CoreGraphics.CGRect(View.Subviews[0].Frame.X, View.Subviews[0].Frame.Y,
-            //                                                     View.Subviews[0].Frame.Width, View.Subviews[0].Frame.Height + 49);
-            //View.Subviews[1].Frame = new CoreGraphics.CGRect(View.Subviews[1].Frame.X, View.Subviews[1].Frame.Y,
-                                                             //View.Subviews[1].Frame.Width, 0);
 
             //TabBar.Hidden = false;
             //View.Subviews[1].Frame = new CoreGraphics.CGRect(View.Subviews[1].Frame.X, View.Subviews[1].Frame.Y,
@@ -59,6 +53,13 @@ namespace StritWalk.iOS
             //View.AddGestureRecognizer(gesture);
 
 		    Tabbed.PropertyChanging += (sender, eventArgs) => {                //propertychanging
+
+                if (eventArgs.PropertyName == "TabBarChanged")
+                {
+                    View.Subviews[0].Frame = new CoreGraphics.CGRect(View.Subviews[0].Frame.X, View.Subviews[0].Frame.Y,
+                                                                 View.Subviews[0].Frame.Width, View.Subviews[0].Frame.Height + 49); 
+                }
+
 				if (eventArgs.PropertyName == "TabBarHidden")
 				{
                     bool tabBarHidden = !custom.TabBarHidden;

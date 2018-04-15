@@ -282,7 +282,7 @@ namespace StritWalk
             await Navigation.PushAsync(new NewItemPage(viewModel.Items));
         }
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
 
