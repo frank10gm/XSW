@@ -10,10 +10,11 @@ namespace StritWalk
     {
         ItemDetailViewModel viewModel;
         public CustomTabbedPage page;
+        Rectangle bounds;
 
         public ItemDetailPage(ItemDetailViewModel viewModel)
         {
-            InitializeComponent();        
+            InitializeComponent();
             BindingContext = this.viewModel = viewModel;
             viewModel.listView = CommentsListView;
 
@@ -31,7 +32,7 @@ namespace StritWalk
                 postLabel.SetBinding(Label.FormattedTextProperty, "Result");
                 grid.Children.Add(postLabel, 0, 0);
 
-                cell.View = grid;                
+                cell.View = grid;
                 return cell;
             });
 
@@ -46,35 +47,41 @@ namespace StritWalk
 
             //caricamento dei commenti
             await viewModel.LoadComments();
-            if(viewModel.CommentsItems.Count > 0)
+            if (viewModel.CommentsItems.Count > 0)
             {
                 var item = viewModel.CommentsItems[viewModel.CommentsItems.Count - 1];
                 bool scrollanimation = false;
                 if (Device.RuntimePlatform == Device.iOS)
                     scrollanimation = true;
                 CommentsListView.ScrollTo(item, ScrollToPosition.End, scrollanimation);
-            }            
+            }
+
+            await Task.Delay(1000);
+            bounds = CommentEditor.Bounds;
+            Console.WriteLine("@@@@ first appearing: " + CommentEditor.Bounds.Y);
         }
 
         protected override void OnDisappearing()
-        {            
+        {
             base.OnDisappearing();
         }
 
         public void WillSparisci()
         {
             Console.WriteLine("@@@@ disappearing ");
-            this.UpdateChildrenLayout();
+            //UpdateChildrenLayout();
+            //ForceLayout();
             //page.TabBarHidden = false;
         }
 
-        public async void WillAppari()
+        public void WillAppari()
         {
-            Console.WriteLine("@@@@ appearing ");
-            await Task.Delay(2000);
-            this.ForceLayout();
-            this.UpdateChildrenLayout();
+            Console.WriteLine("@@@@ appearing: " + CommentEditor.Bounds.Y);
+            //ForceLayout();
+            //UpdateChildrenLayout();
+            //CommentEditor.Focus();
             //page.TabBarHidden = true;
+            CommentEditor.Layout(bounds);
         }
 
         void OnReachBottom(object sender, ItemVisibilityEventArgs args)
