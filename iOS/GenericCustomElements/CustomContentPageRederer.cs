@@ -70,7 +70,7 @@ namespace StritWalk.iOS
         public override void ViewWillDisappear(bool animated)
         {
             thispage.WillSparisci();
-            base.ViewWillDisappear(animated);
+            //base.ViewWillDisappear(animated);
             //UnregisterForKeyboardNotifications();
         }
 

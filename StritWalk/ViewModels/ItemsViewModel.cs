@@ -416,7 +416,7 @@ namespace StritWalk
         async Task ICommentThisTask(object par1)
         {
             CustomTabbedPage page = Application.Current.MainPage as CustomTabbedPage;
-            page.TabBarHidden = true;
+            //page.TabBarHidden = true;
             //if (page.TabBarHidden) page.TabBarHidden = false;
             //else page.TabBarHidden = true;
             var newPage = new ItemDetailPage(new ItemDetailViewModel(par1));

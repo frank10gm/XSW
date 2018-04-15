@@ -58,7 +58,7 @@ namespace StritWalk.iOS
             //View.Subviews[0].AddGestureRecognizer(gesture);
             //View.AddGestureRecognizer(gesture);
 
-		    Tabbed.PropertyChanging += (sender, eventArgs) => {                
+		    Tabbed.PropertyChanging += (sender, eventArgs) => {                //propertychanging
 				if (eventArgs.PropertyName == "TabBarHidden")
 				{
                     bool tabBarHidden = !custom.TabBarHidden;
