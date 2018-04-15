@@ -289,11 +289,11 @@ namespace StritWalk
             if (viewModel.Items.Count == 0)
                 viewModel.LoadItemsCommand.Execute(null);
 
-            CustomTabbedPage page = Application.Current.MainPage as CustomTabbedPage;
-            await Task.Delay(3000);
-            page.TabBarHidden = true;
-            await Task.Delay(3000);
-            page.TabBarHidden = false;
+            //CustomTabbedPage page = Application.Current.MainPage as CustomTabbedPage;
+            //await Task.Delay(6000);
+            //page.TabBarHidden = true;
+            //await Task.Delay(3000);
+            //page.TabBarHidden = false;
         }
 
 
