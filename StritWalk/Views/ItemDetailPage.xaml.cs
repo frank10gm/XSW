@@ -55,11 +55,6 @@ namespace StritWalk
                     scrollanimation = true;
                 CommentsListView.ScrollTo(item, ScrollToPosition.End, scrollanimation);
             }
-
-            await Task.Delay(1000);
-            page.TabBarHidden = true;
-            await Task.Delay(3000);
-            page.TabBarHidden = false;
         }
 
         protected override void OnDisappearing()
@@ -72,7 +67,7 @@ namespace StritWalk
         {
             //UpdateChildrenLayout();
             //ForceLayout();
-            //page.TabBarHidden = false;
+            page.TabBarHidden = false;
             Console.WriteLine("@@@@ scompare la pagina");
         }
 
@@ -81,7 +76,7 @@ namespace StritWalk
             //ForceLayout();
             //UpdateChildrenLayout();
             //CommentEditor.Focus();
-            //page.TabBarHidden = true;
+            page.TabBarHidden = true;
             Console.WriteLine("@@@@ appare la pagina");
             //if(!bounds.IsEmpty)
                 //CommentEditor.Layout(bounds);    

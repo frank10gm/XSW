@@ -282,15 +282,18 @@ namespace StritWalk
             await Navigation.PushAsync(new NewItemPage(viewModel.Items));
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
             if (viewModel.Items.Count == 0)
                 viewModel.LoadItemsCommand.Execute(null);
 
-            //CustomTabbedPage page = Application.Current.MainPage as CustomTabbedPage;
-            //page.TabBarHidden = true;
+            CustomTabbedPage page = Application.Current.MainPage as CustomTabbedPage;
+            await Task.Delay(1000);
+            page.TabBarHidden = true;
+            await Task.Delay(3000);
+            page.TabBarHidden = false;
         }
 
 
