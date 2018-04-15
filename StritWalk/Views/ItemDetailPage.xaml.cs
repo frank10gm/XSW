@@ -56,8 +56,8 @@ namespace StritWalk
                 CommentsListView.ScrollTo(item, ScrollToPosition.End, scrollanimation);
             }
 
-            await Task.Delay(1000);
-            bounds = CommentEditor.Bounds;
+            //await Task.Delay(1000);
+            //bounds = CommentEditor.Bounds;
         }
 
         protected override void OnDisappearing()

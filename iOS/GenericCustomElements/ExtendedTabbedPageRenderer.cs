@@ -39,10 +39,19 @@ namespace StritWalk.iOS
 			if (e.NewElement == null) return;
 
             var custom = e.NewElement as CustomTabbedPage;
-            //TabBar.Hidden = true;
-            //View.Subviews[1].Frame = new CoreGraphics.CGRect(View.Subviews[1].Frame.X, View.Subviews[1].Frame.Y, View.Subviews[1].Frame.Width, 0);
 
-            //base.HidesBottomBarWhenPushed = true;
+            //view setting
+            //TabBar.Hidden = true;
+            //View.Subviews[0].Frame = new CoreGraphics.CGRect(View.Subviews[0].Frame.X, View.Subviews[0].Frame.Y,
+            //                                                     View.Subviews[0].Frame.Width, View.Subviews[0].Frame.Height + 49);
+            //View.Subviews[1].Frame = new CoreGraphics.CGRect(View.Subviews[1].Frame.X, View.Subviews[1].Frame.Y,
+                                                             //View.Subviews[1].Frame.Width, 0);
+
+            //TabBar.Hidden = false;
+            //View.Subviews[1].Frame = new CoreGraphics.CGRect(View.Subviews[1].Frame.X, View.Subviews[1].Frame.Y,
+            //                                                     View.Subviews[1].Frame.Width, 49);
+            //View.Subviews[0].Frame = new CoreGraphics.CGRect(View.Subviews[0].Frame.X, View.Subviews[0].Frame.Y,
+                                                             //View.Subviews[0].Frame.Width, View.Subviews[0].Frame.Height - 49);
 
             //controllo della tastiera
             //UITapGestureRecognizer gesture = new UITapGestureRecognizer(KeyDismiss);
