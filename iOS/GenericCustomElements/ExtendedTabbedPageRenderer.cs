@@ -39,6 +39,8 @@ namespace StritWalk.iOS
 			if (e.NewElement == null) return;
 
             var custom = e.NewElement as CustomTabbedPage;
+            //TabBar.Hidden = true;
+            //View.Subviews[1].Frame = new CoreGraphics.CGRect(View.Subviews[1].Frame.X, View.Subviews[1].Frame.Y, View.Subviews[1].Frame.Width, 0);
 
             //base.HidesBottomBarWhenPushed = true;
 
@@ -47,22 +49,30 @@ namespace StritWalk.iOS
             //View.Subviews[0].AddGestureRecognizer(gesture);
             //View.AddGestureRecognizer(gesture);
 
-			this.Tabbed.PropertyChanging += (sender, eventArgs) => {                
+		    Tabbed.PropertyChanging += (sender, eventArgs) => {                
 				if (eventArgs.PropertyName == "TabBarHidden")
 				{
                     bool tabBarHidden = !custom.TabBarHidden;
                     TabBar.Hidden = tabBarHidden;
 
-                    //Console.WriteLine("@@@ hidden? " + tabBarHidden);
                     //await Task.Delay(1000);
-                    //Console.WriteLine("@@@ hidden? " + tabBarHidden);
+                    Console.WriteLine("@@@ hidden? " + tabBarHidden);
 
                     //The solution to the space left behind the invisible tab bar
-                    if (TabBar.Hidden)
-                        View.Subviews[1].Frame = new CoreGraphics.CGRect(View.Subviews[1].Frame.X, View.Subviews[1].Frame.Y, View.Subviews[1].Frame.Width, 0);
-                    else
-                        View.Subviews[1].Frame = baseFrame;
-                    
+                    if (TabBar.Hidden){
+                        View.Subviews[0].Frame = new CoreGraphics.CGRect(View.Subviews[0].Frame.X, View.Subviews[0].Frame.Y,
+                                                                 View.Subviews[0].Frame.Width, View.Subviews[0].Frame.Height + 49);   
+                        View.Subviews[1].Frame = new CoreGraphics.CGRect(View.Subviews[1].Frame.X, View.Subviews[1].Frame.Y, 
+                                                                         View.Subviews[1].Frame.Width, 0);
+                    }                        
+                    else{
+                        View.Subviews[1].Frame = new CoreGraphics.CGRect(View.Subviews[1].Frame.X, View.Subviews[1].Frame.Y,
+                                                                 View.Subviews[1].Frame.Width, 49);
+                        View.Subviews[0].Frame = new CoreGraphics.CGRect(View.Subviews[0].Frame.X, View.Subviews[0].Frame.Y,
+                                                                         View.Subviews[0].Frame.Width, View.Subviews[0].Frame.Height - 49);
+                        //View.Subviews[1].Frame = baseFrame;
+                    }
+                                         
 				}
 			};
 		}

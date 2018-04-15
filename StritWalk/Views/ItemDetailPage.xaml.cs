@@ -71,6 +71,7 @@ namespace StritWalk
             //UpdateChildrenLayout();
             //ForceLayout();
             page.TabBarHidden = false;
+            Console.WriteLine("@@@@ scompare la pagina");
         }
 
         public void WillAppari()
@@ -79,6 +80,7 @@ namespace StritWalk
             //UpdateChildrenLayout();
             //CommentEditor.Focus();
             page.TabBarHidden = true;
+            Console.WriteLine("@@@@ appare la pagina");
             //if(!bounds.IsEmpty)
                 //CommentEditor.Layout(bounds);    
         }
