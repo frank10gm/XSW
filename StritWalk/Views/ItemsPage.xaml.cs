@@ -35,12 +35,17 @@ namespace StritWalk
                 if (!arg) PostButton.TextColor = (Color)Application.Current.Resources["Testo5"];
                 else PostButton.TextColor = (Color)Application.Current.Resources["App1"];
             });
+            MessagingCenter.Subscribe<ItemDetailPage, bool>(this, "ExitComments", (obj, arg) =>
+            {
+                ItemsListView.ScrollTo(App.currentItem, ScrollToPosition.Start, false);
+            });
 
             var firstTemplate = new DataTemplate(() =>
             {
                 var w = Content.Width;
-                var postLabel = new ClickableLabel { Margin = new Thickness(20, 0, 20, 0) }; 
-                postLabel.Clicked += async (sender, e) => {
+                var postLabel = new ClickableLabel { Margin = new Thickness(20, 0, 20, 0) };
+                postLabel.Clicked += async (sender, e) =>
+                {
                     await Navigation.PushAsync(new PostPage(viewModel.Items, e.PItem));
                     //await App.AppNav.PushAsync(new PostPage(viewModel.Items, e.PItem));
                 };
@@ -97,7 +102,8 @@ namespace StritWalk
             {
                 var w = Content.Width;
                 var postLabel = new ClickableLabel { Margin = new Thickness(20, 0, 20, 0) };
-                postLabel.Clicked += async (sender, e) => {
+                postLabel.Clicked += async (sender, e) =>
+                {
                     await Navigation.PushAsync(new PostPage(viewModel.Items, e.PItem));
                 };
                 postLabel.SetBinding(ClickableLabel.ItemProperty, ".");
@@ -122,7 +128,8 @@ namespace StritWalk
                 var commentsLabel = new CommentsLabel { Margin = new Thickness(20, 0, 20, 0), Text = "", TextColor = (Color)Application.Current.Resources["Testo3"], FontSize = 13 };
                 commentsLabel.SetBinding(Label.FormattedTextProperty, "ViewComments");
                 commentsLabel.SetBinding(CommentsLabel.ItemProperty, ".");
-                commentsLabel.Clicked += (sender, e) => {
+                commentsLabel.Clicked += (sender, e) =>
+                {
                     viewModel.ICommentThis.Execute(e.PItem);
                 };
                 //var tapGestureRecognizer = new TapGestureRecognizer();
@@ -282,18 +289,12 @@ namespace StritWalk
             await Navigation.PushAsync(new NewItemPage(viewModel.Items));
         }
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
 
             if (viewModel.Items.Count == 0)
                 viewModel.LoadItemsCommand.Execute(null);
-
-            //CustomTabbedPage page = Application.Current.MainPage as CustomTabbedPage;
-            //await Task.Delay(6000);
-            //page.TabBarHidden = true;
-            //await Task.Delay(3000);
-            //page.TabBarHidden = false;
         }
 
 

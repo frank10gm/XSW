@@ -44,7 +44,6 @@ namespace StritWalk
         {
             base.OnAppearing();
 
-
             //caricamento dei commenti
             await viewModel.LoadComments();
             if (viewModel.CommentsItems.Count > 0)
@@ -55,6 +54,12 @@ namespace StritWalk
                     scrollanimation = true;
                 CommentsListView.ScrollTo(item, ScrollToPosition.End, scrollanimation);
             }
+
+            //CustomTabbedPage page = Application.Current.MainPage as CustomTabbedPage;
+            //await Task.Delay(6000);
+            //page.TabBarHidden = true;
+            //await Task.Delay(3000);
+            //page.TabBarHidden = false;
         }
 
         protected override void OnDisappearing()
@@ -68,6 +73,7 @@ namespace StritWalk
             //UpdateChildrenLayout();
             //ForceLayout();
             page.TabBarHidden = false;
+            MessagingCenter.Send(this, "ExitComments", true);
             Console.WriteLine("@@@@ scompare la pagina");
         }
 

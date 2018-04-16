@@ -19,6 +19,7 @@ namespace StritWalk
         {
             get; set;
         }
+        public static Item currentItem = null;
 
         public App()
         {
