@@ -35,7 +35,6 @@ namespace StritWalk.iOS
             //TabBar.BarTintColor = UIColor.FromRGB(255, 255, 255);
             TabBar.TintColor = UIColor.FromRGB(43, 152, 240);
 
-
 			if (e.NewElement == null) return;
 
             var custom = e.NewElement as CustomTabbedPage;
