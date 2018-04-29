@@ -17,7 +17,7 @@
                     <Color x:Key="LightTextColor">#999999</Color>
                     <Color x:Key="Azure">#333333</Color>
 
-                    <Color x:Key="Sfondo1">#111111</Color>
+                    <!--<Color x:Key="Sfondo1">#111111</Color>
                     <Color x:Key="Sfondo2">#272727</Color>
                     <Color x:Key="Sfondo3">#1a1a1a</Color>
                     <Color x:Key="Sfondo4">#000000</Color>
@@ -28,6 +28,19 @@
                     <Color x:Key="Testo5">#333333</Color>
                     <Color x:Key="App1">#00ff00</Color>
                     <Color x:Key="App2">#4484fb</Color>
+                    <Color x:Key="App3">#ed5249</Color>-->
+
+                    <Color x:Key="Sfondo1">#ffffff</Color>
+                    <Color x:Key="Sfondo2">#efefef</Color>
+                    <Color x:Key="Sfondo3">#efefef</Color>
+                    <Color x:Key="Sfondo4">#efefef</Color>
+                    <Color x:Key="Testo1">#000000</Color>
+                    <Color x:Key="Testo2">#000000</Color>
+                    <Color x:Key="Testo3">#808080</Color>
+                    <Color x:Key="Testo4">#808080</Color>
+                    <Color x:Key="Testo5">#000000</Color>
+                    <Color x:Key="App1">#4885ed</Color>
+                    <Color x:Key="App2">#4885ed</Color>
                     <Color x:Key="App3">#ed5249</Color>
                     
                     <Style TargetType="NavigationPage">
@@ -50,22 +63,22 @@
                     <Color x:Key="LightTextColor">#999999</Color>
                     <Color x:Key="Azure">#1b1b1b</Color>
 
-                    <Color x:Key="Sfondo1">#111111</Color>
-                    <Color x:Key="Sfondo2">#272727</Color>
-                    <Color x:Key="Sfondo3">#1a1a1a</Color>
-                    <Color x:Key="Sfondo4">#000000</Color>
-                    <Color x:Key="Testo1">#efefef</Color>
-                    <Color x:Key="Testo2">#ffffff</Color>
-                    <Color x:Key="Testo3">#888888</Color>
-                    <Color x:Key="Testo4">#808080</Color>
-                    <Color x:Key="Testo5">#333333</Color>
-                    <Color x:Key="App1">#00ff00</Color>
-                    <Color x:Key="App2">#4484fb</Color>
+                   <Color x:Key="Sfondo1">#efefef</Color>
+                    <Color x:Key="Sfondo2">#ffffff</Color>
+                    <Color x:Key="Sfondo3">#efefef</Color>
+                    <Color x:Key="Sfondo4">#efefef</Color>
+                    <Color x:Key="Testo1">#000000</Color>
+                    <Color x:Key="Testo2">#000000</Color>
+                    <Color x:Key="Testo3">#000000</Color>
+                    <Color x:Key="Testo4">#000000</Color>
+                    <Color x:Key="Testo5">#000000</Color>
+                    <Color x:Key="App1">#4885ed</Color>
+                    <Color x:Key="App2">#4885ed</Color>
                     <Color x:Key="App3">#ed5249</Color>
                     
                     <Style TargetType="NavigationPage">
                         <Setter Property="BarBackgroundColor" Value="{StaticResource Sfondo3}" />
-                        <Setter Property="BarTextColor" Value="{StaticResource White}" />
+                        <Setter Property="BarTextColor" Value="{StaticResource Testo2}" />
                     </Style>
                 </ResourceDictionary>
             </OnPlatform.Android>
