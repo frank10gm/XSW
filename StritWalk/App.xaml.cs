@@ -113,7 +113,7 @@ namespace StritWalk
             if (Device.iOS == Device.RuntimePlatform)
             {
                 tabbedPage.BarBackgroundColor = (Color)Current.Resources["Sfondo4"];
-                tabbedPage.BarTextColor = (Color)Current.Resources["Testo2"];
+                tabbedPage.BarTextColor = (Color)Current.Resources["App1"];
             }
             else
             {
