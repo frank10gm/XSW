@@ -93,7 +93,7 @@ namespace StritWalk.iOS
             {
                 Control.Text = "";
             }
-            Control.TextColor = UIColor.FromRGB(255, 255, 255);
+            Control.TextColor = UIColor.FromRGB(0, 0, 0);
 		}
 
 		protected override void Dispose(bool disposing)
