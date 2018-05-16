@@ -42,7 +42,7 @@
                                 <ColumnDefinition Width="2*" />
                                 <ColumnDefinition Width="8*" />
                             </Grid.ColumnDefinitions>
-                            <Image Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Start" Source="profile_generic.png" HeightRequest="40" />
+                            <Image Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Start" Source="cluster.png" HeightRequest="40" />
                             <Label FormattedText="{Binding Gino}" Grid.Row="0" Grid.Column="1" />
                         </Grid>
                         <Label FormattedText="{Binding PostsN}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" />
@@ -50,7 +50,7 @@
                         <Label FormattedText="{Binding LikesN}" Grid.Row="1" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" />
                         <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="0,0,0,0" HeightRequest="0" BackgroundColor="Transparent"></BoxView>
                         <!-- inizio sezione per postare -->
-                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Margin="0,20,0,0" RowSpacing="0">
+                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Margin="0,0,0,0" RowSpacing="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />

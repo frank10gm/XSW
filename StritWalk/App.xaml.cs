@@ -44,8 +44,8 @@ namespace StritWalk
             {
                 Current.MainPage = new NavigationPage(new LoginPage())
                 {
-                    BarBackgroundColor = (Color)Current.Resources["Sfondo2"],
-                    BarTextColor = (Color)Current.Resources["App1"]
+                    BarBackgroundColor = (Color)Current.Resources["Sfondo4"],
+                    //BarTextColor = (Color)Current.Resources["App1"]
                 };
             }
             else
@@ -69,8 +69,8 @@ namespace StritWalk
 
             Current.MainPage = new NavigationPage(new LoginPage())
             {
-                BarBackgroundColor = (Color)Current.Resources["Sfondo2"],
-                BarTextColor = (Color)Current.Resources["App1"]
+                BarBackgroundColor = (Color)Current.Resources["Sfondo4"],
+                //BarTextColor = (Color)Current.Resources["App1"]
             };
         }
 

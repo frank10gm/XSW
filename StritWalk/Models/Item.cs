@@ -230,7 +230,7 @@ namespace StritWalk
             get
             {
                 FormattedString result = new FormattedString();
-                Span creator = new Span { Text = Creator + "\n", FontAttributes = FontAttributes.Bold, FontSize = 16.0F, ForegroundColor = (Color)Application.Current.Resources["Testo2"] };
+                Span creator = new Span { Text = Creator + "\n", FontAttributes = FontAttributes.Bold, FontSize = 14.0F, ForegroundColor = (Color)Application.Current.Resources["Testo2"] };
                 Span details = new Span { Text = Details + "\n\n", FontSize = 10.0F, ForegroundColor = (Color)Application.Current.Resources["Testo3"] };
                 //Span brace1 = new Span { Text = "{ ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
                 //Span brace2 = new Span { Text = " } ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
@@ -265,7 +265,7 @@ namespace StritWalk
 
                 FormattedString result = new FormattedString();
 
-                Span creator = new Span { Text = Creator + "\n", FontAttributes = FontAttributes.Bold, FontSize = 16.0F, ForegroundColor = Color.FromHex("#4484fb") };
+                Span creator = new Span { Text = Creator + "\n", FontAttributes = FontAttributes.Bold, FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
                 Span details = new Span { Text = Details + "", FontSize = 10.0F, ForegroundColor = (Color)Application.Current.Resources["Testo2"] };
                 Span brace1 = new Span { Text = "{ ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };
                 Span brace2 = new Span { Text = " } ", FontSize = 14.0F, ForegroundColor = Color.FromHex("#4484fb") };

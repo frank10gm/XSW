@@ -160,7 +160,7 @@ namespace StritWalk
             SKPaint paint = new SKPaint
             {
                 Style = SKPaintStyle.Stroke,
-                Color = Color.FromHex("#00ff00").ToSKColor(),
+				Color = Color.FromHex("#4885ed").ToSKColor(),
                 StrokeWidth = 1
             };
 

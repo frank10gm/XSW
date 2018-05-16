@@ -37,8 +37,8 @@
                     <Color x:Key="Testo1">#000000</Color>
                     <Color x:Key="Testo2">#000000</Color>
                     <Color x:Key="Testo3">#808080</Color>
-                    <Color x:Key="Testo4">#808080</Color>
-                    <Color x:Key="Testo5">#000000</Color>
+                    <Color x:Key="Testo4">#000000</Color>
+                    <Color x:Key="Testo5">#808080</Color>
                     <Color x:Key="App1">#4885ed</Color>
                     <Color x:Key="App2">#4885ed</Color>
                     <Color x:Key="App3">#ed5249</Color>

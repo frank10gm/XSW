@@ -76,7 +76,7 @@ namespace StritWalk
 				{
 					Spans =
 					{
-                        new Span { Text = Settings.UserId + "\n", FontAttributes=FontAttributes.Bold, FontSize=16.0F, ForegroundColor=(Color)Application.Current.Resources["Testo2"], FontFamily="Akzidenz-Grotesk Pro"},
+                        new Span { Text = Settings.UserId + "\n", FontAttributes=FontAttributes.Bold, FontSize=14.0F, ForegroundColor=(Color)Application.Current.Resources["Testo2"], FontFamily="Akzidenz-Grotesk Pro"},
                         new Span { Text = Settings.UserDescription + "", FontSize=10.0F, ForegroundColor=(Color)Application.Current.Resources["Testo1"] }
 					}
 				};

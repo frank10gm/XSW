@@ -124,7 +124,7 @@ namespace StritWalk
                 //BorderWidth = 1,
                 //HorizontalOptions = LayoutOptions.Center,
                 //VerticalOptions = LayoutOptions.CenterAndExpand
-                Image = "profile_generic.png",
+                Image = "cluster.png",
                 Margin = new Thickness(0, 0, 0, 0)
             };
             button.Clicked += positionClicked;

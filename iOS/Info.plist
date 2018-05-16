@@ -67,5 +67,21 @@
 	<string>This app will use your microphone for recording voice and music you want to share.</string>
 	<key>CFBundleName</key>
 	<string>StritWalk</string>
+	<key>UIStatusBarHidden</key>
+	<false/>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleDefault</string>
+	<key>UIStatusBarTintParameters</key>
+	<dict>
+		<key>UINavigationBar</key>
+		<dict>
+			<key>Style</key>
+			<string>UIBarStyleDefault</string>
+			<key>Translucent</key>
+			<true/>
+		</dict>
+	</dict>
+	<key>Custom Property</key>
+	<string></string>
 </dict>
 </plist>
