@@ -19,7 +19,7 @@
                     <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy> 
                 </x:Arguments>
                 <ListView.Header>
-                    <Grid Padding="0,20,0,0" RowSpacing="0" ColumnSpacing="0" Margin="0,0,0,0">
+                    <Grid Padding="0,20,0,0" RowSpacing="0" ColumnSpacing="0" Margin="0,0,0,0" BackgroundColor="{StaticResource Sfondo2}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -62,7 +62,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="20" />
                             </Grid.ColumnDefinitions>
-                            <local:CustomEditor HorizontalOptions="FillAndExpand" Placeholder="Do you wand to post something?" Keyboard="Default" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" BackgroundColor="{StaticResource Sfondo1}" x:Name="PostEditor" HeightRequest="40" Focused="OnFocused"
+                            <local:CustomEditor HorizontalOptions="FillAndExpand" Placeholder="Do you wand to post something?" Keyboard="Default" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" BackgroundColor="{StaticResource Sfondo2}" x:Name="PostEditor" HeightRequest="40" Focused="OnFocused"
                                 FontSize="14" Completed="OnCheckTest" Text="{Binding NewPostDescription}" TextColor="{StaticResource Testo2}" Margin="0,0,0,0" />
                             <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Padding="0,0,0,0" Margin="0,0,0,0" RowSpacing="0">
                                 <Grid.RowDefinitions>
@@ -76,7 +76,7 @@
                                 </Grid.ColumnDefinitions>
                                 <!--<Button FontAttributes="None" Grid.Row="0" Grid.Column="0" Text="Video" HorizontalOptions="Center" VerticalOptions="Center">
                                 </Button>-->
-                                <BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HeightRequest="1" BackgroundColor="{StaticResource Sfondo2}" Margin="0,0,0,0"></BoxView>
+                                <BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HeightRequest="1" BackgroundColor="{StaticResource Sfondo1}" Margin="0,0,0,0"></BoxView>
                                 <Button FontAttributes="Bold" Grid.Row="1" Grid.Column="0" Text="{Binding RecButton}" TextColor="{StaticResource App3}" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding RecCommand}" CommandParameter="{Binding Items}" BackgroundColor="Transparent" BorderColor="Transparent">
                                 </Button>
                                 <Button x:Name="PostButton" FontAttributes="Bold" Grid.Row="1" Grid.Column="2" Text="Post" TextColor="{StaticResource Testo5}" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding PostCommand}" CommandParameter="{Binding Items}" BackgroundColor="Transparent" BorderColor="Transparent">
@@ -99,7 +99,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HeightRequest="10" BackgroundColor="{StaticResource Sfondo2}"></BoxView>
+                            <BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HeightRequest="10" BackgroundColor="{StaticResource App1}"></BoxView>
                             <!--<Label Margin="5" FontSize="14.0" Grid.Row="0" Grid.Column="0" Text="My" TextColor="#2b98f0" HorizontalOptions="Center" VerticalOptions="Center">
                             </Label>
                             <Label Margin="5" FontSize="14.0" Grid.Row="0" Grid.Column="1" Text="Friends" TextColor="#2b98f0" HorizontalOptions="Center" VerticalOptions="Center">
